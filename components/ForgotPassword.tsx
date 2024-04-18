@@ -68,7 +68,7 @@ function ForgotPassword() {
           <div className="grid gap-2">
             <Label htmlFor="password">New Password</Label>
             <Input
-              id="password"
+              id="new-password"
               type="password"
               placeholder="Enter new password"
               required
@@ -79,7 +79,7 @@ function ForgotPassword() {
             <Label htmlFor="password">Confirm Password</Label>
             
             <Input
-              id="password"
+              id="confirm-password"
               type="password"
               placeholder="Enter new password"
               required
