@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React from "react";
 import { z } from "zod";
 import { useState } from "react";
@@ -18,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { json } from "stream/consumers";
 
-function LoginForm() {
+export default function AdminLogin() {
   const schema = z.object({
     email: z.string().email({
       message: "Invalid email address eg example@gmail.com",
@@ -124,5 +123,3 @@ function LoginForm() {
     </Card>
   );
 }
-
-export default LoginForm;

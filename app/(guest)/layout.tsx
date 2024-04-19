@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import PropTypes from 'prop-types';
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -27,8 +28,20 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
+          <h1>Header global </h1>
+
         {children}
+
+        <div>
+          <h1>global footer item</h1>
+        </div>
       </body>
     </html>
   );
 }
+
+
+RootLayout.propType = {
+  children: PropTypes.node,
+  layout: PropTypes.string,
+};
