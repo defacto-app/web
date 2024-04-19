@@ -3,7 +3,11 @@ import { Inter as FontSans } from "next/font/google";
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import Link from "next/link";
+import { UserRoundCog, ArrowBigDown } from "lucide-react";
+import env from "@/config/env";
+import IsDev from "@/utils/IsDev";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -25,10 +29,15 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          fontSans.variable
         )}
       >
-          <h1>Header global </h1>
+        {env.isDev && (
+          <Link href="/admin">
+            Admin <UserRoundCog size={20} />
+          </Link>
+        )}
+        <h1>Header global </h1>
 
         {children}
 
@@ -39,7 +48,6 @@ export default function RootLayout({
     </html>
   );
 }
-
 
 RootLayout.propType = {
   children: PropTypes.node,

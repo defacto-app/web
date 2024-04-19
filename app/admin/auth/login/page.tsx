@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import { z } from "zod";
 import { useState } from "react";
@@ -22,14 +22,14 @@ export default function AdminLogin() {
     email: z.string().email({
       message: "Invalid email address eg example@gmail.com",
     }),
-    password: z.string().min(8, {
-      message: "Password must be at least 8 characters long",
+    password: z.string().min(5, {
+      message: "Password must be at least 5 characters long",
     }),
   });
 
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "kats.com.ng@gmail.com",
+    password: "123456",
   });
 
   const [errors, setErrors] = useState<{
@@ -42,20 +42,17 @@ export default function AdminLogin() {
     console.log(name, value);
   };
 
+
   const handleSubmit = () => {
-    setErrors({});
-    const result = schema.safeParse(formData);
-    if (!result.success) {
-      const formattedErrors = {} as any;
-      result.error.errors.forEach((error) => {
-        const fieldName = error.path[0];
-        formattedErrors[fieldName] = error.message;
+    fetch("/api/auth")
+      .then((response) => {
+        console.log(response);
+      })
+      .then((data) => {
+        console.log(data);
       });
-      console.log("code is running", formattedErrors);
-      setErrors(formattedErrors);
-      return;
-    }
-    console.log("I am handled", result.success);
+
+    console.log("I am handled", formData);
   };
 
   return (
@@ -122,4 +119,8 @@ export default function AdminLogin() {
       </CardContent>
     </Card>
   );
+}
+
+function ErrorMsg() {
+  return <div>page</div>;
 }
