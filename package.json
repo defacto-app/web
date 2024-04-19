@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 5700",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "env:dev": "npx jsonbank-env dev .env force",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "jsonbank-env": "^1.0.2",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-label": "^2.0.2",
@@ -35,6 +38,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.1",
     "postcss": "^8",
+    "prettier": "3.2.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

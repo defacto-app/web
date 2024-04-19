@@ -1,26 +1,24 @@
-"use client"
+"use client";
 
-import React from 'react'
-import { z } from 'zod'
-import { useState } from 'react'
+import React from "react";
+import { z } from "zod";
+import { useState } from "react";
 
-import Link from "next/link"
+import Link from "next/link";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { json } from 'stream/consumers'
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { json } from "stream/consumers";
 
-
-
- function LoginForm() {
+function LoginForm() {
   const schema = z.object({
     email: z.string().email({
       message: "Invalid email address eg example@gmail.com",
@@ -29,11 +27,10 @@ import { json } from 'stream/consumers'
       message: "Password must be at least 8 characters long",
     }),
   });
-  
+
   const [formData, setFormData] = useState({
-    email:"",
-    password:"",
-    
+    email: "",
+    password: "",
   });
 
   const [errors, setErrors] = useState<{
@@ -43,29 +40,24 @@ import { json } from 'stream/consumers'
   const handleInputChange = (event: any) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-    console.log(name, value)
+    console.log(name, value);
   };
 
-  
-  
-const handleSubmit = () =>{
-setErrors({}) 
-  const result = schema.safeParse(formData);
-  if (!result.success) {
-    const formattedErrors = {} as any;
-    result.error.errors.forEach((error) => {
-      const fieldName = error.path[0];
-      formattedErrors[fieldName] = error.message;
-    });
-    console.log("code is running", formattedErrors)
-    setErrors(formattedErrors);
-    return;
-  }
-  console.log("I am handled", result.success)
-
-}
-
-
+  const handleSubmit = () => {
+    setErrors({});
+    const result = schema.safeParse(formData);
+    if (!result.success) {
+      const formattedErrors = {} as any;
+      result.error.errors.forEach((error) => {
+        const fieldName = error.path[0];
+        formattedErrors[fieldName] = error.message;
+      });
+      console.log("code is running", formattedErrors);
+      setErrors(formattedErrors);
+      return;
+    }
+    console.log("I am handled", result.success);
+  };
 
   return (
     <Card className="mx-auto max-w-sm">
@@ -78,44 +70,44 @@ setErrors({})
       <CardContent>
         <div className="grid gap-4">
           <div className="grid gap-2">
-            
             <Label htmlFor="email">Email</Label>
             {formData.email}
             <Input
               id="email"
-              name='email'
+              name="email"
               type="email"
               placeholder="m@example.com"
               required
               value={formData.email}
               onChange={handleInputChange}
             />
-            
-          {errors.email && (
-                  <p className={`text-red-500 p-4`}>{errors.email}</p>
-                )}
+
+            {errors.email && (
+              <p className={`text-red-500 p-4`}>{errors.email}</p>
+            )}
           </div>
           {JSON.stringify(formData)}
           <div className="grid gap-2">
-            <div className="flex items-center" >
+            <div className="flex items-center">
               <Label htmlFor="password">Password</Label>
-              
+
               <Link href="#" className="ml-auto inline-block text-sm underline">
                 Forgot your password?
               </Link>
             </div>
             <Input
-            id="password" type="password" required 
-            value={formData.password} 
-            onChange={handleInputChange}
-            name='password'/>
+              id="password"
+              type="password"
+              required
+              value={formData.password}
+              onChange={handleInputChange}
+              name="password"
+            />
           </div>
           {errors.password && (
-                  <p className={`text-red-500 p-4`}>{errors.password}</p>
-                )}
-          <Button
-          onClick={handleSubmit}
-          type="submit" className="w-full">
+            <p className={`text-red-500 p-4`}>{errors.password}</p>
+          )}
+          <Button onClick={handleSubmit} type="submit" className="w-full">
             Login
           </Button>
           <Button variant="outline" className="w-full">
@@ -130,8 +122,7 @@ setErrors({})
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
-
 
 export default LoginForm;

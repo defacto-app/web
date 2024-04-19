@@ -1,9 +1,9 @@
-import React from 'react'; 
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 interface ErrorFieldProps {
-  error?: string; 
-  className?: string; 
+  error?: string;
+  className?: string;
 }
 
 const ErrorField: React.FC<ErrorFieldProps> = ({ error, className }) => {
