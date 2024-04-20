@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 
 const fontSans = FontSans({
@@ -29,6 +30,8 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}>
+      <Header/>
+
       {children}
      
       <Footer/>

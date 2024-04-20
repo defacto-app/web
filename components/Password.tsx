@@ -1,5 +1,4 @@
 "use client"
-
 import React from 'react';
 import { z } from 'zod';
 import { useState } from 'react';
@@ -14,21 +13,17 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Mail } from 'lucide-react';
-import { useRouter } from 'next/router';
+import { Key } from 'lucide-react'; // Import the Key icon for password
 
-
-
-
-function Email() {
+function Password() {
   const schema = z.object({
-    email: z.string().email({
-      message: 'Invalid email address eg example@gmail.com',
+    password: z.string().min(8, {
+      message: 'Password must be at least 8 characters long',
     }),
   });
 
   const [formData, setFormData] = useState({
-    email: '',
+    password: '',
   });
 
   const [errors, setErrors] = useState<{
@@ -52,47 +47,46 @@ function Email() {
       setErrors(formattedErrors);
       return;
     }
-    console.log('Email submitted:', formData.email);
+    console.log('Password submitted:', formData.password);
   };
 
   return (
     <Card className="mx-auto max-w-md rounded-xl">
-      
       <CardHeader>
-      <div className='grid justify-items-start py-6'>
-      <Mail  color="red" size={48}/>
-
-      </div>
-        <CardTitle className="text-3xl text-center font-bold">    Let's start with your email</CardTitle>
-        <CardDescription className="text-center ">
-      We will check if you already have an account, if not, we'll create a new one.
+        <div className="grid justify-items-start py-2">
+          <Key color="red" size={48} />
+        </div>
+        <CardTitle className="text-3xl text-center font-bold">
+          Enter your password
+        </CardTitle>
+        <CardDescription className="text-center">
+          Create a secure password for your account.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4 ">
           <div className="grid gap-2 py-6">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="password">Password</Label>
             <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="m@example.com"
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
               required
-              value={formData.email}
+              value={formData.password}
               onChange={handleInputChange}
             />
-            {errors.email && (
-              <p className="text-red-500 p-4">{errors.email}</p>
+            {errors.password && (
+              <p className="text-red-500 p-4">{errors.password}</p>
             )}
           </div>
         </div>
-        <Button variant="primary" onClick={handleSubmit} type="submit" className="w-full" >
-         Continue
+        <Button variant="primary" onClick={handleSubmit} type="submit" className="w-full">
+          Continue
         </Button>
-      
       </CardContent>
     </Card>
   );
 }
 
-export default Email;
+export default Password;

@@ -1,22 +1,24 @@
-import React from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-export default function SignupForm() {
+export default function Welcome() {
   return (
     <Card className="mx-auto max-w-md rounded-xl">
       <CardHeader>
-        <CardTitle className="text-4xl text-center font-bold">Welcome</CardTitle>
-        <CardDescription className="text-center text-xl">
+        <CardTitle className="text-4xl text-center font-bold">
+          Welcome
+        </CardTitle>
+        <CardDescription className="text-center ">
           Let's start with your phone number
         </CardDescription>
       </CardHeader>
@@ -26,7 +28,7 @@ export default function SignupForm() {
             Phone Number
           </Label>
           <Input
-            id="phone"
+            id="welcomephone"
             type="tel"
             placeholder="Enter your phone number"
             className="w-full border-gray-300 rounded-md h-12 px-4 focus:outline-none focus:ring focus:border-blue-500"
@@ -38,26 +40,20 @@ export default function SignupForm() {
           <hr className="w-1/3 border-gray-300" />
         </div>
         <div className="mb-6">
-          <Button  className="w-full h-12 mb-4">
-             Email
-          </Button>
+          <Link href="/email">
+            <Button variant="primary" className="w-full h-12">
+              Email
+            </Button>
+          </Link>
           <Button variant="secondary" className="w-full h-12">
             Continue with SMS
           </Button>
         </div>
         <p className="text-center text-sm text-gray-600">
-          By creating an account, you automatically accept our{' '}
-          <Link href="/terms-of-service">
-           Terms of Service
-          </Link>
-          ,{' '}
-          <Link href="/privacy-policy">
-           Privacy Policy
-          </Link>
-          , and{' '}
-          <Link href="/cookies-policy">
-           Cookies Policy
-          </Link>
+          By creating an account, you automatically accept our{" "}
+          <Link href="/terms-of-service">Terms of Service</Link>,{" "}
+          <Link href="/privacy-policy">Privacy Policy</Link>, and{" "}
+          <Link href="/cookies-policy">Cookies Policy</Link>
         </p>
       </CardContent>
     </Card>
