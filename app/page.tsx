@@ -3,7 +3,7 @@ import { Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import LoginForm from '@/components/LoginForm'
 import ForgotPassword from '@/components/ForgotPassword'
-import Footer from '@/components/Footer'
+import Welcome from '@/components/Welcome'
 
 
 export default function HomePage() {
@@ -16,7 +16,7 @@ export default function HomePage() {
   </Button>
 <LoginForm/>
 <ForgotPassword/>
-<Footer/>
+<Welcome/>
     </div>
   )
 }

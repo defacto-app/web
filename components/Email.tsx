@@ -67,12 +67,12 @@ setErrors({})
 
 
 
-  return (
-    <Card className="mx-auto max-w-md  rounded-xl">
+return (
+    <Card className="mx-auto max-w-md rounded-xl">
       <CardHeader>
         <CardTitle className="text-4xl text-center font-bold">Welcome</CardTitle>
         <CardDescription className='text-center text-2xl'>
-          Lets start with your phone number
+          Lets start with your Email
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -134,4 +134,4 @@ setErrors({})
 }
 
 
-export default LoginForm;
+export default Email;

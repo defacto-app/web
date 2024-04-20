@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google"
 import "./globals.css";
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button";
+import Footer from "@/components/Footer";
 
 
 const fontSans = FontSans({
@@ -22,12 +23,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body  className={cn(
+      <body className={cn (
+     
+
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}>
       {children}
      
+      <Footer/>
+
       </body>
     </html>
   );

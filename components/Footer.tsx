@@ -78,7 +78,7 @@ const navigation = {
 
 export default function Footer() {
   return (
-    <footer className="bg-primary-900" aria-labelledby="footer-heading">
+    <div className="bg-primary-900" aria-labelledby="footer-heading">
       <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-between"></div>
      
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
@@ -177,6 +177,6 @@ export default function Footer() {
           </p>
         </div>
       </div>
-    </footer>
+    </div>
   );
 }
