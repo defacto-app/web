@@ -11,7 +11,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function Welcome() {
+interface WelcomeProps {
+  onNext: () => void;
+}
+
+export default function Welcome(props: WelcomeProps) {
+
+  function handleNext(event: React.MouseEvent<HTMLButtonElement>) {
+
+    event.preventDefault();
+    props.onNext();
+  }
+
   return (
     <Card className="mx-auto max-w-md rounded-xl">
       <CardHeader>
@@ -40,11 +51,14 @@ export default function Welcome() {
           <hr className="w-1/3 border-gray-300" />
         </div>
         <div className="mb-6">
-          <Link href="/email">
-            <Button variant="primary" className="w-full h-12">
+            <Button onClick={handleNext}
+                    variant="primary" className="w-full h-12">
               Email
             </Button>
-          </Link>
+
+        </div>
+
+        <div>
           <Button variant="secondary" className="w-full h-12">
             Continue with SMS
           </Button>

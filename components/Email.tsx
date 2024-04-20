@@ -18,9 +18,11 @@ import { Mail } from 'lucide-react';
 import { useRouter } from 'next/router';
 
 
+interface EmailProps {
+  onNext: () => void;
+}
 
-
-function Email() {
+function Email(props: EmailProps) {
   const schema = z.object({
     email: z.string().email({
       message: 'Invalid email address eg example@gmail.com',
