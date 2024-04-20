@@ -42,17 +42,23 @@ export default function AdminLogin() {
     console.log(name, value);
   };
 
+  const handleSubmit = async () => {
+    try {
+      const url = `/api/auth`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      };
 
-  const handleSubmit = () => {
-    fetch("/api/auth")
-      .then((response) => {
-        console.log(response);
-      })
-      .then((data) => {
-        console.log(data);
-      });
-
-    console.log("I am handled", formData);
+      const res = await fetch(url, options);
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

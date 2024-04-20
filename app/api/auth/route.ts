@@ -1,17 +1,19 @@
 import env from "@/config/env";
 
 export const dynamic = "force-dynamic"; // defaults to auto
-export async function GET(request: Request) {
-  console.log(env.BASE_URL);
-  const url = "https://api.defactoapp.com.ng/api/admin/auth/login";
+export async function POST(request: Request) {
+
+  const body = await request.json();
+    console.log(body, "chekcing body");
+  const url = `${env.BASE_URL}/admin/auth/login`;
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: "kats.com.ng@gmail.com",
-      password: "123456",
+      email: body.email,
+      password: body.password,
     }),
   };
 
