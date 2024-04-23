@@ -60,6 +60,10 @@ const { user, setUser } = useAuthContext();
       setErrors(formattedErrors);
       return;
     }
+    setUser({
+      email:formData.email,
+      password:"",
+    })
 props.onNext(formData.email);
 
     console.log('Email submitted:', formData.email);

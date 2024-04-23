@@ -24,10 +24,7 @@ export default function Welcome(props: WelcomeProps) {
 
     event.preventDefault();
     props.onNext();
-    setUser({
-      email:"ooooooooo@gmail.com",
-      password:"18181818181"
-    })
+
   }
 
 
