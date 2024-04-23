@@ -14,9 +14,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Key } from 'lucide-react'; // Import the Key icon for password
+import { useAuthContext } from "@/app/provider/auth.context";
 
 
 function Password() {
+const { user, setUser } = useAuthContext();
+
   const schema = z.object({
     password: z.string().min(8, {
       message: 'Password must be at least 8 characters long',
@@ -68,6 +71,9 @@ function Password() {
       <CardContent>
         <div className="grid gap-4 ">
           <div className="grid gap-2 py-6">
+            <p>
+            {user.email}
+            </p>
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"

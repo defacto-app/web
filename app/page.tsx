@@ -5,6 +5,7 @@ import {Button} from "@/components/ui/button"
 import Welcome from '@/components/Welcome'
 import Email from '@/components/Email'
 import Password from '@/components/Password'
+import { UserProvider } from './provider/auth.context';
 
 
 export default function HomePage() {
@@ -21,6 +22,8 @@ export default function HomePage() {
     }
 
     return (
+        <UserProvider>
+
         <div className="mx-auto max-w-md rounded-xl">
 
             <div >
@@ -67,7 +70,7 @@ export default function HomePage() {
 {email}
 
         </div>
-
+        </UserProvider>
     );
 }
 

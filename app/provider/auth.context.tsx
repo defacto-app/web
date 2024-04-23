@@ -28,7 +28,7 @@ type UserProviderProps = {
 
 // Create the provider component
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<UserType>({ email: "aaa@gmail.com", password: "Quickflow@20" });
+  const [user, setUser] = useState<any>({ email: "aaa@gmail.com", password: "Quickflow@20" });
 
   const value: UserContextType = {
     user,

@@ -16,6 +16,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Mail } from 'lucide-react';
 import { useRouter } from 'next/router';
+import { useAuthContext } from "@/app/provider/auth.context";
+
+
 
 
 interface EmailProps {
@@ -23,6 +26,8 @@ interface EmailProps {
 }
 
 function Email(props: EmailProps) {
+const { user, setUser } = useAuthContext();
+
   const schema = z.object({
     email: z.string().email({
       message: 'Invalid email address eg example@gmail.com',
@@ -69,7 +74,7 @@ props.onNext(formData.email);
       <Mail  color="red" size={48}/>
 
       </div>
-        <CardTitle className="text-3xl text-center font-bold">    Let's start with your email</CardTitle>
+        <CardTitle className="text-3xl text-center font-bold">    Let's start with your email{user.email} {user.password}</CardTitle>
         <CardDescription className="text-center ">
       We will check if you already have an account, if not, we'll create a new one.
         </CardDescription>

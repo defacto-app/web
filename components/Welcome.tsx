@@ -10,25 +10,33 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuthContext } from "@/app/provider/auth.context";
 
 interface WelcomeProps {
   onNext: () => void;
   currentStep ?: string;
 }
 
-export default function Welcome(props: WelcomeProps) {
 
+export default function Welcome(props: WelcomeProps) {
+  const { user, setUser } = useAuthContext();
   function handleNext(event: React.MouseEvent<HTMLButtonElement>) {
 
     event.preventDefault();
     props.onNext();
+    setUser({
+      email:"ooooooooo@gmail.com",
+      password:"18181818181"
+    })
   }
+
+
 
   return (
     <Card className="mx-auto max-w-md rounded-xl">
       <CardHeader>
         <CardTitle className="text-4xl text-center font-bold">
-          Welcome {props.currentStep}
+          Welcome {user.email}
         </CardTitle>
         <CardDescription className="text-center ">
           Let's start with your phone number
