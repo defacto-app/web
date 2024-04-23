@@ -85,7 +85,7 @@ export default function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <img
             className="h-7"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+            src="/logo.png"
             alt="Company name"
           />
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
