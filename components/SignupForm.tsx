@@ -1,8 +1,8 @@
-"use client"
-import React, { useState } from 'react';
-import  Welcome  from '@/components/Welcome';
-import  Email  from '@/components/Email';
-import  Password  from '@/components/Password';
+"use client";
+import React, { useState } from "react";
+import Welcome from "@/components/Welcome";
+import Email from "@/components/Email";
+import Password from "@/components/Password";
 
 export default function SignupForm() {
   const [step, setStep] = useState(1);

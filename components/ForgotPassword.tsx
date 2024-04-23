@@ -57,7 +57,7 @@ function ForgotPassword() {
       alert(
         "Password reset successful. Please check your email for further instructions.",
       );
-    } catch (error:any) {
+    } catch (error: any) {
       console.error("Password reset error:", error.message);
       // Display an error message to the user
       alert(

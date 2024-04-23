@@ -1,33 +1,32 @@
-"use client"
-import React from 'react';
-import { z } from 'zod';
-import { useState } from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+"use client";
+import React from "react";
+import { z } from "zod";
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Key } from 'lucide-react'; // Import the Key icon for password
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Key } from "lucide-react"; // Import the Key icon for password
 import { useAuthContext } from "@/app/provider/auth.context";
 
-
 function Password() {
-const { user, setUser } = useAuthContext();
+  const { user, setUser } = useAuthContext();
 
   const schema = z.object({
     password: z.string().min(8, {
-      message: 'Password must be at least 8 characters long',
+      message: "Password must be at least 8 characters long",
     }),
   });
 
   const [formData, setFormData] = useState({
-    password: '',
+    password: "",
   });
 
   const [errors, setErrors] = useState<{
@@ -52,7 +51,7 @@ const { user, setUser } = useAuthContext();
       return;
     }
 
-    console.log('Password submitted:', formData.password);
+    console.log("Password submitted:", formData.password);
   };
 
   return (
@@ -71,9 +70,7 @@ const { user, setUser } = useAuthContext();
       <CardContent>
         <div className="grid gap-4 ">
           <div className="grid gap-2 py-6">
-            <p>
-            {user.email}
-            </p>
+            <p>{user.email}</p>
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
@@ -89,7 +86,12 @@ const { user, setUser } = useAuthContext();
             )}
           </div>
         </div>
-        <Button variant="primary" onClick={handleSubmit} type="submit" className="w-full">
+        <Button
+          variant="primary"
+          onClick={handleSubmit}
+          type="submit"
+          className="w-full"
+        >
           Continue
         </Button>
       </CardContent>

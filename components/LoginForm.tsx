@@ -62,8 +62,10 @@ function LoginForm() {
   return (
     <Card className="mx-auto max-w-md  rounded-xl">
       <CardHeader>
-        <CardTitle className="text-4xl text-center font-bold">Welcome</CardTitle>
-        <CardDescription className='text-center text-2xl'>
+        <CardTitle className="text-4xl text-center font-bold">
+          Welcome
+        </CardTitle>
+        <CardDescription className="text-center text-2xl">
           Lets start with your phone number
         </CardDescription>
       </CardHeader>

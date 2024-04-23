@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function AboutIndex() {
-  return (
-    <div>AboutIndex</div>
-  )
+  return <div>AboutIndex</div>;
 }

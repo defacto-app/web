@@ -14,26 +14,21 @@ import { useAuthContext } from "@/app/provider/auth.context";
 
 interface WelcomeProps {
   onNext: () => void;
-  currentStep ?: string;
 }
 
-
 export default function Welcome(props: WelcomeProps) {
-  const { user, setUser } = useAuthContext();
-  function handleNext(event: React.MouseEvent<HTMLButtonElement>) {
+  const { user, setUser, setCurrentStep, currentStep } = useAuthContext();
 
+  function handleNext(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     props.onNext();
-
   }
-
-
 
   return (
     <Card className="mx-auto max-w-md rounded-xl">
       <CardHeader>
         <CardTitle className="text-4xl text-center font-bold">
-          Welcome {user.email}
+          Welcome {currentStep}
         </CardTitle>
         <CardDescription className="text-center ">
           Let's start with your phone number
@@ -57,11 +52,13 @@ export default function Welcome(props: WelcomeProps) {
           <hr className="w-1/3 border-gray-300" />
         </div>
         <div className="mb-6">
-            <Button onClick={handleNext}
-                    variant="primary" className="w-full h-12">
-              Email
-            </Button>
-
+          <Button
+            onClick={handleNext}
+            variant="primary"
+            className="w-full h-12"
+          >
+            Email
+          </Button>
         </div>
 
         <div>

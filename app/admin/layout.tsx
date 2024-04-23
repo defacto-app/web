@@ -3,7 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import "./../globals.css";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -28,7 +28,7 @@ export default function AdminRootLayout({
           fontSans.variable,
         )}
       >
-          <h1>Admin header </h1>
+        <h1>Admin header </h1>
 
         {children}
 
@@ -39,5 +39,3 @@ export default function AdminRootLayout({
     </html>
   );
 }
-
-

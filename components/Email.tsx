@@ -1,41 +1,38 @@
-"use client"
+"use client";
 
-import React from 'react';
-import { z } from 'zod';
-import { useState } from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import { z } from "zod";
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Mail } from 'lucide-react';
-import { useRouter } from 'next/router';
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Mail } from "lucide-react";
+import { useRouter } from "next/router";
 import { useAuthContext } from "@/app/provider/auth.context";
-
-
-
 
 interface EmailProps {
   onNext: (payload: string) => void;
 }
 
 function Email(props: EmailProps) {
-const { user, setUser } = useAuthContext();
+  const { user, setUser } = useAuthContext();
 
   const schema = z.object({
     email: z.string().email({
-      message: 'Invalid email address eg example@gmail.com',
+      message: "Invalid email address eg example@gmail.com",
     }),
   });
 
   const [formData, setFormData] = useState({
-    email: '',
+    email: "",
   });
 
   const [errors, setErrors] = useState<{
@@ -61,26 +58,26 @@ const { user, setUser } = useAuthContext();
       return;
     }
     setUser({
-      email:formData.email,
-      password:"",
-    })
-props.onNext(formData.email);
+      email: formData.email,
+      password: "",
+    });
 
-    console.log('Email submitted:', formData.email);
+    console.log("Email submitted:", formData.email);
   };
-
 
   return (
     <Card className="mx-auto max-w-md rounded-xl">
-
       <CardHeader>
-      <div className='grid justify-items-start py-6'>
-      <Mail  color="red" size={48}/>
-
-      </div>
-        <CardTitle className="text-3xl text-center font-bold">    Let's start with your email{user.email} {user.password}</CardTitle>
+        <div className="grid justify-items-start py-6">
+          <Mail color="red" size={48} />
+        </div>
+        <CardTitle className="text-3xl text-center font-bold">
+          {" "}
+          Let's start with your email
+        </CardTitle>
         <CardDescription className="text-center ">
-      We will check if you already have an account, if not, we'll create a new one.
+          We will check if you already have an account, if not, we'll create a
+          new one.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -96,15 +93,17 @@ props.onNext(formData.email);
               value={formData.email}
               onChange={handleInputChange}
             />
-            {errors.email && (
-              <p className="text-red-500 p-4">{errors.email}</p>
-            )}
+            {errors.email && <p className="text-red-500 p-4">{errors.email}</p>}
           </div>
         </div>
-        <Button variant="primary" onClick={handleSubmit} type="submit" className="w-full" >
-         Continue
+        <Button
+          variant="primary"
+          onClick={handleSubmit}
+          type="submit"
+          className="w-full"
+        >
+          Continue
         </Button>
-
       </CardContent>
     </Card>
   );

@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function Faqpage() {
-  return (
-    <div>Faqpage</div>
-  )
+  return <div>Faqpage</div>;
 }
