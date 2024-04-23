@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { z } from "zod";
 import { useState } from "react";
@@ -18,19 +17,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { json } from "stream/consumers";
 
-function LoginForm() {
+export default function AdminLogin() {
   const schema = z.object({
     email: z.string().email({
       message: "Invalid email address eg example@gmail.com",
     }),
-    password: z.string().min(8, {
-      message: "Password must be at least 8 characters long",
+    password: z.string().min(5, {
+      message: "Password must be at least 5 characters long",
     }),
   });
 
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "kats.com.ng@gmail.com",
+    password: "123456",
   });
 
   const [errors, setErrors] = useState<{
@@ -43,28 +42,31 @@ function LoginForm() {
     console.log(name, value);
   };
 
-  const handleSubmit = () => {
-    setErrors({});
-    const result = schema.safeParse(formData);
-    if (!result.success) {
-      const formattedErrors = {} as any;
-      result.error.errors.forEach((error) => {
-        const fieldName = error.path[0];
-        formattedErrors[fieldName] = error.message;
-      });
-      console.log("code is running", formattedErrors);
-      setErrors(formattedErrors);
-      return;
+  const handleSubmit = async () => {
+    try {
+      const url = `/api/auth`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      };
+
+      const res = await fetch(url, options);
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
-    console.log("I am handled", result.success);
   };
 
   return (
-    <Card className="mx-auto max-w-md  rounded-xl">
+    <Card className="mx-auto max-w-sm">
       <CardHeader>
-        <CardTitle className="text-4xl text-center font-bold">Welcome</CardTitle>
-        <CardDescription className='text-center text-2xl'>
-          Lets start with your phone number
+        <CardTitle className="text-2xl">Login</CardTitle>
+        <CardDescription>
+          Enter your email below to login to your account
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -125,4 +127,6 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+function ErrorMsg() {
+  return <div>page</div>;
+}
