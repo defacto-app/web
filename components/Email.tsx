@@ -19,7 +19,7 @@ import { useRouter } from 'next/router';
 
 
 interface EmailProps {
-  onNext: () => void;
+  onNext: (payload: string) => void;
 }
 
 function Email(props: EmailProps) {
@@ -55,7 +55,7 @@ function Email(props: EmailProps) {
       setErrors(formattedErrors);
       return;
     }
-props.onNext();
+props.onNext(formData.email);
 
     console.log('Email submitted:', formData.email);
   };

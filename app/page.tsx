@@ -1,21 +1,16 @@
 "use client"
 import React, {useState} from 'react';
 
-import {Mail} from "lucide-react"
 import {Button} from "@/components/ui/button"
-import LoginForm from '@/components/LoginForm'
-import ForgotPassword from '@/components/ForgotPassword'
 import Welcome from '@/components/Welcome'
 import Email from '@/components/Email'
 import Password from '@/components/Password'
-import SignupForm from '@/components/SignupForm'
-import {useRouter} from 'next/router';
-import {Card, CardHeader, CardTitle} from "@/components/ui/card";
 
 
 export default function HomePage() {
     const allSteps = ['welcome', 'email', 'password', 'complete'];
     const [step, setStep] = useState(allSteps[0]); // Initialize with the first step
+    const [email, setEmail] = useState("bbbbb@gmail.com"); // Initialize with the first step
 
     const handleStepChange = (nextStep: React.SetStateAction<string>) => {
         setStep(nextStep);
@@ -28,7 +23,7 @@ export default function HomePage() {
     return (
         <div className="mx-auto max-w-md rounded-xl">
 
-            <div className='bg-red-500'>
+            <div >
                 <div>
                     <Button onClick={
                         goBack
@@ -38,29 +33,38 @@ export default function HomePage() {
                 </div>
                 <div>
                     {step === 'welcome' && (
-                        <Welcome  onNext={() => {
+                        <Welcome
+                        currentStep={'parlor'}
+
+                        onNext={() => {
                             setStep('email')
                         }}/>
 
                     )}
                     {step === 'email' && (
                         <Email
-                            onNext={() => {
+                            onNext={(payload) => {
+
                                 setStep('password')
+                                setEmail(payload)
+                                console.log("logssss", payload)
                             }}
+
 
                             />
                     )}
 
-      {/* {step === 'password' && (
-        <Password value={step}  onNext={() => handleStepChange('complete')} />
-      )} */}
+      {step === 'password' && (
+
+        <Password/>
+      )}
       {/* {step === 'complete' && (
         <SignupForm />
       )} */}
                 </div>
             </div>
 {step}
+{email}
 
         </div>
 

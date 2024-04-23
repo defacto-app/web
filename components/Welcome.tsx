@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 
 interface WelcomeProps {
   onNext: () => void;
+  currentStep ?: string;
 }
 
 export default function Welcome(props: WelcomeProps) {
@@ -27,7 +28,7 @@ export default function Welcome(props: WelcomeProps) {
     <Card className="mx-auto max-w-md rounded-xl">
       <CardHeader>
         <CardTitle className="text-4xl text-center font-bold">
-          Welcome
+          Welcome {props.currentStep}
         </CardTitle>
         <CardDescription className="text-center ">
           Let's start with your phone number

@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Key } from 'lucide-react'; // Import the Key icon for password
 
+
 function Password() {
   const schema = z.object({
     password: z.string().min(8, {
@@ -47,6 +48,7 @@ function Password() {
       setErrors(formattedErrors);
       return;
     }
+
     console.log('Password submitted:', formData.password);
   };
 
@@ -57,7 +59,7 @@ function Password() {
           <Key color="red" size={48} />
         </div>
         <CardTitle className="text-3xl text-center font-bold">
-          Enter your password
+          Create password
         </CardTitle>
         <CardDescription className="text-center">
           Create a secure password for your account.
