@@ -43,6 +43,7 @@ function Email(props: EmailProps) {
   };
 
   const handleSubmit = () => {
+    console.log("Email Submitted");
     setErrors({});
     const result = schema.safeParse(formData);
     if (!result.success) {
@@ -54,12 +55,15 @@ function Email(props: EmailProps) {
       setErrors(formattedErrors);
       return;
     }
+props.onNext();
+
     console.log('Email submitted:', formData.email);
   };
 
+
   return (
     <Card className="mx-auto max-w-md rounded-xl">
-      
+
       <CardHeader>
       <div className='grid justify-items-start py-6'>
       <Mail  color="red" size={48}/>
@@ -91,7 +95,7 @@ function Email(props: EmailProps) {
         <Button variant="primary" onClick={handleSubmit} type="submit" className="w-full" >
          Continue
         </Button>
-      
+
       </CardContent>
     </Card>
   );

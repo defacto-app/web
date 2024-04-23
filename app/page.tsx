@@ -28,7 +28,7 @@ export default function HomePage() {
     return (
         <div className="mx-auto max-w-md rounded-xl">
 
-            <div>
+            <div className='bg-red-500'>
                 <div>
                     <Button onClick={
                         goBack
@@ -41,6 +41,7 @@ export default function HomePage() {
                         <Welcome  onNext={() => {
                             setStep('email')
                         }}/>
+
                     )}
                     {step === 'email' && (
                         <Email
@@ -50,18 +51,19 @@ export default function HomePage() {
 
                             />
                     )}
-                    {/*
-      {step === 'password' && (
+
+      {/* {step === 'password' && (
         <Password value={step}  onNext={() => handleStepChange('complete')} />
-      )}
-      {step === 'complete' && (
+      )} */}
+      {/* {step === 'complete' && (
         <SignupForm />
-      )}*/}
+      )} */}
                 </div>
             </div>
-
+{step}
 
         </div>
+
     );
 }
 
