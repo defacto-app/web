@@ -7,10 +7,13 @@ type UserType = { email: string; password: string };
 type UserContextType = {
   currentStep: string;
   user: UserType;
+  goBack: () => void;
 
   setUser: (user: UserType) => void;
   setCurrentStep: (step: string) => void;
+
 };
+
 
 // Create the context
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -31,14 +34,21 @@ type UserProviderProps = {
 
 // Create the provider component
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+  const allSteps = ["welcome", "email", "password", "complete"];
+
   const [user, setUser] = useState<any>({ email: "", password: "" });
-  const [currentStep, setCurrentStep] = useState<string>("1");
+  const [currentStep, setCurrentStep] = useState<string>(allSteps[0]);
+
+  function goBack() {
+    setCurrentStep(allSteps[allSteps.indexOf(currentStep) - 1]);
+  }
 
   const value: UserContextType = {
     user,
     setUser,
     currentStep,
     setCurrentStep,
+    goBack,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

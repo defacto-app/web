@@ -10,46 +10,36 @@ import { useAuthContext } from "@/app/provider/auth.context";
 
 export default function HomePage() {
   const allSteps = ["welcome", "email", "password", "complete"];
-  const [step, setStep] = useState(allSteps[0]); // Initialize with the first step
   const [email, setEmail] = useState("bbbbb@gmail.com"); // Initialize with the first step
-  const { user, setUser, setCurrentStep, currentStep } = useAuthContext();
+  const { user, setUser, setCurrentStep, currentStep, goBack } = useAuthContext();
 
-  const handleStepChange = (nextStep: React.SetStateAction<string>) => {
-    setStep(nextStep);
-  };
 
-  function goBack() {
-    setStep(allSteps[allSteps.indexOf(step) - 1]);
-  }
+
+
 
   return (
     <div className="mx-auto max-w-md rounded-xl">
       <div>
+      {currentStep !== "welcome" && (
+          <div>
+            <Button onClick={goBack}>Back</Button>
+          </div>
+        )}
         <div>
-          <Button onClick={goBack}>Back</Button>
-        </div>
-        <div>
-          {step === "welcome" && (
+          {currentStep === "welcome" && (
             <Welcome
-              onNext={() => {
-                setStep("email");
-              }}
+
             />
           )}
-          {step === "email" && (
+          {currentStep === "email" && (
             <Email
-              onNext={(payload) => {
-                setStep("password");
-                setEmail(payload);
-                console.log("logssss", payload);
-              }}
+
             />
           )}
 
-          {step === "password" && <Password />}
+          {currentStep === "password" && <Password />}
         </div>
       </div>
-      {step}
       {email}
     </div>
   );

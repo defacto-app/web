@@ -18,12 +18,10 @@ import { Mail } from "lucide-react";
 import { useRouter } from "next/router";
 import { useAuthContext } from "@/app/provider/auth.context";
 
-interface EmailProps {
-  onNext: (payload: string) => void;
-}
 
-function Email(props: EmailProps) {
-  const { user, setUser } = useAuthContext();
+
+function Email() {
+  const { user, setUser, currentStep, setCurrentStep } = useAuthContext();
 
   const schema = z.object({
     email: z.string().email({
@@ -57,6 +55,8 @@ function Email(props: EmailProps) {
       setErrors(formattedErrors);
       return;
     }
+    setCurrentStep("password")
+
     setUser({
       email: formData.email,
       password: "",

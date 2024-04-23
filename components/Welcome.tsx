@@ -12,16 +12,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuthContext } from "@/app/provider/auth.context";
 
-interface WelcomeProps {
-  onNext: () => void;
-}
 
-export default function Welcome(props: WelcomeProps) {
+
+export default function Welcome() {
   const { user, setUser, setCurrentStep, currentStep } = useAuthContext();
 
   function handleNext(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    props.onNext();
+    setCurrentStep("email")
   }
 
   return (
