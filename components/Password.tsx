@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Key } from "lucide-react"; // Import the Key icon for password
+import { Eye, EyeOff, Key } from "lucide-react"; // Import the Key icon for password
 import { useAuthContext } from "@/app/provider/auth.context";
 
 function Password() {
@@ -24,6 +24,8 @@ function Password() {
       message: "Password must be at least 8 characters long",
     }),
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     password: "",
@@ -37,6 +39,11 @@ function Password() {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
 
   const handleSubmit = () => {
     setErrors({});
@@ -72,15 +79,28 @@ function Password() {
           <div className="grid gap-2 py-6">
             <p>{user.email}</p>
             <Label htmlFor="password">Password</Label>
-            <Input
-              id="sign-password"
-              name="password"
-              type="password"
-              placeholder="Enter your password"
-              required
-              value={formData.password}
-              onChange={handleInputChange}
-            />
+            <div className="relative">
+              <Input
+                id="sign-password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                required
+                value={formData.password}
+                onChange={handleInputChange}
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 px-3 flex items-center"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5 text-gray-500" />
+                ) : (
+                  <Eye className="h-5 w-5 text-gray-500" />
+                )}
+              </button>
+            </div>
             {errors.password && (
               <p className="text-red-500 p-4">{errors.password}</p>
             )}
