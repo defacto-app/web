@@ -21,7 +21,8 @@ export default function Welcome() {
   }
 
   return (
-    <Card className="mx-auto max-w-md rounded-xl">
+    <div className=" ">
+<Card className=" rounded-xl ">
       <CardHeader>
         <CardTitle className="text-4xl text-center font-bold">
           Welcome {currentStep}
@@ -70,5 +71,7 @@ export default function Welcome() {
         </p>
       </CardContent>
     </Card>
+    </div>
+
   );
 }

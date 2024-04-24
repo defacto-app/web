@@ -35,21 +35,21 @@ export default function Header() {
             <img className="h-8 w-auto" src="/logo.png" alt="" />
           </a>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
+        <div className="hidden lg:flex lg:gap-x-12 bg-gray-50 px-8 py-2 rounded-full">
           {navigation.map((item) => (
             <a
               key={item.name}
               href={item.href}
-              className="text-sm font-semibold leading-6 text-gray-900"
+              className="text-sm  leading-6 text-gray-900"
             >
               {item.name}
             </a>
           ))}
         </div>
         <div className="flex flex-1 items-center justify-end gap-x-6">
-          <ShoppingBag className="text-primary-500">
+          {/* <ShoppingBag className="text-primary-500">
             <a href="#"></a>
-          </ShoppingBag>
+          </ShoppingBag> */}
           {env.isDev && (
             <Link href="/admin">
               <UserRoundCogIcon className="text-red-500" size={20} />
