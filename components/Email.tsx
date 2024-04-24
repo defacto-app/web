@@ -23,7 +23,7 @@ function Email() {
 
   const schema = z.object({
     email: z.string().email({
-      message: "Invalid email address eg example@gmail.com",
+      message: "Invalid email address e.g example@gmail.com",
     }),
   });
 
@@ -91,7 +91,7 @@ function Email() {
               value={formData.email}
               onChange={handleInputChange}
             />
-            {errors.email && <p className="text-red-500 p-4">{errors.email}</p>}
+            {errors.email && <p className="text-red-500 font-semibold p-4">{errors.email}</p>}
           </div>
         </div>
         <Button
