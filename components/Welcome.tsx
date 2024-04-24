@@ -59,7 +59,7 @@ export default function Welcome() {
         </div>
 
         <div>
-          <Button variant="secondary" className="w-full h-12">
+          <Button variant="destructive" className="w-full h-12">
             Continue with SMS
           </Button>
         </div>
