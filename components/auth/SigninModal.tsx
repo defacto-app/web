@@ -5,6 +5,7 @@ import Welcome from "@/components/Welcome";
 import Email from "@/components/Email";
 import Password from "@/components/Password";
 import { useAuthContext } from "@/app/provider/auth.context";
+import { MoveLeft } from "lucide-react";
 
 export default function SigninModal() {
   const { user, setUser, setCurrentStep, currentStep, goBack } =
@@ -15,7 +16,9 @@ export default function SigninModal() {
       <div>
         {currentStep !== "welcome" && (
           <div>
-            <Button onClick={goBack}>Back</Button>
+            <Button className="bg-primary-500 rounded-full" onClick={goBack}>
+<MoveLeft/>
+            </Button>
           </div>
         )}
         <div>
