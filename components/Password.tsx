@@ -73,7 +73,7 @@ function Password() {
             <p>{user.email}</p>
             <Label htmlFor="password">Password</Label>
             <Input
-              id="password"
+              id="sign-password"
               name="password"
               type="password"
               placeholder="Enter your password"

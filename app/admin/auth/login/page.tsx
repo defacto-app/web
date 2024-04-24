@@ -98,7 +98,7 @@ export default function AdminLogin() {
               </Link>
             </div>
             <Input
-              id="password"
+              id="admin-password"
               type="password"
               required
               value={formData.password}

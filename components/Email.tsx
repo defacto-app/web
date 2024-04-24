@@ -18,8 +18,6 @@ import { Mail } from "lucide-react";
 import { useRouter } from "next/router";
 import { useAuthContext } from "@/app/provider/auth.context";
 
-
-
 function Email() {
   const { user, setUser, currentStep, setCurrentStep } = useAuthContext();
 
@@ -55,7 +53,7 @@ function Email() {
       setErrors(formattedErrors);
       return;
     }
-    setCurrentStep("password")
+    setCurrentStep("password");
 
     setUser({
       email: formData.email,

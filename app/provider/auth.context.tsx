@@ -11,9 +11,7 @@ type UserContextType = {
 
   setUser: (user: UserType) => void;
   setCurrentStep: (step: string) => void;
-
 };
-
 
 // Create the context
 const UserContext = createContext<UserContextType | undefined>(undefined);

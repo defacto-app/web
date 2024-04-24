@@ -1,7 +1,17 @@
 "use client";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { SquareMenu, X, ShoppingBag, User } from "lucide-react";
+import {
+  SquareMenu,
+  X,
+  ShoppingBag,
+  User,
+  UserRoundCogIcon,
+} from "lucide-react";
+import UserAuth from "./UserAuth";
+import { UserProvider } from "@/app/provider/auth.context";
+import env from "@/config/env";
+import Link from "next/link";
 
 const navigation = [
   { name: "Delivery", href: "#" },
@@ -40,10 +50,15 @@ export default function Header() {
           <ShoppingBag className="text-primary-500">
             <a href="#"></a>
           </ShoppingBag>
+          {env.isDev && (
+            <Link href="/admin">
+              <UserRoundCogIcon className="text-red-500" size={20} />
+            </Link>
+          )}
 
-          <User className="text-primary-500">
-            <a href="#"></a>
-          </User>
+          <UserProvider>
+            <UserAuth />
+          </UserProvider>
         </div>
         <div className="flex lg:hidden">
           <button

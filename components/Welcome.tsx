@@ -12,14 +12,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuthContext } from "@/app/provider/auth.context";
 
-
-
 export default function Welcome() {
   const { user, setUser, setCurrentStep, currentStep } = useAuthContext();
 
   function handleNext(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    setCurrentStep("email")
+    setCurrentStep("email");
   }
 
   return (
