@@ -104,6 +104,12 @@ function Password() {
             {errors.password && (
               <p className="text-red-500 p-4">{errors.password}</p>
             )}
+              {/* Button for Forgot Password */}
+              <Link href="/ForgotPassword" passHref>
+              <Button variant="link" className="text-gray-600">
+                Forgot your password?
+              </Button>
+            </Link>
           </div>
         </div>
         <Button
