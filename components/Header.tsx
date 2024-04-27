@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { SquareMenu,X, ShoppingBag, User } from 'lucide-react';
+import Image from "next/image";
 
 const navigation = [
   { name: 'Delivery', href: '#' },
@@ -19,7 +20,11 @@ export default function Header() {
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img className="h-8 w-auto" src="/logo.png" alt="" />
+            <Image
+
+                
+
+                className="h-8 w-auto" src="/logo.png" alt="" />
           </a>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
@@ -63,7 +68,7 @@ export default function Header() {
           <div className="flex items-center gap-x-6">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
+              <Image
                 className="h-8 w-auto"
                 src="/logo.png"
                 alt=""
