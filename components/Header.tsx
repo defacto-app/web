@@ -12,6 +12,7 @@ import UserAuth from "./UserAuth";
 import { UserProvider } from "@/app/provider/auth.context";
 import env from "@/config/env";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 const navigation = [
   { name: "Delivery", href: "#" },
@@ -89,9 +90,9 @@ export default function Header() {
             </a>
             <a
               href="#"
-              className="ml-auto rounded-md bg-primary-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Get Started
+            <Button variant="primary"> Get Started</Button>
+
             </a>
             <button
               type="button"
