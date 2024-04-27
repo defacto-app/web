@@ -5,3 +5,7 @@ export default function Companypage() {
     <div>Company</div>
   )
 }
+
+
+
+export const runtime = 'edge';
