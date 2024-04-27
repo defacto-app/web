@@ -105,11 +105,13 @@ function Password() {
               <p className="text-red-500 p-4">{errors.password}</p>
             )}
               {/* Button for Forgot Password */}
+              <div className="grid place-content-end">
               <Link href="/ForgotPassword" passHref>
-              <Button variant="link" className="text-gray-600">
+              <Button variant="link" className="text-red-500 text-sm">
                 Forgot your password?
               </Button>
             </Link>
+              </div>
           </div>
         </div>
         <Button
