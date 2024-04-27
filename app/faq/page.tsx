@@ -5,3 +5,6 @@ export default function Faqpage() {
     <div>Faqpage</div>
   )
 }
+
+
+export const runtime = 'edge';

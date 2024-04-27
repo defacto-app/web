@@ -12,3 +12,4 @@ export default function AdminIndex() {
     </div>
   );
 }
+export const runtime = 'edge';

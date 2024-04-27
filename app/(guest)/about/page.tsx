@@ -5,3 +5,6 @@ export default function AboutIndex() {
     <div>AboutIndex</div>
   )
 }
+
+
+export const runtime = 'edge';

@@ -130,3 +130,6 @@ export default function AdminLogin() {
 function ErrorMsg() {
   return <div>page</div>;
 }
+
+
+export const runtime = 'edge';

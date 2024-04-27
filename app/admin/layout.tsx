@@ -41,3 +41,5 @@ export default function AdminRootLayout({
 }
 
 
+
+export const runtime = 'edge';

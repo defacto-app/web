@@ -5,3 +5,6 @@ export default function Contactpage() {
     <div>Contact</div>
   )
 }
+
+
+export const runtime = 'edge';

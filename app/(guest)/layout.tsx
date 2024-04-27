@@ -53,3 +53,8 @@ RootLayout.propType = {
   children: PropTypes.node,
   layout: PropTypes.string,
 };
+
+
+export const runtime = 'edge';
+
+

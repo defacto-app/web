@@ -5,3 +5,6 @@ export default function AllUsers() {
     <div>paAll usersge</div>
   )
 }
+
+
+export const runtime = 'edge';
