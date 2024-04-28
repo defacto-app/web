@@ -42,6 +42,33 @@ function Password() {
     setShowPassword(!showPassword);
   };
 
+function RegisterUser() {
+  const url = 'https://api.defactoapp.com.ng/api/admin/auth/register';
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({email: user.email, password: user.password})
+};
+
+fetch(url, requestOptions)
+.then(response => {
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+})
+.then(data => {
+  if (data.user){
+
+setCurrentStep("confirm-email")
+
+  }
+  console.log('User registered successfully:', data);
+})
+.catch(error => {
+  console.error('Problem with Registration:', error);
+});
+}
 
   const handleSubmit = () => {
     setErrors({});
@@ -54,14 +81,14 @@ function Password() {
       });
       setErrors(formattedErrors);
       return;
-    setCurrentStep("forgotpassword");
+  }
+setCurrentStep("confirm-email")
+
+RegisterUser()
 
   }
 
-
-
     console.log("Password submitted:", user.email, user.password);
-  };
 
   return (
     <Card className="mx-auto max-w-md rounded-xl">

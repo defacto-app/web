@@ -32,7 +32,7 @@ type UserProviderProps = {
 
 // Create the provider component
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const allSteps = ["welcome", "email", "password","forgotpassword", "complete"];
+  const allSteps = ["welcome", "email", "password", "confirm-email"];
 
   const [user, setUser] = useState<any>({ email: "", password: "" });
   const [currentStep, setCurrentStep] = useState<string>(allSteps[0]);
