@@ -27,9 +27,7 @@ function Password() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const [formData, setFormData] = useState({
-    password: "",
-  });
+
 
   const [errors, setErrors] = useState<{
     [key: string]: string;
@@ -37,7 +35,7 @@ function Password() {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+    setUser({ ...user, [name]: value });
   };
 
   const togglePasswordVisibility = () => {
@@ -47,7 +45,7 @@ function Password() {
 
   const handleSubmit = () => {
     setErrors({});
-    const result = schema.safeParse(formData);
+    const result = schema.safeParse(user);
     if (!result.success) {
       const formattedErrors: any = {};
       result.error.errors.forEach((error) => {
@@ -61,7 +59,8 @@ function Password() {
   }
 
 
-    console.log("Password submitted:", formData.password);
+
+    console.log("Password submitted:", user.email, user.password);
   };
 
   return (
@@ -89,7 +88,7 @@ function Password() {
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 required
-                value={formData.password}
+                value={user.password}
                 onChange={handleInputChange}
               />
               <button
