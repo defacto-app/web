@@ -45,11 +45,10 @@ export default function  HeroSection() {
           <div className="mt-24 sm:mt-32 lg:mt-16">
             <a href="#" className="inline-flex space-x-6">
 
-              <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
+              {/* <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
                 <span>Become a Rider</span>
                <ChevronRightIcon className='text-primary-500'/>
-                {/* <ChevronRightIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
-              </span>
+              </span> */}
             </a>
           </div>
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
@@ -64,10 +63,7 @@ One Order at a Time.
             <Button variant = "primary">
               <p>Get Started</p>
             </Button>
-            <a href="#" >
-            <Button variant ="link">Learn more <span aria-hidden="true">→</span></Button>
 
-            </a>
           </div>
         </div>
         <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
