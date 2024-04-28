@@ -17,7 +17,7 @@ import { Eye, EyeOff, Key } from "lucide-react"; // Import the Key icon for pass
 import { useAuthContext } from "@/app/provider/auth.context";
 
 function Password() {
-  const { user, setUser } = useAuthContext();
+  const { user, setUser, currentStep,setCurrentStep } = useAuthContext();
 
   const schema = z.object({
     password: z.string().min(8, {
@@ -56,7 +56,10 @@ function Password() {
       });
       setErrors(formattedErrors);
       return;
-    }
+    setCurrentStep("forgotpassword");
+
+  }
+
 
     console.log("Password submitted:", formData.password);
   };
@@ -106,11 +109,9 @@ function Password() {
             )}
               {/* Button for Forgot Password */}
               <div className="grid place-content-end">
-              <Link href="/ForgotPassword" passHref>
-              <Button variant="link" className="text-red-500 text-sm">
+              <Button onClick={handleSubmit} variant="link" className="text-red-500 text-sm">
                 Forgot your password?
               </Button>
-            </Link>
               </div>
           </div>
         </div>
