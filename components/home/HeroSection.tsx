@@ -4,6 +4,21 @@ import { Button } from '../ui/button'
 
 
 export default function  HeroSection() {
+
+    const logos = [
+      { src: 'https://tailwindui.com/img/logos/tuple-logo-gray-400.svg', alt: 'Tuple' },
+      { src: 'https://tailwindui.com/img/logos/mirage-logo-gray-400.svg', alt: 'Mirage' },
+      { src: 'https://tailwindui.com/img/logos/statickit-logo-gray-400.svg', alt: 'StaticKit' },
+      { src: 'https://tailwindui.com/img/logos/transistor-logo-gray-400.svg', alt: 'Transistor' },
+      { src: 'https://tailwindui.com/img/logos/workcation-logo-gray-400.svg', alt: 'Workcation' }
+    ];
+
+    const logoElements = logos.map((logo, index) => (
+      <div className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1" key={index}>
+        <img className="h-12" src={logo.src} alt={logo.alt} />
+      </div>
+    ));
+
   return (
     <div className="relative isolate overflow-hidden bg-white">
       <svg
@@ -24,7 +39,7 @@ export default function  HeroSection() {
         </defs>
         <rect width="100%" height="100%" strokeWidth={0} fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)" />
       </svg>
-      <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
+      <div className="mx-auto max-w-7xl px-6 pb-10 pt-10 sm:pb-10 lg:flex lg:px-8 lg:py-40">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
 
           <div className="mt-24 sm:mt-32 lg:mt-16">
@@ -178,6 +193,16 @@ One Order at a Time.
           </div>
         </div>
       </div>
+      <div >
+            <div className=" container py-16 ">
+              <p className="text-start text-base font-semibold text-gray-500">
+                Trusted by over 30+ businesses
+              </p>
+              <div className="mt-6 grid grid-cols-2 gap-8 md:grid-cols-6 lg:grid-cols-5">
+               {logoElements}
+              </div>
+            </div>
+          </div>
     </div>
   )
 }
