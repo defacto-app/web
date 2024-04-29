@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import {
   SquareMenu,
@@ -15,7 +15,6 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 
 const navigation = [
-  { name: "Delivery", href: "#" },
   { name: "Company", href: "/company" },
   { name: "FAQs", href: "/faq" },
   { name: "Contact", href: "/contact" },
@@ -23,9 +22,24 @@ const navigation = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
-    <header className="bg-white">
+    <header  className={`bg-white ${isSticky ? "fixed top-0 left-0 right-0 z-50" : ""}`}>
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8"
         aria-label="Global"
