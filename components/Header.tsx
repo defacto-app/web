@@ -48,7 +48,7 @@ export default function Header() {
           ))}
         </div>
         <div className="flex flex-1 items-center justify-end gap-x-6">
-          {/* <ShoppingBag className="text-primary-500">
+          {/* <ShoppingBag className="text-primary-600">
             <a href="#"></a>
           </ShoppingBag> */}
           {env.isDev && (
@@ -69,7 +69,7 @@ export default function Header() {
           >
             <span className="sr-only">Open main menu</span>
             <SquareMenu
-              className="h-6 w-6 text-primary-500"
+              className="h-6 w-6 text-primary-600"
               aria-hidden="true"
             />
           </button>
@@ -100,7 +100,7 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close menu</span>
-              <X className="h-6 w-6 text-primary-500" aria-hidden="true" />
+              <X className="h-6 w-6 text-primary-600" aria-hidden="true" />
             </button>
           </div>
           <div className="mt-6 flow-root">

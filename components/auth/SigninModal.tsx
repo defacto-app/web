@@ -23,7 +23,7 @@ function hideBackButton(){
       <div>
         {hideBackButton() && (
           <div>
-            <Button className="bg-primary-500 rounded-full" onClick={goBack}>
+            <Button className="bg-primary-600 rounded-full" onClick={goBack}>
               <MoveLeft />
             </Button>
           </div>

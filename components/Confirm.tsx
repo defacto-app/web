@@ -19,7 +19,7 @@ export default function ConfirmEmail() {
     <div className="">
       <Card className="rounded-xl">
         <CardHeader>
-          <CardTitle className="text-2xl text-start text-primary-500 font-bold">
+          <CardTitle className="text-2xl text-start text-primary-600 font-bold">
             Check your Email
           </CardTitle>
           <CardDescription className="text-start">

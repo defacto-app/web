@@ -1,6 +1,7 @@
 import React from "react";
 import HeroSection from "@/components/home/HeroSection";
 import SendReceive from "@/components/home/SendReceive";
+import CtaSection from "@/components/home/CtaSection";
 
 export default function HomePage() {
   return (
@@ -8,6 +9,7 @@ export default function HomePage() {
 
       <HeroSection/>
       <SendReceive/>
+      <CtaSection/>
 
     </div>
   );

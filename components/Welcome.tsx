@@ -59,7 +59,7 @@ export default function Welcome() {
 
 <div className="">
       <div className="flex items-center">
-        <EnvelopeClosedIcon className="mr-2 text-primary-500" />
+        <EnvelopeClosedIcon className="mr-2 text-primary-600" />
         <p>Email</p>
       </div>
     </div>
