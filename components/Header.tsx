@@ -14,10 +14,16 @@ import env from "@/config/env";
 import Link from "next/link";
 import { Button } from "./ui/button";
 
+interface NavigationItem {
+  name: string;
+  href: string;
+}
+
+
 const navigation = [
-  { name: "Company", href: "/company" },
-  { name: "FAQs", href: "/faq" },
-  { name: "Contact", href: "/contact" },
+  { name: "about", href: "/about" },
+  { name: "faqs", href: "/faq" },
+  { name: "contact", href: "/contact" },
 ];
 
 export default function Header() {
