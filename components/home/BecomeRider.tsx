@@ -1,7 +1,9 @@
 import React from 'react'
+import Link from "next/link"
 import { Button } from '../ui/button'
 
 export default function BecomeRider() {
+  const href = "/rider";
   return (
     <div>
 
@@ -77,7 +79,13 @@ export default function BecomeRider() {
               Are you looking for a flexible way to earn extra income while enjoying the freedom of the open road? Look no further! Become a rider with Defacto Delivery and embark on a rewarding journey. As a valued member of our team, you'll have the opportunity to set your own schedule, explore your city, and make a difference in your community. Join us in delivering smiles, one order at a time.
               </p>
 
-              <Button variant ="primary">Become Rider</Button>
+              <div className='py-1'>
+              <Link href={href}>
+                    <Button variant="primary2">
+                      Become Rider
+                    </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
