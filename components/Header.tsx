@@ -1,55 +1,86 @@
-"use client"
-import { useState } from 'react'
-import { Dialog } from '@headlessui/react'
-import { SquareMenu,X, ShoppingBag, User } from 'lucide-react';
+"use client";
+import { useState, useEffect } from "react";
+import { Dialog } from "@headlessui/react";
+import {
+  SquareMenu,
+  X,
+  ShoppingBag,
+  User,
+  UserRoundCogIcon,
+} from "lucide-react";
+import UserAuth from "./UserAuth";
+import { UserProvider } from "@/app/provider/auth.context";
+import env from "@/config/env";
+import Link from "next/link";
+import { Button } from "./ui/button";
 import Image from "next/image";
 
+interface NavigationItem {
+  name: string;
+  href: string;
+}
+
+
 const navigation = [
-  { name: 'Delivery', href: '#' },
-  { name: 'Company', href: '/company' },
-  { name: 'FAQs', href: '/faq' },
-  { name: 'Contact', href: '/contact' },
-]
+  { name: "About", href: "/about" },
+  { name: "Faqs", href: "/faq" },
+  { name: "Contact", href: "/contact" },
+];
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
-    <header className="bg-white">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8" aria-label="Global">
+    <header  className={`bg-white ${isSticky ? "fixed top-0 left-0 right-0 z-50" : ""}`}>
+      <nav
+        className="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8"
+        aria-label="Global"
+      >
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <Image
-
-                
-
-                className="h-8 w-auto" src="/logo.png" alt="" />
+            <Image className="h-8 w-auto" src="/logo.png" alt="" width={50} height={50} />
           </a>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
+        <div className="hidden lg:flex lg:gap-x-12 bg-gray-50 px-8 py-2 rounded-full">
           {navigation.map((item) => (
-            <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
+            <a
+              key={item.name}
+              href={item.href}
+              className="text-sm  leading-6 text-gray-900"
+            >
               {item.name}
             </a>
           ))}
         </div>
         <div className="flex flex-1 items-center justify-end gap-x-6">
-          <ShoppingBag className='text-primary-500'>
-          <a href="#" >
-            
-          </a>
-          </ShoppingBag>
-          
-          <User className='text-primary-500'>
+          {/* <ShoppingBag className="text-primary-600">
+            <a href="#"></a>
+          </ShoppingBag> */}
+          {env.isDev && (
+            <Link href="/admin">
+              <UserRoundCogIcon className="text-red-500" size={20} />
+            </Link>
+          )}
 
-          <a
-            href="#"
-          >
-            
-          </a>
-          </User>
-         
+          <UserProvider>
+            <UserAuth />
+          </UserProvider>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -58,27 +89,31 @@ export default function Header() {
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
-            <SquareMenu className="h-6 w-6 text-primary-500" aria-hidden="true"/>
+            <SquareMenu
+              className="h-6 w-6 text-primary-600"
+              aria-hidden="true"
+            />
           </button>
         </div>
       </nav>
-      <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
+      <Dialog
+        as="div"
+        className="lg:hidden"
+        open={mobileMenuOpen}
+        onClose={setMobileMenuOpen}
+      >
         <div className="fixed inset-0 z-10" />
         <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center gap-x-6">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <Image
-                className="h-8 w-auto"
-                src="/logo.png"
-                alt=""
-              />
+              <Image className="h-8 w-auto" src="/logo.png" alt="" width={50} height={50} />
             </a>
             <a
               href="#"
-              className="ml-auto rounded-md bg-primary-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Get Started
+            <Button variant="primary"> Get Started</Button>
+
             </a>
             <button
               type="button"
@@ -86,7 +121,7 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close menu</span>
-              <X  className="h-6 w-6 text-primary-500" aria-hidden="true"/>
+              <X className="h-6 w-6 text-primary-600" aria-hidden="true" />
             </button>
           </div>
           <div className="mt-6 flow-root">
@@ -102,11 +137,10 @@ export default function Header() {
                   </a>
                 ))}
               </div>
-            
             </div>
           </div>
         </Dialog.Panel>
       </Dialog>
     </header>
-  )
+  );
 }
