@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from "next/link"
 import { Button } from '../ui/button'
+import Image from 'next/image';
 
 export default function BecomeRider() {
   const href = "/rider";
@@ -15,7 +16,7 @@ export default function BecomeRider() {
             <div className="absolute inset-x-0 h-1/2  lg:hidden" aria-hidden="true" />
             <div className="mx-auto max-w-md px-6 sm:max-w-3xl lg:max-w-none lg:p-0">
               <div className="aspect-h-6 aspect-w-10 sm:aspect-h-1 sm:aspect-w-2 lg:aspect-w-1">
-                <img
+                <Image
                   className=" object-cover "
                   src="/hero/delivery3.svg"
                   alt=""

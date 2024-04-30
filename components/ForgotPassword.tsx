@@ -16,9 +16,6 @@ import { Label } from "@/components/ui/label";
 import { useAuthContext } from "@/app/provider/auth.context";
 
 
-const [formData, setFormData] = useState({
-  password: "",
-});
 
 const schema = z
   .string()
@@ -27,6 +24,11 @@ const schema = z
 function ForgotPassword() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+
+const [formData, setFormData] = useState({
+  password: "",
+});
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -94,6 +96,7 @@ function ForgotPassword() {
       </CardContent>
     </Card>
   );
+}
 }
 
 export default ForgotPassword;

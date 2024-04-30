@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 export default function SendReceive() {
   return (
@@ -9,7 +10,7 @@ export default function SendReceive() {
           <div className="mx-auto  max-w-7xl lg:grid lg:grid-cols-2 lg:gap-x-8 lg:px-8">
             {/* Image Section */}
             <div className="lg:col-span-1 mx-auto max-w-7xl px-6">
-              <img
+              <Image
                 className="w-full h-auto"
                 src="/image.svg"
                 alt="Your Image"

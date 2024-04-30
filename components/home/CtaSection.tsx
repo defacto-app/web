@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 export default function CtaSection() {
   return (
@@ -38,7 +39,7 @@ export default function CtaSection() {
               </a> */}
               <Button size="lg" variant= "secondary">
               <div>
-                  <img className="mr-2 h-6 w-6" src="/hero/apple3.png" alt="" height={50} width={154}/>
+                  <Image className="mr-2 h-6 w-6" src="/hero/apple3.png" alt="" height={50} width={154}/>
                 </div>
                 <div>
                   <h1 className="text-xs font-light">Download on </h1>
@@ -48,7 +49,7 @@ export default function CtaSection() {
               </Button>
               <Button className="py-4" size="lg" variant= "secondary">
               <div>
-                  <img className="mr-2 h-6 w-6" src="/hero/android3.png" alt="" height={50} width={154}/>
+                  <Image className="mr-2 h-6 w-6" src="/hero/android3.png" alt="" height={50} width={154}/>
                 </div>
                 <div>
                   <h1 className="text-xs font-light">Download on </h1>
@@ -59,7 +60,7 @@ export default function CtaSection() {
             </div>
           </div>
           <div className="relative mt-16 h-64 lg:mt-8">
-            <img
+            <Image
               className="absolute left-0 lg:top-28 top-0 w-[30rem] max-w-none rounded-md"
               src="/hero/phones.svg"
               alt="App screenshot"

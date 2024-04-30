@@ -10,8 +10,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
-export default function page() {
+export default function RiderPage() {
   const [driverLicense, setDriverLicense] = useState<string | null>(null);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -23,7 +24,7 @@ export default function page() {
     <div>
       <div className="relative bg-white">
         <div className="lg:absolute lg:inset-0 lg:left-1/2">
-          <img
+          <Image
             className="h-64 w-full bg-gray-50 object-cover sm:h-80 lg:absolute lg:h-full"
             src="/rider/deliveryguy.png"
             alt=""
@@ -91,7 +92,7 @@ export default function page() {
                     <div className="grid gap-2 py-2">
                     <Label htmlFor="driver-license">Driver's License</Label>
                     {driverLicense ? (
-                      <img
+                      <Image
                         src={driverLicense}
                         alt="Driver's License"
                         className="h-32 w-auto"

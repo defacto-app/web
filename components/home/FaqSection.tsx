@@ -1,5 +1,6 @@
 import React from "react";
 import Questions from "../Questions";
+import Image from "next/image";
 
 export default function FaqSection() {
   return (
@@ -8,7 +9,7 @@ export default function FaqSection() {
    <div className="bg-primary-600 rounded-xl container mx-auto flex flex-col lg:flex-row items-center justify-between px-6 lg:px-0">
       {/* Image */}
       <div className="w-full lg:w-1/2 lg:pr-12">
-        <img
+        <Image
           className="w-full h-auto "
           src="hero/faq12.png"
           alt="FAQ Image"

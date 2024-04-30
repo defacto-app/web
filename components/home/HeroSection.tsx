@@ -1,6 +1,6 @@
-import { ChevronRightCircle, ChevronRightIcon } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 export default function HeroSection() {
   const logos = [
@@ -31,7 +31,7 @@ export default function HeroSection() {
       className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1"
       key={index}
     >
-      <img className="h-12" src={logo.src} alt={logo.alt} />
+      <Image className="h-12" src={logo.src} alt={logo.alt} />
     </div>
   ));
 

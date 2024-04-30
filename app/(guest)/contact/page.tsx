@@ -2,13 +2,12 @@ import { Input } from "@/components/ui/input";
 import { EnvelopeOpenIcon } from "@radix-ui/react-icons";
 import { Building2Icon, PhoneIcon } from "lucide-react";
 import React from "react";
-import PhoneInput from "react-phone-input-2";
 import { Button } from "@/components/ui/button";
 
 
 
 
-export default function Contactpage() {
+export default function ContactPage() {
   return (
     <div className="relative isolate bg-white">
       <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">

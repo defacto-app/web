@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const navigation = {
@@ -131,7 +132,7 @@ export default function Footer() {
               >
                 <span className="sr-only">{item.name}</span>
                 <span>
-                  <img src={item.image} className="w-5 h-5" alt="" />
+                  <Image src={item.image} className="w-5 h-5" alt="" />
                 </span>
               </a>
             ))}

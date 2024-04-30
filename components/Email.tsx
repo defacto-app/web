@@ -71,9 +71,11 @@ function Email() {
         </div>
         <CardTitle className="text-3xl text-center font-bold">
           {" "}
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           Let's start with your email
         </CardTitle>
         <CardDescription className="text-center ">
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           We will check if you already have an account, if not, we'll create a
           new one.
         </CardDescription>
