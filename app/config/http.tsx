@@ -1,9 +1,13 @@
-export async function $ClientFetch(
-  url: string,
-  options?: RequestInit,
+import env from "@/config/env";
+
+
+export async function $adminHttp(
+    endpoint: string,
+    options?: RequestInit,
 ): Promise<any> {
+
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(endpoint, options);
     const data = await response.json();
 
     if (!response.ok) {

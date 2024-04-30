@@ -6,6 +6,12 @@ export function middleware(request: NextRequest) {
     let isLoggedIn = true
     // let isLoggedIn = request.cookies.get("loggedin")
 
+    const authToken = request.cookies.get("auth-token")
+
+    console.log(request.url, "checking url", authToken)
+
+
+
     let url = request.url
 
     if (url === '/admin/auth') {
