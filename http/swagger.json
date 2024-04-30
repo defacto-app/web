@@ -14,7 +14,8 @@
   ],
   "security": [
     {
-      "bearerAuth": [],
+      "bearerAuth": [
+      ],
       "basicAuth": [],
       "apiKey": [],
       "oauth2": [],
@@ -34,9 +35,50 @@
     }
   },
   "paths": {
-    "/api/admin/auth/login": {
+    "/api/auth/phone-login": {
       "post": {
-        "summary": "User login",
+        "tags": [
+          "Auth-Phone"
+        ],
+        "summary": "phone number  login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phoneNumber": {
+                    "type": "string",
+                    "example": "08063145125"
+                  },
+                  "otp": {
+                    "type": "string",
+                    "example": "067741"
+                  }
+                },
+                "required": [
+                  "phoneNumber",
+                  "otp"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "token": "Bearer token"
+          }
+        }
+      }
+    },
+    "/api/auth/email-login": {
+      "post": {
+        "tags": [
+          "Auth-Email"
+        ],
+        "summary": "User Email login",
         "requestBody": {
           "required": true,
           "content": {
@@ -53,7 +95,10 @@
                     "example": "123456"
                   }
                 },
-                "required": ["email", "password"]
+                "required": [
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -65,8 +110,56 @@
         }
       }
     },
-    "/api/admin/auth/register": {
+    "/api/auth/email-exists": {
       "post": {
+        "tags": [
+          "Auth-Email"
+        ],
+        "summary": "Check if a user exists",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "kats.com.ng@gmail.com"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "user exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "exists": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/email-register": {
+      "post": {
+        "tags": [
+          "Auth-Email"
+        ],
         "summary": "User registration",
         "requestBody": {
           "required": true,
@@ -77,14 +170,17 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "example": "admin@gmail.com"
+                    "example": "kats.com.ng@gmail.com"
                   },
                   "password": {
                     "type": "string",
                     "example": "123456"
                   }
                 },
-                "required": ["email", "password"]
+                "required": [
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -96,8 +192,113 @@
         }
       }
     },
-    "/api/admin/auth/logout": {
+    "/api/auth/phone-register": {
+      "post": {
+        "tags": [
+          "Auth-Phone"
+        ],
+        "summary": "User registration",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phoneNumber": {
+                    "type": "string",
+                    "example": "08063145125"
+                  },
+                  "otp": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                },
+                "required": [
+                  "phoneNumber",
+                  "otp"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registration successful",
+            "token": "Bearer token"
+          }
+        }
+      }
+    },
+    "/api/auth/phone-number-exist": {
+      "post": {
+        "tags": [
+          "Auth-Phone"
+        ],
+        "summary": "Check if a phone number exists",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phoneNumber": {
+                    "type": "string",
+                    "example": "08063145125"
+                  }
+                },
+                "required": [
+                  "phoneNumber"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Phone number exists"
+          }
+        }
+      }
+    },
+    "/api/auth/verify-phone-number": {
+      "post": {
+        "tags": [
+          "Auth-Phone"
+        ],
+        "summary": "Send Otp To Phone Number to verify",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phoneNumber": {
+                    "type": "string",
+                    "example": "08063145125"
+                  }
+                },
+                "required": [
+                  "phoneNumber"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP sent"
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
       "get": {
+        "tags": [
+          "Auth-flow"
+        ],
         "summary": "Log out a user",
         "responses": {
           "200": {
@@ -106,12 +307,47 @@
         }
       }
     },
-    "/api/admin/auth/ping": {
+    "/api/auth/ping": {
       "get": {
+        "tags": [
+          "Auth-flow"
+        ],
         "summary": "Ping to verify token validity",
         "responses": {
           "200": {
             "description": "Ping successful"
+          }
+        }
+      }
+    },
+    "/api/user/update-user": {
+      "put": {
+        "summary": "Update User Details",
+        "tags": [
+          "User-Routes"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "admin@gmail.com"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User details updated"
           }
         }
       }
