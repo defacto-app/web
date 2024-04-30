@@ -22,9 +22,9 @@ interface NavigationItem {
 
 
 const navigation = [
-  { name: "about", href: "/about" },
-  { name: "faqs", href: "/faq" },
-  { name: "contact", href: "/contact" },
+  { name: "About", href: "/about" },
+  { name: "Faqs", href: "/faq" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export default function Header() {
