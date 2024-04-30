@@ -14,8 +14,7 @@
   ],
   "security": [
     {
-      "bearerAuth": [
-      ],
+      "bearerAuth": [],
       "basicAuth": [],
       "apiKey": [],
       "oauth2": [],
@@ -54,10 +53,7 @@
                     "example": "123456"
                   }
                 },
-                "required": [
-                  "email",
-                  "password"
-                ]
+                "required": ["email", "password"]
               }
             }
           }
@@ -88,10 +84,7 @@
                     "example": "123456"
                   }
                 },
-                "required": [
-                  "email",
-                  "password"
-                ]
+                "required": ["email", "password"]
               }
             }
           }
@@ -125,5 +118,3 @@
     }
   }
 }
-
-

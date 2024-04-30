@@ -2,9 +2,8 @@ import env from "@/config/env";
 
 export const dynamic = "force-dynamic"; // defaults to auto
 export async function POST(request: Request) {
-
   const body = await request.json();
-    console.log(body, "chekcing body");
+  console.log(body, "chekcing body");
   const url = `${env.BASE_URL}/admin/auth/login`;
   const options = {
     method: "POST",

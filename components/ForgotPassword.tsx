@@ -13,6 +13,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuthContext } from "@/app/provider/auth.context";
+
+
 
 const schema = z
   .string()
@@ -22,49 +25,28 @@ function ForgotPassword() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+
+const [formData, setFormData] = useState({
+  password: "",
+});
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     setErrors({});
-    const result = schema.safeParse(password);
+    const result = schema.safeParse(formData);
     if (!result.success) {
-      const formattedErrors = {} as any;
+      const formattedErrors: any = {};
       result.error.errors.forEach((error) => {
-        formattedErrors["password"] = error.message;
+        const fieldName = error.path[0];
+        formattedErrors[fieldName] = error.message;
       });
       setErrors(formattedErrors);
       return;
     }
 
-    try {
-      // Simulate password reset request to the backend API
-      const response = await fetch("/api/reset-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ newPassword: password }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to reset password");
-      }
-
-      console.log("Password reset successful");
-      // Display a success message to the user
-      alert(
-        "Password reset successful. Please check your email for further instructions.",
-      );
-    } catch (error:any) {
-      console.error("Password reset error:", error.message);
-      // Display an error message to the user
-      alert(
-        "An error occurred while resetting your password. Please try again later.",
-      );
-    }
-  };
 
   return (
     <Card className="mx-auto max-w-sm">
@@ -79,7 +61,7 @@ function ForgotPassword() {
           <div className="grid gap-2">
             <Label htmlFor="password">New Password</Label>
             <Input
-              id="new-password"
+              id="forgotpassword"
               type="password"
               placeholder="Enter new password"
               required
@@ -114,6 +96,7 @@ function ForgotPassword() {
       </CardContent>
     </Card>
   );
+}
 }
 
 export default ForgotPassword;
