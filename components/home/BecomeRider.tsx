@@ -20,6 +20,8 @@ export default function BecomeRider() {
                   className=" object-cover "
                   src="/hero/delivery3.svg"
                   alt=""
+                  width={1000}
+                  height={1000}
                 />
               </div>
             </div>

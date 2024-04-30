@@ -11,7 +11,7 @@ export default function FaqSection() {
       <div className="w-full lg:w-1/2 lg:pr-12">
         <Image
           className="w-full h-auto "
-          src="hero/faq12.png"
+          src="/hero/faq12.png"
           alt="FAQ Image"
           width={1824}
           height={1080}

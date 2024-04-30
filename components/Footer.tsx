@@ -24,12 +24,12 @@ const navigation = {
     {
       name: "Facebook",
       href: "#",
-      image: "footer/facebook.png",
+      image: "/footer/facebook.png",
     },
     {
       name: "Whatsapp",
       href: "#",
-      image: "footer/whatsapp.png",
+      image: "/footer/whatsapp.png",
     },
     {
       name: "X",
@@ -132,7 +132,7 @@ export default function Footer() {
               >
                 <span className="sr-only">{item.name}</span>
                 <span>
-                  <Image src={item.image} className="w-5 h-5" alt="" />
+                  <Image src={item.image} className="w-5 h-5" alt="" width={50} height={50} />
                 </span>
               </a>
             ))}

@@ -7,6 +7,7 @@ export default function HeroSection() {
     {
       src: "https://tailwindui.com/img/logos/tuple-logo-gray-400.svg",
       alt: "Tuple",
+
     },
     {
       src: "https://tailwindui.com/img/logos/mirage-logo-gray-400.svg",
@@ -31,7 +32,7 @@ export default function HeroSection() {
       className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1"
       key={index}
     >
-      <Image className="h-12" src={logo.src} alt={logo.alt} />
+      <Image className="h-12" src={logo.src} alt={logo.alt} width={20} height={20}/>
     </div>
   ));
 

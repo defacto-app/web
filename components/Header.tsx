@@ -54,7 +54,7 @@ export default function Header() {
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <Image className="h-8 w-auto" src="/logo.png" alt="" />
+            <Image className="h-8 w-auto" src="/logo.png" alt="" width={50} height={50} />
           </a>
         </div>
         <div className="hidden lg:flex lg:gap-x-12 bg-gray-50 px-8 py-2 rounded-full">
@@ -107,7 +107,7 @@ export default function Header() {
           <div className="flex items-center gap-x-6">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <Image className="h-8 w-auto" src="/logo.png" alt="" />
+              <Image className="h-8 w-auto" src="/logo.png" alt="" width={50} height={50} />
             </a>
             <a
               href="#"
