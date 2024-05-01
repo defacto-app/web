@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "next build",
+    "cf-build": "npx @cloudflare/next-on-pages",
     "start": "next start",
     "lint": "next lint",
     "env:dev": "npx jsonbank-env dev .env force",
@@ -51,5 +52,8 @@
     "prettier": "3.2.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "overrides": {
+    "string-width": "4.2.3"
   }
 }
