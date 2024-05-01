@@ -42,7 +42,7 @@ const navigation = {
 export default function Footer() {
   return (
     <div className="bg-slate-900" aria-labelledby="footer-heading">
-      <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-between"></div>
+      <div className="mt-6 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-between"></div>
 
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
@@ -53,91 +53,7 @@ export default function Footer() {
                alt=""
                 width={1824}
                 height={1080}/> */}
-                <svg
-                  width="201"
-                  height="202"
-                  viewBox="0 0 301 272"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M292.593 5.38177C289.536 2.74218 285.815 0.989221 281.833 0.312733C277.852 -0.363755 273.761 0.0620079 270.003 1.54392L14.0745 102.088C9.61361 103.84 5.84011 106.99 3.31865 111.066C0.797187 115.142 -0.336654 119.925 0.0867834 124.699C0.510221 129.473 2.46817 133.982 5.66766 137.55C8.86714 141.119 13.1361 143.555 17.8359 144.495L82.8437 157.497V238.695C82.84 243.084 84.139 247.377 86.5764 251.028C89.0137 254.679 92.4798 257.525 96.5355 259.205C100.591 260.885 105.054 261.323 109.36 260.465C113.665 259.607 117.618 257.49 120.72 254.383L156.696 218.408L211.299 266.459C215.32 270.028 220.507 272.003 225.884 272.01C228.221 272.007 230.543 271.639 232.767 270.918C236.433 269.755 239.731 267.651 242.331 264.815C244.931 261.98 246.742 258.512 247.583 254.758L299.743 27.1522C300.651 23.2165 300.465 19.1072 299.204 15.2697C297.944 11.4322 295.658 8.01274 292.593 5.38177ZM225.956 249.802L111.701 149.257L276.228 30.4328L225.956 249.802Z"
-                    fill="#1C1C1C"
-                  />
-                </svg>
-              </div>
-              <div className="mt-10 md:mt-0">
-                <h3 className="text-sm leading-6 text-primary-600 font-semibold">
-                  Services
-                </h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  {navigation.support.map((item) => (
-                    <li key={item.name}>
-                      <a
-                        href={item.href}
-                        className="text-sm leading-6 text-gray-300 hover:text-white"
-                      >
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="text-sm leading-6 text-primary-600 font-semibold">
-                  Company
-                </h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  {navigation.company.map((item) => (
-                    <li key={item.name}>
-                      <a
-                        href={item.href}
-                        className="text-sm leading-6 text-gray-300 hover:text-white"
-                      >
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-10 md:mt-0">
-                <h3 className="text-sm leading-6 text-primary-600 font-semibold">
-                  Legal
-                </h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  {navigation.legal.map((item) => (
-                    <li key={item.name}>
-                      <a
-                        href={item.href}
-                        className="text-sm leading-6 text-gray-300 hover:text-white"
-                      >
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mt-8 border-t border-white/10 pt-8 md:flex md:items-center md:justify-between">
-          <div className="flex space-x-6 md:order-2">
-            {navigation.social.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-gray-300 hover:text-gray-400"
-              >
-                <span className="sr-only">{item.name}</span>
-                <span>
-                  <Image src={item.image} className="w-5 h-5" alt="" width={50} height={50} />
-                </span>
-              </a>
-            ))}
-          </div>
-          <svg
+                 <svg
             width="139"
             height="67"
             viewBox="0 0 139 67"
@@ -247,6 +163,85 @@ export default function Footer() {
               </clipPath>
             </defs>
           </svg>
+              </div>
+              <div className="mt-10 md:mt-0">
+                <h3 className="text-sm leading-6 text-primary-600 font-semibold">
+                  Services
+                </h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.support.map((item) => (
+                    <li key={item.name}>
+                      <a
+                        href={item.href}
+                        className="text-sm leading-6 text-gray-300 hover:text-white"
+                      >
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="md:grid md:grid-cols-2 md:gap-8">
+              <div>
+                <h3 className="text-sm leading-6 text-primary-600 font-semibold">
+                  Company
+                </h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.company.map((item) => (
+                    <li key={item.name}>
+                      <a
+                        href={item.href}
+                        className="text-sm leading-6 text-gray-300 hover:text-white"
+                      >
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-10 md:mt-0">
+                <h3 className="text-sm leading-6 text-primary-600 font-semibold">
+                  Legal
+                </h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.legal.map((item) => (
+                    <li key={item.name}>
+                      <a
+                        href={item.href}
+                        className="text-sm leading-6 text-gray-300 hover:text-white"
+                      >
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mt-8 border-t border-white/10 pt-8 md:flex md:items-center md:justify-between">
+         <div className="grid grid-cols-12">
+         <div className="col-span-8">
+         <div className="flex space-x-6 md:order-2">
+            {navigation.social.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-gray-300 hover:text-gray-400"
+              >
+                <span className="sr-only">{item.name}</span>
+                <span>
+                  <Image src={item.image} className="w-5 h-5" alt="" width={50} height={50} />
+                </span>
+              </a>
+            ))}
+          </div>
+         </div>
+          <div className="col-span-4">
+
+          </div>
+         </div>
         </div>
       </div>
     </div>
