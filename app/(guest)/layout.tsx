@@ -30,6 +30,7 @@ export default function RootLayout({
         <meta property="og:image" content="/logo.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <link rel="icon" href="/favicon.ico" />
       </head>
       <body
         className={cn(
