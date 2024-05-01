@@ -4,27 +4,26 @@ import React from "react";
 const navigation = {
 
   support: [
-    { name: "Delivery", href: "#" },
-    { name: "Customers", href: "#" },
-    { name: "Drivers", href: "#" },
-    { name: "Riders", href: "#" },
+    { name: "Delivery", href: "/contact" },
+    { name: "Customers", href: "/contact" },
+    { name: "Drivers", href: "/contact" },
+    { name: "Riders", href: "/rider" },
   ],
   company: [
-    { name: "About", href: "#" },
-    { name: "FAQs", href: "#" },
-    { name: "Be a Rider/Driver", href: "#" },
-    { name: "Contact Us", href: "#" },
+    { name: "About", href: "about" },
+    { name: "FAQs", href: "faq" },
+    { name: "Be a Rider/Driver", href: "/rider" },
+    { name: "Contact Us", href: "/contact" },
   ],
   legal: [
-    { name: "License Agreement", href: "#" },
-    { name: "Privacy", href: "#" },
-    { name: "Terms of Use", href: "#" },
+    { name: "Privacy", href: "/privacy" },
+    { name: "Terms of Use", href: "/terms" },
   ],
   social: [
     {
       name: "Facebook",
       href: "#",
-      image: "/footer/facebook.png",
+      image: "/footer/social.png",
     },
     {
       name: "Whatsapp",
@@ -173,7 +172,7 @@ export default function Footer() {
                     <li key={item.name}>
                       <a
                         href={item.href}
-                        className="text-sm leading-6 text-gray-300 hover:text-white"
+                        className="text-sm cursor-pointer leading-6 text-gray-300 hover:text-white"
                       >
                         {item.name}
                       </a>

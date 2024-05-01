@@ -1,19 +1,17 @@
 import React from "react";
 
-export const metadata = {
-
-}
+export const metadata = {};
 
 export default function RootLayout({
-                                       children,
-                                   }: {
-    children: React.ReactNode
+  children,
+}: {
+  children: React.ReactNode;
 }) {
-    return (
-        <html lang="en">
-        <body>{children}</body>
-        </html>
-    )
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
 }
 
-export const runtime = 'edge';
+export const runtime = "edge";
