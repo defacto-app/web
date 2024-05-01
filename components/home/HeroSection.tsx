@@ -80,7 +80,7 @@ export default function HeroSection() {
             we've got you covered.
           </p>
           <div className="mt-10 flex items-center gap-x-6">
-            <Button className="py-5 px-24" variant="primary">
+            <Button className="py-5 px-10" variant="primary">
               <p>Send Package Swiftly!</p>
             </Button>
           </div>
