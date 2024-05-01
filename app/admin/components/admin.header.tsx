@@ -58,7 +58,7 @@ export function AdminHeader() {
                         Products
                     </Link>
                     <Link
-                        href="#"
+                        href="/admin/users"
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
                         Customers
