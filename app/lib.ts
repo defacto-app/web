@@ -14,7 +14,7 @@ export async function authenticate(data: any) {
 
     // ping the server to check if the token is valid
 
-    const result = await fetch(`${env.BASE_URL}/auth/ping`, {
+    const result = await fetch(`${env.BASE_URL}/auth/admin-ping`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
