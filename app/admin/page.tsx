@@ -2,6 +2,7 @@
 import React, {useEffect} from "react";
 import {Dashboard} from "@/app/admin/admin-dash";
 import {$adminHttp} from "@/app/config/http";
+import env from "@/config/env";
 
 
 export default function AdminIndex() {
@@ -15,7 +16,7 @@ export default function AdminIndex() {
     useEffect(() => {
         const getData = async () => {
             setLoading(true);
-            const url = "http://localhost:5700/api/admin/dashboard";
+            const url = `${env.BASE_URL}/admin/dashboard`;
             try {
                 const res = await $adminHttp(url, {
                     method: "GET",

@@ -1,7 +1,6 @@
 import {cookies} from "next/headers";
-import {NextRequest, NextResponse} from "next/server";
 import env from "@/config/env";
-
+import {NextRequest} from "next/server";
 
 export async function logout() {
     // Destroy the session
@@ -37,6 +36,22 @@ export async function authenticate(data: any) {
     if (_data.success) {
         return true
     }
+
+
+}
+
+export async function getAllUsers() {
+    const authToken = cookies().get("auth-token")?.value;
+    const result = await fetch(`${env.BASE_URL}/admin/dashboard`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${authToken}`
+        },
+
+    })
+
+    return await result.json()
 
 
 }

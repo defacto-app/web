@@ -13,6 +13,9 @@ export async function middleware(request: NextRequest) {
 
 
     if (isAuthenticated) {
+        // add the token to the request headers
+
+        request.headers.set("authorization", `Bearer ${authToken?.value}`)
         return NextResponse.next()
     }
 
