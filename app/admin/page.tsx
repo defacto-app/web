@@ -12,37 +12,28 @@ export default function AdminIndex() {
 
     const [serverError, setServerError] = React.useState<any>(null);
 
-    const getData = async () => {
-        setLoading(true);
-        const url = "http://localhost:5700/api/admin/dashboard";
-        try {
-            const res = await $adminHttp(url, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            })
-
-            setData(res);
-
-            setLoading(false);
-
-            console.log(data)
-        } catch (error) {
-            setServerError(error);
-            setLoading(false);
-            console.log(error)
-        }
-
-
-    };
-
-
     useEffect(() => {
-        getData()
+        const getData = async () => {
+            setLoading(true);
+            const url = "http://localhost:5700/api/admin/dashboard";
+            try {
+                const res = await $adminHttp(url, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+
+                setData(res);
+                setLoading(false);
+            } catch (error) {
+                setServerError(error);
+                setLoading(false);
+            }
+        };
+
+        getData();
     }, []);
-
-
     return (
 
 
