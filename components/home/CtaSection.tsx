@@ -21,7 +21,7 @@ export default function CtaSection() {
               </radialGradient>
             </defs>
           </svg>
-          <div className="mx-auto max-w-md mt-8 text-start lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
+          <div className="mx-auto max-w-md pt-8 text-start lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Download Defacto App
               <br />
