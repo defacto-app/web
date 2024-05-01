@@ -39,7 +39,7 @@ export default function BecomeRider() {
 
               <div className='py-1'>
               <Link href={href}>
-                    <Button variant="primary" className='py-5 w-full px-24'>
+                    <Button variant="primary" className='py-5 px-10'>
                       Become Rider
                     </Button>
                 </Link>
