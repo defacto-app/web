@@ -58,34 +58,59 @@ export default function AdminLogin() {
     };
 
 
- 
-
     const handleSubmit = async () => {
         try {
-            const url = `${env.BASE_URL}/auth/admin-login`;
-            const options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+
+            const data = await fetch(`/api/auth`, {
+                method: 'POST',
                 body: JSON.stringify(formData),
-            };
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
 
-            const res = await fetch(url, options);
-            const data = await res.json();
 
-            // save the token to local storage
+            const res = await data.json();
 
-            localStorage.setItem("auth-token", data.token);
+            // save to local storage
 
-            if (data.success){
-                await router.push('/admin/');
-            }
-            console.log(data);
+            localStorage.setItem("auth-token", res.data.token);
+
+            router.push('/admin/');
+
+
         } catch (error) {
             console.log(error);
         }
     };
+
+
+    /*    const handleSubmit = async () => {
+            try {
+                const url = `${env.BASE_URL}/auth/admin-login`;
+                const options = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                };
+
+                const res = await fetch(url, options);
+                const data = await res.json();
+
+                // save the token to local storage
+
+                localStorage.setItem("auth-token", data.token);
+
+                if (data.success){
+                    await router.push('/admin/');
+                }
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
+        };*/
 
     async function sendEmailOtp() {
         console.log(formData.email);

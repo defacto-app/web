@@ -1,26 +1,29 @@
-import {NextResponse} from 'next/server'
 import type {NextRequest} from 'next/server'
+import {NextResponse} from 'next/server'
+
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-    let isLoggedIn = true
-    // let isLoggedIn = request.cookies.get("loggedin")
 
     const authToken = request.cookies.get("auth-token")
 
-    console.log(request.url, "checking url", authToken)
-
-
-
-    let url = request.url
-
-    if (url === '/admin/auth') {
-        return NextResponse.next();
+    // const isAuthenticated = authenticate(request)
+    // If the user is authenticated, continue as normal
+    if (authToken) {
+        return NextResponse.next()
     }
 
-    if (!isLoggedIn && url.includes("/admin")) {
-        return NextResponse.redirect(new URL('/', request.url))
-    }
+    // If the user is not authenticated, redirect to log in
+
+    const url = request.nextUrl.clone()
+    url.pathname = '/admin/auth/'
+    return NextResponse.rewrite(url)
+
+
+    // const  isLoggedIn = true
+
+    // set authorization  headers
+
 
 }
 
