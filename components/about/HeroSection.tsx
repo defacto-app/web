@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-export default function () {
+export default function HeroSection () {
   const logos = [
     {
       src: "https://tailwindui.com/img/logos/tuple-logo-gray-400.svg",
