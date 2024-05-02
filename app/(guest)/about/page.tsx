@@ -1,4 +1,5 @@
 import AboutMission from "@/components/about/AboutMission";
+import AboutRider from "@/components/about/AboutRider";
 import AboutTeam from "@/components/about/AboutTeam";
 import HeroSection from "@/components/about/HeroSection";
 import BecomeRider from "@/components/home/BecomeRider";
@@ -10,7 +11,7 @@ export default function AboutIndex() {
       <HeroSection />
       <AboutMission />
       <AboutTeam />
-      <BecomeRider />
+<AboutRider/>
     </div>
   );
 }
