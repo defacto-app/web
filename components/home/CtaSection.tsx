@@ -6,7 +6,7 @@ export default function CtaSection() {
   return (
    <div>
    <div className="bg-white">
-      <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
+      <div className="mx-auto max-w-7xl py-12 sm:px-6 sm:py-32 lg:px-8">
         <div className="relative isolate overflow-hidden  lg:rounded-xl bg-primary-600 px-6 lg:pt-10 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 ">
           <svg
             viewBox="0 0 1024 1024"
@@ -61,8 +61,8 @@ export default function CtaSection() {
           </div>
           <div className="relative mt-16 h-64 lg:mt-8">
             <Image
-              className="absolute left-0 lg:top-28 top-0 w-[30rem] max-w-none rounded-md"
-              src="/hero/phones.svg"
+              className="absolute left-0 lg:top-28 top-0 w-[40rem] max-w-none rounded-md"
+              src="/mobileapp.png"
               alt="App screenshot"
               width={824}
               height={1080}
