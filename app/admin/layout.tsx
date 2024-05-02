@@ -6,6 +6,9 @@ import {Button} from "@/components/ui/button";
 import PropTypes from 'prop-types';
 import {AdminFooter, AdminHeader} from "@/app/admin/components/admin.header";
 import Head from "next/head";
+import { ToastContainer, toast } from 'react-toastify';
+import React from "react";
+import 'react-toastify/dist/ReactToastify.css';
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -22,7 +25,7 @@ export default function AdminRootLayout({
     children: React.ReactNode;
 }>) {
 
-    console.log("AdminRootLayout");
+
     return (
         <html lang="en">
         <Head>
@@ -37,7 +40,7 @@ export default function AdminRootLayout({
         >
 
         <AdminHeader/>
-
+        <ToastContainer position="top-center"/>
         {children}
 
         <div>

@@ -20,6 +20,7 @@ import {$adminHttp} from "@/app/config/http";
 import env from "@/config/env";
 import {InputOTPPattern} from "@/components/ui/InputOTPPattern";
 import {useRouter} from "next/navigation";
+import {toast} from "react-toastify";
 
 export default function AdminLogin() {
 
@@ -36,7 +37,7 @@ export default function AdminLogin() {
 
     const [formData, setFormData] = useState({
         email: "kats.com.ng@gmail.com",
-        otp: "421557",
+        otp: "457303",
     });
     const [isPending, setIsPending] = useState(false);
 
@@ -76,10 +77,15 @@ export default function AdminLogin() {
 
             localStorage.setItem("auth-token", res.data.token);
 
+            toast.success("Login successful");
+
             router.push('/admin/');
 
 
-        } catch (error) {
+
+        } catch (error: any) {
+            console.log(error);
+            toast.error("Login credentials are invalid");
             console.log(error);
         }
     };
@@ -147,6 +153,7 @@ export default function AdminLogin() {
 
     }
 
+
     return (
         <Card className="mx-auto max-w-sm">
             <CardHeader>
@@ -154,6 +161,8 @@ export default function AdminLogin() {
                 <CardDescription>
                     Enter your email below to login to your account
                 </CardDescription>
+
+
             </CardHeader>
             <CardContent>
                 <div className="grid gap-4">
@@ -179,7 +188,7 @@ export default function AdminLogin() {
                             <p className={`text-red-500 p-4`}>{errors.email}</p>
                         )}
                     </div>
-                    <InputOTPPattern setOtp={setOtp}/>
+                    <InputOTPPattern setOtp={setOtp} defaultValue={formData.otp}/>
                     {errors.otp && (
                         <p className={`text-red-500 p-4`}>{errors.otp}</p>
                     )}
