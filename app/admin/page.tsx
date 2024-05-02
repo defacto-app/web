@@ -1,15 +1,50 @@
-import React from "react";
+"use client";
+import React, {useEffect} from "react";
+import {Dashboard} from "@/app/admin/admin-dash";
+import {$adminHttp} from "@/app/config/http";
+import env from "@/config/env";
+
 
 export default function AdminIndex() {
-  return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <div className="flex justify-center">
-          <h1> Welcome to admin Dashboard</h1>
+
+    const [data, setData] = React.useState<any>(null);
+
+    const [isLoading, setLoading] = React.useState<boolean>(true);
+
+    const [serverError, setServerError] = React.useState<any>(null);
+
+    useEffect(() => {
+        const getData = async () => {
+            setLoading(true);
+            const url = `${env.BASE_URL}/admin/dashboard`;
+            try {
+                const res = await $adminHttp(url, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+
+                setData(res);
+                setLoading(false);
+            } catch (error) {
+                setServerError(error);
+                setLoading(false);
+            }
+        };
+
+        getData();
+    }, []);
+    return (
+
+
+        <div>
+            {/*<Dashboard/>*/}
+
+            {JSON.stringify(data)}
+            welcome
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export const runtime = 'edge';
