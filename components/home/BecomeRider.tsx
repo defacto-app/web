@@ -41,7 +41,7 @@ export default function BecomeRider() {
                   Become a Rider/Driver at{" "}
                   <span className="text-primary-600">Defacto</span>
                 </h2>
-                <p>
+                <p className="mt-6 text-lg leading-8 text-gray-600">
                   Are you looking for a flexible way to earn extra income while
                   enjoying the freedom of the open road? Look no further! Become
                   a rider with Defacto Delivery and embark on a rewarding

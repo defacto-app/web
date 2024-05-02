@@ -1,5 +1,4 @@
 import React from "react";
-import Questions from "./Questions";
 import Image from "next/image";
 import FaqAccordian from "./FaqAccordian";
 
