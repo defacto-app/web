@@ -15,15 +15,15 @@ export default function AboutMission() {
                 </h1>
           <div className="mt-6 flex flex-col gap-x-8 gap-y-20 lg:flex-row">
             <div className="lg:w-full lg:max-w-2xl lg:flex-auto">
-              <p className="text-xl leading-8 text-gray-600">
+              <p className="mt-6 text-lg leading-8 text-gray-600">
               At Defacto, our mission is to revolutionize the delivery industry by providing fast, reliable, and efficient services to our clients. We believe in delivering more than just packages; we deliver trust, reliability, and peace of mind.
 
               </p>
               <div className="mt-10 max-w-xl text-base leading-7 text-gray-700">
-              <p>
+              <p className="mt-6 text-lg leading-8 text-gray-600">
                   Our commitment to excellence drives us to continuously innovate and improve our delivery processes, ensuring that every delivery is executed with precision and care.
                 </p>
-                <p className="mt-10">
+                <p className="mt-6 text-lg leading-8 text-gray-600">
                   With a focus on customer satisfaction and operational excellence, we aim to exceed expectations and set new standards in the delivery industry. Join us on our mission to redefine delivery services and create a world where packages are delivered safely and on time, every time.
                 </p>
               </div>
