@@ -56,20 +56,20 @@ export default function FaqAccordian() {
   return (
     <div>
     {faqs.map((faq, index) => (
-      <Accordion className='bg-primary-600' key={index} expanded={expanded === index} onChange={handleChange(index)}>
+      <Accordion slots={{ transition: Fade as AccordionSlots['transition'] }}
+      slotProps={{ transition: { timeout: 400 } }}
+      sx={{
+        '& .MuiAccordion-region': { height: expanded ? 'auto' : 0 },
+        '& .MuiAccordionDetails-root': { display: expanded ? 'block' : 'none' },
+      }} className='bg-primary-600' key={index} expanded={expanded === index} onChange={handleChange(index)}>
         <AccordionSummary
-          expandIcon={expanded === index ? <MinusIcon className='text-white'/> : <PlusIcon className='text-white'/>}
-          aria-controls={`panel${index + 1}-content`}
-          id={`panel${index + 1}-header`}
-          slots={{ transition: Fade as AccordionSlots['transition'] }}
-          slotProps={{ transition: { timeout: 400 } }}
-          sx={{
-            '& .MuiAccordion-region': { height: expanded ? 'auto' : 0 },
-            '& .MuiAccordionDetails-root': { display: expanded ? 'block' : 'none' },
-          }}
-        >
-          <Typography className='text-white'>{faq.question}</Typography>
-        </AccordionSummary>
+  expandIcon={expanded === index ? <MinusIcon className='text-white' /> : <PlusIcon className='text-white' />}
+  aria-controls={`panel${index + 1}-content`}
+  id={`panel${index + 1}-header`}
+
+>
+  <Typography className='text-white'>{faq.question}</Typography>
+</AccordionSummary>
         <AccordionDetails>
           <Typography className='text-white'>{faq.answer}</Typography>
         </AccordionDetails>
