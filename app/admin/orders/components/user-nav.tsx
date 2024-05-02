@@ -1,3 +1,4 @@
+"use client";
 import {
   Avatar,
   AvatarFallback,
@@ -14,8 +15,36 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {useRouter} from "next/navigation";
 
 export function UserNav() {
+  const router = useRouter();
+
+  async function handleLogout() {
+
+    try {
+
+      await fetch(`/api/auth/logout`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+    } catch (error) {
+      console.log(error);
+    }
+
+    // clear the token
+
+    localStorage.removeItem("auth-token")
+
+    router.push("/admin/login")
+
+    // redirect to login page
+
+
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -52,7 +81,7 @@ export function UserNav() {
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleLogout}>
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>

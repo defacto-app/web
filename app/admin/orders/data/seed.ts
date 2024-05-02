@@ -13,7 +13,7 @@ const tasks = Array.from({ length: 100 }, () => ({
 }))
 
 fs.writeFileSync(
-  path.join(__dirname, "tasks.json"),
+  path.join(__dirname, "orders.json"),
   JSON.stringify(tasks, null, 2)
 )
 

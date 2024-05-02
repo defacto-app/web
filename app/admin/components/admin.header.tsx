@@ -25,7 +25,31 @@ import {
 import {Input} from "@/components/ui/input"
 import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet"
 import AdminUserAction from "@/app/admin/components/AdminUserAction";
+import {UserNav} from "@/app/admin/orders/components/user-nav";
 
+const navigation = [
+    {
+        title: "Dashboard",
+        href: "/admin"
+    },
+    {
+        title: "Orders",
+        href: "/admin/orders"
+    },
+    {
+        title: "Products",
+        href: "/admin/products"
+    },
+    {
+        title: "Users",
+        href: "/admin/users"
+    },
+    {
+        title: "Analytics",
+        href: "/admin/analytics"
+    }
+
+]
 
 export function AdminHeader() {
 
@@ -44,36 +68,18 @@ export function AdminHeader() {
                         <Package2 className="h-6 w-6"/>
                         <span className="sr-only">Acme Inc</span>
                     </Link>
-                    <Link
-                        href="/admin"
-                        className="text-foreground transition-colors hover:text-foreground"
-                    >
-                        Dashboard
-                    </Link>
-                    <Link
-                        href="/admin/orders"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                        Orders
-                    </Link>
-                    <Link
-                        href="#"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                        Products
-                    </Link>
-                    <Link
-                        href="/admin/users"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                        Customers
-                    </Link>
-                    <Link
-                        href="#"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                        Analytics
-                    </Link>
+                    {
+                        navigation.map((navItem) => (
+                            <Link
+                                href={navItem.href}
+                                key={navItem.title}
+                                className="text-foreground transition-colors hover:text-foreground"
+                            >
+                                {navItem.title}
+                            </Link>
+                        ))
+                    }
+                    
                 </nav>
                 <Sheet>
                     <SheetTrigger asChild>
@@ -95,33 +101,18 @@ export function AdminHeader() {
                                 <Package2 className="h-6 w-6"/>
                                 <span className="sr-only">Acme Inc</span>
                             </Link>
-                            <Link href="#" className="hover:text-foreground">
-                                Dashboard
-                            </Link>
-                            <Link
-                                href="#"
-                                className="text-muted-foreground hover:text-foreground"
-                            >
-                                Orders
-                            </Link>
-                            <Link
-                                href="#"
-                                className="text-muted-foreground hover:text-foreground"
-                            >
-                                Products
-                            </Link>
-                            <Link
-                                href="#"
-                                className="text-muted-foreground hover:text-foreground"
-                            >
-                                Customers
-                            </Link>
-                            <Link
-                                href="#"
-                                className="text-muted-foreground hover:text-foreground"
-                            >
-                                Analytics
-                            </Link>
+                            {
+                                navigation.map((navItem) => (
+                                    <Link
+                                        href={navItem.href}
+                                        key={navItem.title}
+                                        className="text-foreground transition-colors hover:text-foreground"
+                                    >
+                                        {navItem.title}
+                                    </Link>
+                                ))
+                            }
+                        
                         </nav>
                     </SheetContent>
                 </Sheet>
@@ -136,7 +127,7 @@ export function AdminHeader() {
                             />
                         </div>
                     </form>
-                    <AdminUserAction/>
+                    <UserNav/>
                  
                 </div>
             </header>
