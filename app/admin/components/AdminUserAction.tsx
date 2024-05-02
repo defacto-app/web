@@ -17,7 +17,7 @@ export default function AdminUserAction() {
 
         try {
 
-        await fetch(`/api/auth/logout`, {
+            await fetch(`/api/auth/logout`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

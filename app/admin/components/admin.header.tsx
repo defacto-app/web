@@ -51,7 +51,7 @@ export function AdminHeader() {
                         Dashboard
                     </Link>
                     <Link
-                        href="#"
+                        href="/admin/orders"
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
                         Orders

@@ -15,7 +15,7 @@ async function getData(): Promise<Payment[]> {
     return await getUsers()
 }
 
-export default async function DemoPage() {
+export default async function AllUsers() {
 
     const data = await getData()
 
