@@ -6,8 +6,8 @@ import FaqAccordian from "./FaqAccordian";
 export default function FaqSection() {
   return (
     <div className="bg-white">
-   <div className=" block p-24 lg:py-32">
-   <div className="bg-primary-600 rounded-xl container mx-auto flex flex-col lg:flex-row items-center justify-between px-6 lg:px-0">
+   <div className=" block lg:py-32 sm:mb-20">
+   <div className="bg-primary-600 rounded-xl container mx-auto flex flex-col lg:flex-row items-center justify-between px-2 lg:px-0">
       {/* Image */}
       <div className="w-full lg:w-1/2 lg:pr-12">
         <Image
