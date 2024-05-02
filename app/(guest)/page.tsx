@@ -4,7 +4,6 @@ import SendReceive from "@/components/home/SendReceive";
 import CtaSection from "@/components/home/CtaSection";
 import BecomeRider from "@/components/home/BecomeRider";
 import FaqSection from "@/components/FaqSection";
-import Accordian from "@/components/FaqAccordian";
 
 export default function HomePage() {
   return (
