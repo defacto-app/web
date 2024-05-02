@@ -43,7 +43,7 @@ type ResponseType = {
 
 }
 
-export async function POST(request: { json: () => any; }) {
+export async function POST(request: any) {
     try {
         const body = await request.json();
 
