@@ -1,4 +1,4 @@
-import FaqSection from '@/components/home/FaqSection'
+import FaqSection from '@/components/FaqSection'
 import React from 'react'
 
 export default function faqpage() {
