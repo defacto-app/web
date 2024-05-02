@@ -15,7 +15,6 @@ import {Button} from "@/components/ui/button";
 // You can use a Zod schema here if you want.
 export type Payment = {
     id: string
-    amount: number
     status: "pending" | "processing" | "success" | "failed"
     email: string
 }
@@ -32,9 +31,15 @@ export const columns: ColumnDef<Payment>[] = [
         header: "Email",
     },
     {
-        accessorKey: "amount",
-        header: "Amount",
+        accessorKey: "phoneNumber",
+        header: "Phone Number",
     },
+    {
+        accessorKey: "provider",
+        header: "Provider",
+    },
+
+ 
     {
         id: "actions",
         cell: ({ row }) => {

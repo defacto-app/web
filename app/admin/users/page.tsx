@@ -10,32 +10,22 @@ async function getUsers() {
 }
 
 async function getData(): Promise<Payment[]> {
-  // Fetch data from your API here.
-  // const response = await getAllUsers()
 
-  // console.log(response, "getAllUsers response")
-  return [
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "mSW@example.com",
-    },
-  ]
+
+    return await getUsers()
 }
 
 export default async function DemoPage() {
-  const data = await getData()
 
-   const _result=  await getUsers()
+    const data = await getData()
 
-  return (
-      <div className="container mx-auto py-10">
-          {JSON.stringify(_result)}
-          {/*// sen to tables*/}
-        <DataTable columns={columns} data={data} />
-      </div>
-  )
+    return (
+        <div className="container mx-auto py-10">
+            {JSON.stringify(data.length)}
+            {/*// sen to tables*/}
+            <DataTable columns={columns} data={data}/>
+        </div>
+    )
 }
 
 
