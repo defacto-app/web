@@ -8,17 +8,11 @@ export default function BecomeRider() {
   return (
     <div>
       <div className="relative bg-white py-4">
-        <div
-          className="absolute inset-x-0 top-0 hidden h-1/2  lg:block"
-          aria-hidden="true"
-        />
-        <div className="mx-auto max-w-7xl  lg:bg-transparent lg:px-8">
+
+        <div >
           <div className="lg:grid lg:grid-cols-12">
             <div className="relative z-10 lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:py-16">
-              <div
-                className="absolute inset-x-0 h-1/2  lg:hidden"
-                aria-hidden="true"
-              />
+
               <div className="mx-auto max-w-md px-6 sm:max-w-3xl lg:max-w-none lg:p-0">
                 <div className="aspect-h-6 aspect-w-10 sm:aspect-h-1 sm:aspect-w-2 lg:aspect-w-1">
                   <Image
@@ -33,7 +27,7 @@ export default function BecomeRider() {
             </div>
 
             <div className="relative  lg:col-span-10 lg:col-start-3 lg:row-start-1 lg:grid lg:grid-cols-10 lg:items-center lg:rounded-3xl">
-              <div className="relative mx-auto max-w-md space-y-6 px-6 py-12 sm:max-w-3xl sm:py-16 lg:col-span-6 lg:col-start-4 lg:max-w-none lg:p-0">
+              <div className=" container relative mx-auto max-w-md space-y-6 py-12  sm:py-16 lg:col-span-6 lg:col-start-4 lg:max-w-none lg:p-0">
                 <h2
                   className="text-4xl sm:text-6xl font-bold tracking-tight "
                   id="join-heading"
