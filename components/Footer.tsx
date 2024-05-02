@@ -6,13 +6,11 @@ const navigation = {
   support: [
     { name: "Delivery", href: "/contact" },
     { name: "Customers", href: "/contact" },
-    { name: "Drivers", href: "/contact" },
     { name: "Riders", href: "/rider" },
   ],
   company: [
     { name: "About", href: "about" },
     { name: "FAQs", href: "faq" },
-    { name: "Be a Rider/Driver", href: "/rider" },
     { name: "Contact Us", href: "/contact" },
   ],
   legal: [
