@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { BikeIcon } from "lucide-react";
 
 export default function HeroSection() {
   const logos = [
@@ -61,14 +62,14 @@ export default function HeroSection() {
           fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)"
         />
       </svg>
-      <div className="container px-3 pb-10 pt-10 sm:pb-10 lg:flex lg:px-8 lg:py-10">
+      <div className="container px-3 pb-10 pt-10 sm:pb-10 lg:flex lg:px-8 lg:py-4">
         <div className="mx-auto container max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
           <div className="mt-24 sm:mt-32 lg:mt-16">
             <a href="#" className="inline-flex space-x-6">
-              {/* <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
-                <span>Become a Rider</span>
-               <ChevronRightIcon className='text-primary-600'/>
-              </span> */}
+              <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
+                <span>Riders Available</span>
+               <BikeIcon className='text-primary-600'/>
+              </span>
             </a>
           </div>
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-primary-600 sm:text-6xl">

@@ -7,6 +7,7 @@ import {
   ShoppingBag,
   User,
   UserRoundCogIcon,
+  Menu,
 } from "lucide-react";
 import UserAuth from "./UserAuth";
 import { UserProvider } from "@/app/provider/auth.context";
@@ -94,7 +95,7 @@ export default function Header() {
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
-            <SquareMenu
+            <Menu
               className="h-6 w-6 text-primary-600"
               aria-hidden="true"
             />

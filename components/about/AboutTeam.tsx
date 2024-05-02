@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import React from 'react'
 
 export default function AboutTeam() {
@@ -34,7 +35,10 @@ export default function AboutTeam() {
           >
             {team.map((person) => (
               <li key={person.name}>
-             {/*   <img className="mx-auto h-24 w-24 rounded-full" src={person.imageUrl} alt="" /> */}{/**/}
+               <Image
+               className="mx-auto h-24 w-24 rounded-full" src={person.imageUrl} alt="team"
+                width={100}
+                height={100} />
                 <h3 className="mt-6 text-base font-semibold leading-7 tracking-tight text-gray-900">{person.name}</h3>
                 <p className="text-sm leading-6 text-gray-600">{person.role}</p>
               </li>
