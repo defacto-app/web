@@ -27,8 +27,8 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="/logo.png" />
-        <meta property="og:image:width" content="1200" />
+        <meta property="og:image" content="/defacto.png" />
+        <meta property="og:image:width" content="600" />
         <meta property="og:image:height" content="630" />
         <link rel="icon" href="/favicon.ico" />
       </head>
