@@ -16,9 +16,9 @@ export async function $adminHttp(url: string | URL | Request, options: {
   };
 
   // When sending FormData, do not set the Content-Type header
-  if (!(options.body instanceof FormData)) {
+ /* if (!(options.body instanceof FormData)) {
     headers['Content-Type'] = "application/json";
-  }
+  }*/
 
   const response = await fetch(url, {
     method: options.method || 'GET',

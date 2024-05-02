@@ -113,7 +113,7 @@ export default function AdminLogin() {
         };*/
 
     async function sendEmailOtp() {
-        console.log(formData.email);
+        console.log(JSON.stringify({email: formData.email}), "hows");
 
         setIsPending(true);
 
@@ -124,9 +124,12 @@ export default function AdminLogin() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({email: formData.email, otp: formData.otp}),
+
             };
+
 
             const res = await $adminHttp(url, options);
 
@@ -176,7 +179,6 @@ export default function AdminLogin() {
                             <p className={`text-red-500 p-4`}>{errors.email}</p>
                         )}
                     </div>
-                    {JSON.stringify(formData)}
                     <InputOTPPattern setOtp={setOtp}/>
                     {errors.otp && (
                         <p className={`text-red-500 p-4`}>{errors.otp}</p>
