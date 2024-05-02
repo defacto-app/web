@@ -26,9 +26,8 @@ export default function SendReceive() {
               </h2>
               <p className="mt-4  text-gray-600">
               At Defacto Delivery, we pride ourselves on delivering not just packages, but peace of mind. Our dedicated team ensures that your items reach their destination safely and on time, every time. With our intuitive app, you can track your deliveries in real-time, communicate with your delivery agent, and rest assured that your items are in trusted hands. Say goodbye to delivery worries and hello to hassle-free service with Defacto Delivery. </p>
-              <div className="mt-8 flex gap-2">
-               <Button size="lg" variant="primary2">About Us</Button>
-               <Button size="lg" variant="outline">Call Us</Button>
+              <div className="mt-8 flex place-content-center gap-2">
+               <Button  variant="primary" className="py-5 w-full px-24">About Us</Button>
               </div>
             </div>
           </div>

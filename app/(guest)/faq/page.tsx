@@ -1,4 +1,4 @@
-import Questions from '@/components/Questions'
+import FaqSection from '@/components/home/FaqSection'
 import React from 'react'
 
 export default function faqpage() {
@@ -12,7 +12,7 @@ export default function faqpage() {
           </a>{' '}
           and we’ll get back to you as soon as we can.
         </p>
-<Questions/>
+<FaqSection/>
     </div>
   )
 }
