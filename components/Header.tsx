@@ -72,6 +72,9 @@ export default function Header() {
               <Link href="/admin">
                 <UserRoundCogIcon className="text-red-500" size={20} />
               </Link>
+              <Link href="/user">
+                <UserRoundCogIcon className="text-green-500" size={20} />
+              </Link>
             </motion.div>
           )}
           <UserProvider>
