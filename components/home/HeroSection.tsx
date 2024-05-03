@@ -8,7 +8,6 @@ export default function HeroSection() {
     {
       src: "https://tailwindui.com/img/logos/tuple-logo-gray-400.svg",
       alt: "Tuple",
-
     },
     {
       src: "https://tailwindui.com/img/logos/mirage-logo-gray-400.svg",
@@ -33,7 +32,14 @@ export default function HeroSection() {
       className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1"
       key={index}
     >
-      <Image className="h-12" src={logo.src} alt={logo.alt} width={100} height={100}style={{ width: "100%", height: "auto" }}/>
+      <Image
+        className="h-12"
+        src={logo.src}
+        alt={logo.alt}
+        width={100}
+        height={100}
+        style={{ width: "100%", height: "auto" }}
+      />
     </div>
   ));
 
@@ -68,7 +74,7 @@ export default function HeroSection() {
             <a href="#" className="inline-flex space-x-6">
               <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
                 <span>Riders Available</span>
-               <BikeIcon className='text-primary-600'/>
+                <BikeIcon className="text-primary-600" />
               </span>
             </a>
           </div>
@@ -87,19 +93,20 @@ export default function HeroSection() {
           </div>
         </div>
         <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
-          <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
-            <div className="  lg:p-4">
-              <div className="grid justify-items-center">
-              <Image
-  className="object-cover w-full h-auto sm:max-w-md"
-  src="/heroimage.svg"
-  alt=""
-width={1000}
-height={1000}/>
-              </div>
-            </div>
-          </div>
-        </div>
+  <div className="max-w-full sm:max-w-md flex-none  lg:max-w-none">
+    <div className="lg:p-4">
+      <div className="grid justify-items-center">
+        <Image
+          className="object-cover w-full h-auto"
+          src="/heroimage.svg"
+          alt="rider vector"
+          width={1000}
+          height={1000}
+        />
+      </div>
+    </div>
+  </div>
+</div>
       </div>
       <div className="container">
         <div className="  py-16 ">
