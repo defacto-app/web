@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 
 const navigation = {
 
@@ -46,11 +47,8 @@ export default function Footer() {
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div className="">
-                {/* <img src=""
-               alt=""
-                width={1824}
-                height={1080}/> */}
-                 <svg
+
+                 {/* <svg
             width="139"
             height="67"
             viewBox="0 0 139 67"
@@ -159,7 +157,19 @@ export default function Footer() {
                 />
               </clipPath>
             </defs>
-          </svg>
+          </svg> */}
+          <div>
+          <Link href="/">
+            <span className="sr-only">Your Company</span>
+            <Image
+              className="h-14 w-auto"
+              src="/logo.png"
+              alt=""
+              width={100}
+              height={100}
+            />
+          </Link>
+          </div>
               </div>
               <div className="mt-10 md:mt-0">
                 <h3 className="text-sm leading-6 text-primary-600 font-semibold">

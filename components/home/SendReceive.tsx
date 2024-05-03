@@ -8,7 +8,6 @@ export default function SendReceive() {
       <div>
         <div className="relative  bg-white">
           <div className="mx-auto lg:grid lg:grid-cols-2 lg:gap-x-8 ">
-            {/* Image Section */}
             <div className="lg:col-span-1 mx-auto">
               <Image
                 className=" object-cover w-full sm:px-4 h-auto sm:max-w-md"
@@ -19,8 +18,7 @@ export default function SendReceive() {
               />
 
             </div>
-            {/* Writeup Section */}
-            <div className="lg:col-span-1  lg:text-start sm:text-center lg:px-6 px-6 py-10 sm:py-20">
+            <div className="lg:col-span-1  lg:text-start sm:text-start lg:px-6 px-6 py-10 sm:py-20">
               <h2 className="text-4xl sm:text-6xl font-bold text-primary-600">
                 Send And Receive Packages Swiftly<br />  with Defacto Delivery
               </h2>

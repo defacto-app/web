@@ -23,12 +23,14 @@ export default function RiderPage() {
   return (
     <div>
       <div className="relative bg-white">
-        <div className="lg:absolute lg:inset-0 lg:left-1/2">
-          <Image
-            className="h-64 w-full bg-gray-50 object-cover sm:h-80 lg:absolute lg:h-full"
-            src="/rider/deliveryguy.png"
-            alt=""
-          />
+        <div className="lg:absolute lg:inset-0 sm:h-full lg:left-1/2">
+        <Image
+  className="h-auto sm:h-auto lg:h-full w-full bg-gray-50 object-cover lg:absolute"
+  src="/rider/deliveryguy.png"
+  alt=""
+  width={1000}
+  height={2000}
+/>
         </div>
         <div className="py-6 sm:pb-32 sm:pt-24 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:pt-32">
           <div className="px-6 lg:px-8">
@@ -109,9 +111,11 @@ export default function RiderPage() {
                     )}
                   </div>
                   </div>
+                  <div className="pt-10">
                   <Button variant="primary" type="submit" className="w-full">
-                    Submit
+  Submit
                   </Button>
+                  </div>
                 </CardContent>
               </Card>
             </div>
