@@ -1,4 +1,5 @@
 import FaqAccordion from '@/components/FaqAccordian'
+import FaqSection from '@/components/FaqSection'
 import React from 'react'
 
 export default function faqpage() {
@@ -13,6 +14,7 @@ export default function faqpage() {
           </a>{' '}
           and we’ll get back to you as soon as we can.
         </p>
+{/* <FaqSection/> */}
     </div>
     <div className='container'>
     <FaqAccordion/>
