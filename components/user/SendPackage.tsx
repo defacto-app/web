@@ -92,7 +92,7 @@ export default function SendPackage() {
             name="bio"
             render={({ field }) => (
               <FormItem>
-                <FormLabel> <div className='block text-lg font-semibold mb-2'> Additional Information </div></FormLabel>
+                <FormLabel> <div className='block text-lg bg-gray-200 font-semibold mb-2'> Additional Information </div></FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="e.g Knock 3 times on the gate!"
