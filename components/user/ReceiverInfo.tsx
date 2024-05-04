@@ -13,7 +13,7 @@ export default function ReceiverInfo() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-            <div className='py-10 bg-gray-100 p-4 rounded-lg shadow-gray-500  text-start  '><h1 className='sm:text-3xl font-semibold text-xl text-primary-600'>Receiver Information</h1></div>
+            <div className='py-10 bg-gray-100 p-4 rounded-lg shadow-gray-500  text-start  '><h1 className='sm:text-xl font-semibold text-lg text-primary-600'>Receiver Information</h1></div>
 
       <div className="mb-6">
       <div className="mb-4 mt-4">

@@ -1,5 +1,5 @@
-"use client"
-import React from 'react';
+"use client";
+import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -16,9 +16,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from '../ui/input';
+import { Input } from "../ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { Label } from '../ui/label';
+import { Label } from "../ui/label";
 
 const FormSchema = z.object({
   bio: z
@@ -49,8 +49,11 @@ export default function SendPackage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-            <div className='py-10 bg-gray-100 p-4 rounded-lg shadow-gray-500  text-start  '><h1 className='sm:text-3xl font-semibold text-xl text-primary-600'>Sender Information</h1></div>
-
+      <div className="py-10 bg-gray-100 p-4 rounded-lg shadow-gray-500  text-start  ">
+        <h1 className="sm:text-xl font-semibold text-lg text-primary-600">
+          Sender Information
+        </h1>
+      </div>
 
       <div className="flex mt-4 items-center space-x-2 mb-6">
         <Checkbox id="info" />
@@ -62,9 +65,11 @@ export default function SendPackage() {
         </label>
       </div>
 
-      <div >
-      <div className="mb-4">
-          <Label htmlFor="name" className="block text-lg font-semibold mb-2">Full Name</Label>
+      <div>
+        <div className="mb-4">
+          <Label htmlFor="name" className="block text-lg font-semibold mb-2">
+            Full Name
+          </Label>
           <Input
             id="name"
             name="full-name"
@@ -74,7 +79,9 @@ export default function SendPackage() {
           />
         </div>
         <div className="mb-4">
-          <Label htmlFor="number" className="block text-lg font-semibold mb-2">Phone Number</Label>
+          <Label htmlFor="number" className="block text-lg font-semibold mb-2">
+            Phone Number
+          </Label>
           <Input
             id="number"
             name="number"
@@ -86,13 +93,22 @@ export default function SendPackage() {
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full space-y-6"
+        >
           <FormField
             control={form.control}
             name="bio"
             render={({ field }) => (
               <FormItem>
-                <FormLabel> <div className='block text-lg bg-gray-200 font-semibold mb-2'> Additional Information </div></FormLabel>
+                <FormLabel>
+                  {" "}
+                  <div className="block text-lg p-3 rounded-lg bg-gray-200 font-semibold mb-2">
+                    {" "}
+                    Additional Information{" "}
+                  </div>
+                </FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="e.g Knock 3 times on the gate!"

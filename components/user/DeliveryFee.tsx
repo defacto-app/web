@@ -11,7 +11,7 @@ export default function DeliveryFee() {
 
   return (
     <div className="bg-gray-100 p-4 rounded-md shadow-md md:w-auto md:min-w-max">
-      <div className="text-3xl text-primary-600 font-semibold mb-4">Delivery Fee</div>
+      <div className="sm:text-xl font-semibold text-lg text-primary-600">Delivery Fee</div>
       <div className="mb-4">
         <div className="text-lg">Description:</div>
         <div className="text-gray-700">Pickup from {fromLocation} to {toLocation} in Asaba</div>
