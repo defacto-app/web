@@ -5,7 +5,7 @@ import SendPackage from '@/components/user/SendPackage';
 import WelcomeUser from '@/components/user/WelcomeUser';
 import React from 'react';
 
-export default function UserPage() {
+export default function Page() {
   return (
    <div>
     <div className='container mx-auto px-4'>
