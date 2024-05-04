@@ -21,7 +21,7 @@ export default function DeliveryDetails() {
   const [date, setDate] = React.useState<Date>()
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className='py-10 bg-gray-100 p-4 rounded-lg shadow-gray-500  text-start  '><h1 className='sm:text-3xl font-semibold text-xl text-primary-600'>Delivery Details</h1></div>
+      <div className='py-10 bg-gray-100 p-4 rounded-lg shadow-gray-500  text-start  '><h1 className='sm:text-xl font-semibold text-lg text-primary-600'>Delivery Details</h1></div>
       <div>
         <RadioGroup className='' defaultValue="default">
           <div className="flex items-center space-x-2 py-4">
@@ -40,8 +40,11 @@ export default function DeliveryDetails() {
           </div>
         </RadioGroup>
         <div className="mb-4">
-          <Label htmlFor="calendar" className="block text-lg font-semibold mb-2">Schedule Delivery</Label>
           <div>
+<div className='mb-4 mt-2'>
+<Label htmlFor="calendar" className=" text-lg font-semibold mb-2 p-3 bg-gray-200 rounded-lg">Schedule Delivery</Label>
+
+</div>
           <Popover>
       <PopoverTrigger asChild>
         <Button
