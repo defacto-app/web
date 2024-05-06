@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import EditUserModal from "./EditUserModal";
 
 const getUserDetails = () => {
   return {
@@ -32,9 +33,8 @@ export default function UserPopoverItem() {
           </div>
         </div>
         <div className="mt-2">
-          <Link className="text-blue-500 font-bold" href="/">
-            Edit
-          </Link>
+
+          <EditUserModal/>
         </div>
       </div>
       <div className="border-b border-gray-500"></div>
