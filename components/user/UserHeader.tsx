@@ -74,7 +74,6 @@ export default function UserHeader() {
               </Link>
             </motion.div>
           )}
-          <CircleUser className="text-primary-600"/>
           <UserPopover/>
           <Bell className="text-primary-600"/>
 
