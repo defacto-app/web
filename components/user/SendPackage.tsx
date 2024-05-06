@@ -92,39 +92,7 @@ export default function SendPackage() {
         </div>
       </div>
 
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-6"
-        >
-          <FormField
-            control={form.control}
-            name="bio"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {" "}
-                  <div className="block text-lg p-3 rounded-lg bg-gray-200 font-semibold mb-2">
-                    {" "}
-                    Additional Information{" "}
-                  </div>
-                </FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="e.g Knock 3 times on the gate!"
-                    className="resize-none"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  You can go into a little detail.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </form>
-      </Form>
+
     </div>
   );
 }
