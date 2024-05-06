@@ -5,7 +5,7 @@ const WelcomeUser = () => {
   const user = "John";
 
   return (
-    <div className=" text-gray-200 p-6 rounded-md  flex items-center">
+    <div className=" text-gray-800 p-6 rounded-md  flex items-center">
        <Image
   className=""
   src="/user/welcome.png"

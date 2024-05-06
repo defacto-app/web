@@ -7,6 +7,7 @@ import env from "@/config/env";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import UserPopover from "./UserPopover";
 
 interface NavigationItem {
   name: string;
@@ -74,6 +75,7 @@ export default function UserHeader() {
             </motion.div>
           )}
           <CircleUser className="text-primary-600"/>
+          <UserPopover/>
           <Bell className="text-primary-600"/>
 
         </div>
