@@ -17,7 +17,7 @@ interface NavigationItem {
 
 const navigation = [
   { name: "About", href: "/user/about" },
-  { name: "Faqs", href: "/user/faq" },
+  { name: "FAQs", href: "/user/faq" },
   { name: "Contact", href: "/user/contact" },
 ];
 
