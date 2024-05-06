@@ -9,10 +9,10 @@ export default function Page() {
   return (
    <div>
     <div className='container mx-auto px-4'>
-      <div className='w-full bg-primary-600'>
+      {/* <div className='w-full bg-primary-600'>
       <WelcomeUser/>
 
-      </div>
+      </div> */}
 
       <h1 className="text-start px-1 py-4 text-primary-600 text-3xl font-bold mt-5">Send Package</h1>
     <div className=" lg:grid lg:grid-cols-12 py-8">
