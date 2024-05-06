@@ -2,8 +2,12 @@ import HeroImage from '@/components/user/HeroImage';
 import OrdersSection from '@/components/user/OrdersSection';
 import WelcomeUser from '@/components/user/WelcomeUser';
 import React from 'react';
+import { usePackageFlowContext } from '../provider/packages.context';
 
 export default function UserPage() {
+
+
+
   return (
     <div className='container mx-auto px-4'>
       <div className='grid lg:grid-cols-6 gap-4'>

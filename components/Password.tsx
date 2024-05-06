@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, Key } from "lucide-react"; // Import the Key icon for password
+import { Eye, EyeOff, Key } from "lucide-react";
 import { useAuthContext } from "@/app/provider/auth.context";
 
 function Password() {
