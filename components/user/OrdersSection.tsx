@@ -39,7 +39,7 @@ const orders: Order[] = [
 
 const OrdersSection = () => {
   return (
-   <div className="bg-white container px-8 py-4 rounded-md ">
+   <div className="bg-white container px-8 py-4 rounded-md mt-4">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">Recent Deliveries</h2>
       {orders.map((order) => (
         <div key={order.id} className=" bg-gray-50 rounded-md p-4 mb-4">

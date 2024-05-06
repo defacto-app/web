@@ -14,7 +14,7 @@ const WelcomeUser = () => {
   height={100}
 />
       <div>
-        <h1 className="text-xl font-semibold mb-2">Nice choice {user}, Please send your package.</h1>
+        <h1 className="text-xl font-semibold mb-2">Hello {user}, Please send your package.</h1>
       </div>
     </div>
   );
