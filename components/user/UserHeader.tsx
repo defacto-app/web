@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import UserPopover from "./UserPopover";
+import HistoryPopover from "./HistoryPopover";
 
 interface NavigationItem {
   name: string;
@@ -75,7 +76,7 @@ export default function UserHeader() {
             </motion.div>
           )}
           <UserPopover/>
-          <Bell className="text-primary-600"/>
+          <HistoryPopover/>
 
         </div>
         <div className="flex lg:hidden">

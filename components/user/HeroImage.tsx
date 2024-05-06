@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { CircleArrowRight } from "lucide-react";
+import { ArrowRightIcon, CircleArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function HeroImage() {
@@ -12,7 +12,7 @@ export default function HeroImage() {
             <h1 className="text-4xl sm:text-4xl md:text-2xl lg:text-2xl text-primary-600 font-bold mb-4">Send Package</h1>
             <p className="text-base sm:text-base md:text-base lg:text-base text-gray-700 mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero debitis molestias</p>
           <Link href="/user/send-package">
-          <CircleArrowRight className="text-primary-900 bg-white text-lg rounded-full font-bold"/>
+          <ArrowRightIcon className="text-primary-900 bg-white text-lg rounded-full font-bold"/>
           </Link>
           </div>
           <div className="col-span-12 md:col-span-6 lg:col-span-7">

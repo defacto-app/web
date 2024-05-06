@@ -39,10 +39,10 @@ const orders: Order[] = [
 
 const OrdersSection = () => {
   return (
-   <div className="bg-white container px-8 py-4 rounded-md shadow-md">
+   <div className="bg-white container px-8 py-4 rounded-md ">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">Recent Deliveries</h2>
       {orders.map((order) => (
-        <div key={order.id} className="border border-gray-300 bg-gray-50 rounded-md p-4 mb-4">
+        <div key={order.id} className=" bg-gray-50 rounded-md p-4 mb-4">
           <div className="flex justify-between items-center mb-2">
             <div>
               <h3 className="font-semibold">{order.locationFrom} to {order.locationTo}</h3>
