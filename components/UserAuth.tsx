@@ -9,7 +9,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import SigninModal from "./auth/SigninModal";
-import { Button } from "./ui/button";
 
 export default function UserAuth() {
   return (
