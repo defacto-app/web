@@ -32,7 +32,7 @@ const EditUserPasswordModal = () => {
     oldPassword: '',
     newPassword: '',
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<{ oldPassword?: string; newPassword?: string }>({});
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
