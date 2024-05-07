@@ -7,7 +7,7 @@ import FaqSection from "@/components/FaqSection";
 
 export default function HomePage() {
   return (
-    <div className="bg-gray-100">
+    <div className="bg-[#FFFBFE]">
 
       <HeroSection/>
       <SendReceive/>

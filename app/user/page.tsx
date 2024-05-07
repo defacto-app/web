@@ -9,7 +9,7 @@ export default function UserPage() {
 
 
   return (
-    <div className='container mx-auto px-4'>
+    <div className='container mx-auto px-4 bg-[#FFFBFE]'>
       <div className='grid lg:grid-cols-6 gap-4'>
         <div className='lg:col-span-3'>
           <WelcomeUser />

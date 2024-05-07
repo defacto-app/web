@@ -85,7 +85,7 @@ export default function HeroSection () {
           />
         </div>
         <div className="overflow-hidden">
-          <div className="mx-auto max-w-7xl px-6 pb-32 pt-16 sm:pt-30 lg:px-8 lg:pt-32">
+          <div className="mx-auto max-w-7xl px-6 pb-22 pt-16 sm:pt-20 lg:px-8 lg:pt-22">
             <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
               <div className="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
                 <h1 className="mt-10 text-4xl font-bold tracking-tight text-black sm:text-6xl">

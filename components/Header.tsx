@@ -41,7 +41,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={`bg-white ${isSticky ? "fixed top-0 left-0 right-0 z-50" : ""}`}>
+    <header className={`bg-[#FFFBFE] ${isSticky ? "fixed top-0 left-0 right-0 z-50" : ""}`}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8" aria-label="Global">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
           <Link href="/">
@@ -60,7 +60,7 @@ export default function Header() {
             <a
               key={item.name}
               href={item.href}
-              className="text-sm leading-6 text-gray-900"
+              className="text-sm leading-6 text-gray-900 font-semibold"
             >
               {item.name}
             </a>
