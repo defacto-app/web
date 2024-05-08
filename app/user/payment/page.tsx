@@ -1,4 +1,5 @@
 import DeliveryFee from "@/components/user/DeliveryFee";
+import PaymentModal from "@/components/user/PaymentModal";
 import {
   ChevronRight,
   LocateFixedIcon,
@@ -8,6 +9,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+
 
 export default function page() {
   return (
@@ -53,7 +55,7 @@ export default function page() {
                         <p>UserEmail</p>
                       </div>
                       <div>
-                        <ChevronRight />
+                        <PaymentModal/>
                       </div>
                     </div>
                   </div>{" "}
