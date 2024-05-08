@@ -25,10 +25,15 @@ export default function Page() {
       <div className='col-span-4'>
         <ReceiverInfo/>
       </div>
-      <div>
-        <DeliveryFee/>
-      </div>
+
     </div>
+    <div className='grid grid-cols-5'>
+      <div className='col-span-2'></div>
+      <div className='col-span-3'>
+      <DeliveryFee/>
+
+      </div>
+      </div>
     </div>
    </div>
   );
