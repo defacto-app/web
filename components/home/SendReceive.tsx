@@ -10,8 +10,8 @@ export default function SendReceive() {
           <div className="mx-auto lg:grid lg:grid-cols-2 lg:gap-x-8 ">
             <div className="lg:col-span-1 mx-auto">
               <Image
-                className=" object-cover w-full sm:px-4 h-auto sm:max-w-md"
-                src="/send.png"
+                className=" object-cover w-full sm:px-4 h-auto sm:max-w-md max-w-md"
+                src="/hero/sndhero.png"
                 alt="Your Image"
               width={1824}
               height={1080}

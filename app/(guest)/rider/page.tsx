@@ -26,7 +26,7 @@ export default function RiderPage() {
         <div className="lg:absolute lg:inset-0 sm:h-full lg:left-1/2">
         <Image
   className="h-auto sm:h-auto lg:h-full w-full bg-gray-50 object-cover lg:absolute"
-  src="/rider/deliveryguy.png"
+  src="/rider/logis.png"
   alt=""
   width={1000}
   height={2000}
