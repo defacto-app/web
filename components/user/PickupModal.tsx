@@ -30,7 +30,8 @@ export default function PickupModal() {
     <div className="">
       <Dialog>
         <DialogTrigger asChild>
-          <ChevronRightIcon />
+          <p className="text-lg text-primary-600 font-semibold">Edit</p>
+          {/* <ChevronRightIcon /> */}
         </DialogTrigger>
         <DialogContent className="sm:max-w-[700px] p-20 sm:max-h-[700px]">
           <DialogHeader>

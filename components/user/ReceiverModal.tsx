@@ -17,7 +17,8 @@ export default function ReceiverModal() {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <ChevronRightIcon />
+        <p className="text-lg text-primary-600 font-semibold">Edit</p>
+
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
