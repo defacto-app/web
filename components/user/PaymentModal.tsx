@@ -1,79 +1,80 @@
-"use client"
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { BanknoteIcon, CheckCheckIcon, CheckCircleIcon, CreditCardIcon } from "lucide-react";
+import Image from "next/image";
+import React from "react";
 
-export function PaymentModal() {
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
-
-  const handleSelectPaymentMethod = (paymentMethod: any) => {
-    setSelectedPaymentMethod(paymentMethod);
-  };
-
-  const getPaymentMethodName = () => {
-    if (selectedPaymentMethod === "cash") {
-      return "Pay with Cash";
-    } else if (selectedPaymentMethod === "card") {
-      return "Pay with Card";
-    }
-    return "Choose Payment Method";
-  };
-
+export default function PaymentModal() {
+  const accounts = [
+    {
+      id: "cash",
+      name: "Cash Payment",
+      description: "Pay on delivery",
+      image: "/money.png",
+    },
+    {
+      id: "card",
+      name: "Paystack",
+      description: "Verve ••••7877",
+      image: "/paystack.png",
+    },
+  ];
   return (
     <div>
-      <Dialog>
-        <DialogTrigger className="w-full" asChild>
-          <Button variant="outline">{getPaymentMethodName()}</Button>
-        </DialogTrigger>
-        <DialogContent className="bg-[#FFFBFB] sm:max-w-[425px] rounded-xl">
-          <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-          </DialogHeader>
-          <div>
-            <div
-              className={`grid grid-cols-6 bg-white rounded-xl mb-5 mt-2 p-4 ${
-                selectedPaymentMethod === "cash" ? "ring ring-primary-600" : ""
-              }`}
-              onClick={() => handleSelectPaymentMethod("cash")}
-            >
-              <div className="col-span-1">
-                <BanknoteIcon className="text-primary-600" />
-              </div>
-              <div className="col-span-4">
-                <h1>Pay with Cash</h1>
-              </div>
-              <div className="col-span-1">
-                {selectedPaymentMethod === "cash" && <CheckCircleIcon className=" text-primary-600" />}
-              </div>
-            </div>
-            <div
-              className={`grid grid-cols-6 bg-white rounded-xl mb-5 mt-2 p-4 ${
-                selectedPaymentMethod === "card" ? "ring ring-primary-600" : ""
-              }`}
-              onClick={() => handleSelectPaymentMethod("card")}
-            >
-              <div className="col-span-1">
-                <CreditCardIcon className="text-primary-600"/>
-              </div>
-              <div className="col-span-4">
-                <h1>Pay with Card</h1>
-              </div>
-              <div className="col-span-1">
-                {selectedPaymentMethod === "card" && <CheckCircleIcon className=" text-primary-600"/>}
-              </div>
-            </div>
-          </div>{" "}
+      <div>
+        <div className="bg-primary-600 p-5 rounded-lg mb-4 mt-4">
+          <h1 className=" font-semibold text-xl text-gray-200">
+            Choose Payment Method
+          </h1>
+        </div>
+        <p className="mt-1 text-sm text-gray-500">
+          Choose your desired payment method
+        </p>
+        <fieldset className="mt-2">
+          <legend className="sr-only">Bank account</legend>
+          <div className="divide-y divide-gray-200">
+            {accounts.map((account, accountIdx) => (
+              <div
+                key={accountIdx}
+                className="relative flex gap-x-2 items-start pb-4 pt-3.5"
+              >
+                <div>
+                  <Image
+                   id={`account-${account.id}-image`}
+                    className=""
+                    src={account.image}
+                    alt="team"
+                    width={50}
+                    height={50}
+                  />
+                </div>
 
-        </DialogContent>
-      </Dialog>
+                <div className="min-w-0 flex-1 text-lg leading-6">
+                  <label
+                    htmlFor={`account-${account.id}`}
+                    className="font-medium text-gray-900"
+                  >
+                    {account.name}
+                  </label>
+                  <p
+                    id={`account-${account.id}-description`}
+                    className="text-gray-500"
+                  >
+                    {account.description}
+                  </p>
+                </div>
+                <div className="ml-3 flex h-6 items-center">
+                  <input
+                    id={`account-${account.id}`}
+                    aria-describedby={`account-${account.id}-description`}
+                    name="account"
+                    type="radio"
+                    defaultChecked={account.id === "cash"}
+                    className="h-4 w-4 border-gray-300 text-primary-600 focus:ring-primary-600"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </fieldset>
+      </div>
     </div>
   );
 }

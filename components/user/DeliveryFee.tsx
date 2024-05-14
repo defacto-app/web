@@ -12,7 +12,7 @@ export default function DeliveryFee() {
   const toLocation = "Airport";
 
   return (
-    <div className="bg-primary-600 border text-gray-200 border-primary-200 p-4 rounded-xl shadow-md md:w-auto md:min-w-max">
+    <div className="bg-white border text-gray-700 border-primary-600 p-4 rounded-xl shadow-md md:w-auto md:min-w-max">
 
      <div className='grid grid-cols-7'>
       <div className='col-span-2 grid place-content-center'>
@@ -23,7 +23,7 @@ export default function DeliveryFee() {
         <div className="text-lg">Delivery Cost:</div>
         <div className="text-lg font-semibold">₦{deliveryCost.toFixed(2)}</div>
       </div>
-      <div className="border-t border-primary-100"></div>
+      <div className="border-t border-primary-600"></div>
 
       <div className="flex justify-between items-center">
         <div className="text-lg font-semibold">Total:</div>
@@ -34,7 +34,7 @@ export default function DeliveryFee() {
 
      </div>
      <div className="mt-4 grid place-items-center">
-        <Button variant="secondary" >Checkout</Button>
+        <Button variant="primary" >Checkout</Button>
       </div>
     </div>
   );
