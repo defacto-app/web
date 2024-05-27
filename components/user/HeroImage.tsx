@@ -15,7 +15,7 @@ export default function HeroImage() {
                 Send Package
               </h1>
               <p className="text-base sm:text-base md:text-lg lg:text-lg text-gray-700 mb-5">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit...
               </p>
               <div className="bg-white rounded-xl w-10 h-10 flex justify-center items-center">
                 <ArrowRightIcon className="text-primary-600 text-3xl font-bold" />
