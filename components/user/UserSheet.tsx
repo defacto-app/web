@@ -1,6 +1,6 @@
+'use client'
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import React, { ReactNode } from "react";
 import {
   Sheet,
   SheetClose,
@@ -13,12 +13,16 @@ import {
 } from "@/components/ui/sheet"
 import SheetWelcome from "./SheetWelcome"
 
-export default function UserSheet() {
+interface UserSheetProps {
+  children: ReactNode;
+}
+
+const UserSheet: React.FC<UserSheetProps> = ({ children }) => {
   return (
     <div>
       <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <div>{children}</div>
       </SheetTrigger>
       <SheetContent >
         <SheetHeader>
@@ -38,3 +42,4 @@ export default function UserSheet() {
     </div>
   )
 }
+export default UserSheet;
