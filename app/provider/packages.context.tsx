@@ -1,61 +1,55 @@
-
 import React, { useState, createContext, useContext, ReactNode } from "react";
 
-interface PackageFlowProviderProps {
-  children: React.ReactNode;
-}
-// Define the type for package data
-type PackageData = { /* Define package properties */ };
+// Define the type for the user
+type UserType = { email: string; password: string };
 
-// Define the type for the package flow context
-type PackageFlowContextType = {
+// Define the type for the context
+type UserContextType = {
   currentStep: string;
-  packages: PackageData[];
-  selectedPackages: PackageData[];
-  paymentDetails: any; // Define type for payment details
+  user: UserType;
   goBack: () => void;
-
-  selectPackages: (packages: PackageData[]) => void;
-  setPaymentDetails: (details: any) => void;
+  setUser: (user: UserType) => void;
   setCurrentStep: (step: string) => void;
 };
 
 // Create the context
-const PackageFlowContext = createContext<PackageFlowContextType | undefined>(undefined);
+const UserContext = createContext<UserContextType | undefined>(undefined);
 
-// Custom hook to use the package flow context
-export const usePackageFlowContext = () => {
-  const context = useContext(PackageFlowContext);
+// Create a custom hook to use the context
+export const usePackageContext = () => {
+  const context = useContext(UserContext);
   if (!context) {
-    throw new Error("usePackageFlowContext must be used within a PackageFlowProvider");
+    throw new Error("usePackageContext must be used within a UserProvider");
   }
   return context;
 };
 
-// Provider component for package flow
-export const PackageFlowProvider: React.FC<PackageFlowProviderProps> = ({ children }) => {
-  const allSteps = ["welcome", "select-packages", "payment", "confirmation"];
+// Define the props interface for the provider component
+type UserProviderProps = {
+  children: ReactNode;
+};
 
-  const [packages, setPackages] = useState<PackageData[]>([]); // All available packages
-  const [selectedPackages, setSelectedPackages] = useState<PackageData[]>([]); // Selected packages
-  const [paymentDetails, setPaymentDetails] = useState<any>(null); // Payment details
+// Create the provider component
+export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+  const allSteps = ["welcome", "send"];
+
+  const [user, setUser] = useState<UserType>({ email: "", password: "" });
   const [currentStep, setCurrentStep] = useState<string>(allSteps[0]);
 
   function goBack() {
-    setCurrentStep(allSteps[allSteps.indexOf(currentStep) - 1]);
+    const currentIndex = allSteps.indexOf(currentStep);
+    if (currentIndex > 0) {
+      setCurrentStep(allSteps[currentIndex - 1]);
+    }
   }
 
-  const value: PackageFlowContextType = {
+  const value: UserContextType = {
+    user,
+    setUser,
     currentStep,
-    packages,
-    selectedPackages,
-    paymentDetails,
-    goBack,
-
-    selectPackages: (selected: PackageData[]) => setSelectedPackages(selected),
-    setPaymentDetails,
     setCurrentStep,
+    goBack,
   };
 
-  return <PackageFlowContext.Provider value={value}>{children}</PackageFlowContext.Provider>;
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
