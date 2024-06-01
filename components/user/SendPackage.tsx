@@ -20,6 +20,9 @@ import { Input } from "../ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Label } from "../ui/label";
 import Calender from "./Calender";
+import PickupModal from "./PickupModal";
+import DropoffModal from "./DropoffModal";
+import DeliveryFee from "./DeliveryFee";
 
 const FormSchema = z.object({
   bio: z
@@ -49,9 +52,9 @@ export default function SendPackage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="py-10 bg-gray-100 p-4 rounded-lg shadow-gray-500  text-start  ">
-        <h1 className="sm:text-xl font-semibold text-lg text-primary-600">
+    <div className="container mx-auto px-4 py-8 mt-6">
+      <div className="py-4 bg-gray-100 p-4 rounded-lg shadow-gray-500  text-start  ">
+        <h1 className="sm:text-xl  font-semibold text-lg text-primary-600">
           Sender Information
         </h1>
       </div>
@@ -65,7 +68,16 @@ export default function SendPackage() {
           Use my account Information
         </label>
       </div>
+      <div>
+        <h1 className="text-lg mb-2 text-start font-semibold">Pickup Address</h1>
+      <PickupModal/>
 
+      </div><div>
+        <h1 className="text-lg mt-5 mb-2 text-start font-semibold">Dropoff Address</h1>
+      <DropoffModal/>
+
+      </div>
+<DeliveryFee/>
       <div>
         <div className="mb-4">
           <Label htmlFor="name" className="block text-lg font-semibold mb-2">
