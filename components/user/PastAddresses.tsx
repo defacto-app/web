@@ -29,12 +29,12 @@ export default function PastAddresses({ onSelect }:Props) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="grid place-content-center ">
-        <Button className="" variant="outline"> <HistoryIcon className="mr-2"/> Open Past Addresses </Button>
+        <Button className="w-[600px] mb-1 mt-5 bg-primary-600" > <HistoryIcon className="mr-2"/> Open saved addresses </Button>
 
         </div>
       </DropdownMenuTrigger>
-     <div className="w-[]">
-     <DropdownMenuContent >
+     <div className="w-[600px] mt-5">
+     <DropdownMenuContent className="w-[600px]" >
         <DropdownMenuRadioGroup className="font-semibold text-base" value={selectedAddress} onValueChange={handleAddressSelection}>
           {pastAddresses.map((address) => (
             <DropdownMenuRadioItem key={address} value={address}>
