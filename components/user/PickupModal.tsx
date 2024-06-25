@@ -36,17 +36,17 @@ export default function PickupModal() {
       <Dialog>
         <DialogTrigger asChild>
           {savedAddress ? (
-            <Button variant="primary2" className="w-full text-left border rounded px-3 py-2">
+            <Button variant="outline" className="w-full text-left border rounded px-3 py-2">
               <div className="flex items-center">
                 <Map className="mr-2" />
-                <span className="text-gray-200">{savedAddress}</span>
+                <span className="text-gray-600">{savedAddress}</span>
               </div>
             </Button>
           ) : (
-            <Button variant="primary2" className="w-full text-left border rounded px-3 py-2">
-              <div className="flex items-center">
+            <Button variant="outline" className="w-full text-left border rounded px-3 py-2">
+              <div className="flex items-start">
                 <Map className="mr-2" />
-                <span className="text-gray-200">Add your address</span>
+                <span className="text-gray-600">| Add your address</span>
               </div>
             </Button>
           )}

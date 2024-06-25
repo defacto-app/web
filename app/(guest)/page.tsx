@@ -4,17 +4,19 @@ import SendReceive from "@/components/home/SendReceive";
 import CtaSection from "@/components/home/CtaSection";
 import BecomeRider from "@/components/home/BecomeRider";
 import FaqSection from "@/components/FaqSection";
+import FoodHero from "@/components/home/FoodHero";
 
 export default function HomePage() {
   return (
     <div className="bg-[#FFFBFE]">
 
-      <HeroSection/>
-      <SendReceive/>
+      {/* <HeroSection/> */}
+      <FoodHero/>
+      {/* <SendReceive/>
       <CtaSection/>
-      <BecomeRider/>
+      <BecomeRider/> */}
 
-      <FaqSection/>
+      {/* <FaqSection/> */}
 
 
     </div>
