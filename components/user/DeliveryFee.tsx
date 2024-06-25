@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button } from '../ui/button';
+import Image from 'next/image';
+import { HourglassIcon } from 'lucide-react';
 
 export default function DeliveryFee() {
   const deliveryCost = 0.00;
@@ -10,28 +12,27 @@ export default function DeliveryFee() {
   const toLocation = "Airport";
 
   return (
-    <div className="bg-gray-100 p-4 rounded-md shadow-md md:w-auto md:min-w-max">
-      <div className="sm:text-xl font-semibold text-lg text-primary-600">Delivery Fee</div>
-      <div className="mb-4">
-        <div className="text-lg">Description:</div>
-        <div className="text-gray-700">Pickup from {fromLocation} to {toLocation} in Asaba</div>
+    <div className="bg-secondary-500 mt-4 text-gray-200 border border-primary-600 py-2  md:w-auto md:min-w-max">
+
+     <div className='grid grid-cols-7'>
+      <div className='col-span-2 text-start grid place-content-center'>
+        Delivery Fee
       </div>
-      <div className="mb-4">
-        <div className="text-lg">Subtotal:</div>
-        <div className="text-lg font-semibold">₦{subtotal.toFixed(2)}</div>
+      <div className='col-span-3'></div>
+      <div className='col-span-2'>
+      <div>
+        <div className="text-lg text-end px-2 font-semibold">₦{deliveryCost.toFixed(2)}</div>
       </div>
-      <div className="mb-4">
-        <div className="text-lg">Delivery Cost:</div>
-        <div className="text-lg font-semibold">₦{deliveryCost.toFixed(2)}</div>
-      </div>
-      <hr className="my-4" />
-      <div className="flex justify-between items-center">
+
+      {/* <div className="flex justify-between items-center">
         <div className="text-lg font-semibold">Total:</div>
         <div className="text-lg font-semibold">₦{total.toFixed(2)}</div>
+      </div> */}
       </div>
-      <div className="mt-4">
-        <Button variant="primary" className="w-full">Checkout</Button>
-      </div>
+
+
+     </div>
+
     </div>
   );
 }
