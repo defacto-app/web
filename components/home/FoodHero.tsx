@@ -3,8 +3,28 @@ import React from "react";
 import PickupModal from "../user/PickupModal";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { TypewriterEffect } from "./Typewriter";
 
 function FoodHero() {
+
+  const words = [
+    {
+      text: "Feast",
+    },
+    {
+      text: "your senses",
+    },
+    {
+      text: "Fast ",
+    },
+    {
+      text: "and Fresh",
+    },
+    {
+      text: "Aceternity.",
+      className: "text-blue-500 dark:text-blue-500",
+    },
+  ];
   return (
     <div>
       <main>
@@ -33,14 +53,15 @@ function FoodHero() {
                       />
                     </a>
                   </div>
-                  <h1 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-6xl lg:mt-6 xl:text-6xl">
+                  {/* <h1 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-6xl lg:mt-6 xl:text-6xl">
                     <span className="block text-primary-600">
                       Feast your Senses
                     </span>
                     <span className="block text-primary-400">
                       Fast and Fresh
                     </span>
-                  </h1>
+                  </h1> */}
+                  <TypewriterEffect words={words}/>
                   <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                     Enter your address to see what we deliver
                   </p>
