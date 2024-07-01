@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import PickupModal from "./user/PickupModal";
 
 interface NavigationItem {
   name: string;

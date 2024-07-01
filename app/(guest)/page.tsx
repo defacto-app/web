@@ -8,7 +8,7 @@ import FoodHero from "@/components/home/FoodHero";
 
 export default function HomePage() {
   return (
-    <div className="bg-[#FFFBFE]">
+    <div className="bg-[#FFFBFE] ">
 
       {/* <HeroSection/> */}
       <FoodHero/>

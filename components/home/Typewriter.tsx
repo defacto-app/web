@@ -1,187 +1,117 @@
-"use client";
+"use client"
 
-import { cn } from "@/utils/cn";
-import { motion, stagger, useAnimate, useInView } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react"
+import { animate, motion, useMotionValue, useTransform } from "framer-motion"
 
-export const TypewriterEffect = ({
-  words,
-  className,
-  cursorClassName,
-}: {
-  words: {
-    text: string;
-    className?: string;
-  }[];
-  className?: string;
-  cursorClassName?: string;
-}) => {
-  // split text inside of words into array of characters
-  const wordsArray = words.map((word) => {
-    return {
-      ...word,
-      text: word.text.split(""),
-    };
-  });
+export interface ITypewriterProps {
+  delay: number
+  texts: string[]
+  baseText?: string
+}
 
-  const [scope, animate] = useAnimate();
-  const isInView = useInView(scope);
+export function Typewriter({ delay, texts, baseText = "" }: ITypewriterProps) {
+  const [animationComplete, setAnimationComplete] = useState(false)
+  const count = useMotionValue(0)
+  const rounded = useTransform(count, (latest) => Math.round(latest))
+  const displayText = useTransform(rounded, (latest) =>
+    baseText.slice(0, latest)
+  )
+
   useEffect(() => {
-    if (isInView) {
-      animate(
-        "span",
-        {
-          display: "inline-block",
-          opacity: 1,
-          width: "fit-content",
-        },
-        {
-          duration: 0.3,
-          delay: stagger(0.1),
-          ease: "easeInOut",
-        }
-      );
+    const controls = animate(count, baseText.length, {
+      type: "tween",
+      delay,
+      duration: 1,
+      ease: "easeInOut",
+      onComplete: () => setAnimationComplete(true),
+    })
+    return () => {
+      controls.stop && controls.stop()
     }
-  }, [isInView]);
-
-  const renderWords = () => {
-    return (
-      <motion.div ref={scope} className="inline">
-        {wordsArray.map((word, idx) => {
-          return (
-            <div key={`word-${idx}`} className="inline-block">
-              {word.text.map((char, index) => (
-                <motion.span
-                  initial={{}}
-                  key={`char-${index}`}
-                  className={cn(
-                    `dark:text-white text-black opacity-0 hidden`,
-                    word.className
-                  )}
-                >
-                  {char}
-                </motion.span>
-              ))}
-              &nbsp;
-            </div>
-          );
-        })}
-      </motion.div>
-    );
-  };
-  return (
-    <div
-      className={cn(
-        "text-base sm:text-xl md:text-3xl lg:text-5xl font-bold text-center",
-        className
-      )}
-    >
-      {renderWords()}
-      <motion.span
-        initial={{
-          opacity: 0,
-        }}
-        animate={{
-          opacity: 1,
-        }}
-        transition={{
-          duration: 0.8,
-          repeat: Infinity,
-          repeatType: "reverse",
-        }}
-        className={cn(
-          "inline-block rounded-sm w-[4px] h-4 md:h-6 lg:h-10 bg-blue-500",
-          cursorClassName
-        )}
-      ></motion.span>
-    </div>
-  );
-};
-
-export const TypewriterEffectSmooth = ({
-  words,
-  className,
-  cursorClassName,
-}: {
-  words: {
-    text: string;
-    className?: string;
-  }[];
-  className?: string;
-  cursorClassName?: string;
-}) => {
-  // split text inside of words into array of characters
-  const wordsArray = words.map((word) => {
-    return {
-      ...word,
-      text: word.text.split(""),
-    };
-  });
-  const renderWords = () => {
-    return (
-      <div>
-        {wordsArray.map((word, idx) => {
-          return (
-            <div key={`word-${idx}`} className="inline-block">
-              {word.text.map((char, index) => (
-                <span
-                  key={`char-${index}`}
-                  className={cn(`dark:text-white text-black `, word.className)}
-                >
-                  {char}
-                </span>
-              ))}
-              &nbsp;
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
+  }, [count, baseText.length, delay])
 
   return (
-    <div className={cn("flex space-x-1 my-6", className)}>
-      <motion.div
-        className="overflow-hidden pb-2"
-        initial={{
-          width: "0%",
-        }}
-        whileInView={{
-          width: "fit-content",
-        }}
-        transition={{
-          duration: 2,
-          ease: "linear",
-          delay: 1,
-        }}
-      >
-        <div
-          className="text-xs sm:text-base md:text-xl lg:text:3xl xl:text-5xl font-bold"
-          style={{
-            whiteSpace: "nowrap",
-          }}
-        >
-          {renderWords()}{" "}
-        </div>{" "}
-      </motion.div>
-      <motion.span
-        initial={{
-          opacity: 0,
-        }}
-        animate={{
-          opacity: 1,
-        }}
-        transition={{
-          duration: 0.8,
+    <span className="inline-block text-4xl text-gray-100 font-semibold overflow-hidden">
+    <motion.span className="text-gray-100 font-bold">{displayText}</motion.span>
+    {animationComplete && <RepeatedTextAnimation texts={texts} delay={delay + 1} />}
+    <BlinkingCursor />
+  </span>
+  )
+}
 
-          repeat: Infinity,
-          repeatType: "reverse",
-        }}
-        className={cn(
-          "block rounded-sm w-[4px]  h-4 sm:h-6 xl:h-12 bg-blue-500",
-          cursorClassName
-        )}
-      ></motion.span>
-    </div>
-  );
-};
+export interface IRepeatedTextAnimationProps {
+  delay: number
+  texts: string[]
+}
+
+const defaultTexts = [
+  "quiz page with questions and answers",
+  "blog Article Details Page Layout",
+  "ecommerce dashboard with a sidebar",
+  "ui like platform.openai.com....",
+  "buttttton",
+  "aop that tracks non-standard split sleep cycles",
+  "transparent card to showcase achievements of a user",
+]
+function RepeatedTextAnimation({
+  delay,
+  texts = defaultTexts,
+}: IRepeatedTextAnimationProps) {
+  const textIndex = useMotionValue(0)
+
+  const baseText = useTransform(textIndex, (latest) => texts[latest] || "")
+  const count = useMotionValue(0)
+  const rounded = useTransform(count, (latest) => Math.round(latest))
+  const displayText = useTransform(rounded, (latest) =>
+    baseText.get().slice(0, latest)
+  )
+  const updatedThisRound = useMotionValue(true)
+
+  useEffect(() => {
+    const animation = animate(count, 60, {
+      type: "tween",
+      delay,
+      duration: 1,
+      ease: "easeIn",
+      repeat: Infinity,
+      repeatType: "reverse",
+      repeatDelay: 1,
+      onUpdate(latest) {
+        if (updatedThisRound.get() && latest > 0) {
+          updatedThisRound.set(false)
+        } else if (!updatedThisRound.get() && latest === 0) {
+          textIndex.set((textIndex.get() + 1) % texts.length)
+          updatedThisRound.set(true)
+        }
+      },
+    })
+    return () => {
+      animation.stop && animation.stop()
+    }
+  }, [count, delay, textIndex, texts, updatedThisRound])
+
+  return <motion.span className="inline text-4xl text-primary-500 font-semibold">{displayText}</motion.span>
+}
+
+const cursorVariants = {
+  blinking: {
+    opacity: [0, 0, 1, 1],
+    transition: {
+      duration: 1,
+      repeat: Infinity,
+      repeatDelay: 0,
+      ease: "linear",
+      times: [0, 0.5, 0.5, 1],
+    },
+  },
+}
+
+function BlinkingCursor() {
+  return (
+    <motion.div
+      variants={cursorVariants}
+      animate="blinking"
+      className=" text-primary-100 sm:text-xl md:text-3xl lg:text-5xl font-bold text-center inline-block h-5 w-[1px] translate-y-1 "
+    />
+  )
+}

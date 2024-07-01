@@ -32,24 +32,18 @@ export default function PickupModal() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <Dialog>
         <DialogTrigger asChild>
-          {savedAddress ? (
-            <Button variant="outline" className="w-full text-left border rounded px-3 py-2">
-              <div className="flex items-center">
-                <Map className="mr-2" />
-                <span className="text-gray-600">{savedAddress}</span>
-              </div>
-            </Button>
-          ) : (
-            <Button variant="outline" className="w-full text-left border rounded px-3 py-2">
-              <div className="flex items-start">
-                <Map className="mr-2" />
-                <span className="text-gray-600">| Add your address</span>
-              </div>
-            </Button>
-          )}
+          <div className="relative w-full grid justify-items-center" >
+            <textarea
+              className="w-full text-left border rounded px-3 py-2 h-12 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-600 cursor-pointer placeholder:text-gray-600"
+              placeholder={savedAddress ? savedAddress : "| Add your address"}
+              readOnly
+              rows={1}
+              style={{ caretColor: "blue", backgroundColor: "white" }}
+            />
+          </div>
         </DialogTrigger>
         <DialogContent id="dialog-trigger" className="sm:max-w-[700px] p-20 sm:max-h-[700px]">
           <svg
