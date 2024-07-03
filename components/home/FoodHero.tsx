@@ -4,9 +4,15 @@ import PickupModal from "../user/PickupModal";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { Typewriter } from "./Typewriter";
+import RotateBetween from "./RotataBetween";
 
 function FoodHero() {
   const texts = [
+    "cravings are delivered",
+    "We Deliver",
+    "Order with speed",
+    "Order with ease",
+  ]; const words = [
     "cravings are delivered",
     "We Deliver",
     "Order with speed",
@@ -16,9 +22,9 @@ function FoodHero() {
     <div>
       <main>
         <div className="bg-[#03081F] pt-10 sm:pt-16 lg:overflow-hidden lg:pb-14 lg:pt-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="lg:grid lg:grid-cols-9 gap-6">
-              <div className="max-w-md col-span-3 sm:max-w-2xl sm:text-center lg:flex lg:items-center lg:px-0 lg:text-left">
+          <div className="  sm:px-6 lg:px-8">
+            <div className="lg:grid lg:grid-cols-11 gap-6">
+              <div className="max-w-md col-span-4 sm:max-w-2xl sm:text-center lg:flex lg:items-center lg:px-0 lg:text-left">
                 <div>
                   <div className="sm:flex sm:justify-center lg:justify-start mb-5 sm:mb-0">
                     <a href="#" className="flex items-center rounded-full p-1 pr-2 text-white hover:text-gray-200 sm:text-base lg:text-sm xl:text-base">
@@ -33,7 +39,14 @@ function FoodHero() {
                   </div>
 
                   <div className="py-2">
-                    <Typewriter texts={texts} delay={1} baseText="At Defacto, " />
+                  <div className="flex h-20 items-center justify-start space-x-1 px-2 text-4xl font-normal text-primary-600Na dark:text-gray-300">
+        <p>Contribute us to</p>
+        <RotateBetween
+          words={words}
+          className="text-balance  from-primary-500 from-30% to-primary-300/60 bg-clip-text px-1 py-2 font-bold leading-none tracking-tighter dark:from-white dark:to-white/40"
+        />
+      </div>
+                    {/* <Typewriter texts={texts} delay={1} baseText="At Defacto, " /> */}
                     <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                       Enter your address to see what we deliver
                     </p>
@@ -62,7 +75,7 @@ function FoodHero() {
                 </div>
               </div>
 
-              <div className="relative col-span-3 mt-12 lg:m-0">
+              <div className="relative col-span-2 mt-12 lg:m-0">
                 <div className="absolute inset-y-0 left-0 h-full w-full lg:block hidden">
                   <Image
                     src="/hero/bg1.png"
@@ -83,9 +96,9 @@ function FoodHero() {
                 </div>
               </div>
 
-              <div className="col-span-3 grid justify-items-center bg-primary-600 lg:rounded-tl-full lg:mt-0 mt-12 lg:py-0 py-8">
-                <div className="bg-gray-900 w-full rounded-r-xl grid justify-items-center mb-4 mt-44">
-                  <h1 className=" text-xl p-4 font-semibold underline text-primary-500"> Personialised  <span className="text-white">and Instant </span> </h1>
+              <div className="col-span-5 grid justify-items-center bg-primary-600 lg:rounded-tl-full lg:mt-0 mt-12 lg:py-0 py-8">
+                <div className="bg-[#03081F] w-full rounded-r-xl grid justify-items-center mb-4 mt-44 ">
+                  <h1 className=" text-xl p-4 font-semibold "> <span className="underline text-primary-500 italic">Personialised</span>   <span className="text-white">and Instant </span> </h1>
                 </div>
                 <div className="px-4 lg:ml-20 ml-4">
                   <h1 className="lg:px-3 font-bold py-3 inline-block text-xl text-gray-900 text-center">
