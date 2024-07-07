@@ -12,7 +12,8 @@ function FoodHero() {
     "We Deliver",
     "Order with speed",
     "Order with ease",
-  ]; const words = [
+  ];
+  const words = [
     "cravings are delivered",
     "We Deliver",
     "Order with speed",
@@ -23,35 +24,44 @@ function FoodHero() {
       <main>
         <div className="bg-[#03081F] pt-10 sm:pt-16 lg:overflow-hidden lg:pb-14 lg:pt-8">
           <div className="  sm:px-6 lg:px-8">
-            <div className="lg:grid lg:grid-cols-11 gap-6">
-              <div className="max-w-md col-span-4 sm:max-w-2xl sm:text-center lg:flex lg:items-center lg:px-0 lg:text-left">
+            <div className="lg:grid lg:grid-cols-2 gap-6">
+              <div className="max-w-md col-span-1 sm:max-w-2xl sm:text-center lg:flex lg:items-center lg:px-0 lg:text-left">
                 <div>
                   <div className="sm:flex sm:justify-center lg:justify-start mb-5 sm:mb-0">
-                    <a href="#" className="flex items-center rounded-full p-1 pr-2 text-white hover:text-gray-200 sm:text-base lg:text-sm xl:text-base">
+                    <a
+                      href="#"
+                      className="flex items-center rounded-full p-1 pr-2 text-white hover:text-gray-200 sm:text-base lg:text-sm xl:text-base"
+                    >
                       <span className="text-primary-50 px-3 py-0.5 text-sm font-semibold leading-5">
                         Order from Restaurant
                       </span>
                       <span className="ml-4 text-sm text-gray-100">
                         or Send a Package!
                       </span>
-                      <ChevronRight className="ml-2 h-5 w-5 text-gray-200" aria-hidden="true" />
+                      <ChevronRight
+                        className="ml-2 h-5 w-5 text-gray-200"
+                        aria-hidden="true"
+                      />
                     </a>
                   </div>
 
                   <div className="py-2">
-                  <div className="flex h-20 items-center justify-start space-x-1 px-2 text-4xl font-normal text-primary-600Na dark:text-gray-300">
-        <p>Contribute us to</p>
-        <RotateBetween
-          words={words}
-          className="text-balance  from-primary-500 from-30% to-primary-300/60 bg-clip-text px-1 py-2 font-bold leading-none tracking-tighter dark:from-white dark:to-white/40"
-        />
-      </div>
+                    <div className="flex h-20 items-center justify-start space-x-1 px-2 text-4xl font-normal text-primary-600 dark:text-gray-300">
+                      <p>Contribute us to</p>
+                      <RotateBetween
+                        words={words}
+                        className="text-balance  from-primary-500 from-30% to-primary-300/60 bg-clip-text px-1 py-2 font-bold leading-none tracking-tighter dark:from-white dark:to-white/40"
+                      />
+                    </div>
                     {/* <Typewriter texts={texts} delay={1} baseText="At Defacto, " /> */}
                     <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                       Enter your address to see what we deliver
                     </p>
                     <div className="mt-10 sm:mt-12">
-                      <form action="#" className="sm:mx-auto sm:max-w-xl lg:mx-0">
+                      <form
+                        action="#"
+                        className="sm:mx-auto sm:max-w-xl lg:mx-0"
+                      >
                         <div className="sm:flex">
                           <div className="min-w-0 flex-1">
                             <label htmlFor="email" className="sr-only">
@@ -75,17 +85,8 @@ function FoodHero() {
                 </div>
               </div>
 
-              <div className="relative col-span-2 mt-12 lg:m-0">
-                <div className="absolute inset-y-0 left-0 h-full w-full lg:block hidden">
-                  <Image
-                    src="/hero/bg1.png"
-                    alt="Background"
-                    className="h-full w-full object-cover opacity-95"
-                    width={1000}
-                    height={1000}
-                  />
-                </div>
-                <div className="mx-auto ml-24 max-w-md px-6 sm:max-w-2xl lg:max-w-none lg:px-0">
+              <div className="col-span-1 grid grid-cols-3 justify-items-center bg-primary-600 lg:rounded-tl-full lg:mt-0 mt-12 lg:py-0 py-8">
+                <div className="relative col-span-1  mt-12 lg:m-0">
                   <Image
                     src="/hero/bg2.png"
                     alt="Foreground"
@@ -94,19 +95,18 @@ function FoodHero() {
                     height={1000}
                   />
                 </div>
-              </div>
-
-              <div className="col-span-5 grid justify-items-center bg-primary-600 lg:rounded-tl-full lg:mt-0 mt-12 lg:py-0 py-8">
-                <div className="bg-[#03081F] w-full rounded-r-xl grid justify-items-center mb-4 mt-44 ">
-                  <h1 className=" text-xl p-4 font-semibold "> <span className="underline text-primary-500 italic">Personialised</span>   <span className="text-white">and Instant </span> </h1>
-                </div>
-                <div className="px-4 lg:ml-20 ml-4">
-                  <h1 className="lg:px-3 font-bold py-3 inline-block text-xl text-gray-900 text-center">
+               <div className="flex">
+               <div className="px-4 col-span-1 lg:ml-20 ml-4">
+                  <h1 className="lg:px-3 mt-20 font-bold py-3 inline-block text-xl text-gray-900 text-center">
                     Download the Defacto App for faster ordering
                   </h1>
                 </div>
-                <div className="lg:mb-20 mb-10 flex flex-col lg:flex-row justify-center gap-x-6 lg:justify-start">
-                  <Button size="lg" variant="secondary" className="mb-4 lg:mb-0 bg-gray-900 text-white">
+                <div className="lg:mb-20 col-span-1 mb-10 flex flex-col lg:flex-row justify-center gap-x-6 lg:justify-start">
+                  <Button
+                    size="lg"
+                    variant="secondary"
+                    className="mb-4 lg:mb-0 bg-gray-900 text-white"
+                  >
                     <div className="flex items-center">
                       <Image
                         className="mr-2 h-6 w-6"
@@ -121,7 +121,11 @@ function FoodHero() {
                       </div>
                     </div>
                   </Button>
-                  <Button size="lg" variant="secondary" className="mb-4 lg:mb-0 bg-gray-900 text-white">
+                  <Button
+                    size="lg"
+                    variant="secondary"
+                    className="mb-4 lg:mb-0 bg-gray-900 text-white"
+                  >
                     <div className="flex items-center">
                       <Image
                         className="mr-2 h-6 w-6"
@@ -137,6 +141,7 @@ function FoodHero() {
                     </div>
                   </Button>
                 </div>
+               </div>
               </div>
             </div>
           </div>

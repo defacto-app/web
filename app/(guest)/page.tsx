@@ -5,13 +5,15 @@ import CtaSection from "@/components/home/CtaSection";
 import BecomeRider from "@/components/home/BecomeRider";
 import FaqSection from "@/components/FaqSection";
 import FoodHero from "@/components/home/FoodHero";
+import FoodHero2 from "@/components/home/FoodHero2";
 
 export default function HomePage() {
   return (
     <div className="bg-[#FFFBFE] ">
 
       {/* <HeroSection/> */}
-      <FoodHero/>
+      {/* <FoodHero/> */}
+      <FoodHero2/>
       {/* <SendReceive/>
       <CtaSection/>
       <BecomeRider/> */}
