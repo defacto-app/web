@@ -93,6 +93,7 @@ function FoodHero() {
                     className="w-full lg:absolute lg:inset-y-0 lg:h-full lg:w-auto lg:max-w-none"
                     width={1000}
                     height={1000}
+                    priority
                   />
                 </div>
                <div className="flex">
@@ -147,7 +148,6 @@ function FoodHero() {
           </div>
         </div>
 
-        {/* More main page content here... */}
       </main>
     </div>
   );

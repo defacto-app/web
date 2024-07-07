@@ -63,6 +63,7 @@ export default function FoodHero2() {
           className="w-full h-auto"
           width={500}
           height={500}
+          priority
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center lg:items-end p-4 lg:p-8">
           <h2 className="text-lg text-gray-100 w-full lg:w-56 text-center lg:text-end font-semibold mb-4 lg:mb-8">
