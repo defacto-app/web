@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import RotateBetween from "./RotataBetween";
+import PickupModal from "../user/PickupModal";
 
 export default function FoodHero2() {
   const words = [
@@ -12,7 +13,8 @@ export default function FoodHero2() {
     "Orders with ease",
   ];
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-between p-10 bg-white">
+   <div className="mx-auto max-w-7xl">
+     <div className="flex flex-col lg:flex-row items-center justify-between p-10 ">
       <div className="max-w-md mb-10 lg:mb-0">
         <a href="#" className="inline-flex space-x-6 mb-8">
           <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
@@ -31,29 +33,8 @@ export default function FoodHero2() {
           Bringing happiness to your doorstep, one delivery at a time. We
           deliver, you enjoy.
         </p>
-        <div className="relative mb-8">
-          <input
-            type="text"
-            placeholder="What's your address?"
-            className="w-full p-4 pr-16 border border-gray-300 rounded-full"
-          />
-          <button className="absolute right-0 top-0 mt-3 mr-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-blue-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
-          </button>
-        </div>
+
+        <PickupModal/>
       </div>
 
       <div className="relative bg-primary-900 lg:rounded-tl-full lg:w-1/2 w-full">
@@ -112,5 +93,6 @@ export default function FoodHero2() {
         </div>
       </div>
     </div>
+   </div>
   );
 }

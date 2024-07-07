@@ -6,6 +6,7 @@ import BecomeRider from "@/components/home/BecomeRider";
 import FaqSection from "@/components/FaqSection";
 import FoodHero from "@/components/home/FoodHero";
 import FoodHero2 from "@/components/home/FoodHero2";
+import MarqueeSlide from "@/components/MarqueeSlide";
 
 export default function HomePage() {
   return (
@@ -14,6 +15,7 @@ export default function HomePage() {
       {/* <HeroSection/> */}
       {/* <FoodHero/> */}
       <FoodHero2/>
+      <MarqueeSlide/>
       {/* <SendReceive/>
       <CtaSection/>
       <BecomeRider/> */}

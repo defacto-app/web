@@ -10,7 +10,7 @@ import { BanknoteIcon, CheckCircleIcon, CreditCardIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 
-export default function page() {
+export default function Paymentpage() {
   const truncateText = (text: string, maxLength: number): string => {
     return text.length > maxLength
       ? `${text.substring(0, maxLength)}...`

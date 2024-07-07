@@ -40,10 +40,9 @@ export default function PickupModal() {
               type="text"
               placeholder={savedAddress ? savedAddress : "What's your address?"}
               className="w-full p-4 pr-16 border border-gray-300 rounded-full"
-              readOnly
             />
             <button className="absolute right-0 top-0 mt-3 mr-4" disabled>
-              <svg
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 text-blue-600"
                 fill="none"
@@ -56,7 +55,12 @@ export default function PickupModal() {
                   strokeWidth="2"
                   d="M14 5l7 7m0 0l-7 7m7-7H3"
                 />
-              </svg>
+              </svg> */}
+              <div className="grid justify-items-center place-content-center">
+              <Navigation className="text-primary-500 items-center"/>
+
+              </div>
+
             </button>
           </div>
         </DialogTrigger>
