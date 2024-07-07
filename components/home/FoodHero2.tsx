@@ -2,8 +2,15 @@ import { BikeIcon } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import RotateBetween from "./RotataBetween";
 
 export default function FoodHero2() {
+  const words = [
+    "Cravings",
+    "Joy",
+    "Orders with speed",
+    "Orders with ease",
+  ];
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between p-10 bg-white">
       <div className="max-w-md mb-10 lg:mb-0">
@@ -14,7 +21,11 @@ export default function FoodHero2() {
           </span>
         </a>
         <h1 className="text-4xl lg:text-5xl font-bold text-blue-900 mb-4">
-          Delivering Joy
+          Delivering
+          <RotateBetween
+            words={words}
+            className="text-balance  from-primary-500 from-30% to-primary-300/60 bg-clip-text px-1 py-2 font-bold leading-none tracking-tighter dark:from-white dark:to-white/40"
+          />
         </h1>
         <p className="text-base lg:text-lg text-gray-700 mb-8">
           Bringing happiness to your doorstep, one delivery at a time. We
