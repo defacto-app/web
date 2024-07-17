@@ -12,6 +12,44 @@ export default function FoodHero2() {
     "Orders with speed",
     "Orders with ease",
   ];
+
+  const logos = [
+    {
+      src: "https://tailwindui.com/img/logos/tuple-logo-gray-400.svg",
+      alt: "Tuple",
+    },
+    {
+      src: "https://tailwindui.com/img/logos/mirage-logo-gray-400.svg",
+      alt: "Mirage",
+    },
+    {
+      src: "https://tailwindui.com/img/logos/statickit-logo-gray-400.svg",
+      alt: "StaticKit",
+    },
+    {
+      src: "https://tailwindui.com/img/logos/transistor-logo-gray-400.svg",
+      alt: "Transistor",
+    },
+    {
+      src: "https://tailwindui.com/img/logos/workcation-logo-gray-400.svg",
+      alt: "Workcation",
+    },
+  ];
+  const logoElements = logos.map((logo, index) => (
+    <div
+      className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1"
+      key={index}
+    >
+      <Image
+        className="h-12"
+        src={logo.src}
+        alt={logo.alt}
+        width={100}
+        height={100}
+        style={{ width: "100%", height: "auto" }}
+      />
+    </div>
+  ));
   return (
    <div className="mx-auto max-w-7xl">
      <div className="flex flex-col lg:flex-row items-center justify-between p-10 ">
@@ -93,6 +131,16 @@ export default function FoodHero2() {
         </div>
       </div>
     </div>
+    <div className="container">
+        <div className="  py-16 ">
+          <p className="text-start text-base font-semibold text-gray-500">
+            Trusted by over 30+ businesses
+          </p>
+          <div className="mt-6 grid grid-cols-2 gap-8 md:grid-cols-6 lg:grid-cols-5">
+            {logoElements}
+          </div>
+        </div>
+      </div>
    </div>
   );
 }
