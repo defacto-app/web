@@ -33,6 +33,7 @@ export default function ContactPage() {
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" strokeWidth={0} fill="white" />
+                {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
                 <svg x="100%" y={-1} className="overflow-visible fill-gray-50">
                   <path d="M-470.5 0h201v201h-201Z" strokeWidth={0} />
                 </svg>
