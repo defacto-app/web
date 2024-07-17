@@ -50,6 +50,7 @@ export default function Header() {
             <Image
               className="h-14 w-auto"
               src="/logo.png"
+              priority={true}
               alt=""
               width={100}
               height={100}
@@ -107,6 +108,7 @@ export default function Header() {
               <Image
                 className="h-8 w-auto"
                 src="/logo.png"
+priority={true}
                 alt=""
                 width={50}
                 height={50}
@@ -138,11 +140,11 @@ export default function Header() {
                   </a>
                 ))}
               </div>
-              <a href="#">
+              <div >
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
                   <Button variant="primary"> Get Started</Button>
                 </motion.div>
-              </a>
+              </div>
             </div>
           </div>
         </Dialog.Panel>
