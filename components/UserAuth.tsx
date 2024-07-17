@@ -1,30 +1,37 @@
 "use client";
 import React from "react";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 import SigninModal from "./auth/SigninModal";
+import { Button } from "@/components/ui/button";
 
 export default function UserAuth() {
-  return (
-    <div>
-      <Dialog>
-        <DialogTrigger>
-          {/* <User className="text-primary-600"/> */}
-          <div className="rounded-full py-3 bg-primary-600 px-2.5 text-sm cursor-pointer  text-white shadow-sm hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">Get Started</div>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
+	return (
+		<div>
+			<AlertDialog>
+				<AlertDialogTrigger className="w-32 h-10 bg-blue-500 rounded-full text-white" >
+					{/* <User className="text-primary-600"/> */}
 
-            <SigninModal />
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
+					Get Started
+				</AlertDialogTrigger>
+				<AlertDialogContent>
+					<SigninModal />
+					<AlertDialogFooter>
+						<AlertDialogCancel>Cancel</AlertDialogCancel>
+						<AlertDialogAction>Continue</AlertDialogAction>
+					</AlertDialogFooter>
+				</AlertDialogContent>
+			</AlertDialog>
+		</div>
+	);
 }

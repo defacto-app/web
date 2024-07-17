@@ -21,6 +21,7 @@
     "@mui/material": "^5.15.19",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -37,6 +38,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@tanstack/react-table": "^8.16.0",
     "axios": "^1.6.8",
+    "biome": "^0.3.3",
     "class-variance-authority": "^0.7.0",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
@@ -61,7 +63,8 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.11.1",
+    "@biomejs/biome": "1.8.3",
+    "@cloudflare/next-on-pages": "^1.12.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -70,7 +73,6 @@
     "eslint-config-next": "14.2.1",
     "framer-motion": "^11.2.13",
     "postcss": "^8",
-    "prettier": "3.2.5",
     "tailwind-merge": "^2.4.0",
     "tailwindcss": "^3.4.4",
     "typescript": "^5"

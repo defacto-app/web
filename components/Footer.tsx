@@ -164,6 +164,7 @@ export default function Footer() {
             <Image
               className="h-14 w-auto"
               src="/logo.png"
+priority={true}
               alt=""
               width={100}
               height={100}

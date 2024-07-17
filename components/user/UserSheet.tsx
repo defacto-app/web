@@ -56,6 +56,7 @@ const UserSheetContent: React.FC<UserSheetProps> = ({ children }) => {
                 <Image
                   className="h-10 w-auto"
                   src="/logo.png"
+priority={true}
                   alt="Logo"
                   width={70}
                   height={70}
