@@ -1,10 +1,14 @@
 "use client"
 import * as React from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
+
 import { MinusIcon, PlusIcon } from 'lucide-react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
 
 export default function FaqAccordion() {
   const [expanded, setExpanded] = React.useState<number | false>(false);
@@ -45,34 +49,21 @@ export default function FaqAccordion() {
   ];
 
   return (
-    <div>
-      {faqs.map((faq, index) => (
-        <Accordion
-        className='text-white bg-primary-600'
-
-          key={index}
-          expanded={expanded === index}
-          onChange={handleChange(index)}
-          sx={{
-            backgroundColor: 'bg-primary.600',
-            color: 'bg-primary-500',
-            '&:hover': {
-              backgroundColor: 'bg-primary.700',
-            },
-          }}
-        >
-          <AccordionSummary
-            expandIcon={expanded === index ? <MinusIcon className='text-white' /> : <PlusIcon className='text-white' />}
-            aria-controls={`panel${index + 1}-content`}
-            id={`panel${index + 1}-header`}
-          >
-            <Typography>{faq.question}</Typography>
-          </AccordionSummary>
-          <AccordionDetails sx={{ backgroundColor: 'primary.700' }}>
-            <Typography>{faq.answer}</Typography>
-          </AccordionDetails>
-        </Accordion>
-      ))}
-    </div>
+      // biome-ignore lint/style/noUnusedTemplateLiteral: <explanation>
+<div className={`flex justify-center`}>
+        <div className=" shadow rounded-md  bg-white ">
+          {faqs.map((faq, index) => (
+              // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
+<Accordion type="single" collapsible>
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>{faq.question}</AccordionTrigger>
+                  <AccordionContent className="max-w-3xl p-4" >
+             {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+          ))}
+        </div>
+      </div>
   );
 }

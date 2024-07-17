@@ -1,6 +1,6 @@
 import axios from "axios";
-import {getToken} from "@/utils/IsDev";
-const baseUrl = "https://api.defactoapp.com.ng/api/v1"
+import { getToken } from "@/utils/IsDev";
+const baseUrl = "https://api.defactoapp.com.ng/api/v1";
 
 //
 
