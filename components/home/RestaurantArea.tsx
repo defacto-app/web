@@ -5,46 +5,46 @@ import Image from 'next/image';
 
 const restaurants = [
   {
-    name: 'Chef Burgers London',
+    name: 'Cold Stone creamery',
     rating: 4.5,
     time: '5-20 mins',
     category: 'Salad',
-    image: '/dummy-image.jpg', // Replace with your dummy image path
+    image: '/rest/cold.jpg', // Replace with your dummy image path
+  },
+  {
+    name: 'Mr.Biggs',
+    rating: 4.5,
+    time: '5-20 mins',
+    category: 'Salad',
+    image: '/rest/biggs.jpg', // Replace with your dummy image path
+  },
+  {
+    name: 'Chicken Republic',
+    rating: 4.5,
+    time: '5-20 mins',
+    category: 'Salad',
+    image: '/rest/chickenrep.jpg', // Replace with your dummy image path
+  },
+  {
+    name: 'KFC',
+    rating: 4.5,
+    time: '5-20 mins',
+    category: 'Salad',
+    image: '/rest/kfc1.jpg', // Replace with your dummy image path
+  },
+  {
+    name: 'Dominos Pizza',
+    rating: 4.5,
+    time: '5-20 mins',
+    category: 'Salad',
+    image: '/rest/domino.jpg', // Replace with your dummy image path
   },
   {
     name: 'Chef Burgers London',
     rating: 4.5,
     time: '5-20 mins',
     category: 'Salad',
-    image: '/dummy-image.jpg', // Replace with your dummy image path
-  },
-  {
-    name: 'Chef Burgers London',
-    rating: 4.5,
-    time: '5-20 mins',
-    category: 'Salad',
-    image: '/dummy-image.jpg', // Replace with your dummy image path
-  },
-  {
-    name: 'Chef Burgers London',
-    rating: 4.5,
-    time: '5-20 mins',
-    category: 'Salad',
-    image: '/dummy-image.jpg', // Replace with your dummy image path
-  },
-  {
-    name: 'Chef Burgers London',
-    rating: 4.5,
-    time: '5-20 mins',
-    category: 'Salad',
-    image: '/dummy-image.jpg', // Replace with your dummy image path
-  },
-  {
-    name: 'Chef Burgers London',
-    rating: 4.5,
-    time: '5-20 mins',
-    category: 'Salad',
-    image: '/dummy-image.jpg', // Replace with your dummy image path
+    image: '/rest/kfc1.jpg', // Replace with your dummy image path
   },
 ];
 
