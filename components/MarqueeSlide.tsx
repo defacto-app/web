@@ -1,43 +1,57 @@
 import Marquee from "@/components/magicui/marquee";
 import { cn } from "@/lib/utils";
-import React from 'react'
+import React from 'react';
+import { Star, Quote } from 'lucide-react';
+import Image from 'next/image';
 
 const reviews = [
   {
     name: "Jack",
     username: "@jack",
-    body: "I've never seen anything like this before. It's amazing. I love it.",
-    img: "https://avatar.vercel.sh/jack",
+    role: "Tech Enthusiast",
+    testimonial: "I've never seen anything like this before. It's amazing. I love it.",
+    img: "/testimony/test1.png",
+    rating: 5,
   },
   {
     name: "Jill",
     username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
-    img: "https://avatar.vercel.sh/jill",
+    role: "Developer",
+    testimonial: "I don't know what to say. I'm speechless. This is amazing.",
+    img: "/testimony/test1.png",
+    rating: 4.5,
   },
   {
     name: "John",
     username: "@john",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/john",
+    role: "Designer",
+    testimonial: "I'm at a loss for words. This is amazing. I love it.",
+    img: "/testimony/test1.png",
+    rating: 4,
   },
   {
     name: "Jane",
     username: "@jane",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/jane",
+    role: "Product Manager",
+    testimonial: "I'm at a loss for words. This is amazing. I love it.",
+    img: "/testimony/test1.png",
+    rating: 5,
   },
   {
     name: "Jenny",
     username: "@jenny",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/jenny",
+    role: "Marketing Specialist",
+    testimonial: "I'm at a loss for words. This is amazing. I love it.",
+    img: "/testimony/test1.png",
+    rating: 4.5,
   },
   {
     name: "James",
     username: "@james",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/james",
+    role: "CEO",
+    testimonial: "I'm at a loss for words. This is amazing. I love it.",
+    img: "/testimony/test1.png",
+    rating: 5,
   },
 ];
 
@@ -53,43 +67,59 @@ const upperRowContent = [
   {
     text: "Fast delivery",
     img: "/marquee/fast-delivery.png",
-  },  {
+  },
+  {
     text: "Send & Receive Packages",
     img: "/marquee/package.png",
   },
 ];
 
-const secondRow = reviews.slice(reviews.length / 2);
-
 const ReviewCard = ({
   img,
   name,
-  body,
+  role,
+  testimonial,
+  rating,
 }: {
   img: string;
   name: string;
-  body: string;
+  role: string;
+  testimonial: string;
+  rating: number;
 }) => {
   return (
-    <figure
-      className={cn(
-        "relative w-64 cursor-pointer overflow-hidden  p-4",
-        // light styles
-        " bg-gray-950/[.01] hover:bg-gray-950/[.05]",
-        // dark styles
-        "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]",
-      )}
-    >
-      <div className="flex flex-row items-center gap-2">
-        <img className="rounded-full" width="32" height="32" alt="" src={img} />
-        <div className="flex flex-col">
-          <figcaption className="text-sm font-medium dark:text-white">
-            {name}
-          </figcaption>
+    <div className="pb-10   ">
+  <div className="relative border-2 border-primary-200 bg-primary-900 flex h-[700px] rounded-lg shadow-lg p-4 w-80 flex-shrink-0">
+    <div className="relative h-[670px] w-full mb-4 overflow-hidden rounded-lg">
+      <Image
+        src={img}
+        alt={name}
+        layout="fill"
+        objectFit="cover"
+        className="rounded-lg"
+      />
+      <div className="absolute inset-0  bg-opacity-50 flex flex-col justify-end p-6">
+        <div>
+          <h3 className="text-lg font-semibold text-white">{name}</h3>
+          <p className="text-sm text-gray-300 mb-2">{role}</p>
+          <div className="relative mb-4">
+            <Quote className="absolute top-0 left-0 text-gray-100" />
+            <p className="italic text-gray-200 pl-6">{testimonial}</p>
+            <Quote className="absolute bottom-0 right-0 text-gray-100" />
+          </div>
+          <div className="flex items-center text-white">
+            {[...Array(Math.floor(rating))].map((_, i) => (
+              <Star key={i} className="text-yellow-500" />
+            ))}
+            {rating % 1 !== 0 && <Star className="text-yellow-500" />}
+            <span className="ml-2 text-gray-300">{rating}</span>
+          </div>
         </div>
       </div>
-      <blockquote className="mt-2 text-sm">{body}</blockquote>
-    </figure>
+    </div>
+  </div>
+</div>
+
   );
 };
 
@@ -101,7 +131,7 @@ const UpperRowCard = ({
   text: string;
 }) => {
   return (
-    <div className="flex items-center gap-2 p-4">
+    <div className="flex items-center rounded-xl bg-primary-200 gap-2 p-4">
       <img className="rounded-full" width="32" height="32" alt="" src={img} />
       <p className="text-sm text-primary-900 font-bold">{text}</p>
     </div>
@@ -110,14 +140,14 @@ const UpperRowCard = ({
 
 export default function MarqueeSlide() {
   return (
-    <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background ">
+    <div className="relative flex  w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background ">
       <Marquee pauseOnHover className="[--duration:20s] ">
         {upperRowContent.map((item, index) => (
           <UpperRowCard key={index} {...item} />
         ))}
       </Marquee>
       <Marquee reverse pauseOnHover className="[--duration:20s]">
-        {secondRow.map((review) => (
+        {reviews.map((review) => (
           <ReviewCard key={review.username} {...review} />
         ))}
       </Marquee>
