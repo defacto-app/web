@@ -89,14 +89,14 @@ const ReviewCard = ({
 }) => {
   return (
     <div className="pb-10   ">
-  <div className="relative border-2 border-primary-200 bg-primary-900 flex h-[700px] rounded-lg shadow-lg p-4 w-80 flex-shrink-0">
+  <div className="relative border-2  bg-primary-200 flex h-[700px] rounded-lg shadow-lg p-4 w-80 flex-shrink-0">
     <div className="relative h-[670px] w-full mb-4 overflow-hidden rounded-lg">
       <Image
         src={img}
         alt={name}
         layout="fill"
         objectFit="cover"
-        className="rounded-lg"
+        className="rounded-xl"
       />
       <div className="absolute inset-0  bg-opacity-50 flex flex-col justify-end p-6">
         <div>
@@ -131,16 +131,18 @@ const UpperRowCard = ({
   text: string;
 }) => {
   return (
-    <div className="flex items-center rounded-xl bg-primary-200 gap-2 p-4">
+    <div className="">
+      <div className="flex items-center rounded-xl bg-primary-200 gap-2 p-4">
       <img className="rounded-full" width="32" height="32" alt="" src={img} />
       <p className="text-sm text-primary-900 font-bold">{text}</p>
+    </div>
     </div>
   );
 };
 
 export default function MarqueeSlide() {
   return (
-    <div className="relative flex  w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background ">
+    <div className="bg-primary-900 relative flex  w-full gap-9 py-5 flex-col items-center justify-center overflow-hidden rounded-lg border bg-background ">
       <Marquee pauseOnHover className="[--duration:20s] ">
         {upperRowContent.map((item, index) => (
           <UpperRowCard key={index} {...item} />
