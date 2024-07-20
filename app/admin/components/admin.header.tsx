@@ -25,29 +25,23 @@ import {
 import {Input} from "@/components/ui/input"
 import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet"
 import AdminUserAction from "@/app/admin/components/AdminUserAction";
-import {UserNav} from "@/app/admin/orders/components/user-nav";
+import {UserNav} from "@/app/admin/x/orders/components/user-nav";
 
 const navigation = [
     {
         title: "Dashboard",
-        href: "/admin"
+        href: "/admin/x/"
     },
     {
         title: "Orders",
-        href: "/admin/orders"
+        href: "/admin/x/orders"
     },
-    {
-        title: "Products",
-        href: "/admin/products"
-    },
+
     {
         title: "Users",
-        href: "/admin/users"
+        href: "/admin/x/users"
     },
-    {
-        title: "Analytics",
-        href: "/admin/analytics"
-    }
+
 
 ]
 
@@ -56,6 +50,7 @@ export function AdminHeader() {
     function handleLogout() {
         console.log("Logout")
     }
+
     return (
         <div className="flex w-full flex-col">
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -79,7 +74,7 @@ export function AdminHeader() {
                             </Link>
                         ))
                     }
-                    
+
                 </nav>
                 <Sheet>
                     <SheetTrigger asChild>
@@ -112,7 +107,7 @@ export function AdminHeader() {
                                     </Link>
                                 ))
                             }
-                        
+
                         </nav>
                     </SheetContent>
                 </Sheet>
@@ -128,7 +123,7 @@ export function AdminHeader() {
                         </div>
                     </form>
                     <UserNav/>
-                 
+
                 </div>
             </header>
         </div>

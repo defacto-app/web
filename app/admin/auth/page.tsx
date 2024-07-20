@@ -74,13 +74,15 @@ export default function AdminLogin() {
 
             const res = await data.json();
 
+
+
             // save to local storage
 
             localStorage.setItem("auth-token", res.data.token);
 
             toast.success("Login successful");
 
-            router.push('/admin/');
+            router.push('/admin/orders');
 
 
             setIsPending(false);

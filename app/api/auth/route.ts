@@ -1,53 +1,13 @@
 import env from "@/config/env";
 import {cookies} from 'next/headers'
+import {de} from "@faker-js/faker";
 
 export const dynamic = "force-dynamic"; // defaults to auto
-/*export async function POST(request: Request) {
-  const body = await request.json();
-  console.log(body, "chekcing body");
-  const url = `${env.BASE_URL}/admin/auth/login`;
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: body.email,
-      password: body.password,
-    }),
-  };
-
-  const res = await fetch(url, options);
-  const data = await res.json();
-
-  return new Response(JSON.stringify(data), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-}*/
-
-/* {
-  message: 'Admin logged in',
-  success: true,
-  timeStamp: '2024-04-30T23:47:24.434Z',
-  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzE0YmE0YzU0NGM2OTQyMDcxMjAwNCIsImlhdCI6MTcxNDUyMDg0NCwiZXhwIjoxNzE0NTM4ODQ0fQ.rGZ_NhIi7qqupVdvWDkGh5SXCryqGxvq2qkcGSa_mD4'
-}  */
-
-type ResponseType = {
-    message: string;
-    success: boolean;
-    timeStamp: string;
-    token: string;
-
-}
 
 export async function POST(request: any) {
     try {
         const body = await request.json();
 
-        console.log(body, "chekcing body");
 
         const url = `${env.BASE_URL}/auth/admin-login`;
         const options = {
@@ -68,8 +28,7 @@ export async function POST(request: any) {
         const data = await res.json();
 
         // Assuming you have a function cookies() that sets cookies
-        const token = data.token;
-        cookies().set('auth-token', token, { secure: true });
+        const token = data.data.token;
 
         cookies().set({
             name: 'auth-token',
@@ -77,6 +36,7 @@ export async function POST(request: any) {
             httpOnly: true,
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
             path: '/',
+            secure: true,
         });
 
         // The cookie string seems unused, remove if not needed, or ensure it's being utilized correctly

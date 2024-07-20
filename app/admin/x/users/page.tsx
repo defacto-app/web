@@ -4,15 +4,11 @@ import {columns, Payment} from "./columns"
 import {DataTable} from "./data-table"
 import {getAllUsers} from "@/app/lib";
 
-async function getUsers() {
-    return await getAllUsers()
-
-}
 
 async function getData(): Promise<Payment[]> {
 
 
-    return await getUsers()
+    return await getAllUsers()
 }
 
 export default async function AllUsers() {
