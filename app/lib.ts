@@ -10,6 +10,8 @@ export async function logout() {
 
 export async function authenticate(data: any) {
 
+    console.log(data, "checking data")
+
 
     // ping the server to check if the token is valid
 

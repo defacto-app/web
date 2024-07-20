@@ -60,6 +60,7 @@ export default function AdminLogin() {
 
 
     const handleSubmit = async () => {
+        setIsPending(true);
         try {
 
             const data = await fetch(`/api/auth`, {
@@ -82,11 +83,13 @@ export default function AdminLogin() {
             router.push('/admin/');
 
 
+            setIsPending(false);
 
         } catch (error: any) {
             console.log(error);
             toast.error("Login credentials are invalid");
             console.log(error);
+            setIsPending(false);
         }
     };
 
@@ -192,7 +195,8 @@ export default function AdminLogin() {
                     {errors.otp && (
                         <p className={`text-red-500 p-4`}>{errors.otp}</p>
                     )}
-                    <Button onClick={handleSubmit} type="submit" className="w-full">
+                    {JSON.stringify(isPending)}
+                    <Button loading={isPending} onClick={handleSubmit} type="submit" className="w-full">
                         Login
                     </Button>
 

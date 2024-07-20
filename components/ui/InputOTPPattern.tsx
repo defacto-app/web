@@ -5,13 +5,37 @@ import {
     InputOTPGroup,
     InputOTPSlot,
 } from "@/components/ui/input-otp"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-export function InputOTPPattern({ setOtp }:any) {
+
+interface InputOTPPatternProps {
+    setOtp: (otp: string) => void;
+    defaultValue: string;
+}
+
+export function InputOTPPattern({setOtp, defaultValue}: InputOTPPatternProps) {
     // Use the defaultValue prop to set the initial state
+    const [localOtp, setLocalOtp] = useState(defaultValue);
+    console.log(defaultValue);
+    useEffect(() => {
+        // This will set the local state to the defaultValue when the component mounts
+        // or when defaultValue changes.
+        setLocalOtp(defaultValue);
+    }, [defaultValue]);
+
+    const handleChange = (newOtp: string) => {
+        setLocalOtp(newOtp); // Update local state
+        setOtp(newOtp); // Update parent state
+    };
+
 
     return (
-        <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS} onChange={setOtp}>
+        <InputOTP
+            value={localOtp}
+            maxLength={6}
+            pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+            onChange={handleChange}
+        >
             <InputOTPGroup>
                 <InputOTPSlot index={0} />
                 <InputOTPSlot index={1} />

@@ -47,6 +47,8 @@ export async function POST(request: any) {
     try {
         const body = await request.json();
 
+        console.log(body, "chekcing body");
+
         const url = `${env.BASE_URL}/auth/admin-login`;
         const options = {
             method: "POST",
