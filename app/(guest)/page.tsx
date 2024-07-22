@@ -17,6 +17,10 @@ export default function HomePage() {
       {/* <FoodHero/> */}
       <FoodHero2/>
       <RestaurantArea/>
+      <div className="text-center bg-primary-900 pt-10 pb-10">
+        <h1 className="text-xl pb-5 font-bold text-primary-200">Our Reviews</h1>
+        <h2 className="text-4xl font-bold text-primary-200">Our Happy Customers</h2>
+      </div>
       <MarqueeSlide/>
       {/* <SendReceive/>
       <CtaSection/>

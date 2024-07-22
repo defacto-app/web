@@ -5,14 +5,7 @@ import { Star, Quote } from 'lucide-react';
 import Image from 'next/image';
 
 const reviews = [
-  {
-    name: "Jack",
-    username: "@jack",
-    role: "Tech Enthusiast",
-    testimonial: "I've never seen anything like this before. It's amazing. I love it.",
-    img: "/testimony/test1.png",
-    rating: 5,
-  },
+
   {
     name: "Jill",
     username: "@jill",
@@ -26,7 +19,7 @@ const reviews = [
     username: "@john",
     role: "Designer",
     testimonial: "I'm at a loss for words. This is amazing. I love it.",
-    img: "/testimony/test1.png",
+    img: "/testimony/t2.png",
     rating: 4,
   },
   {
@@ -34,7 +27,7 @@ const reviews = [
     username: "@jane",
     role: "Product Manager",
     testimonial: "I'm at a loss for words. This is amazing. I love it.",
-    img: "/testimony/test1.png",
+    img: "/testimony/t3.png",
     rating: 5,
   },
   {
@@ -42,17 +35,10 @@ const reviews = [
     username: "@jenny",
     role: "Marketing Specialist",
     testimonial: "I'm at a loss for words. This is amazing. I love it.",
-    img: "/testimony/test1.png",
+    img: "/testimony/t4.png",
     rating: 4.5,
   },
-  {
-    name: "James",
-    username: "@james",
-    role: "CEO",
-    testimonial: "I'm at a loss for words. This is amazing. I love it.",
-    img: "/testimony/test1.png",
-    rating: 5,
-  },
+
 ];
 
 const upperRowContent = [
@@ -142,7 +128,10 @@ const UpperRowCard = ({
 
 export default function MarqueeSlide() {
   return (
-    <div className="bg-primary-900 relative flex  w-full gap-9 py-5 flex-col items-center justify-center overflow-hidden rounded-lg border bg-background ">
+    <div className="bg-primary-900 relative flex  w-full gap-9 py-5 flex-col items-center justify-center overflow-hidden rounded-lg   ">
+     <div className="absolute top-0 right-0 w-1/4 h-1/4">
+        <Image src="/bg.png" alt="Background" layout="fill" objectFit="cover" />
+      </div>
       <Marquee pauseOnHover className="[--duration:20s] ">
         {upperRowContent.map((item, index) => (
           <UpperRowCard key={index} {...item} />
@@ -153,8 +142,8 @@ export default function MarqueeSlide() {
           <ReviewCard key={review.username} {...review} />
         ))}
       </Marquee>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-background"/>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background"/>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-primary-900 dark:from-background"/>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-primary-900 dark:from-background"/>
     </div>
   );
 }
