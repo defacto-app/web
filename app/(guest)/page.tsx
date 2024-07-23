@@ -8,6 +8,7 @@ import FoodHero from "@/components/home/FoodHero";
 import FoodHero2 from "@/components/home/FoodHero2";
 import MarqueeSlide from "@/components/MarqueeSlide";
 import RestaurantArea from "@/components/home/RestaurantArea";
+import NewsletterSection from "@/components/home/NewsletterSection";
 
 export default function HomePage() {
   return (
@@ -22,6 +23,7 @@ export default function HomePage() {
         <h2 className="text-4xl font-bold text-primary-200">Our Happy Customers</h2>
       </div>
       <MarqueeSlide/>
+      <NewsletterSection/>
       {/* <SendReceive/>
       <CtaSection/>
       <BecomeRider/> */}
