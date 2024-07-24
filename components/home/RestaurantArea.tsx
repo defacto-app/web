@@ -63,7 +63,7 @@ const RestaurantArea = () => {
       <h2 className="text-2xl font-bold text-center mb-8">Restaurants you might like</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {restaurants.map((restaurant, index) => (
-           <Link href={`/guest/restaurants/${restaurant.id}`} key={restaurant.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+           <Link href={`user/restaurants/${restaurant.id}`} key={restaurant.id} className="bg-white rounded-lg shadow-md overflow-hidden">
             <div className="relative h-48">
               <Image
                 src={restaurant.image}
