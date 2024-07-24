@@ -2,9 +2,11 @@
 
 import { Star } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const restaurants = [
   {
+    id:'1',
     name: 'Cold Stone creamery',
     rating: 4.5,
     time: '5-20 mins',
@@ -12,6 +14,7 @@ const restaurants = [
     image: '/rest/cold.jpg', // Replace with your dummy image path
   },
   {
+    id:'2',
     name: 'Mr.Biggs',
     rating: 4.5,
     time: '5-20 mins',
@@ -19,6 +22,7 @@ const restaurants = [
     image: '/rest/biggs.jpg', // Replace with your dummy image path
   },
   {
+    id:'3',
     name: 'Chicken Republic',
     rating: 4.5,
     time: '5-20 mins',
@@ -26,6 +30,7 @@ const restaurants = [
     image: '/rest/chickenrep.jpg', // Replace with your dummy image path
   },
   {
+    id:'4',
     name: 'KFC',
     rating: 4.5,
     time: '5-20 mins',
@@ -33,6 +38,8 @@ const restaurants = [
     image: '/rest/kfc1.jpg', // Replace with your dummy image path
   },
   {
+    id:'5',
+
     name: 'Dominos Pizza',
     rating: 4.5,
     time: '5-20 mins',
@@ -40,6 +47,8 @@ const restaurants = [
     image: '/rest/domino.jpg', // Replace with your dummy image path
   },
   {
+    id:'6',
+
     name: 'Chef Burgers London',
     rating: 4.5,
     time: '5-20 mins',
@@ -54,7 +63,7 @@ const RestaurantArea = () => {
       <h2 className="text-2xl font-bold text-center mb-8">Restaurants you might like</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {restaurants.map((restaurant, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+           <Link href={`/guest/restaurants/${restaurant.id}`} key={restaurant.id} className="bg-white rounded-lg shadow-md overflow-hidden">
             <div className="relative h-48">
               <Image
                 src={restaurant.image}
@@ -75,7 +84,7 @@ const RestaurantArea = () => {
                 <span className="text-gray-600">{restaurant.time}</span>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <div className="text-center mt-8">

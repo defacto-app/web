@@ -20,7 +20,7 @@ export default function NewsletterSection() {
           </div>
 
           {/* Form Section */}
-          <div className="max-w-xl lg:max-w-lg">
+          <div className="max-w-xl lg:mt-20 lg:max-w-lg">
             <h2 className="text-3xl font-bold tracking-tight text-primary-500 sm:text-4xl">
               Subscribe to our newsletter.
             </h2>
