@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { Tabs } from "../ui/tabs";
+import RestaurantGrid from "./restaurant component/MenuTab";
+import Products from "./restaurant component/Products";
 
 export function MenuTab() {
   const tabs = [

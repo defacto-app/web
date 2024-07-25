@@ -1,10 +1,20 @@
 // types.ts
+
+export interface MenuItem {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+}
+
 export interface Restaurant {
   id: string;
   name: string;
   rating: number;
   time: string;
-  category: string;
+  categories: {
+    [key: string]: MenuItem[];
+  };
   image: string;
   background: string;
   distance: string;
