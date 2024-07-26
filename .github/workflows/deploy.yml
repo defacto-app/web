@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Executing remote ssh commands
         uses: appleboy/ssh-action@master
         with:
@@ -19,11 +22,22 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
-            cd /var/www/defacto/web
+            # Deploy User Application
+            cd /var/www/defacto/web/user
             git fetch --force origin main
             git reset --hard origin/main
             git pull origin main
             npx jsonbank-env dev .env force
             rm -rf node_modules
             npm install --production
-            pm2 restart all
+            pm2 restart user_app
+            
+            # Deploy Admin Application
+            cd /var/www/defacto/web/admin
+            git fetch --force origin main
+            git reset --hard origin/main
+            git pull origin main
+            npx jsonbank-env dev .env force
+            rm -rf node_modules
+            npm install --production
+            pm2 restart admin_app
