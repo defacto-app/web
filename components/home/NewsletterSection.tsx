@@ -1,8 +1,6 @@
-import Image from "next/image";
 import React from 'react';
 import { Button } from '../ui/button';
 import {Input} from "@/components/ui/input";
-import {Label} from "@/components/ui/label";
 
 export default function NewsletterSection() {
   return (
