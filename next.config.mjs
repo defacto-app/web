@@ -1,15 +1,15 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-
-
-    images: {
-        remotePatterns:[
-            {
-               hostname:"placehold.co"
-            }
-        ]
-    }
-
+const guestConfig = {
+    distDir: 'build/guest',
+    // Add other guest-specific configurations here
 };
+
+/** @type {import('next').NextConfig} */
+const adminConfig = {
+    distDir: 'build/admin',
+    // Add other admin-specific configurations here
+};
+
+const nextConfig = process.env.BUILD_TARGET === 'admin' ? adminConfig : guestConfig;
 
 export default nextConfig;

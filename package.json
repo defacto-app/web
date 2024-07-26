@@ -3,6 +3,8 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
+    "build:guest": "BUILD_TARGET=guest next build",
+    "build:admin": "BUILD_TARGET=admin next build",
     "dev": "next dev --port 3001",
     "build": "next build",
     "cf-build": "npx @cloudflare/next-on-pages",
