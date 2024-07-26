@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import React from "react";
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
@@ -16,9 +16,9 @@ export default function HeroImage() {
                 className="object-cover object-center"
                 src="/foodbg.jpg"
                 alt="Background"
-                layout="fill"
                 quality={100}
-              />
+                fill
+                sizes="100vw" />
               <div className="absolute inset-0 bg-primary-500 mix-blend-multiply" />
             </div>
             <div className="relative px-6 py-10 sm:py-20 lg:px-8 ">

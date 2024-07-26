@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from "next/link";
 import { Button } from "../ui/button";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 
 export default function AboutRider(){
@@ -24,7 +24,10 @@ export default function AboutRider(){
                     alt=""
                     width={1000}
                     height={1000}
-                  />
+                    style={{
+                      maxWidth: "100%",
+                      height: "auto"
+                    }} />
                 </div>
               </div>
             </div>
@@ -62,5 +65,5 @@ export default function AboutRider(){
       </div>
     </div>
     </div>
-  )
+  );
 }

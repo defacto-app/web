@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 
@@ -164,11 +164,14 @@ export default function Footer() {
       <Image
         className="h-14 w-auto"
         src="/logo.png"
-priority={true}
+        priority={true}
         alt=""
         width={100}
         height={100}
-      />
+        style={{
+          maxWidth: "100%",
+          height: "auto"
+        }} />
     </Link>
     </div>
         </div>
@@ -240,7 +243,16 @@ priority={true}
         >
           <span className="sr-only">{item.name}</span>
           <span>
-            <Image src={item.image} className="w-5 h-5" alt="" width={50} height={50} />
+            <Image
+              src={item.image}
+              className="w-5 h-5"
+              alt=""
+              width={50}
+              height={50}
+              style={{
+                maxWidth: "100%",
+                height: "auto"
+              }} />
           </span>
         </a>
       ))}
@@ -254,6 +266,5 @@ priority={true}
 </div>
 </div>
     </div>
-
   );
 }

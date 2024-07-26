@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { BikeIcon } from "lucide-react";
 
 export default function HeroSection() {
@@ -38,8 +38,12 @@ export default function HeroSection() {
         alt={logo.alt}
         width={100}
         height={100}
-        style={{ width: "100%", height: "auto" }}
-      />
+        style={{
+          width: "100%",
+          height: "auto",
+          maxWidth: "100%",
+          height: "auto"
+        }} />
     </div>
   ));
 
@@ -102,7 +106,10 @@ export default function HeroSection() {
           alt="rider vector"
           width={1000}
           height={1000}
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
       </div>
     </div>
   </div>

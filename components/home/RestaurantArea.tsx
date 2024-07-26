@@ -1,7 +1,7 @@
 // components/Restaurants.tsx
 
 import { Star } from 'lucide-react';
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from 'next/link';
 
 const restaurants = [
@@ -68,9 +68,11 @@ const RestaurantArea = () => {
               <Image
                 src={restaurant.image}
                 alt={restaurant.name}
-                layout="fill"
-                objectFit="cover"
-              />
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: "cover"
+                }} />
             </div>
             <div className="p-4">
               <span className="inline-block bg-blue-500 text-white text-xs px-2 rounded-full mb-2">

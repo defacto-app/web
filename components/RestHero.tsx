@@ -1,5 +1,5 @@
 import React from 'react'
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 export default function RestHero() {
   return (
@@ -8,10 +8,13 @@ export default function RestHero() {
         <Image
           alt=""
           width={2830}
-            height={1698}
+          height={1698}
           src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
           className="absolute inset-0 -z-10 h-full w-full object-cover"
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
         <div
           aria-hidden="true"
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -71,5 +74,5 @@ export default function RestHero() {
         </div>
       </div>
     </div>
-  )
+  );
 }

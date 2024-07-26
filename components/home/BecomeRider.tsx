@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 export default function BecomeRider() {
   const href = "/rider";
@@ -21,7 +21,10 @@ export default function BecomeRider() {
                     alt=""
                     width={1000}
                     height={1000}
-                  />
+                    style={{
+                      maxWidth: "100%",
+                      height: "auto"
+                    }} />
                 </div>
               </div>
             </div>

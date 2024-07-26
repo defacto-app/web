@@ -2,7 +2,7 @@ import { ChevronRight } from "lucide-react";
 import React from "react";
 import PickupModal from "../user/PickupModal";
 import { Button } from "../ui/button";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { Typewriter } from "./Typewriter";
 import RotateBetween from "./RotataBetween";
 
@@ -94,7 +94,10 @@ function FoodHero() {
                     width={1000}
                     height={1000}
                     priority
-                  />
+                    style={{
+                      maxWidth: "100%",
+                      height: "auto"
+                    }} />
                 </div>
                <div className="flex">
                <div className="px-4 col-span-1 lg:ml-20 ml-4">
@@ -115,7 +118,10 @@ function FoodHero() {
                         alt="Apple Store"
                         height={50}
                         width={154}
-                      />
+                        style={{
+                          maxWidth: "100%",
+                          height: "auto"
+                        }} />
                       <div>
                         <h1 className="text-xs font-light">Download on</h1>
                         <div className="font-semibold">Apple Store</div>
@@ -134,7 +140,10 @@ function FoodHero() {
                         alt="Play Store"
                         height={50}
                         width={154}
-                      />
+                        style={{
+                          maxWidth: "100%",
+                          height: "auto"
+                        }} />
                       <div>
                         <h1 className="text-xs font-light">Download on</h1>
                         <div className="font-semibold">Play Store</div>

@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 export default function HeroSection () {
   const logos = [
@@ -36,8 +36,12 @@ export default function HeroSection () {
         alt={logo.alt}
         width={100}
         height={100}
-        style={{ width: "100%", height: "auto" }}
-      />
+        style={{
+          width: "100%",
+          height: "auto",
+          maxWidth: "100%",
+          height: "auto"
+        }} />
     </div>
   ));
   return (
@@ -110,8 +114,12 @@ export default function HeroSection () {
                       className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                       width={1000}
                       height={1000}
-                      style={{ width: "100%", height: "auto" }}
-                    />
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        maxWidth: "100%",
+                        height: "auto"
+                      }} />
                     <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                   </div>
                 </div>
@@ -123,8 +131,12 @@ export default function HeroSection () {
                       className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                       width={1000}
                       height={1000}
-                      style={{ width: "100%", height: "auto" }}
-                    />
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        maxWidth: "100%",
+                        height: "auto"
+                      }} />
                     <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                   </div>
                   <div className="relative">
@@ -134,8 +146,12 @@ export default function HeroSection () {
                       className="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
                       width={1000}
                       height={1000}
-                      style={{ width: "100%", height: "auto" }}
-                    />
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        maxWidth: "100%",
+                        height: "auto"
+                      }} />
                     <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                   </div>
                 </div>

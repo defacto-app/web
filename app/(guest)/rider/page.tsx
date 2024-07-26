@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 export default function RiderPage() {
   const [driverLicense, setDriverLicense] = useState<string | null>(null);
@@ -30,7 +30,10 @@ export default function RiderPage() {
             alt=""
             width={1000}
             height={2000}
-          />
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }} />
         </div>
         <div className="py-6 sm:pb-32 sm:pt-24 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:pt-32">
           <div className="px-6 lg:px-8">
@@ -98,7 +101,10 @@ export default function RiderPage() {
                           src={driverLicense}
                           alt="Driver's License"
                           className="h-32 w-auto"
-                        />
+                          style={{
+                            maxWidth: "100%",
+                            height: "auto"
+                          }} />
                       ) : (
                         <Input
                           id="driver-license"

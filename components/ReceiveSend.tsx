@@ -1,4 +1,4 @@
-import Image from "next/legacy/image"
+import Image from "next/image"
 import React from 'react'
 
 export default function ReceiveSend() {
@@ -11,9 +11,9 @@ export default function ReceiveSend() {
             className="object-cover w-full h-full object-center"
             src="/receive.jpg"
             alt="Background"
-            layout="fill"
             quality={100}
-          />
+            fill
+            sizes="100vw" />
           <div className="absolute inset-0 bg-secondary-700 mix-blend-multiply" />
         </div>
         <div className="relative px-6 py-10 sm:py-20 lg:px-8 ">
@@ -29,5 +29,5 @@ export default function ReceiveSend() {
       </div>
     </div>
   </div></div>
-  )
+  );
 }

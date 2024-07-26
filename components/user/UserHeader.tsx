@@ -5,7 +5,7 @@ import { X, Menu, UserRoundCogIcon, CircleUser, Bell } from "lucide-react";
 import { UserProvider } from "@/app/provider/auth.context";
 import env from "@/config/env";
 import Link from "next/link";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import UserPopover from "./UserPopover";
 import HistoryPopover from "./HistoryPopover";
@@ -49,11 +49,14 @@ export default function UserHeader() {
             <Image
               className="h-14 w-auto"
               src="/logo.png"
-priority={true}
+              priority={true}
               alt=""
               width={100}
               height={100}
-            />
+              style={{
+                maxWidth: "100%",
+                height: "auto"
+              }} />
           </Link>
         </motion.div>
         <div className="hidden lg:flex lg:gap-x-12 bg-gray-50 px-8 py-2 rounded-full">
@@ -105,11 +108,14 @@ priority={true}
               <Image
                 className="h-8 w-auto"
                 src="/logo.png"
-priority={true}
+                priority={true}
                 alt=""
                 width={50}
                 height={50}
-              />
+                style={{
+                  maxWidth: "100%",
+                  height: "auto"
+                }} />
             </Link>
 
             <motion.button

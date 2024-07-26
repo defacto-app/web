@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 export default function SendReceive() {
   return (
@@ -13,9 +13,12 @@ export default function SendReceive() {
                 className=" object-cover w-full sm:px-4 h-auto sm:max-w-md max-w-md"
                 src="/hero/sndhero.png"
                 alt="Your Image"
-              width={1824}
-              height={1080}
-              />
+                width={1824}
+                height={1080}
+                style={{
+                  maxWidth: "100%",
+                  height: "auto"
+                }} />
 
             </div>
             <div className="lg:col-span-1  lg:text-start sm:text-start lg:px-6 px-6 py-10 sm:py-20">

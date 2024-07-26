@@ -7,7 +7,7 @@ import PickupModal from "@/components/user/PickupModal";
 import ReceiverModal from "@/components/user/ReceiverModal";
 import SenderModal from "@/components/user/SenderModal";
 import { BanknoteIcon, CheckCircleIcon, CreditCardIcon } from "lucide-react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import React, { useState } from "react";
 
 export default function Paymentpage() {
@@ -37,7 +37,10 @@ export default function Paymentpage() {
                 alt="team"
                 width={800}
                 height={1000}
-              />
+                style={{
+                  maxWidth: "100%",
+                  height: "auto"
+                }} />
             </div>
           </div>
         </div>

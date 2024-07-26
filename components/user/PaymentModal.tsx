@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import React from "react";
 
 export default function PaymentModal() {
@@ -37,13 +37,16 @@ export default function PaymentModal() {
               >
                 <div>
                   <Image
-                   id={`account-${account.id}-image`}
+                    id={`account-${account.id}-image`}
                     className=""
                     src={account.image}
                     alt="team"
                     width={50}
                     height={50}
-                  />
+                    style={{
+                      maxWidth: "100%",
+                      height: "auto"
+                    }} />
                 </div>
 
                 <div className="min-w-0 flex-1 text-lg leading-6">

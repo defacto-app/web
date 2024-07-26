@@ -2,7 +2,7 @@ import Marquee from "@/components/magicui/marquee";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Star, Quote } from "lucide-react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 const reviews = [
 	{
@@ -72,16 +72,18 @@ const ReviewCard = ({
 	rating: number;
 }) => {
 	return (
-		<div className="pb-10   ">
+        <div className="pb-10   ">
 			<div className="relative border-2  bg-primary-200 flex h-[700px] shadow-lg p-4 w-80 flex-shrink-0">
 				<div className="relative h-[670px] w-full mb-4 overflow-hidden">
 					<Image
-						src={img}
-						alt={name}
-						layout="fill"
-						objectFit="cover"
-						className="rounded-xl"
-					/>
+                        src={img}
+                        alt={name}
+                        className="rounded-xl"
+                        fill
+                        sizes="100vw"
+                        style={{
+                            objectFit: "cover"
+                        }} />
 					<div className="absolute inset-0  bg-opacity-50 flex flex-col justify-end p-6">
 						<div>
 							<h3 className="text-lg font-semibold text-white">{name}</h3>
@@ -104,7 +106,7 @@ const ReviewCard = ({
 				</div>
 			</div>
 		</div>
-	);
+    );
 };
 
 const UpperRowCard = ({
@@ -115,26 +117,36 @@ const UpperRowCard = ({
 	text: string;
 }) => {
 	return (
-		<div className="">
+        <div className="">
 			<div className="flex items-center rounded-xl bg-primary-200 gap-2 p-4">
 				<Image
-					className="rounded-full"
-					width="32"
-					height="32"
-					alt=""
-					src={img}
-				/>
+                    className="rounded-full"
+                    width="32"
+                    height="32"
+                    alt=""
+                    src={img}
+                    style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                    }} />
 				<p className="text-sm text-primary-900 font-bold">{text}</p>
 			</div>
 		</div>
-	);
+    );
 };
 
 export default function MarqueeSlide() {
 	return (
-		<div className="bg-primary-900 relative flex  w-full gap-9 py-5 flex-col items-center justify-center overflow-hidden rounded-lg   ">
+        <div className="bg-primary-900 relative flex  w-full gap-9 py-5 flex-col items-center justify-center overflow-hidden rounded-lg   ">
 			<div className="absolute top-0 right-0 w-1/4 h-1/4">
-				<Image src="/bg.png" alt="Background" layout="fill" objectFit="cover" />
+				<Image
+                    src="/bg.png"
+                    alt="Background"
+                    fill
+                    sizes="100vw"
+                    style={{
+                        objectFit: "cover"
+                    }} />
 			</div>
 			<Marquee pauseOnHover className="[--duration:20s] ">
 				{upperRowContent.map((item, index) => (
@@ -150,5 +162,5 @@ export default function MarqueeSlide() {
 			<div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-primary-900 dark:from-background" />
 			<div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-primary-900 dark:from-background" />
 		</div>
-	);
+    );
 }

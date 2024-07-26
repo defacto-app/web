@@ -1,4 +1,4 @@
-import Image from "next/legacy/image"
+import Image from "next/image"
 import React from 'react'
 import gif from "/dispatch.gif"
 
@@ -12,8 +12,11 @@ export default function GifSection() {
         className="object-cover w-full h-full"
         width={1000}
         height={1000}
-      />
+        style={{
+          maxWidth: "100%",
+          height: "auto"
+        }} />
     </div>
     </div>
-  )
+  );
 }

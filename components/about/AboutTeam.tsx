@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import React from 'react';
 
 export default function AboutTeam() {
@@ -36,7 +36,10 @@ export default function AboutTeam() {
                   alt="team"
                   width={100}
                   height={100}
-                />
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />
               </div>
               <h3 className="mt-6 text-base font-semibold leading-7 tracking-tight text-gray-900">{person.name}</h3>
               <p className="text-sm leading-6 text-gray-600">{person.role}</p>

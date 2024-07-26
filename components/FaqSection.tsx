@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import FaqAccordian from "./FaqAccordian";
 
 export default function FaqSection() {
@@ -14,7 +14,10 @@ export default function FaqSection() {
           alt="FAQ Image"
           width={1824}
           height={1080}
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
       </div>
       <div className="w-full lg:w-1/2">
         <div className="max-w-md mx-auto">

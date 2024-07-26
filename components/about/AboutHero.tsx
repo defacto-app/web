@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 export default function AboutHero() {
   const logos = [
@@ -32,7 +32,18 @@ export default function AboutHero() {
       className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1"
       key={index}
     >
-      <Image className="h-12" src={logo.src} alt={logo.alt} width={100} height={100} style={{ width: "100%", height: "auto" }}/>
+      <Image
+        className="h-12"
+        src={logo.src}
+        alt={logo.alt}
+        width={100}
+        height={100}
+        style={{
+          width: "100%",
+          height: "auto",
+          maxWidth: "100%",
+          height: "auto"
+        }} />
     </div>
   ));
 
@@ -59,11 +70,16 @@ export default function AboutHero() {
             <div className="  lg:p-4">
               <div className="grid justify-items-center">
                <Image
-               src="/hero/delivery.png"
-               alt='Delivery man'
-               width={1000}
-               height={1000}
-               style={{ width: "100%", height: "auto" }}/>
+                 src="/hero/delivery.png"
+                 alt='Delivery man'
+                 width={1000}
+                 height={1000}
+                 style={{
+                   width: "100%",
+                   height: "auto",
+                   maxWidth: "100%",
+                   height: "auto"
+                 }} />
               </div>
             </div>
           </div>

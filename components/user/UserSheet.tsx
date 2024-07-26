@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import SendReceive from "../SendReceive";
 import ReceiveSend from "../ReceiveSend";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import {
 	usePackageContext,
 	UserProvider,
@@ -45,7 +45,7 @@ const UserSheetContent: React.FC<UserSheetProps> = ({ children }) => {
 	};
 
 	return (
-		<div className="">
+        <div className="">
 			<Sheet>
 				<SheetTrigger asChild>
 					<div>{children}</div>
@@ -55,13 +55,16 @@ const UserSheetContent: React.FC<UserSheetProps> = ({ children }) => {
 						<SheetTitle>
 							<div>
 								<Image
-									className="h-10 w-auto"
-									src="/logo.png"
-									priority={true}
-									alt="Logo"
-									width={70}
-									height={70}
-								/>
+                                    className="h-10 w-auto"
+                                    src="/logo.png"
+                                    priority={true}
+                                    alt="Logo"
+                                    width={70}
+                                    height={70}
+                                    style={{
+                                        maxWidth: "100%",
+                                        height: "auto"
+                                    }} />
 							</div>
 						</SheetTitle>
 					</SheetHeader>
@@ -105,7 +108,7 @@ const UserSheetContent: React.FC<UserSheetProps> = ({ children }) => {
 				</SheetContent>
 			</Sheet>
 		</div>
-	);
+    );
 };
 
 // Outer component that wraps UserSheetContent with UserProvider
