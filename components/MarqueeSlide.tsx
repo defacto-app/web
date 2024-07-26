@@ -79,11 +79,9 @@ const ReviewCard = ({
                         src={img}
                         alt={name}
                         className="rounded-xl"
-                        fill
-                        sizes="100vw"
-                        style={{
-                            objectFit: "cover"
-                        }} />
+						fill
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+						style={{ objectFit: 'cover' }} />
 					<div className="absolute inset-0  bg-opacity-50 flex flex-col justify-end p-6">
 						<div>
 							<h3 className="text-lg font-semibold text-white">{name}</h3>
@@ -142,11 +140,9 @@ export default function MarqueeSlide() {
 				<Image
                     src="/bg.png"
                     alt="Background"
-                    fill
-                    sizes="100vw"
-                    style={{
-                        objectFit: "cover"
-                    }} />
+					fill
+					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+					style={{ objectFit: 'cover' }} />
 			</div>
 			<Marquee pauseOnHover className="[--duration:20s] ">
 				{upperRowContent.map((item, index) => (
