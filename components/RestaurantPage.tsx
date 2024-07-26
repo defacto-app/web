@@ -7,8 +7,8 @@ import RestaurantHeader from './user/restaurant component/RestaurantHeader';
 import OperatingHours from './user/restaurant component/OperatingHours';
 import Categories from './user/restaurant component/Categories';
 import Products from './user/restaurant component/Products';
-import { Restaurant } from '@/lib/types';
 import { MenuTab } from './user/MenuTab';
+import {Restaurant} from "@/lib/types";
 
 const restaurants: Restaurant[] = [
   {

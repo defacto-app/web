@@ -1,11 +1,14 @@
 import React from 'react'
+import Image from "next/image";
 
 export default function RestHero() {
   return (
     <div>
 <div className="relative isolate overflow-hidden pt-14">
-        <img
+        <Image
           alt=""
+          width={2830}
+            height={1698}
           src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
           className="absolute inset-0 -z-10 h-full w-full object-cover"
         />
@@ -25,10 +28,12 @@ export default function RestHero() {
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-400 ring-1 ring-white/10 hover:ring-white/20">
               Announcing our next round of funding.{' '}
-              <a href="#" className="font-semibold text-white">
+              <p
+
+                  className="font-semibold text-white">
                 <span aria-hidden="true" className="absolute inset-0" />
                 Read more <span aria-hidden="true">&rarr;</span>
-              </a>
+              </p>
             </div>
           </div>
           <div className="text-center">
@@ -40,15 +45,15 @@ export default function RestHero() {
               fugiat veniam occaecat fugiat aliqua.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="#"
+              <p
+
                 className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
               >
                 Get started
-              </a>
-              <a href="#" className="text-sm font-semibold leading-6 text-white">
+              </p>
+              <p className="text-sm font-semibold leading-6 text-white">
                 Learn more <span aria-hidden="true">→</span>
-              </a>
+              </p>
             </div>
           </div>
         </div>

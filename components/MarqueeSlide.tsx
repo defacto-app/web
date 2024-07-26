@@ -117,7 +117,13 @@ const UpperRowCard = ({
 	return (
 		<div className="">
 			<div className="flex items-center rounded-xl bg-primary-200 gap-2 p-4">
-				<img className="rounded-full" width="32" height="32" alt="" src={img} />
+				<Image
+					className="rounded-full"
+					width="32"
+					height="32"
+					alt=""
+					src={img}
+				/>
 				<p className="text-sm text-primary-900 font-bold">{text}</p>
 			</div>
 		</div>

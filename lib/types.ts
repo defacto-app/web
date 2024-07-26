@@ -12,9 +12,7 @@ export interface Restaurant {
   name: string;
   rating: number;
   time: string;
-  categories: {
-    [key: string]: MenuItem[];
-  };
+  category: any;
   image: string;
   background: string;
   distance: string;
