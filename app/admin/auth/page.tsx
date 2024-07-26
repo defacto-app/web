@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/card";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
-import {json} from "stream/consumers";
 import {$adminHttp} from "@/app/config/http";
 import env from "@/config/env";
 import {InputOTPPattern} from "@/components/ui/InputOTPPattern";
@@ -169,7 +168,7 @@ export default function AdminLogin() {
                     <div className="grid gap-2">
                         <Label htmlFor="email">Email</Label>
                         {formData.email}
-                        <div className={`flex gap-x-2`}>
+                        <div className={"flex gap-x-2"}>
                             <Input
                                 id="email"
                                 name="email"
@@ -185,12 +184,13 @@ export default function AdminLogin() {
                         </div>
 
                         {errors.email && (
-                            <p className={`text-red-500 p-4`}>{errors.email}</p>
+                            // biome-ignore lint/style/noUnusedTemplateLiteral: <explanation>
+<p className={`text-red-500 p-4`}>{errors.email}</p>
                         )}
                     </div>
                     <InputOTPPattern setOtp={setOtp} defaultValue={formData.otp}/>
                     {errors.otp && (
-                        <p className={`text-red-500 p-4`}>{errors.otp}</p>
+                        <p className={"text-red-500 p-4"}>{errors.otp}</p>
                     )}
                     <Button onClick={handleSubmit} type="submit" className="w-full">
                         Login

@@ -23,7 +23,7 @@ export default function HomePage() {
         <h2 className="text-4xl font-bold text-primary-200">Our Happy Customers</h2>
       </div>
       <MarqueeSlide/>
-      <NewsletterSection/>
+      {/*<NewsletterSection/>*/}
       {/* <SendReceive/>
       <CtaSection/>
       <BecomeRider/> */}
