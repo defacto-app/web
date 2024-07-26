@@ -1,7 +1,7 @@
 // components/RestaurantPage.tsx
 import React from 'react';
 import { PhoneIcon, Star } from 'lucide-react';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { EnvelopeOpenIcon } from '@radix-ui/react-icons';
 import RestaurantHeader from './user/restaurant component/RestaurantHeader';
 import OperatingHours from './user/restaurant component/OperatingHours';

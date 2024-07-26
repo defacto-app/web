@@ -7,7 +7,7 @@ import { UserProvider } from "@/app/provider/auth.context";
 import env from "@/config/env";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { motion } from "framer-motion";
 import PickupModal from "./user/PickupModal";
 

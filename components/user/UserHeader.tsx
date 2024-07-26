@@ -5,7 +5,7 @@ import { X, Menu, UserRoundCogIcon, CircleUser, Bell } from "lucide-react";
 import { UserProvider } from "@/app/provider/auth.context";
 import env from "@/config/env";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { motion } from "framer-motion";
 import UserPopover from "./UserPopover";
 import HistoryPopover from "./HistoryPopover";

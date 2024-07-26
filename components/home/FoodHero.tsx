@@ -2,7 +2,7 @@ import { ChevronRight } from "lucide-react";
 import React from "react";
 import PickupModal from "../user/PickupModal";
 import { Button } from "../ui/button";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { Typewriter } from "./Typewriter";
 import RotateBetween from "./RotataBetween";
 

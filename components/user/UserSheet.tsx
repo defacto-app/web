@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import SendReceive from "../SendReceive";
 import ReceiveSend from "../ReceiveSend";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import {
 	usePackageContext,
 	UserProvider,

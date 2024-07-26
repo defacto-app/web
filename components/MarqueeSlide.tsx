@@ -2,7 +2,7 @@ import Marquee from "@/components/magicui/marquee";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Star, Quote } from "lucide-react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const reviews = [
 	{

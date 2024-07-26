@@ -7,7 +7,7 @@ import PickupModal from "@/components/user/PickupModal";
 import ReceiverModal from "@/components/user/ReceiverModal";
 import SenderModal from "@/components/user/SenderModal";
 import { BanknoteIcon, CheckCircleIcon, CreditCardIcon } from "lucide-react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import React, { useState } from "react";
 
 export default function Paymentpage() {

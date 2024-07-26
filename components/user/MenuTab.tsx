@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { Tabs } from "../ui/tabs";
 import RestaurantGrid from "./restaurant component/MenuTab";
 import Products from "./restaurant component/Products";
