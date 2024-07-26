@@ -28,6 +28,7 @@ export default function HeroSection () {
   const logoElements = logos.map((logo, index) => (
     <div
       className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1"
+      // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
       key={index}
     >
       <Image
@@ -38,7 +39,6 @@ export default function HeroSection () {
         height={100}
         style={{
           width: "100%",
-          height: "auto",
           maxWidth: "100%",
           height: "auto"
         }} />
@@ -63,6 +63,7 @@ export default function HeroSection () {
               <path d="M.5 200V.5H200" fill="none" />
             </pattern>
           </defs>
+          {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
           <svg x="50%" y={-1} className="overflow-visible fill-gray-50">
             <path
               d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z"
@@ -118,7 +119,6 @@ export default function HeroSection () {
                         width: "100%",
                         height: "auto",
                         maxWidth: "100%",
-                        height: "auto"
                       }} />
                     <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                   </div>
@@ -135,7 +135,6 @@ export default function HeroSection () {
                         width: "100%",
                         height: "auto",
                         maxWidth: "100%",
-                        height: "auto"
                       }} />
                     <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                   </div>
@@ -150,7 +149,6 @@ export default function HeroSection () {
                         width: "100%",
                         height: "auto",
                         maxWidth: "100%",
-                        height: "auto"
                       }} />
                     <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10" />
                   </div>

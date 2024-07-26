@@ -28,8 +28,7 @@ function FoodHero() {
               <div className="max-w-md col-span-1 sm:max-w-2xl sm:text-center lg:flex lg:items-center lg:px-0 lg:text-left">
                 <div>
                   <div className="sm:flex sm:justify-center lg:justify-start mb-5 sm:mb-0">
-                    <a
-                      href="#"
+                    <p
                       className="flex items-center rounded-full p-1 pr-2 text-white hover:text-gray-200 sm:text-base lg:text-sm xl:text-base"
                     >
                       <span className="text-primary-50 px-3 py-0.5 text-sm font-semibold leading-5">
@@ -42,7 +41,7 @@ function FoodHero() {
                         className="ml-2 h-5 w-5 text-gray-200"
                         aria-hidden="true"
                       />
-                    </a>
+                    </p>
                   </div>
 
                   <div className="py-2">

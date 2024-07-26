@@ -30,6 +30,7 @@ export default function AboutHero() {
   const logoElements = logos.map((logo, index) => (
     <div
       className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1"
+      // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
       key={index}
     >
       <Image
@@ -40,7 +41,6 @@ export default function AboutHero() {
         height={100}
         style={{
           width: "100%",
-          height: "auto",
           maxWidth: "100%",
           height: "auto"
         }} />
@@ -76,7 +76,6 @@ export default function AboutHero() {
                  height={1000}
                  style={{
                    width: "100%",
-                   height: "auto",
                    maxWidth: "100%",
                    height: "auto"
                  }} />

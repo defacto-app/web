@@ -38,6 +38,7 @@ export default function FoodHero2() {
   const logoElements = logos.map((logo, index) => (
     <div
       className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1"
+      // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
       key={index}
     >
       <Image
@@ -48,7 +49,6 @@ export default function FoodHero2() {
         height={100}
         style={{
           width: "100%",
-          height: "auto",
           maxWidth: "100%",
           height: "auto"
         }} />
@@ -58,12 +58,12 @@ export default function FoodHero2() {
     <div className="">
       <div className="flex flex-col lg:flex-row items-center justify-between">
        <div className="max-w-md mb-10 lg:mb-0 px-20">
-         <a href="#" className="inline-flex space-x-6 mb-8">
+         <p className="inline-flex space-x-6 mb-8">
            <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
              <span>Riders Available</span>
              <BikeIcon className="text-primary-600" />
            </span>
-         </a>
+         </p>
          <h1 className="text-4xl lg:text-5xl font-bold text-blue-900 mb-4">
            Delivering
            <RotateBetween
