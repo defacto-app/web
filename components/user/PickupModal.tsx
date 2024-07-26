@@ -32,24 +32,37 @@ export default function PickupModal() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <Dialog>
         <DialogTrigger asChild>
-          {savedAddress ? (
-            <Button variant="primary2" className="w-full text-left border rounded px-3 py-2">
-              <div className="flex items-center">
-                <Map className="mr-2" />
-                <span className="text-gray-200">{savedAddress}</span>
+          <div className="relative mb-8 w-full cursor-pointer">
+            <input
+              type="text"
+              placeholder={savedAddress ? savedAddress : "What's your address?"}
+              className="w-full p-4 pr-16 border border-gray-300 rounded-full"
+            />
+            <button className="absolute right-0 top-0 mt-3 mr-4" disabled>
+              {/* <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-blue-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg> */}
+              <div className="grid justify-items-center place-content-center">
+              <Navigation className="text-primary-500 items-center"/>
+
               </div>
-            </Button>
-          ) : (
-            <Button variant="primary2" className="w-full text-left border rounded px-3 py-2">
-              <div className="flex items-center">
-                <Map className="mr-2" />
-                <span className="text-gray-200">Add your address</span>
-              </div>
-            </Button>
-          )}
+
+            </button>
+          </div>
         </DialogTrigger>
         <DialogContent id="dialog-trigger" className="sm:max-w-[700px] p-20 sm:max-h-[700px]">
           <svg

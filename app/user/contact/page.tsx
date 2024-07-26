@@ -3,6 +3,8 @@ import { EnvelopeOpenIcon } from "@radix-ui/react-icons";
 import { Building2Icon, PhoneIcon } from "lucide-react";
 import React from "react";
 import { Button } from "@/components/ui/button";
+import {Label} from "@/components/ui/label";
+import {Textarea} from "@/components/ui/textarea";
 
 
 
@@ -31,6 +33,7 @@ export default function ContactPage() {
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" strokeWidth={0} fill="white" />
+                {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
                 <svg x="100%" y={-1} className="overflow-visible fill-gray-50">
                   <path d="M-470.5 0h201v201h-201Z" strokeWidth={0} />
                 </svg>
@@ -82,51 +85,48 @@ export default function ContactPage() {
           <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
               <div>
-                <label htmlFor="first-name" className="block text-sm font-semibold leading-6 text-gray-900">
+                <Label htmlFor="first-name" >
                   First name
-                </label>
+                </Label>
                 <div className="mt-2.5">
-                  <input
+                  <Input
                     type="text"
                     name="first-name"
                     id="first-name"
                     autoComplete="given-name"
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
               </div>
               <div>
-                <label htmlFor="last-name" className="block text-sm font-semibold leading-6 text-gray-900">
+                <label htmlFor="last-name" >
                   Last name
                 </label>
                 <div className="mt-2.5">
-                  <input
+                  <Input
                     type="text"
                     name="last-name"
                     id="last-name"
                     autoComplete="family-name"
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
               </div>
               <div className="sm:col-span-2">
-                <label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900">
+                <Label htmlFor="email">
                   Email
-                </label>
+                </Label>
                 <div className="mt-2.5">
-                  <input
+                  <Input
                     type="email"
                     name="email"
                     id="email"
                     autoComplete="email"
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
               </div>
               <div className="sm:col-span-2">
-                <label htmlFor="phone-number" className="block text-sm font-semibold leading-6 text-gray-900">
+                <Label htmlFor="phone-number" >
                   Phone number
-                </label>
+                </Label>
                 <div className="mt-2.5">
 
                   <Input type="tel"
@@ -137,16 +137,14 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="sm:col-span-2">
-                <label htmlFor="message" className="block text-sm font-semibold leading-6 text-gray-900">
+                <Label htmlFor="message">
                   Message
-                </label>
+                </Label>
                 <div className="mt-2.5">
-                  <textarea
+                  <Textarea
                     name="message"
                     id="message"
                     rows={4}
-                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue={''}
                   />
                 </div>
               </div>

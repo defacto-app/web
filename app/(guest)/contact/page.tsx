@@ -31,6 +31,7 @@ export default function ContactPage() {
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" strokeWidth={0} fill="white" />
+                {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
                 <svg x="100%" y={-1} className="overflow-visible fill-gray-50">
                   <path d="M-470.5 0h201v201h-201Z" strokeWidth={0} />
                 </svg>
@@ -114,12 +115,11 @@ export default function ContactPage() {
                   Email
                 </label>
                 <div className="mt-2.5">
-                  <input
+                  <Input
                     type="email"
                     name="email"
                     id="email"
                     autoComplete="email"
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
               </div>

@@ -13,8 +13,8 @@ export default function SigninModal() {
     useAuthContext();
 function hideBackButton(){
   const shouldShow =["welcome","confirm-email"]
-  if (shouldShow.includes(currentStep)) return false;
-   else return true;
+  return !shouldShow.includes(currentStep);
+
 }
   return (
     <div className="mx-auto max-w-md rounded-xl">
