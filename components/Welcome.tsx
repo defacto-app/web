@@ -24,11 +24,9 @@ export default function Welcome() {
 
 	return (
 		<div className="">
-			<Card className="rounded-xl">
+			<div className="rounded-xl">
 				<CardHeader>
-					<CardTitle className="text-4xl text-center font-bold">
-						Welcome
-					</CardTitle>
+					<h3 className="text-xl text-center font-bold">Welcome</h3>
 					<CardDescription className="text-center">
 						Let's start with your phone number
 					</CardDescription>
@@ -62,7 +60,7 @@ export default function Welcome() {
 								</div>
 							</Button>
 						</div>
-						<p className="text-center text-sm text-gray-600">
+						<p className="text-center text-xs pt-4 text-gray-600">
 							By creating an account, you automatically accept our{" "}
 							<Link href="/terms-of-service">Terms of Service</Link>,{" "}
 							<Link href="/privacy-policy">Privacy Policy</Link>, and{" "}
@@ -70,7 +68,7 @@ export default function Welcome() {
 						</p>
 					</div>
 				</CardContent>
-			</Card>
+			</div>
 		</div>
 	);
 }
