@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import type React from "react";
 import { z } from "zod";
 import { useState } from "react";
 import Link from "next/link";
@@ -17,7 +17,7 @@ import { Eye, EyeOff, Key } from "lucide-react";
 import { useAuthContext } from "@/app/provider/auth.context";
 
 function Password() {
-  const { user, setUser, currentStep,setCurrentStep } = useAuthContext();
+  const {form,setForm, currentStep,setCurrentStep } = useAuthContext();
 
   const schema = z.object({
     password: z.string().min(8, {
@@ -35,7 +35,7 @@ function Password() {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setUser({ ...user, [name]: value });
+    setForm({ ...form, [name]: value });
   };
 
   const togglePasswordVisibility = () => {
@@ -47,7 +47,7 @@ function RegisterUser() {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({email: user.email, password: user.password})
+    body: JSON.stringify({email: form.email, password: form.password})
 };
 
 fetch(url, requestOptions)
@@ -72,13 +72,13 @@ setCurrentStep("confirm-email")
 
   const handleSubmit = () => {
     setErrors({});
-    const result = schema.safeParse(user);
+    const result = schema.safeParse(form);
     if (!result.success) {
       const formattedErrors: any = {};
-      result.error.errors.forEach((error) => {
+      for (const error of result.error.errors) {
         const fieldName = error.path[0];
         formattedErrors[fieldName] = error.message;
-      });
+      }
       setErrors(formattedErrors);
       return;
   }
@@ -88,7 +88,7 @@ RegisterUser()
 
   }
 
-    console.log("Password submitted:", user.email, user.password);
+    console.log("Password submitted:", form.email, form.password);
 
   return (
     <Card className="mx-auto max-w-md rounded-xl">
@@ -106,7 +106,7 @@ RegisterUser()
       <CardContent>
         <div className="grid gap-4 ">
           <div className="grid gap-2 py-6">
-            <p>{user.email}</p>
+            <p>{form.email}</p>
             <Label htmlFor="password">Password</Label>
             <div className="relative">
               <Input
@@ -115,7 +115,7 @@ RegisterUser()
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 required
-                value={user.password}
+                value={form.password}
                 onChange={handleInputChange}
               />
               <button

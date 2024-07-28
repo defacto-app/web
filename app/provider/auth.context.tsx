@@ -37,7 +37,7 @@ type UserProviderProps = {
 
 // Create the provider component
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-	const allSteps = ["welcome", "email", "password", "confirm-email"];
+	const allSteps = ["welcome", "phone-otp", "email", "password", "confirm-email"];
 
 	const [form, setForm] = useState<registerFormType>({
 		email: "",

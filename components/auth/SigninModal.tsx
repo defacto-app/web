@@ -9,7 +9,7 @@ import { MoveLeft } from "lucide-react";
 import ConfirmEmail from "../Confirm";
 
 export default function SigninModal() {
-  const { user, setUser, setCurrentStep, currentStep, goBack } =
+  const { form,setForm, setCurrentStep, currentStep, goBack } =
     useAuthContext();
 function hideBackButton(){
   const shouldShow =["welcome","confirm-email"]

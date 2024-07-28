@@ -1,4 +1,4 @@
-
+import env from "@/config/env";
 
 
 export const $api = {
@@ -24,6 +24,27 @@ export const $api = {
             sendEmailOtp: async (body: any) => {
                 try {
                     const res = await fetch('https://api.defactoapp.com.ng/api/v1/auth/admin-login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(body),
+                    });
+
+                    if (!res.ok) {
+                        return res.json();
+                    }
+
+                    return await res.json();
+                } catch (error:any) {
+                    return error;
+                }
+            }
+        },
+        user:{
+            phone_login: async (body: any) => {
+                try {
+                    const res = await fetch(`${env.base_url}/auth/confirm-phone-login`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

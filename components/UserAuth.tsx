@@ -22,7 +22,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 export default function UserAuth() {
 	const [open, setOpen] = React.useState(true);
 	return (
-		<div className="relative">
+		<div >
 			<div>
 				<AlertDialog defaultOpen={open} open={open}>
 					<AlertDialogTrigger
@@ -32,7 +32,7 @@ export default function UserAuth() {
 						{/* <User className="text-primary-600"/> */}
 						Get Started
 					</AlertDialogTrigger>
-					<AlertDialogContent>
+					<AlertDialogContent className={`min-h-min py-12`}>
 						<VisuallyHidden>
 							<AlertDialogTitle />
 							<AlertDialogDescription />

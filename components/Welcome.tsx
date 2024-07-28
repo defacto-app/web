@@ -13,32 +13,46 @@ import { useAuthContext } from "@/app/provider/auth.context";
 import PhoneNo from "./PhoneNo";
 import "react-phone-input-2/lib/style.css";
 import { EnvelopeClosedIcon } from "@radix-ui/react-icons";
-import {Input} from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
+import { $api } from "@/http/endpoints";
 
 export default function Welcome() {
-	const { form, setForm,setCurrentStep, currentStep } = useAuthContext();
+	const { form, setForm, setCurrentStep, currentStep } = useAuthContext();
 
-	function handleNext(event: React.MouseEvent<HTMLButtonElement>) {
+	async function handleNext(event: React.MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
+
 		setCurrentStep("email");
+	}
+
+	async function submit(event: React.MouseEvent<HTMLButtonElement>) {
+		event.preventDefault();
+
+		try {
+			const res = await $api.auth.user.phone_login({
+				phoneNumber: "+2347030000000",
+			});
+			console.log(res);
+		} catch (error) {
+			console.log(error);
+		}
+
 	}
 
 	return (
 		<div className="">
 			<div className="rounded-xl h-80">
-				<CardHeader>
+				<div>
 					<h3 className="text-xl text-center font-bold">Welcome</h3>
-					<CardDescription className="text-center">
-						Let's start with your phone number
-					</CardDescription>
-				</CardHeader>
-				<CardContent>
+					<p className="text-center">Let's start with your phone number</p>
+				</div>
+				<div>
 					<div className="grid place-content-center">
 						<div className="py-4">
 							<PhoneNo />
 						</div>
 						<div className="mb-6 grid place-content-center">
-							<Button variant="primary" className=" w-80 h-10 ">
+							<Button onClick={submit} variant="primary" className=" w-80 h-10 ">
 								Continue with SMS
 							</Button>
 						</div>
@@ -68,7 +82,7 @@ export default function Welcome() {
 							<Link href="/cookies-policy">Cookies Policy</Link>
 						</p>
 					</div>
-				</CardContent>
+				</div>
 			</div>
 		</div>
 	);
