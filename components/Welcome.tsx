@@ -13,9 +13,10 @@ import { useAuthContext } from "@/app/provider/auth.context";
 import PhoneNo from "./PhoneNo";
 import "react-phone-input-2/lib/style.css";
 import { EnvelopeClosedIcon } from "@radix-ui/react-icons";
+import {Input} from "@/components/ui/input";
 
 export default function Welcome() {
-	const { user, setUser, setCurrentStep, currentStep } = useAuthContext();
+	const { form, setForm,setCurrentStep, currentStep } = useAuthContext();
 
 	function handleNext(event: React.MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
@@ -24,7 +25,7 @@ export default function Welcome() {
 
 	return (
 		<div className="">
-			<div className="rounded-xl">
+			<div className="rounded-xl h-80">
 				<CardHeader>
 					<h3 className="text-xl text-center font-bold">Welcome</h3>
 					<CardDescription className="text-center">
@@ -33,11 +34,11 @@ export default function Welcome() {
 				</CardHeader>
 				<CardContent>
 					<div className="grid place-content-center">
-						<div className="mb-6 grid place-content-center w-full">
+						<div className="py-4">
 							<PhoneNo />
 						</div>
 						<div className="mb-6 grid place-content-center">
-							<Button variant="primary" className=" w-72 h-10 ">
+							<Button variant="primary" className=" w-80 h-10 ">
 								Continue with SMS
 							</Button>
 						</div>

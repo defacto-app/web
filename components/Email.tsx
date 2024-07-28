@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import type React from "react";
 import { z } from "zod";
 import { useState } from "react";
 import Link from "next/link";
@@ -19,7 +19,7 @@ import { useRouter } from "next/router";
 import { useAuthContext } from "@/app/provider/auth.context";
 
 function Email() {
-  const { user, setUser, currentStep, setCurrentStep } = useAuthContext();
+  const { setForm, form, currentStep, setCurrentStep } = useAuthContext();
 
   const schema = z.object({
     email: z.string().email({
@@ -46,16 +46,16 @@ function Email() {
     const result = schema.safeParse(formData);
     if (!result.success) {
       const formattedErrors: any = {};
-      result.error.errors.forEach((error) => {
+      for (const error of result.error.errors) {
         const fieldName = error.path[0];
         formattedErrors[fieldName] = error.message;
-      });
+      }
       setErrors(formattedErrors);
       return;
     }
     setCurrentStep("password");
 
-    setUser({
+    setForm({
       email: formData.email,
       password: "",
     });
@@ -64,11 +64,9 @@ function Email() {
   };
 
   return (
-    <Card className="mx-auto max-w-md rounded-xl">
+    <div >
       <CardHeader>
-        <div className="grid justify-items-start py-6">
-          <Mail color="red" size={48} />
-        </div>
+
         <CardTitle className="text-3xl text-center font-bold">
           {" "}
           {/* eslint-disable-next-line react/no-unescaped-entities */}
@@ -105,7 +103,7 @@ function Email() {
           Continue
         </Button>
       </CardContent>
-    </Card>
+    </div>
   );
 }
 

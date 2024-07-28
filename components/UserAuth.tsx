@@ -20,7 +20,7 @@ import { cn } from "@/utils/cn";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export default function UserAuth() {
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = React.useState(true);
 	return (
 		<div className="relative">
 			<div>
