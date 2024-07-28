@@ -57,7 +57,7 @@ export default function FoodHero2() {
   return (
     <div className="">
       <div className="flex flex-col lg:flex-row items-center justify-between">
-       <div className="max-w-md mb-10 lg:mb-0 px-20">
+       <div className="max-w-2xl mb-10 lg:mb-0 px-10">
          <p className="inline-flex space-x-6 mb-8">
            <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
              <span>Riders Available</span>

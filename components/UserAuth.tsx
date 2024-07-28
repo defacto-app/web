@@ -20,35 +20,37 @@ import { cn } from "@/utils/cn";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export default function UserAuth() {
-	const [open, setOpen] = React.useState(true);
+	const [open, setOpen] = React.useState(false);
 	return (
 		<div className="relative">
-			<AlertDialog defaultOpen={open} open={open}>
-				<AlertDialogTrigger
-					onClick={() => setOpen(true)}
-					className="w-32 h-10 bg-blue-500 rounded-full text-white"
-				>
-					{/* <User className="text-primary-600"/> */}
-					Get Started
-				</AlertDialogTrigger>
-				<AlertDialogContent>
-					<VisuallyHidden>
-						<AlertDialogTitle />
-						<AlertDialogDescription />
-					</VisuallyHidden>
+			<div>
+				<AlertDialog defaultOpen={open} open={open}>
+					<AlertDialogTrigger
+						onClick={() => setOpen(true)}
+						className="w-32 h-10 bg-blue-500 rounded-full text-white"
+					>
+						{/* <User className="text-primary-600"/> */}
+						Get Started
+					</AlertDialogTrigger>
+					<AlertDialogContent>
+						<VisuallyHidden>
+							<AlertDialogTitle />
+							<AlertDialogDescription />
+						</VisuallyHidden>
 
-					<SigninModal />
-					<AlertDialogFooter>
-						<Button
-							onClick={() => setOpen(false)}
-							variant="outline"
-							className="absolute bg-gray-400 hover:bg-gray-400 hover:text-white top-2 right-2 text-white p-2 rounded-full"
-						>
-							<X />
-						</Button>
-					</AlertDialogFooter>
-				</AlertDialogContent>
-			</AlertDialog>
+						<SigninModal />
+						<AlertDialogFooter>
+							<Button
+								onClick={() => setOpen(false)}
+								variant="outline"
+								className="absolute bg-gray-400 hover:bg-gray-400 hover:text-white top-2 right-2 text-white p-2 rounded-full"
+							>
+								<X />
+							</Button>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
+			</div>
 		</div>
 	);
 }
