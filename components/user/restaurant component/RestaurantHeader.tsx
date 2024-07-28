@@ -12,31 +12,11 @@ interface RestaurantHeaderProps {
 
 const RestaurantHeader: React.FC<RestaurantHeaderProps> = ({ restaurant }) => {
   return (
-    // old area
-    // <div
-    //   className="relative bg-cover bg-center p-6 rounded-lg flex flex-col items-center text-center"
-    //   style={{ backgroundImage: `url(${restaurant.background})` }}
-    // >
-    //   <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
-    //   <div className="relative z-10">
-    //     <h1 className="text-4xl font-bold text-white">{restaurant.name}</h1>
-    //     <div className="flex items-center mt-2">
-    //       <Star className="text-yellow-500 mr-1" />
-    //       <span className="text-white">{restaurant.rating}</span>
-    //     </div>
-    //     <div className="flex items-center mt-2 space-x-4">
-    //       <span className="text-white">{restaurant.distance} Away</span>
-    //       <span className="text-white">{restaurant.fee}</span>
-    //     </div>
-    //     <div className="mt-2">
-    //       <span className="text-green-500">Open Now</span>
-    //       <span className="text-white"> {restaurant.hours}</span>
-    //     </div>
-    //   </div>
-    // </div>
     // new area
     <div className="relative isolate overflow-hidden  pb-16 pt-14 sm:pb-20">
-      <div className="flex justify-between p-10">
+      <div className="absolute inset-0 -z-10 bg-black opacity-50"></div>
+
+      <div className="flex relative justify-between p-10">
         <Link href={"/"} className="bg-primary-600 rounded-full p-3">
           <HomeIcon className="text-white" />
         </Link>
@@ -71,11 +51,15 @@ const RestaurantHeader: React.FC<RestaurantHeaderProps> = ({ restaurant }) => {
         </div>
       </div>
 
-      <img
-        alt=""
-        src={restaurant.background}
-        className="absolute inset-0 -z-10 h-[700px] w-full object-cover"
-      />
+      <div>
+        <img
+          alt=""
+          src={restaurant.background}
+          className="absolute inset-0 -z-10 h-[700px] w-full object-cover"
+        />
+        <div className="absolute inset-0 -z-10 bg-black opacity-50"></div>
+      </div>
+
       <div
         aria-hidden="true"
         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -94,14 +78,14 @@ const RestaurantHeader: React.FC<RestaurantHeaderProps> = ({ restaurant }) => {
             <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl">
               {restaurant.name}
             </h1>
-            <div className="flex gap-3  text-xl">
-              <div className="flex gap-3 mt-4 mb-2">
+            <div className="flex gap-3 items-center  text-xl">
+              <div className="flex gap-3 mt-4 ">
                 <MapPin className="text-white  text-2xl" />
                 <p className="text-white font-semibold">
                   {restaurant.distance}
                 </p>
               </div>
-              <div className="flex gap-3 mt-2 mb-2 text-xl">
+              <div className="flex gap-3 items-center mt-2  text-xl">
                 <div className="bg-primary-500 p-2 rounded-full">
                   <BikeIcon className="text-white" />
                 </div>
@@ -110,13 +94,13 @@ const RestaurantHeader: React.FC<RestaurantHeaderProps> = ({ restaurant }) => {
                 </p>
               </div>
             </div>
-            <div className="flex gap-3 mt-3 text-xl">
-<Clock2Icon className="text-white text-xl"/>
-            <p className=" text-xl leading-8 text-white">
-              {restaurant.hours}
-            </p>
+            <div className="flex items-center gap-3 mt-3 text-xl">
+              <Clock2Icon className="text-white " />
+              <p className=" text-xl  text-white">
+                <span className="text-primary-500 font-bold">Open By</span>{" "}
+                {restaurant.hours}
+              </p>
             </div>
-
           </div>
         </div>
       </div>

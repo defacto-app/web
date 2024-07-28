@@ -43,7 +43,7 @@ export const MenuTab: React.FC<MenuTabProps> = ({ restaurant }) => {
         <TabsContent key={category} value={category} className="grid grid-cols-3 gap-4">
           {menuItems.map((item) => (
             <Card key={item.id} className="relative">
-              <Image src={item.imageUrl} alt={item.name} width={300} height={200} className="object-cover" />
+              <Image src={item.imageUrl} alt={item.name} width={500} height={500} className="object-cover" />
               {item.isBestSeller && <span className="absolute top-2 left-2 bg-blue-500 text-white px-2 py-1 rounded">Best Seller</span>}
               <CardContent className="p-4">
                 <CardTitle>{item.name}</CardTitle>

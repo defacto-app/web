@@ -21,7 +21,7 @@ export const restaurants: Restaurant[] = [
           name: 'Mixed Vegetable Salad',
           description: 'Fresh veggies with a touch of dressing.',
           price: '₦5,000',
-          imageUrl: '/images/salad1.jpg',
+          imageUrl: '/rest/ms.jpg',
           rating: 4.7,
           stars: 5,
           isBestSeller: true
@@ -31,7 +31,7 @@ export const restaurants: Restaurant[] = [
           name: 'Fruit & Spice Salad',
           description: 'A delightful mix of fruits and spices.',
           price: '₦5,000',
-          imageUrl: '/images/salad2.jpg',
+          imageUrl: '/rest/fs.jpg',
           rating: 4.6,
           stars: 5,
           isBestSeller: true
@@ -43,7 +43,7 @@ export const restaurants: Restaurant[] = [
           name: 'Ice Cream',
           description: 'Cold and sweet ice cream.',
           price: '₦3,000',
-          imageUrl: '/images/icecream.jpg',
+          imageUrl: '/rest/ic.jpg',
           rating: 4.8,
           stars: 5,
           isBestSeller: false
@@ -53,7 +53,8 @@ export const restaurants: Restaurant[] = [
           name: 'Chocolate Cake',
           description: 'Rich chocolate cake with layers.',
           price: '₦4,000',
-          imageUrl: '/images/cake.jpg',
+          imageUrl: '/rest/ic.jpg',
+
           rating: 4.9,
           stars: 5,
           isBestSeller: false
@@ -65,7 +66,7 @@ export const restaurants: Restaurant[] = [
           name: 'Smoothie',
           description: 'Refreshing fruit smoothie.',
           price: '₦2,000',
-          imageUrl: '/images/smoothie.jpg',
+          imageUrl: '/rest/sm.jpg',
           rating: 4.5,
           stars: 4,
           isBestSeller: false
@@ -75,7 +76,7 @@ export const restaurants: Restaurant[] = [
           name: 'Milkshake',
           description: 'Creamy milkshake with various flavors.',
           price: '₦2,500',
-          imageUrl: '/images/milkshake.jpg',
+          imageUrl: '/rest/milks.jpg',
           rating: 4.6,
           stars: 5,
           isBestSeller: true
@@ -102,7 +103,8 @@ export const restaurants: Restaurant[] = [
           name: 'Chicken Salad',
           description: 'Grilled chicken with fresh greens.',
           price: '₦4,500',
-          imageUrl: '/images/chickensalad.jpg',
+          imageUrl: '/rest/milks.jpg',
+
           rating: 4.4,
           stars: 5,
           isBestSeller: true
@@ -112,7 +114,8 @@ export const restaurants: Restaurant[] = [
           name: 'Veggie Delight',
           description: 'A mix of seasonal vegetables.',
           price: '₦4,000',
-          imageUrl: '/images/veggiedelight.jpg',
+          imageUrl: '/rest/milks.jpg',
+
           rating: 4.3,
           stars: 4,
           isBestSeller: false
@@ -124,7 +127,8 @@ export const restaurants: Restaurant[] = [
           name: 'Pastry',
           description: 'Freshly baked pastry.',
           price: '₦1,500',
-          imageUrl: '/images/pastry.jpg',
+          imageUrl: '/rest/sm.jpg',
+
           rating: 4.1,
           stars: 4,
           isBestSeller: false
@@ -134,7 +138,8 @@ export const restaurants: Restaurant[] = [
           name: 'Cupcake',
           description: 'Delicious cupcake with frosting.',
           price: '₦1,200',
-          imageUrl: '/images/cupcake.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.2,
           stars: 4,
           isBestSeller: false
@@ -146,7 +151,8 @@ export const restaurants: Restaurant[] = [
           name: 'Soda',
           description: 'Chilled soda drink.',
           price: '₦800',
-          imageUrl: '/images/soda.jpg',
+          imageUrl: '/rest/milks.jpg',
+
           rating: 3.9,
           stars: 3,
           isBestSeller: false
@@ -156,7 +162,8 @@ export const restaurants: Restaurant[] = [
           name: 'Iced Tea',
           description: 'Refreshing iced tea.',
           price: '₦1,000',
-          imageUrl: '/images/icedtea.jpg',
+          imageUrl: '/rest/milks.jpg',
+
           rating: 4.5,
           stars: 4,
           isBestSeller: false
@@ -183,7 +190,8 @@ export const restaurants: Restaurant[] = [
           name: 'Spicy Chicken Salad',
           description: 'Spicy grilled chicken with mixed greens.',
           price: '₦5,500',
-          imageUrl: '/images/spicychickensalad.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.8,
           stars: 5,
           isBestSeller: true
@@ -193,7 +201,8 @@ export const restaurants: Restaurant[] = [
           name: 'Caesar Salad',
           description: 'Classic Caesar salad with a creamy dressing.',
           price: '₦5,000',
-          imageUrl: '/images/caesarsalad.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.7,
           stars: 5,
           isBestSeller: true
@@ -205,7 +214,8 @@ export const restaurants: Restaurant[] = [
           name: 'Brownie',
           description: 'Chocolate brownie with nuts.',
           price: '₦2,000',
-          imageUrl: '/images/brownie.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.5,
           stars: 4,
           isBestSeller: false
@@ -215,7 +225,8 @@ export const restaurants: Restaurant[] = [
           name: 'Cheesecake',
           description: 'Creamy cheesecake with a graham crust.',
           price: '₦3,500',
-          imageUrl: '/images/cheesecake.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.6,
           stars: 5,
           isBestSeller: false
@@ -227,7 +238,8 @@ export const restaurants: Restaurant[] = [
           name: 'Lemonade',
           description: 'Freshly squeezed lemonade.',
           price: '₦1,500',
-          imageUrl: '/images/lemonade.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.2,
           stars: 4,
           isBestSeller: false
@@ -237,7 +249,8 @@ export const restaurants: Restaurant[] = [
           name: 'Coffee',
           description: 'Hot brewed coffee.',
           price: '₦1,000',
-          imageUrl: '/images/coffee.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.3,
           stars: 4,
           isBestSeller: false
@@ -264,7 +277,8 @@ export const restaurants: Restaurant[] = [
           name: 'Zinger Salad',
           description: 'Crispy zinger chicken with fresh veggies.',
           price: '₦6,000',
-          imageUrl: '/images/zingersalad.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.8,
           stars: 5,
           isBestSeller: true
@@ -274,7 +288,8 @@ export const restaurants: Restaurant[] = [
           name: 'Coleslaw',
           description: 'Classic KFC coleslaw.',
           price: '₦2,000',
-          imageUrl: '/images/coleslaw.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.4,
           stars: 4,
           isBestSeller: true
@@ -286,7 +301,8 @@ export const restaurants: Restaurant[] = [
           name: 'Apple Pie',
           description: 'Warm apple pie.',
           price: '₦2,500',
-          imageUrl: '/images/applepie.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.6,
           stars: 5,
           isBestSeller: false
@@ -296,7 +312,8 @@ export const restaurants: Restaurant[] = [
           name: 'Chocolate Sundae',
           description: 'Sundae with chocolate sauce.',
           price: '₦2,000',
-          imageUrl: '/images/sundae.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.3,
           stars: 4,
           isBestSeller: false
@@ -308,7 +325,8 @@ export const restaurants: Restaurant[] = [
           name: 'Pepsi',
           description: 'Chilled Pepsi drink.',
           price: '₦800',
-          imageUrl: '/images/pepsi.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.0,
           stars: 4,
           isBestSeller: false
@@ -318,7 +336,8 @@ export const restaurants: Restaurant[] = [
           name: 'Iced Coffee',
           description: 'Refreshing iced coffee.',
           price: '₦1,500',
-          imageUrl: '/images/icedcoffee.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.2,
           stars: 4,
           isBestSeller: false
@@ -345,7 +364,8 @@ export const restaurants: Restaurant[] = [
           name: 'Pepperoni Pizza',
           description: 'Classic pepperoni pizza with mozzarella cheese.',
           price: '₦8,000',
-          imageUrl: '/images/pepperonipizza.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.9,
           stars: 5,
           isBestSeller: true
@@ -355,7 +375,8 @@ export const restaurants: Restaurant[] = [
           name: 'Veggie Pizza',
           description: 'Pizza loaded with fresh vegetables.',
           price: '₦7,500',
-          imageUrl: '/images/veggiepizza.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.7,
           stars: 5,
           isBestSeller: true
@@ -367,7 +388,8 @@ export const restaurants: Restaurant[] = [
           name: 'Chocolate Lava Cake',
           description: 'Warm chocolate cake with a gooey center.',
           price: '₦4,000',
-          imageUrl: '/images/lavacake.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.8,
           stars: 5,
           isBestSeller: false
@@ -377,7 +399,8 @@ export const restaurants: Restaurant[] = [
           name: 'Cinnamon Sticks',
           description: 'Sweet cinnamon sticks with icing dip.',
           price: '₦3,000',
-          imageUrl: '/images/cinnamonsticks.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.6,
           stars: 4,
           isBestSeller: false
@@ -389,7 +412,8 @@ export const restaurants: Restaurant[] = [
           name: 'Coca Cola',
           description: 'Chilled Coca Cola drink.',
           price: '₦900',
-          imageUrl: '/images/cocacola.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.5,
           stars: 4,
           isBestSeller: false
@@ -399,7 +423,8 @@ export const restaurants: Restaurant[] = [
           name: 'Sprite',
           description: 'Refreshing Sprite drink.',
           price: '₦900',
-          imageUrl: '/images/sprite.jpg',
+          imageUrl: '/rest/fs.jpg',
+
           rating: 4.4,
           stars: 4,
           isBestSeller: false
