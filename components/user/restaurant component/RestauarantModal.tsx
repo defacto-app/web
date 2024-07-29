@@ -32,11 +32,12 @@ interface RestaurantModalProps {
   menuItem: MenuItem;
   isOpen: boolean;
   onClose: () => void;
-  onAddToCart: (item: MenuItem, selectedOptions: Record<string, string[]>) => void;
+  onAddToCart: (item: MenuItem, selectedOptions: Record<string, string[]>, quantity: number) => void;
 }
 
 const RestaurantModal: React.FC<RestaurantModalProps> = ({ menuItem, isOpen, onClose, onAddToCart }) => {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
+  const [quantity, setQuantity] = useState<number>(1);
 
   if (!menuItem) {
     return null;
@@ -58,8 +59,13 @@ const RestaurantModal: React.FC<RestaurantModalProps> = ({ menuItem, isOpen, onC
   };
 
   const handleAddToCart = () => {
-    onAddToCart(menuItem, selectedOptions);
+    onAddToCart(menuItem, selectedOptions, quantity);
     onClose();
+  };
+
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    setQuantity(value > 0 ? value : 1); // Ensure quantity is at least 1
   };
 
   return (
@@ -109,6 +115,17 @@ const RestaurantModal: React.FC<RestaurantModalProps> = ({ menuItem, isOpen, onC
               </div>
             </div>
           ))}
+          <div className="flex items-center mt-4">
+            <label htmlFor="quantity" className="mr-2 font-bold">Quantity:</label>
+            <Input
+              type="number"
+              id="quantity"
+              min="1"
+              value={quantity}
+              onChange={handleQuantityChange}
+              className="w-16"
+            />
+          </div>
           <Button className="w-full bg-blue-500 text-white mt-4 py-2 rounded" onClick={handleAddToCart}>Add to Cart</Button>
         </div>
       </DialogContent>
