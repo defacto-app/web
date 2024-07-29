@@ -38,17 +38,17 @@ a new one.`,
 
 		{
 			id: "existing-user",
-			title:  `Welcome back!\nEnter your password`,
+			title: `Welcome back!\nEnter your password`,
 			description: "Use your password to log in to your existing account.",
 		},
 	];
 
 	type authState = "default" | "new-user" | "existing-user";
 	const [authState, setAuthState] = useState<authState>("default");
-	const {  currentStep, setCurrentStep } = useAuthContext();
+	const { currentStep, setCurrentStep } = useAuthContext();
 
 	const getCurrentStep = () => {
-		return authSteps.find(step => step.id === authState);
+		return authSteps.find((step) => step.id === authState);
 	};
 
 	const currentStepDetails = getCurrentStep();
@@ -140,7 +140,6 @@ a new one.`,
 
 			setLoading(false);
 			setCurrentStep("success");
-
 		} catch (error: any) {
 			console.log(error);
 
@@ -184,46 +183,43 @@ a new one.`,
 		<div>
 			<CardContent>
 				<div className={`py-4 w-96`}>
-						<div className="text-2xl  font-bold">
-							{" "}
-							{/* eslint-disable-next-line react/no-unescaped-entities */}
-							{currentStepDetails?.title}
-							{}
-						</div>
+					<div className="text-2xl  font-bold">
+						{" "}
+						{/* eslint-disable-next-line react/no-unescaped-entities */}
+						{currentStepDetails?.title}
+						{}
+					</div>
 
 					<CardDescription className="text-left whitespace-pre-wrap">
 						{currentStepDetails?.description}
 					</CardDescription>
 				</div>
 				<div>
+					{authState === "default" && (
+						<div className=" py-2">
+							<Label htmlFor="email">Email</Label>
+							<Input
+								id="email"
+								name="email"
+								type="email"
+								placeholder="m@example.com"
+								required
+								value={formData.email}
+								onChange={handleInputChange}
+							/>
 
-					{
-						authState === "default" && (
-							<div className=" py-2">
-								<Label htmlFor="email">Email</Label>
-								<Input
-									id="email"
-									name="email"
-									type="email"
-									placeholder="m@example.com"
-									required
-									value={formData.email}
-									onChange={handleInputChange}
-								/>
-
-								<FormError error={errors.email}/>
-									<Button
-									loading={loading}
-									variant="primary"
-									onClick={check_email_exists}
-									type="button"
-									className="w-full mt-4"
-								>
-									Continue
-								</Button>
-							</div>
-						)
-					}
+							<FormError error={errors.email} />
+							<Button
+								loading={loading}
+								variant="primary"
+								onClick={check_email_exists}
+								type="button"
+								className="w-full mt-4"
+							>
+								Continue
+							</Button>
+						</div>
+					)}
 
 					{
 						// Show password field if user is existing
@@ -237,7 +233,7 @@ a new one.`,
 									handleInputChange={handleInputChange}
 									required
 								/>
-								<FormError error={errors.password}/>
+								<FormError error={errors.password} />
 
 								<Button
 									loading={loading}
@@ -249,7 +245,6 @@ a new one.`,
 									Continue
 								</Button>
 							</div>
-
 						)
 					}
 					{
@@ -264,7 +259,7 @@ a new one.`,
 									handleInputChange={handleInputChange}
 									required
 								/>
-								<FormError error={errors.password}/>
+								<FormError error={errors.password} />
 
 								<Button
 									loading={loading}
@@ -276,11 +271,9 @@ a new one.`,
 									Continue
 								</Button>
 							</div>
-
 						)
 					}
 				</div>
-
 			</CardContent>
 		</div>
 	);
