@@ -1,9 +1,8 @@
 // components/RestaurantHeader.tsx
-import React from "react";
+import type React from "react";
 import { BikeIcon, Clock2Icon, HomeIcon, MapPin, Star } from "lucide-react";
-import { Restaurant } from "@/lib/types";
+import type { Restaurant } from "@/lib/types";
 import Link from "next/link";
-import { InstagramLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 
 interface RestaurantHeaderProps {

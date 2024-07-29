@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Key } from "lucide-react";
 import { useAuthContext } from "@/app/provider/auth.context";
+import FormError from "@/components/ui/FormError";
+import PasswordInput from "@/components/ui/PasswordInput";
 
 function Password() {
   const {form,setForm, currentStep,setCurrentStep } = useAuthContext();
@@ -25,7 +27,6 @@ function Password() {
     }),
   });
 
-  const [showPassword, setShowPassword] = useState(false);
 
 
 
@@ -38,9 +39,7 @@ function Password() {
     setForm({ ...form, [name]: value });
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+
 
 function RegisterUser() {
   const url = 'https://api.defactoapp.com.ng/api/admin/auth/register';
@@ -94,7 +93,6 @@ RegisterUser()
     <Card className="mx-auto max-w-md rounded-xl">
       <CardHeader>
         <div className="grid justify-items-start py-2">
-          <Key color="red" size={48} />
         </div>
         <CardTitle className="text-3xl text-center font-bold">
           Create password
@@ -108,34 +106,18 @@ RegisterUser()
           <div className="grid gap-2 py-6">
             <p>{form.email}</p>
             <Label htmlFor="password">Password</Label>
-            <div className="relative">
-              <Input
-                id="sign-password"
-                name="password"
-                type={showPassword ? "text" : "password"}
+            <PasswordInput
                 placeholder="Enter your password"
-                required
+                name="password"
                 value={form.password}
-                onChange={handleInputChange}
-              />
-              <button
-                type="button"
-                onClick={togglePasswordVisibility}
-                className="absolute inset-y-0 right-0 px-3 flex items-center"
-              >
-                {showPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-500" />
-                ) : (
-                  <Eye className="h-5 w-5 text-gray-500" />
-                )}
-              </button>
-            </div>
-            {errors.password && (
-              <p className="text-red-500 p-4">{errors.password}</p>
-            )}
-              {/* Button for Forgot Password */}
+                handleInputChange={handleInputChange}
+                required
+            />
+
+
+            <FormError error={errors.password} />
               <div className="grid place-content-end">
-              <Button onClick={handleSubmit} variant="link" className="text-red-500 text-sm">
+              <Button onClick={handleSubmit} variant="ghost" className="text-sm">
                 Forgot your password?
               </Button>
               </div>

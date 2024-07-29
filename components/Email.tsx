@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Mail } from "lucide-react";
 import { useRouter } from "next/router";
 import { useAuthContext } from "@/app/provider/auth.context";
+import {isDev} from "@/config/env";
 
 function Email() {
 	const { setForm, form, currentStep, setCurrentStep } = useAuthContext();
@@ -28,7 +29,7 @@ function Email() {
 	});
 
 	const [formData, setFormData] = useState({
-		email: "",
+		email: isDev ? "kats.com.ng@gmail.com" : "",
 	});
 
 	const [errors, setErrors] = useState<{

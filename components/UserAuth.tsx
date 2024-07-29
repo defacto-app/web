@@ -12,7 +12,7 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import SigninModal from "./auth/SigninModal";
+import SignInModal from "./auth/SigninModal";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { TiMessage } from "react-icons/ti";
 import {ChevronLeft, MoveLeft, X} from "lucide-react";
@@ -47,7 +47,7 @@ export default function UserAuth() {
 							<AlertDialogDescription />
 						</VisuallyHidden>
 
-						<SigninModal />
+						<SignInModal />
 						<AlertDialogFooter>
 							{/*			<Button
 								onClick={() => setOpen(false)}
