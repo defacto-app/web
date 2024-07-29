@@ -9,7 +9,7 @@ export async function POST(request: any) {
         const body = await request.json();
 
 
-        const url = `${env.BASE_URL}/auth/admin-login`;
+        const url = `${env.base_url}/auth/admin-login`;
         const options = {
             method: "POST",
             headers: {

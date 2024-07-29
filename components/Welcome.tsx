@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 
 import { useAuthContext } from "@/app/provider/auth.context";
-import PhoneNo from "./PhoneNo";
+import PhoneNo from "./PhoneLogin";
 import "react-phone-input-2/lib/style.css";
 import { EnvelopeClosedIcon } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input";
@@ -29,7 +29,7 @@ export default function Welcome() {
 		event.preventDefault();
 
 		try {
-			const res = await $api.auth.user.phone_login({
+			const res = await $api.auth.user.confirm_phone_login({
 				phoneNumber: "+2347030000000",
 			});
 			console.log(res);
@@ -41,7 +41,7 @@ export default function Welcome() {
 
 	return (
 		<div className="">
-			<div className="rounded-xl h-80">
+			<div className="rounded-xl h-80 px-10">
 				<div>
 					<h3 className="text-xl text-center font-bold">Welcome</h3>
 					<p className="text-center">Let's start with your phone number</p>
@@ -51,11 +51,7 @@ export default function Welcome() {
 						<div className="py-4">
 							<PhoneNo />
 						</div>
-						<div className="mb-6 grid place-content-center">
-							<Button onClick={submit} variant="primary" className=" w-80 h-10 ">
-								Continue with SMS
-							</Button>
-						</div>
+
 						<div className="flex justify-between items-center mb-6">
 							<hr className="w-1/3 border-gray-300" />
 							<span className="mx-4 text-gray-500">or with</span>

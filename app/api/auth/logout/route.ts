@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic"; // defaults to auto
 /*export async function POST(request: Request) {
   const body = await request.json();
   console.log(body, "chekcing body");
-  const url = `${env.BASE_URL}/admin/auth/login`;
+  const url = `${env.base_url}/admin/auth/login`;
   const options = {
     method: "POST",
     headers: {
@@ -47,7 +47,7 @@ export async function GET(request: Request) {
 
     console.log("logout use- serr")
 
-    const url = `${env.BASE_URL}/auth/admin-login`;
+    const url = `${env.base_url}/auth/admin-login`;
     const options = {
         method: "POST",
         headers: {

@@ -16,7 +16,7 @@ export default function AdminIndex() {
     useEffect(() => {
         const getData = async () => {
             setLoading(true);
-            const url = `${env.BASE_URL}/admin/dashboard`;
+            const url = `${env.base_url}/admin/dashboard`;
             try {
                 const res = await $adminHttp(url, {
                     method: "GET",

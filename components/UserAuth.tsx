@@ -15,14 +15,23 @@ import {
 import SigninModal from "./auth/SigninModal";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { TiMessage } from "react-icons/ti";
-import { X } from "lucide-react";
+import {ChevronLeft, MoveLeft, X} from "lucide-react";
 import { cn } from "@/utils/cn";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import {useAuthContext} from "@/app/provider/auth.context";
 
 export default function UserAuth() {
+	const { form,setForm, setCurrentStep, currentStep, goBack } =
+		useAuthContext();
 	const [open, setOpen] = React.useState(true);
+
+	function hideBackButton(){
+		const shouldShow =["welcome","confirm-email"]
+		return !shouldShow.includes(currentStep);
+
+	}
 	return (
-		<div >
+		<div>
 			<div>
 				<AlertDialog defaultOpen={open} open={open}>
 					<AlertDialogTrigger
@@ -40,6 +49,22 @@ export default function UserAuth() {
 
 						<SigninModal />
 						<AlertDialogFooter>
+							{/*			<Button
+								onClick={() => setOpen(false)}
+								variant="outline"
+								className="absolute bg-gray-400 hover:bg-gray-400 hover:text-white top-2 left-2 text-white p-2 rounded-full"
+							>
+								<X />
+							</Button>*/}
+
+							{hideBackButton() && (
+								<Button variant={`ghost`} className="absolute rounded-full top-2 left-2 ">
+									<ChevronLeft />
+								</Button>
+							)}
+
+
+
 							<Button
 								onClick={() => setOpen(false)}
 								variant="outline"

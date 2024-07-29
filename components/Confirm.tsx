@@ -12,7 +12,7 @@ import "react-phone-input-2/lib/style.css";
 
 export default function ConfirmEmail() {
 
-  const { user, setUser, currentStep, setCurrentStep } = useAuthContext();
+  const { form,setForm, currentStep, setCurrentStep } = useAuthContext();
 
 
   return (
@@ -23,7 +23,7 @@ export default function ConfirmEmail() {
             Check your Email
           </CardTitle>
           <CardDescription className="text-start">
-            Use the link we  sent {user.email} to set a new password.
+            Use the link we  sent {form.email} to set a new password.
             Can’t see it? Try your spam folder or ask us to resend the link.
           </CardDescription>
         </CardHeader>

@@ -22,13 +22,14 @@ export interface Restaurant {
   name: string;
   rating: number;
   time: string;
-  category: any;
   image: string;
   background: string;
   distance: string;
   fee: string;
   hours: string;
   isBestSeller: boolean;
+  categories:any;
+
   products: {
     id: string;
     name: string;

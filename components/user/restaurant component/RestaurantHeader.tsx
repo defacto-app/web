@@ -52,7 +52,9 @@ const RestaurantHeader: React.FC<RestaurantHeaderProps> = ({ restaurant }) => {
       </div>
 
       <div>
-        <img
+        <Image
+            width={300}
+            height={300}
           alt=""
           src={restaurant.background}
           className="absolute inset-0 -z-10 h-[700px] w-full object-cover"

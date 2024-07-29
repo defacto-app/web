@@ -21,19 +21,22 @@ function hideBackButton(){
 
 
       <div>
-        {hideBackButton() && (
+   {/*     {hideBackButton() && (
           <div>
             <Button className="bg-primary-600 rounded-full" onClick={goBack}>
               <MoveLeft />
             </Button>
           </div>
-        )}
+        )}*/}
         <div>
           {currentStep === "welcome" && <Welcome />}
           {currentStep === "email" && <Email />}
 
           {currentStep === "password" && <Password />}
           {currentStep === "confirm-email" && <ConfirmEmail />}
+          {currentStep === "login-success" && <div>Login Successful</div>}
+
+
         </div>
       </div>
     </div>

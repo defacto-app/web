@@ -1,13 +1,14 @@
 
 "use client"
-import React, { useState } from 'react';
-import { Restaurant, MenuItem } from '@/lib/types';
+import type React from 'react';
+import { useState } from 'react';
+import type { Restaurant, MenuItem } from '@/lib/types';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs1';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
-import RestauarantModal from './RestauarantModal';
+import RestaurantModal from './RestauarantModal';
 
 interface MenuTabProps {
   restaurant: Restaurant;
@@ -35,7 +36,7 @@ export const MenuTab: React.FC<MenuTabProps> = ({ restaurant }) => {
           <Input type="text" placeholder="Search" className="mb-4" />
         </div>
         <TabsContent value="All" className="grid grid-cols-3 gap-4">
-          {Object.values(restaurant.categories).flat().map((item) => (
+          {Object.values(restaurant.categories).flat().map((item:any) => (
             <Card key={item.id} className="relative">
               <Image src={item.imageUrl} alt={item.name} width={300} height={200} className="object-cover" />
               {item.isBestSeller && <span className="absolute top-2 left-2 bg-blue-500 text-white px-2 py-1 rounded">Best Seller</span>}
@@ -52,7 +53,7 @@ export const MenuTab: React.FC<MenuTabProps> = ({ restaurant }) => {
         </TabsContent>
         {Object.entries(restaurant.categories).map(([category, menuItems]) => (
           <TabsContent key={category} value={category} className="grid grid-cols-3 gap-4">
-            {menuItems.map((item) => (
+            {(menuItems as MenuItem[]).map((item:any) => (
               <Card key={item.id} className="relative">
                 <Image src={item.imageUrl} alt={item.name} width={500} height={500} className="object-cover" />
                 {item.isBestSeller && <span className="absolute top-2 left-2 bg-blue-500 text-white px-2 py-1 rounded">Best Seller</span>}
@@ -70,7 +71,7 @@ export const MenuTab: React.FC<MenuTabProps> = ({ restaurant }) => {
         ))}
       </Tabs>
       {selectedMenuItem && (
-        <RestauarantModal
+        <RestaurantModal
           menuItem={selectedMenuItem}
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}

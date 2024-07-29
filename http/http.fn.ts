@@ -1,11 +1,10 @@
 import axios from "axios";
 import { getToken } from "@/utils/IsDev";
-const baseUrl = "https://api.defactoapp.com.ng/api/v1";
+import env from "@/config/env";
 
-//
 
 const $axios = axios.create({
-	baseURL: baseUrl,
+	baseURL: env.base_url,
 });
 
 $axios.interceptors.request.use(
@@ -21,5 +20,16 @@ $axios.interceptors.request.use(
 		return Promise.reject(error);
 	},
 );
+
+$axios.interceptors.response.use(
+	(response) => {
+		return response.data; // Extract and return the data from the response
+	},
+	(error) => {
+		return Promise.reject(error.response ? error.response.data : error);
+	}
+);
+
+
 
 export { $axios };

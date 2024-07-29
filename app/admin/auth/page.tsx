@@ -84,7 +84,7 @@ export default function AdminLogin() {
 
 	/*    const handleSubmit = async () => {
             try {
-                const url = `${env.BASE_URL}/auth/admin-login`;
+                const url = `${env.base_url}/auth/admin-login`;
                 const options = {
                     method: "POST",
                     headers: {
