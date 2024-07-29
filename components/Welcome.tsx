@@ -13,8 +13,7 @@ import { useAuthContext } from "@/app/provider/auth.context";
 import PhoneNo from "./PhoneLogin";
 import "react-phone-input-2/lib/style.css";
 import { EnvelopeClosedIcon } from "@radix-ui/react-icons";
-import { Input } from "@/components/ui/input";
-import { $api } from "@/http/endpoints";
+
 
 export default function Welcome() {
 	const { form, setForm, setCurrentStep, currentStep } = useAuthContext();
@@ -25,26 +24,13 @@ export default function Welcome() {
 		setCurrentStep("email");
 	}
 
-	async function submit(event: React.MouseEvent<HTMLButtonElement>) {
-		event.preventDefault();
-
-		try {
-			const res = await $api.auth.user.confirm_phone_login({
-				phoneNumber: "+2347030000000",
-			});
-			console.log(res);
-		} catch (error) {
-			console.log(error);
-		}
-
-	}
 
 	return (
 		<div className="">
 			<div className="rounded-xl h-80 px-10">
 				<div>
-					<h3 className="text-xl text-center font-bold">Welcome</h3>
-					<p className="text-center">Let's start with your phone number</p>
+					<h3 className="text-xl text-left font-bold">Welcome</h3>
+					<CardDescription className="text-left">Let's start with your phone number</CardDescription>
 				</div>
 				<div>
 					<div className="grid place-content-center">
@@ -52,16 +38,16 @@ export default function Welcome() {
 							<PhoneNo />
 						</div>
 
-						<div className="flex justify-between items-center mb-6">
+						<div className="flex justify-between items-center mb-4">
 							<hr className="w-1/3 border-gray-300" />
-							<span className="mx-4 text-gray-500">or with</span>
+							<span className="mx-2 text-gray-500">or with</span>
 							<hr className="w-1/3 border-gray-300" />
 						</div>
 						<div className="flex justify-between items-center">
 							<Button
 								onClick={handleNext}
 								variant="outline"
-								className="w-full  h-12"
+								className="w-96  h-12"
 							>
 								<div className="">
 									<div className="flex items-center">
@@ -73,9 +59,9 @@ export default function Welcome() {
 						</div>
 						<p className="text-center text-xs pt-4 text-gray-600">
 							By creating an account, you automatically accept our{" "}
-							<Link href="/terms-of-service">Terms of Service</Link>,{" "}
-							<Link href="/privacy-policy">Privacy Policy</Link>, and{" "}
-							<Link href="/cookies-policy">Cookies Policy</Link>
+							<Link className={`underline`} href="/terms-of-service">Terms of Service</Link>,{" "}
+							<Link className={`underline`} href="/privacy-policy">Privacy Policy</Link>, and{" "}
+							<Link className={`underline`} href="/cookies-policy">Cookies Policy</Link>
 						</p>
 					</div>
 				</div>

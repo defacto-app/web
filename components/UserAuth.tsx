@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -21,13 +21,29 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import {useAuthContext} from "@/app/provider/auth.context";
 
 export default function UserAuth() {
-	const { form,setForm, setCurrentStep, currentStep, goBack } =
+	const { form,setForm, setCurrentStep,currentStep, goBack } =
 		useAuthContext();
 	const [open, setOpen] = React.useState(true);
+
+	const [hideCloseButton, setHideCloseButton] = useState(false);
+
+	useEffect(() => {
+		const shouldShow = ["welcome", "email"];
+		setHideCloseButton(!shouldShow.includes(currentStep));
+	}, [currentStep]);
+
 
 	function hideBackButton(){
 		const shouldShow =["welcome","confirm-email"]
 		return !shouldShow.includes(currentStep);
+
+	}
+
+
+
+	function  handleNaviagtion(){
+		console.log("going back")
+
 
 	}
 	return (
@@ -58,20 +74,23 @@ export default function UserAuth() {
 							</Button>*/}
 
 							{hideBackButton() && (
-								<Button variant={`ghost`} className="absolute rounded-full top-2 left-2 ">
+								<Button onClick={
+									goBack
+								} variant={`ghost`} className="absolute rounded-full top-2 left-2 ">
 									<ChevronLeft />
 								</Button>
 							)}
 
 
-
-							<Button
-								onClick={() => setOpen(false)}
-								variant="outline"
-								className="absolute bg-gray-400 hover:bg-gray-400 hover:text-white top-2 right-2 text-white p-2 rounded-full"
-							>
-								<X />
-							</Button>
+							{!hideCloseButton && (
+								<Button
+									onClick={() => setOpen(false)}
+									variant="outline"
+									className="absolute bg-gray-400 hover:bg-gray-400 hover:text-white top-2 right-2 text-white p-2 rounded-full"
+								>
+									<X />
+								</Button>
+							)}
 						</AlertDialogFooter>
 					</AlertDialogContent>
 				</AlertDialog>

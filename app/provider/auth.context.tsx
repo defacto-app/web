@@ -1,6 +1,9 @@
 import type React from "react";
 import { useState, createContext, useContext, type ReactNode } from "react";
 
+export const authSteps = ["welcome", "email", "phone", "success"] as const;
+
+export type AuthStep = (typeof authSteps)[number];
 // Define the type for the user
 type registerFormType = {
 	email: string;
@@ -10,13 +13,15 @@ type registerFormType = {
 
 // Define the type for the context
 type UserContextType = {
-	currentStep: string;
+	currentStep: AuthStep;
 	form: registerFormType;
 	goBack: () => void;
 
 	setForm: (form: registerFormType) => void;
-	setCurrentStep: (step: string) => void;
+	setCurrentStep: (step: AuthStep) => void;
 };
+
+
 
 // Create the context
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -37,17 +42,20 @@ type UserProviderProps = {
 
 // Create the provider component
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-	const allSteps = ["welcome", "phone-otp", "email", "password", "confirm-email", "login-success"];
+	const allSteps = ["welcome",  "email", "phone", "success"];
 
 	const [form, setForm] = useState<registerFormType>({
 		email: "",
 		password: "",
 		phoneNumber: "",
 	});
-	const [currentStep, setCurrentStep] = useState<string>(allSteps[0]);
+
+	const [currentStep, setCurrentStep] = useState<AuthStep>(authSteps[0]);
 
 	function goBack() {
-		setCurrentStep(allSteps[allSteps.indexOf(currentStep) - 1]);
+
+
+		setCurrentStep(authSteps[authSteps.indexOf(currentStep) - 1]);
 	}
 
 	const value: UserContextType = {

@@ -32,9 +32,9 @@ function hideBackButton(){
           {currentStep === "welcome" && <Welcome />}
           {currentStep === "email" && <Email />}
 
-          {currentStep === "password" && <Password />}
-          {currentStep === "confirm-email" && <ConfirmEmail />}
-          {currentStep === "login-success" && <div>Login Successful</div>}
+          {/*{currentStep === "password" && <Password />}*/}
+          {/*{currentStep === "confirm-email" && <ConfirmEmail />}*/}
+          {currentStep === "success" && <div>Login Successful</div>}
 
 
         </div>

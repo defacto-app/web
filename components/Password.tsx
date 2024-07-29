@@ -59,7 +59,7 @@ fetch(url, requestOptions)
 .then(data => {
   if (data.user){
 
-setCurrentStep("confirm-email")
+setCurrentStep("email")
 
   }
   console.log('User registered successfully:', data);
@@ -81,7 +81,7 @@ setCurrentStep("confirm-email")
       setErrors(formattedErrors);
       return;
   }
-setCurrentStep("confirm-email")
+setCurrentStep("email")
 
 RegisterUser()
 

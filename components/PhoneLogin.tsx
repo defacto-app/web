@@ -7,11 +7,10 @@ import { $api } from "@/http/endpoints";
 import { Button } from "@/components/ui/button";
 import FormError from "@/components/ui/FormError";
 import { InputOTPPattern } from "@/components/ui/InputOTPPattern";
-import {useAuthContext} from "@/app/provider/auth.context";
+import { useAuthContext } from "@/app/provider/auth.context";
 
 const PhoneNumberValidation = () => {
-	const {  setCurrentStep, currentStep, goBack } =
-		useAuthContext();
+	const { setCurrentStep, currentStep, goBack } = useAuthContext();
 	const [form, setForm] = useState<any>({
 		code: "+234",
 		phoneNumber: "08063145125",
@@ -106,7 +105,7 @@ const PhoneNumberValidation = () => {
 			setState({
 				loading: false,
 			});
-			setCurrentStep("login-success");
+			setCurrentStep("success");
 		} catch (error: any) {
 			console.log(error, "otp error");
 
@@ -147,7 +146,7 @@ const PhoneNumberValidation = () => {
 								loading={state.loading}
 								onClick={login}
 								variant="primary"
-								className=" w-80 h-10 mt-4"
+								className=" w-96 h-10 mt-4"
 							>
 								Login
 							</Button>
@@ -173,7 +172,7 @@ const PhoneNumberValidation = () => {
 							loading={state.loading}
 							onClick={confirm_phone_login}
 							variant="primary"
-							className=" w-80 h-10 mt-4"
+							className="w-96 h-10 mt-4"
 						>
 							Continue with SMS
 						</Button>

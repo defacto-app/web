@@ -60,6 +60,28 @@ export const $api = {
 					return error;
 				}
 			},
+			email_exists: async (body: any) => {
+				try {
+					return $axios.post(`/auth/email-exists`, body);
+				} catch (error: any) {
+					return error;
+				}
+			},
+			email_login: async (body: any) => {
+				try {
+					return $axios.post(`/auth/email-login`, body);
+				} catch (error: any) {
+					return error;
+				}
+			},
+			email_register: async (body: any) => {
+				try {
+					return $axios.post(`/auth/email-register`, body);
+				} catch (error: any) {
+					return error;
+				}
+			},
+
 		},
 	},
 };
