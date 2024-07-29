@@ -1,5 +1,4 @@
-"use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -13,17 +12,16 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import SignInModal from "./auth/SigninModal";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { TiMessage } from "react-icons/ti";
-import {ChevronLeft, MoveLeft, X} from "lucide-react";
-import { cn } from "@/utils/cn";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, MoveLeft, X } from "lucide-react";
+
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import {useAuthContext} from "@/app/provider/auth.context";
+import { useAuthContext } from "@/app/provider/auth.context";
 
 export default function UserAuth() {
-	const { form,setForm, setCurrentStep,currentStep, goBack } =
+	const {isLoggedIn, form, setForm, setCurrentStep, currentStep, goBack } =
 		useAuthContext();
-	const [open, setOpen] = React.useState(true);
+	const [open, setOpen] = React.useState(false);
 
 	const [hideCloseButton, setHideCloseButton] = useState(false);
 
@@ -32,23 +30,15 @@ export default function UserAuth() {
 		setHideCloseButton(!shouldShow.includes(currentStep));
 	}, [currentStep]);
 
-
-	function hideBackButton(){
-		const shouldShow =["welcome","confirm-email"]
+	function hideBackButton() {
+		const shouldShow = ["welcome", "confirm-email"];
 		return !shouldShow.includes(currentStep);
-
 	}
 
-
-
-	function  handleNaviagtion(){
-		console.log("going back")
-
-
-	}
 	return (
 		<div>
 			<div>
+				{JSON.stringify(isLoggedIn)}
 				<AlertDialog defaultOpen={open} open={open}>
 					<AlertDialogTrigger
 						onClick={() => setOpen(true)}
@@ -74,13 +64,14 @@ export default function UserAuth() {
 							</Button>*/}
 
 							{hideBackButton() && (
-								<Button onClick={
-									goBack
-								} variant={`ghost`} className="absolute rounded-full top-2 left-2 ">
+								<Button
+									onClick={goBack}
+									variant={`ghost`}
+									className="absolute rounded-full top-2 left-2 "
+								>
 									<ChevronLeft />
 								</Button>
 							)}
-
 
 							{!hideCloseButton && (
 								<Button

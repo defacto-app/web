@@ -21,7 +21,7 @@ import { isDev } from "@/config/env";
 import { $api } from "@/http/endpoints";
 import FormError from "@/components/ui/FormError";
 import PasswordInput from "@/components/ui/PasswordInput";
-import {setToken} from "@/utils/IsDev";
+import {setToken} from "@/utils/auth";
 
 function Email() {
 	const authSteps = [

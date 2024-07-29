@@ -1,5 +1,7 @@
 import type React from "react";
+import {useEffect} from "react";
 import { useState, createContext, useContext, type ReactNode } from "react";
+import {isUserLoggedIn} from "@/utils/auth";
 
 export const authSteps = ["welcome", "email", "phone", "success"] as const;
 
@@ -19,6 +21,7 @@ type UserContextType = {
 
 	setForm: (form: registerFormType) => void;
 	setCurrentStep: (step: AuthStep) => void;
+	isLoggedIn: boolean;
 };
 
 
@@ -43,6 +46,7 @@ type UserProviderProps = {
 // Create the provider component
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 	const allSteps = ["welcome",  "email", "phone", "success"];
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	const [form, setForm] = useState<registerFormType>({
 		email: "",
@@ -52,6 +56,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
 	const [currentStep, setCurrentStep] = useState<AuthStep>(authSteps[0]);
 
+	useEffect(() => {
+		const loggedIn = isUserLoggedIn();
+		setIsLoggedIn(loggedIn);
+	}, []);
 	function goBack() {
 
 
@@ -64,6 +72,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 		currentStep,
 		setCurrentStep,
 		goBack,
+		isLoggedIn,
 	};
 
 	return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

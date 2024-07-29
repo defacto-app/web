@@ -13,7 +13,7 @@ export const tokenConstants = {
 };
 
 // Type definition for permissible token keys
-type TokenOptions = "admin" | "user";
+export type TokenOptions = "admin" | "user";
 
 // Retrieves a token from localStorage
 export function getToken(key: TokenOptions): string {
@@ -23,6 +23,11 @@ export function getToken(key: TokenOptions): string {
     console.error("Failed to retrieve token:", error);
     return "";
   }
+}
+
+export function isUserLoggedIn () {
+    return !!getToken("user");
+
 }
 
 // Stores a token in localStorage
@@ -42,3 +47,5 @@ export function clearToken(key: TokenOptions): void {
     console.error("Failed to clear token:", error);
   }
 }
+
+
