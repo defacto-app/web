@@ -1,4 +1,5 @@
 import {$axios} from "@/http/http.fn";
+import env from "@/config/env";
 
 export const $api = {
 	guest: {
@@ -6,7 +7,7 @@ export const $api = {
 			all: async () => {
 				try {
 					const res = await fetch(
-						"https://api.defactoapp.com.ng/api/v1/restaurant/all?page=1&perPage=10",
+						`${env.base_url}/restaurant/all?page=1&perPage=10`,
 					);
 					if (!res.ok) {
 						throw new Error("Failed to fetch data");

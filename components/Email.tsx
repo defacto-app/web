@@ -21,6 +21,7 @@ import { isDev } from "@/config/env";
 import { $api } from "@/http/endpoints";
 import FormError from "@/components/ui/FormError";
 import PasswordInput from "@/components/ui/PasswordInput";
+import {setToken} from "@/utils/IsDev";
 
 function Email() {
 	const authSteps = [
@@ -60,7 +61,7 @@ a new one.`,
 
 	const [formData, setFormData] = useState({
 		email: isDev ? "kats.com.ng@gmail.com" : "",
-		password: "",
+		password: isDev ? "123456" : "",
 	});
 
 	const [errors, setErrors] = useState<{
@@ -131,12 +132,28 @@ a new one.`,
 		console.log("Email Submitted");
 
 		try {
-			const res = await $api.auth.user.email_login({
+		/*	const res = await $api.auth.user.email_login({
 				email: formData.email,
 				password: formData.password,
 			});
 
-			console.log(res);
+			console.log(res);*/
+
+			const data = await fetch(`/api/auth/user`, {
+				method: "POST",
+				body: JSON.stringify(formData),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			const res = await data.json();
+
+			const token = res.data.data.token
+
+			console.log(res.data.data.token);
+
+			setToken('user',token);
 
 			setLoading(false);
 			setCurrentStep("success");

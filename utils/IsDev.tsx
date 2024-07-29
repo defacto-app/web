@@ -8,13 +8,12 @@ export default function IsDev({ ...props }) {
 
 
 export const tokenConstants = {
-  company: "company-token",
   admin: "admin-token",
   user: "user-token",
 };
 
 // Type definition for permissible token keys
-type TokenOptions = "company" | "admin" | "user";
+type TokenOptions = "admin" | "user";
 
 // Retrieves a token from localStorage
 export function getToken(key: TokenOptions): string {
