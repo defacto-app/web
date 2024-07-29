@@ -13,6 +13,7 @@ const RestaurantHeader: React.FC<RestaurantHeaderProps> = ({ restaurant }) => {
   return (
     // new area
     <div className="relative isolate overflow-hidden  pb-16 pt-14 sm:pb-20">
+      {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
       <div className="absolute inset-0 -z-10 bg-black opacity-50"></div>
 
       <div className="flex relative justify-between p-10">
@@ -58,6 +59,7 @@ const RestaurantHeader: React.FC<RestaurantHeaderProps> = ({ restaurant }) => {
           src={restaurant.background}
           className="absolute inset-0 -z-10 h-[700px] w-full object-cover"
         />
+        {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
         <div className="absolute inset-0 -z-10 bg-black opacity-50"></div>
       </div>
 
