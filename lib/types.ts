@@ -1,20 +1,25 @@
-// types.ts
+export interface Choice {
+  id: string;
+  name: string;
+  price: string;
+}
+
+export interface Option {
+  name: string;
+  required: boolean;
+  choices: Choice[];
+}
 
 export interface MenuItem {
   id: string;
   name: string;
   description: string;
   price: string;
+  imageUrl: string;
   rating: number;
   stars: number;
-  imageUrl: string;
   isBestSeller: boolean;
-}
-
-export interface RestaurantProduct {
-  id: string;
-  name: string;
-  price: string;
+  options?: Option[];
 }
 
 export interface Restaurant {
@@ -22,18 +27,11 @@ export interface Restaurant {
   name: string;
   rating: number;
   time: string;
-  categories: {
-    [key: string]: MenuItem[];
-  };
   image: string;
   background: string;
   distance: string;
   fee: string;
   hours: string;
   isBestSeller: boolean;
-  products: {
-    id: string;
-    name: string;
-    price: string;
-  }[];
+  categories: Record<string, MenuItem[]>;
 }

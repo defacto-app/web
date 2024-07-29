@@ -1,13 +1,13 @@
+"use client"; // Add this line at the top
 
-"use client"
 import React, { useState } from 'react';
 import { Restaurant, MenuItem } from '@/lib/types';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs1';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
-import RestauarantModal from './RestauarantModal';
+import RestaurantModal from './RestauarantModal';
 
 interface MenuTabProps {
   restaurant: Restaurant;
@@ -16,10 +16,15 @@ interface MenuTabProps {
 export const MenuTab: React.FC<MenuTabProps> = ({ restaurant }) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [cartItems, setCartItems] = useState<{ item: MenuItem, options: Record<string, string[]> }[]>([]);
 
   const handleAddToCartClick = (item: MenuItem) => {
     setSelectedMenuItem(item);
     setIsModalOpen(true);
+  };
+
+  const handleAddToCart = (item: MenuItem, selectedOptions: Record<string, string[]>) => {
+    setCartItems(prev => [...prev, { item, options: selectedOptions }]);
   };
 
   return (
@@ -70,10 +75,11 @@ export const MenuTab: React.FC<MenuTabProps> = ({ restaurant }) => {
         ))}
       </Tabs>
       {selectedMenuItem && (
-        <RestauarantModal
+        <RestaurantModal
           menuItem={selectedMenuItem}
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
+          onAddToCart={handleAddToCart}
         />
       )}
     </div>
