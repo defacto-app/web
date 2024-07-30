@@ -73,14 +73,14 @@ export default function Header() {
         </div>
         <div className="flex flex-1 items-center justify-end gap-x-6">
           {env.isDev && (
-            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
-              <Link href="/admin">
-                <UserRoundCogIcon className="text-red-500" size={20} />
-              </Link>
-              <Link href="/user">
-                <UserRoundCogIcon className="text-green-500" size={20} />
-              </Link>
-            </motion.div>
+        <div className={`flex gap-x-2`}>
+          <Link href="/admin">
+            <UserRoundCogIcon className="text-red-500" size={20} />
+          </Link>
+          <Link href="/user">
+            <UserRoundCogIcon className="text-green-500" size={20} />
+          </Link>
+        </div>
           )}
           <UserProvider>
             <UserAuth />
@@ -146,10 +146,8 @@ export default function Header() {
                   </a>
                 ))}
               </div>
-              <div >
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
-                  <Button variant="primary"> Get Started</Button>
-                </motion.div>
+              <div>
+                  <Button variant="primary"> Get Startdded</Button>
               </div>
             </div>
           </div>
