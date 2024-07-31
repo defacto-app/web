@@ -1,4 +1,5 @@
-import React, { useState, createContext, useContext, ReactNode } from "react";
+import type React from "react";
+import { useState, createContext, useContext, type ReactNode } from "react"
 
 // Define the type for the user
 type UserType = { email: string; password: string };

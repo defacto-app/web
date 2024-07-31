@@ -1,7 +1,7 @@
 import type React from "react";
 import {useEffect} from "react";
 import { useState, createContext, useContext, type ReactNode } from "react";
-import {isUserLoggedIn} from "@/utils/auth";
+import {clearToken, isUserLoggedIn} from "@/utils/auth";
 
 export const authSteps = ["welcome", "email", "phone", "success"] as const;
 
@@ -18,10 +18,14 @@ type UserContextType = {
 	currentStep: AuthStep;
 	form: registerFormType;
 	goBack: () => void;
-
+	logOut: () => void;
 	setForm: (form: registerFormType) => void;
 	setCurrentStep: (step: AuthStep) => void;
 	isLoggedIn: boolean;
+	setIsLoggedIn: (value: boolean) => void;
+	modalOpen: boolean;
+	setModalOpen: (value: boolean) => void;
+
 };
 
 
@@ -47,7 +51,7 @@ type UserProviderProps = {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 	const allSteps = ["welcome",  "email", "phone", "success"];
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+const [modalOpen, setModalOpen] = useState(false);
 	const [form, setForm] = useState<registerFormType>({
 		email: "",
 		password: "",
@@ -66,6 +70,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 		setCurrentStep(authSteps[authSteps.indexOf(currentStep) - 1]);
 	}
 
+	function logOut() {
+		clearToken('user');
+		setIsLoggedIn(false);
+	}
+
 	const value: UserContextType = {
 		form,
 		setForm,
@@ -73,6 +82,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 		setCurrentStep,
 		goBack,
 		isLoggedIn,
+		logOut,
+		setIsLoggedIn,
+		modalOpen,
+		setModalOpen,
 	};
 
 	return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

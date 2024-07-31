@@ -46,7 +46,7 @@ a new one.`,
 
 	type authState = "default" | "new-user" | "existing-user";
 	const [authState, setAuthState] = useState<authState>("default");
-	const { currentStep, setCurrentStep } = useAuthContext();
+	const { currentStep, setCurrentStep,setIsLoggedIn } = useAuthContext();
 
 	const getCurrentStep = () => {
 		return authSteps.find((step) => step.id === authState);
@@ -139,7 +139,7 @@ a new one.`,
 
 			console.log(res);*/
 
-			const data = await fetch(`/api/auth/user`, {
+			const data = await fetch(`/api/auth/login`, {
 				method: "POST",
 				body: JSON.stringify(formData),
 				headers: {
@@ -156,6 +156,9 @@ a new one.`,
 			setToken('user',token);
 
 			setLoading(false);
+
+
+			setIsLoggedIn(true);
 			setCurrentStep("success");
 		} catch (error: any) {
 			console.log(error);

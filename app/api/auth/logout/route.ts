@@ -62,7 +62,8 @@ export async function GET(request: Request) {
 
     // reset       token log out user
 
-    cookies().set('auth-token', '', {secure: true})
+    cookies().set('user-token', '', {secure: true})
+    cookies().set('admin-token', '', {secure: true})
 
 
     return Response.json({data});
