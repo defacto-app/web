@@ -1,5 +1,5 @@
 import type React from "react";
-import { useEffect } from "react";
+import {useEffect} from "react";
 import { useState, createContext, useContext, type ReactNode } from "react";
 import { clearToken, isUserLoggedIn } from "@/utils/auth";
 
@@ -47,7 +47,7 @@ type UserProviderProps = {
 // Create the provider component
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 	const allSteps = ["welcome", "email", "phone", "success"];
-	const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn());
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
 	const [form, setForm] = useState<registerFormType>({
 		email: "",
@@ -68,6 +68,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
 		localStorage.setItem("isLoggedIn", JSON.stringify(false));
 	}
+
+	useEffect(() => {
+		setIsLoggedIn(isUserLoggedIn());
+	}, []);
 
 	const value: UserContextType = {
 		form,
