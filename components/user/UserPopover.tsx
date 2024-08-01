@@ -3,19 +3,20 @@ import * as Popover from '@radix-ui/react-popover';
 import { MixerHorizontalIcon, Cross2Icon } from '@radix-ui/react-icons';
 import UserPopoverItem from './UserPopoverItem';
 import { UserIcon } from 'lucide-react';
+import {Button} from "@/components/ui/button";
 
 export default function UserPopover() {
   return (
     <div>
        <Popover.Root>
     <Popover.Trigger asChild>
-      <button
-        className="rounded-full w-[35px] h-[35px] inline-flex items-center justify-center text-violet11 bg-white  hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-black cursor-default outline-none"
+      <Button
+          variant={`ghost`}
         aria-label="Update dimensions"
       >
         {/* <MixerHorizontalIcon /> */}
         <UserIcon className='text-primary-600'/>
-      </button>
+      </Button>
     </Popover.Trigger>
     <Popover.Portal>
       <Popover.Content

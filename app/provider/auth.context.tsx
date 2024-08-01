@@ -1,7 +1,7 @@
 import type React from "react";
-import {useEffect} from "react";
+import { useEffect } from "react";
 import { useState, createContext, useContext, type ReactNode } from "react";
-import {clearToken, isUserLoggedIn} from "@/utils/auth";
+import { clearToken, isUserLoggedIn } from "@/utils/auth";
 
 export const authSteps = ["welcome", "email", "phone", "success"] as const;
 
@@ -25,10 +25,7 @@ type UserContextType = {
 	setIsLoggedIn: (value: boolean) => void;
 	modalOpen: boolean;
 	setModalOpen: (value: boolean) => void;
-
 };
-
-
 
 // Create the context
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -49,9 +46,9 @@ type UserProviderProps = {
 
 // Create the provider component
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-	const allSteps = ["welcome",  "email", "phone", "success"];
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-const [modalOpen, setModalOpen] = useState(false);
+	const allSteps = ["welcome", "email", "phone", "success"];
+	const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn());
+	const [modalOpen, setModalOpen] = useState(false);
 	const [form, setForm] = useState<registerFormType>({
 		email: "",
 		password: "",
@@ -60,19 +57,16 @@ const [modalOpen, setModalOpen] = useState(false);
 
 	const [currentStep, setCurrentStep] = useState<AuthStep>(authSteps[0]);
 
-	useEffect(() => {
-		const loggedIn = isUserLoggedIn();
-		setIsLoggedIn(loggedIn);
-	}, []);
+
 	function goBack() {
-
-
 		setCurrentStep(authSteps[authSteps.indexOf(currentStep) - 1]);
 	}
 
 	function logOut() {
-		clearToken('user');
+		clearToken("user");
 		setIsLoggedIn(false);
+
+		localStorage.setItem("isLoggedIn", JSON.stringify(false));
 	}
 
 	const value: UserContextType = {

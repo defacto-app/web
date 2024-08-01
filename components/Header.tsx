@@ -147,7 +147,7 @@ export default function Header() {
                 ))}
               </div>
               <div>
-                  <Button variant="primary"> Get Startdded</Button>
+                  <Button variant="primary"> Get Started</Button>
               </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ import EditUserNumberModal from "./EditUserNumberModal";
 import EditUserPasswordModal from "./EditUserPasswordModal";
 import { Button } from "@/components/ui/button";
 import { clearToken } from "@/utils/auth";
+import {useAuthContext} from "@/app/provider/auth.context";
 
 const getUserDetails = () => {
 	return {
@@ -16,12 +17,17 @@ const getUserDetails = () => {
 };
 
 export default function UserPopoverItem() {
+	const {setIsLoggedIn, isLoggedIn, currentStep, goBack, modalOpen, setModalOpen } =
+		useAuthContext();
 	const userDetails = getUserDetails();
 
 	async function logout() {
 		clearToken("user");
 
 		const data = await fetch(`/api/auth/logout`);
+
+		setIsLoggedIn(false);
+		localStorage.setItem("isLoggedIn", JSON.stringify(false));
 	}
 
 	return (

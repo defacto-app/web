@@ -14,9 +14,12 @@ import { ChevronLeft, MoveLeft, X } from "lucide-react";
 
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useAuthContext } from "@/app/provider/auth.context";
+import UserHeader from "@/components/user/UserHeader";
+import UserPopover from "@/components/user/UserPopover";
 
 export default function UserAuth() {
-	const { isLoggedIn, currentStep, goBack , modalOpen,setModalOpen} = useAuthContext();
+	const { isLoggedIn, setIsLoggedIn,currentStep, goBack, modalOpen, setModalOpen } =
+		useAuthContext();
 
 	const [hideCloseButton, setHideCloseButton] = useState(false);
 
@@ -30,27 +33,37 @@ export default function UserAuth() {
 		return !shouldShow.includes(currentStep);
 	}
 
+
+
+
+	useEffect(() => {
+		localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
+	}, [isLoggedIn]);
+
 	return (
 		<div>
-			<div>
+			<div className={`flex items-center`}>
 				{JSON.stringify(isLoggedIn)}
-				<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
-					<AlertDialogTrigger
-						onClick={() => setModalOpen(true)}
-						className="w-32 h-10 bg-blue-500 rounded-full text-white"
-					>
-						{/* <User className="text-primary-600"/> */}
-						Get Started
-					</AlertDialogTrigger>
-					<AlertDialogContent className={`min-h-min py-12`}>
-						<VisuallyHidden>
-							<AlertDialogTitle />
-							<AlertDialogDescription />
-						</VisuallyHidden>
+				{isLoggedIn ? (
+					<UserPopover />
+				) : (
+					<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
+						<AlertDialogTrigger
+							onClick={() => setModalOpen(true)}
+							className="w-32 h-10 bg-blue-500 rounded-full text-white"
+						>
+							{/* <User className="text-primary-600"/> */}
+							Get Started
+						</AlertDialogTrigger>
+						<AlertDialogContent className={`min-h-min py-12`}>
+							<VisuallyHidden>
+								<AlertDialogTitle />
+								<AlertDialogDescription />
+							</VisuallyHidden>
 
-						<SignInModal />
-						<AlertDialogFooter>
-							{/*			<Button
+							<SignInModal />
+							<AlertDialogFooter>
+								{/*			<Button
 								onClick={() => setOpen(false)}
 								variant="outline"
 								className="absolute bg-gray-400 hover:bg-gray-400 hover:text-white top-2 left-2 text-white p-2 rounded-full"
@@ -58,28 +71,29 @@ export default function UserAuth() {
 								<X />
 							</Button>*/}
 
-							{hideBackButton() && (
-								<Button
-									onClick={goBack}
-									variant={`ghost`}
-									className="absolute rounded-full top-2 left-2 "
-								>
-									<ChevronLeft />
-								</Button>
-							)}
+								{hideBackButton() && (
+									<Button
+										onClick={goBack}
+										variant={`ghost`}
+										className="absolute rounded-full top-2 left-2 "
+									>
+										<ChevronLeft />
+									</Button>
+								)}
 
-							{!hideCloseButton && (
-								<Button
-									onClick={() => setModalOpen(false)}
-									variant="outline"
-									className="absolute bg-gray-400 hover:bg-gray-400 hover:text-white top-2 right-2 text-white p-2 rounded-full"
-								>
-									<X />
-								</Button>
-							)}
-						</AlertDialogFooter>
-					</AlertDialogContent>
-				</AlertDialog>
+								{!hideCloseButton && (
+									<Button
+										onClick={() => setModalOpen(false)}
+										variant="outline"
+										className="absolute bg-gray-400 hover:bg-gray-400 hover:text-white top-2 right-2 text-white p-2 rounded-full"
+									>
+										<X />
+									</Button>
+								)}
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
+				)}
 			</div>
 		</div>
 	);
