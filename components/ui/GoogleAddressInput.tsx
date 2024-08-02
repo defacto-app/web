@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { $axios } from "@/http/http.fn";
+import { predictionJson } from "@/lib/data";
+import { $api } from "@/http/endpoints";
+import { set } from "date-fns";
 
-// Custom debounce hook
-function useDebounce(value, delay) {
+function useDebounce(value: unknown, delay: unknown) {
 	const [debouncedValue, setDebouncedValue] = useState(value);
 
 	useEffect(() => {
@@ -22,9 +23,11 @@ function useDebounce(value, delay) {
 }
 
 function GoogleAddressInput() {
-	const [selectedAddress, setSelectedAddress] = useState('');
+	const [selectedAddress, setSelectedAddress] = useState("");
 	const [suggestions, setSuggestions] = useState([]);
-	const debouncedSearchTerm = useDebounce(selectedAddress, 500); // Debounce delay of 500ms
+	const debouncedSearchTerm = useDebounce(selectedAddress, 500);
+
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		if (debouncedSearchTerm) {
@@ -35,55 +38,66 @@ function GoogleAddressInput() {
 	}, [debouncedSearchTerm]);
 
 	const fetchSuggestions = async (input) => {
+		setLoading(true);
 		if (input.length < 3) {
 			setSuggestions([]);
 			return;
 		}
 
 		try {
-			const response = await $axios.get('/g/google-places', {
-				params: { input },
-			});
+			const response = await $api.guest.location.autocomplete(input);
 
-			setSuggestions(response.data.predictions);
+			console.log("response", response);
+			setSuggestions(response);
 		} catch (error) {
-			console.error('Error fetching suggestions:', error);
+			console.error("Error fetching suggestions:", error);
 		}
 	};
 
+	const handleSuggestionClick = (suggestion) => {
+		setSelectedAddress(suggestion.description);
+		setSuggestions([]);
+	};
+
 	return (
-		<div>
-			<div>
-				<Label>Label: </Label>
-				<Input
-					type="text"
-					placeholder="What's your address?"
-					className="w-96"
-					value={selectedAddress}
-					onChange={(e) => setSelectedAddress(e.target.value)}
-				/>
-				{suggestions.length > 0 && (
-					<ul className="suggestions-list" style={{ listStyleType: 'none', padding: 0 }}>
-						{suggestions.map((suggestion) => (
-							<li
-								key={suggestion.place_id}
-								onClick={() => {
-									setSelectedAddress(suggestion.description);
-									setSuggestions([]);
-								}}
-								style={{ cursor: 'pointer', padding: '8px 0' }}
-							>
-								<strong>{suggestion.structured_formatting.main_text}</strong>
-								<small style={{ display: 'block', color: 'gray' }}>
-									{suggestion.structured_formatting.secondary_text}
-								</small>
-							</li>
-						))}
-					</ul>
-				)}
-			</div>
+		<div className="relative">
+			<Label htmlFor="address">Delivery address</Label>
+			<Input
+				id="address"
+				type="text"
+				placeholder="Lifecamp Road"
+				className="w-full"
+				value={selectedAddress}
+				onChange={(e) => setSelectedAddress(e.target.value)}
+			/>
+
+			<PredicationList data={suggestions} />
 		</div>
 	);
 }
 
 export default GoogleAddressInput;
+
+function PredicationList({ data }: any) {
+	console.log("how come", data);
+	return (
+		<div>
+
+			{
+				data.predictions?.length > 0 ? (
+					<div>
+			{data.predictions.map((prediction: any) => (
+				<div key={prediction.place_id}>
+					<div>{prediction.description}</div>
+					<div>{prediction.structured_formatting.secondary_text}</div>
+				</div>
+			))}
+					</div>
+				) : (
+					<div>No predictions</div>
+				)
+			}
+
+		</div>
+	);
+}

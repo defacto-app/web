@@ -433,3 +433,201 @@ export const restaurants: Restaurant[] = [
 		},
 	},
 ];
+
+
+export const predictionJson = {
+	predictions: [
+		{
+			description: "Life Camp Roundabout, Abuja, Nigeria",
+			matched_substrings: [
+				{
+					length: 8,
+					offset: 0,
+				},
+			],
+			place_id: "ChIJ4YggG8J1ThARTOPg4BU9rkY",
+			reference: "ChIJ4YggG8J1ThARTOPg4BU9rkY",
+			structured_formatting: {
+				main_text: "Life Camp Roundabout",
+				main_text_matched_substrings: [
+					{
+						length: 8,
+						offset: 0,
+					},
+				],
+				secondary_text: "Abuja, Nigeria",
+			},
+			terms: [
+				{
+					offset: 0,
+					value: "Life Camp Roundabout",
+				},
+				{
+					offset: 22,
+					value: "Abuja",
+				},
+				{
+					offset: 29,
+					value: "Nigeria",
+				},
+			],
+			types: ["establishment", "point_of_interest"],
+		},
+		{
+			description: "Life camps, Abuja, Nigeria",
+			matched_substrings: [
+				{
+					length: 8,
+					offset: 0,
+				},
+			],
+			place_id: "ChIJv9xFJkd1ThARePTL0Z_UQkc",
+			reference: "ChIJv9xFJkd1ThARePTL0Z_UQkc",
+			structured_formatting: {
+				main_text: "Life camps",
+				main_text_matched_substrings: [
+					{
+						length: 8,
+						offset: 0,
+					},
+				],
+				secondary_text: "Abuja, Nigeria",
+			},
+			terms: [
+				{
+					offset: 0,
+					value: "Life camps",
+				},
+				{
+					offset: 12,
+					value: "Abuja",
+				},
+				{
+					offset: 19,
+					value: "Nigeria",
+				},
+			],
+			types: ["lodging", "establishment", "point_of_interest"],
+		},
+		{
+			description: "Lifecamp Road, Abuja, Nigeria",
+			matched_substrings: [
+				{
+					length: 13,
+					offset: 0,
+				},
+			],
+			place_id:
+				"Eh1MaWZlY2FtcCBSb2FkLCBBYnVqYSwgTmlnZXJpYSIuKiwKFAoSCfubECfddE4QETYmkCoZ8W2mEhQKEgnZL9ZMX3ROEBEroQ6itBe9Uw",
+			reference:
+				"Eh1MaWZlY2FtcCBSb2FkLCBBYnVqYSwgTmlnZXJpYSIuKiwKFAoSCfubECfddE4QETYmkCoZ8W2mEhQKEgnZL9ZMX3ROEBEroQ6itBe9Uw",
+			structured_formatting: {
+				main_text: "Lifecamp Road",
+				main_text_matched_substrings: [
+					{
+						length: 13,
+						offset: 0,
+					},
+				],
+				secondary_text: "Abuja, Nigeria",
+			},
+			terms: [
+				{
+					offset: 0,
+					value: "Lifecamp Road",
+				},
+				{
+					offset: 15,
+					value: "Abuja",
+				},
+				{
+					offset: 22,
+					value: "Nigeria",
+				},
+			],
+			types: ["geocode", "route"],
+		},
+		{
+			description: "Life Camp Hotel, Ecowas Road, Accra, Ghana",
+			matched_substrings: [
+				{
+					length: 8,
+					offset: 0,
+				},
+			],
+			place_id: "ChIJsxxVqaqd3w8RjVI3JNaDKe0",
+			reference: "ChIJsxxVqaqd3w8RjVI3JNaDKe0",
+			structured_formatting: {
+				main_text: "Life Camp Hotel",
+				main_text_matched_substrings: [
+					{
+						length: 8,
+						offset: 0,
+					},
+				],
+				secondary_text: "Ecowas Road, Accra, Ghana",
+			},
+			terms: [
+				{
+					offset: 0,
+					value: "Life Camp Hotel",
+				},
+				{
+					offset: 17,
+					value: "Ecowas Road",
+				},
+				{
+					offset: 30,
+					value: "Accra",
+				},
+				{
+					offset: 37,
+					value: "Ghana",
+				},
+			],
+			types: ["establishment", "lodging", "point_of_interest"],
+		},
+		{
+			description:
+				"Life Camp Quarters, Tajudeen Kotun Crescent, Abuja, Nigeria",
+			matched_substrings: [
+				{
+					length: 8,
+					offset: 0,
+				},
+			],
+			place_id: "ChIJ7Zr1iA51ThAR8l1cAAYCE2Y",
+			reference: "ChIJ7Zr1iA51ThAR8l1cAAYCE2Y",
+			structured_formatting: {
+				main_text: "Life Camp Quarters",
+				main_text_matched_substrings: [
+					{
+						length: 8,
+						offset: 0,
+					},
+				],
+				secondary_text: "Tajudeen Kotun Crescent, Abuja, Nigeria",
+			},
+			terms: [
+				{
+					offset: 0,
+					value: "Life Camp Quarters",
+				},
+				{
+					offset: 20,
+					value: "Tajudeen Kotun Crescent",
+				},
+				{
+					offset: 45,
+					value: "Abuja",
+				},
+				{
+					offset: 52,
+					value: "Nigeria",
+				},
+			],
+			types: ["point_of_interest", "establishment", "lodging"],
+		},
+	],
+	status: "OK",
+};

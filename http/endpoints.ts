@@ -19,6 +19,18 @@ export const $api = {
 				}
 			},
 		},
+		location:{
+			autocomplete: async (input: any) => {
+				try {
+					return $axios.get(`/g/google-places`, {
+						params: { input },
+					});
+				} catch (error: any) {
+					return error;
+				}
+			},
+		}
+
 	},
 
 	auth: {
