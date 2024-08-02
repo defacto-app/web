@@ -14,7 +14,6 @@ import { ChevronLeft, MoveLeft, X } from "lucide-react";
 
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useAuthContext } from "@/app/provider/auth.context";
-import UserHeader from "@/components/user/UserHeader";
 import UserPopover from "@/components/user/UserPopover";
 
 export default function UserAuth() {
@@ -63,6 +62,11 @@ export default function UserAuth() {
 
 							<SignInModal />
 							<AlertDialogFooter>
+								<VisuallyHidden>
+
+
+								<AlertDialogDescription/>
+								</VisuallyHidden>
 								{/*			<Button
 								onClick={() => setOpen(false)}
 								variant="outline"

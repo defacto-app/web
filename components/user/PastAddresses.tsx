@@ -29,7 +29,7 @@ export default function PastAddresses({ onSelect }:Props) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="grid place-content-center ">
-        <Button className="w-[600px] mb-1 mt-5 bg-primary-600" > <HistoryIcon className="mr-2"/> Open saved addresses </Button>
+        <Button > <HistoryIcon className="mr-2"/> Open saved addresses </Button>
 
         </div>
       </DropdownMenuTrigger>

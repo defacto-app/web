@@ -9,6 +9,7 @@ const env = {
 	google_client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "",
 	lat: process.env.NEXT_PUBLIC_LAT || "",
 	lng: process.env.NEXT_PUBLIC_LON || "",
+	google_map_api:process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
 };
 
 export default env;
