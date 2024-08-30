@@ -1,14 +1,12 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { $api } from "@/http/endpoints";
-import { $axios } from "@/http/http.fn";
-import { predictionJson } from "@/lib/data";
-import { set } from "date-fns";
+
 import type React from "react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
+import { Map } from "lucide-react";
 
 function useDebounce(value: string, delay: number) {
 	const [debouncedValue, setDebouncedValue] = useState(value);
@@ -29,6 +27,7 @@ function useDebounce(value: string, delay: number) {
 function GoogleAddressInput() {
 	const [selectedAddress, setSelectedAddress] = useState("");
 	const [suggestions, setSuggestions] = useState([]);
+	const [isPredictionVisible, setIsPredictionVisible] = useState(false);
 	const debouncedSearchTerm = useDebounce(selectedAddress, 500);
 
 	const [loading, setLoading] = useState(false);
@@ -45,14 +44,14 @@ function GoogleAddressInput() {
 		setLoading(true);
 		if (input.length < 3) {
 			setSuggestions([]);
+			setIsPredictionVisible(false);
 			return;
 		}
 
 		try {
 			const response = await $api.guest.location.autocomplete(input);
-
-			console.log("response", response);
 			setSuggestions(response);
+			setIsPredictionVisible(true);
 		} catch (error) {
 			console.error("Error fetching suggestions:", error);
 		}
@@ -62,7 +61,9 @@ function GoogleAddressInput() {
 		description: React.SetStateAction<string>;
 	}) => {
 		setSelectedAddress(suggestion.description);
-		setSuggestions([]);
+		setIsPredictionVisible(false);
+
+		console.log("hide item here");
 	};
 
 	const getCurrentLocation = () => {
@@ -77,6 +78,7 @@ function GoogleAddressInput() {
 						);
 
 						setSelectedAddress(response.formatted_address);
+						setIsPredictionVisible(false); // Hide the prediction list
 					} catch (error) {
 						console.error("Error fetching current location:", error);
 					}
@@ -93,21 +95,33 @@ function GoogleAddressInput() {
 	return (
 		<div className="relative">
 			<Label htmlFor="address">Delivery address</Label>
-			<Input
-				id=""
-				type="text"
-				placeholder="Lifecamp Road"
-				className="w-full"
-				value={selectedAddress}
-				autoComplete="off"
-				onChange={(e) => setSelectedAddress(e.target.value)}
-			/>
-
-			<PredictionList onSelection={handleSuggestionClick} data={suggestions} />
+			<div className={`flex items-center gap-x-2`}>
+				<Map className="h-6 w-6 text-gray-400" aria-hidden="true" />
+				<Input
+					type="text"
+					placeholder="Lifecamp Road"
+					className="w-80"
+					value={selectedAddress}
+					autoComplete="off"
+					onChange={(e) => {
+						setSelectedAddress(e.target.value);
+						setIsPredictionVisible(true); // Show the prediction list when typing
+					}}
+				/>
+			</div>
+			{JSON.stringify(isPredictionVisible)}
+			{isPredictionVisible && (
+				<div className={`absolute w-96 bg-red-500 z-10`}>
+					<PredictionList
+						onSelection={handleSuggestionClick}
+						data={suggestions}
+					/>
+				</div>
+			)}
 
 			<Button
 				className="absolute top-40 right-0"
-				onClick={() => getCurrentLocation("")}
+				onClick={() => getCurrentLocation()}
 			>
 				Use current location
 			</Button>
@@ -117,17 +131,25 @@ function GoogleAddressInput() {
 
 export default GoogleAddressInput;
 
-
-function PredictionList({ data, onSelection }) {
+function PredictionList({ data, onSelection }: any) {
 	const [focusedIndex, setFocusedIndex] = useState(-1);
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, prediction: any, index: number) => {
+
+
+	const handleKeyDown = (
+		event: React.KeyboardEvent<HTMLDivElement>,
+		prediction: any,
+		index: number,
+	) => {
 		if (event.key === "Enter" || event.key === " ") {
 			onSelection(prediction);
 		} else if (event.key === "ArrowDown") {
 			setFocusedIndex((prevIndex) => (prevIndex + 1) % data.predictions.length);
 		} else if (event.key === "ArrowUp") {
-			setFocusedIndex((prevIndex) => (prevIndex - 1 + data.predictions.length) % data.predictions.length);
+			setFocusedIndex(
+				(prevIndex) =>
+					(prevIndex - 1 + data.predictions.length) % data.predictions.length,
+			);
 		}
 	};
 
@@ -135,21 +157,24 @@ function PredictionList({ data, onSelection }) {
 		<div>
 			{data.predictions?.length > 0 ? (
 				<div>
-					{data.predictions.map((prediction: any, index: number) => (
-						<div
-							onClick={() => onSelection(prediction)}
-							onKeyDown={(event) => handleKeyDown(event, prediction, index)}
-							tabIndex={0} // Makes the div focusable
-							key={prediction.place_id}
-							role="button" // Indicates that this element is interactive
-							style={{
-								cursor: "pointer",
-								backgroundColor: focusedIndex === index ? "#eee" : "transparent", // Highlights the focused item
-							}}
-						>
-							{prediction.description}
-						</div>
-					))}
+					<ScrollArea className="h-72">
+						{data.predictions.map((prediction: any, index: number) => (
+							<div
+								onClick={() => onSelection(prediction)}
+								onKeyDown={(event) => handleKeyDown(event, prediction, index)}
+								tabIndex={0} // Makes the div focusable
+								key={prediction.place_id}
+								role="button" // Indicates that this element is interactive
+								style={{
+									cursor: "pointer",
+									backgroundColor:
+										focusedIndex === index ? "#eee" : "transparent", // Highlights the focused item
+								}}
+							>
+								{prediction.description}
+							</div>
+						))}
+					</ScrollArea>
 				</div>
 			) : (
 				<div>No predictions</div>
@@ -157,5 +182,3 @@ function PredictionList({ data, onSelection }) {
 		</div>
 	);
 }
-
-
