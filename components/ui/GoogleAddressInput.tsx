@@ -7,16 +7,8 @@ import { set } from "date-fns";
 import type React from "react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import {ScrollArea} from "@/components/ui/scroll-area";
-import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select"
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 
 function useDebounce(value: string, delay: number) {
 	const [debouncedValue, setDebouncedValue] = useState(value);
@@ -111,11 +103,7 @@ function GoogleAddressInput() {
 				onChange={(e) => setSelectedAddress(e.target.value)}
 			/>
 
-			<PredicationList
-
-				onSelection={handleSuggestionClick}
-
-				data={suggestions} />
+			<PredictionList onSelection={handleSuggestionClick} data={suggestions} />
 
 			<Button
 				className="absolute top-40 right-0"
@@ -129,14 +117,17 @@ function GoogleAddressInput() {
 
 export default GoogleAddressInput;
 
-function PredicationList({ data }: any) {
-	const onSelection = (prediction: any) => {
-		console.log(prediction);
-	};
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, prediction: any) => {
-		if (event.key === 'Enter' || event.key === ' ') {
+function PredictionList({ data, onSelection }) {
+	const [focusedIndex, setFocusedIndex] = useState(-1);
+
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, prediction: any, index: number) => {
+		if (event.key === "Enter" || event.key === " ") {
 			onSelection(prediction);
+		} else if (event.key === "ArrowDown") {
+			setFocusedIndex((prevIndex) => (prevIndex + 1) % data.predictions.length);
+		} else if (event.key === "ArrowUp") {
+			setFocusedIndex((prevIndex) => (prevIndex - 1 + data.predictions.length) % data.predictions.length);
 		}
 	};
 
@@ -144,22 +135,21 @@ function PredicationList({ data }: any) {
 		<div>
 			{data.predictions?.length > 0 ? (
 				<div>
-
-						{data.predictions.map((prediction: any) => (
-
-							<div
-								onClick={() => onSelection(prediction)}
-								onKeyDown={(event) => handleKeyDown(event, prediction)}
-								tabIndex={0} // Makes the div focusable
-								key={prediction.place_id}
-								role="button" // Indicates that this element is interactive
-								style={{ cursor: 'pointer' }} // Optional: Changes cursor to pointer
-							>
-								{prediction.description}
-							</div>
-						))}
-
-
+					{data.predictions.map((prediction: any, index: number) => (
+						<div
+							onClick={() => onSelection(prediction)}
+							onKeyDown={(event) => handleKeyDown(event, prediction, index)}
+							tabIndex={0} // Makes the div focusable
+							key={prediction.place_id}
+							role="button" // Indicates that this element is interactive
+							style={{
+								cursor: "pointer",
+								backgroundColor: focusedIndex === index ? "#eee" : "transparent", // Highlights the focused item
+							}}
+						>
+							{prediction.description}
+						</div>
+					))}
 				</div>
 			) : (
 				<div>No predictions</div>
@@ -167,4 +157,5 @@ function PredicationList({ data }: any) {
 		</div>
 	);
 }
+
 
