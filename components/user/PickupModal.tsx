@@ -1,14 +1,11 @@
 "use client";
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
-import { Map, Navigation } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	AlertDialog,
 	AlertDialogContent,
 	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
@@ -17,7 +14,7 @@ import PastAddresses from "./PastAddresses";
 import { Input } from "@/components/ui/input";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Label } from "@/components/ui/label";
-import GoogleAddressInput from "@/components/ui/GoogleAddressInput";
+import GoogleAddressInput from "@/components/GoogleAddressInput";
 
 const demoAddresses = [
 	"No 2 Asaba Street, Lagos",
@@ -44,7 +41,9 @@ export default function PickupModal() {
 					<div className="relative mb-8  cursor-pointer">
 						<Input
 							type="text"
-							placeholder={savedAddress ? savedAddress : "What's your address ?"}
+							placeholder={
+								savedAddress ? savedAddress : "What's your address ?"
+							}
 						/>
 						<Button
 							variant={`primary`}
@@ -73,24 +72,16 @@ export default function PickupModal() {
 					</div>
 				</AlertDialogTrigger>
 
-				<AlertDialogContent id="dialog-trigger" className={`h-screen`}>
-					<div className={`flex`}>
-						<div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-							<Map className="h-5 w-5 text-gray-400" aria-hidden="true" />
-						</div>
+				<AlertDialogContent id="dialog-trigger" className={`h-[500px]`}>
+					<AlertDialogTitle className={`text-center`}>
+						<span>Add a delivery address</span>
+					</AlertDialogTitle>
+					<VisuallyHidden>
+						<AlertDialogDescription />
+					</VisuallyHidden>
+					<div className={`absolute top-20 px-10`}>
 						<div className={`flex items-center`}>
-							<div>
-								<GoogleAddressInput/>
-							</div>
-							<Button
-								type="button"
-								onClick={() => handleAddressSelection(selectedAddress)}
-							>
-								<Navigation
-									className="-ml-0.5 h-5 w-5 text-gray-200"
-									aria-hidden="true"
-								/>
-							</Button>
+							<GoogleAddressInput/>
 						</div>
 					</div>
 				</AlertDialogContent>
