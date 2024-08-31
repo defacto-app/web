@@ -101,8 +101,12 @@ function GoogleAddressInput() {
                                 suggestions.predictions.map((suggestion) => (
                                     <li
                                         key={suggestion.id}
+                                        tabIndex="0"  // Make the element focusable
                                         className="p-2 hover:bg-gray-100 cursor-pointer"
                                         onClick={() => handleSuggestionClick(suggestion)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') handleSuggestionClick(suggestion);
+                                        }} // Handle Enter key press
                                     >
                                         {suggestion.description}
                                     </li>
@@ -111,6 +115,7 @@ function GoogleAddressInput() {
                                 <li className="p-2">No suggestions found</li>
                             ))}
                         </ul>
+
                     </section>
                 )}
             </div>

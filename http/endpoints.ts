@@ -1,4 +1,4 @@
-import {$axios} from "@/http/http.fn";
+import { $axios } from "@/http/http.fn";
 import env from "@/config/env";
 
 export const $api = {
@@ -19,7 +19,7 @@ export const $api = {
 				}
 			},
 		},
-		location:{
+		location: {
 			autocomplete: async (input: any) => {
 				try {
 					return $axios.get(`/g/google-places`, {
@@ -29,8 +29,16 @@ export const $api = {
 					return error;
 				}
 			},
-		}
-
+			reverse_geocode: async (lat: any, lng: any) => {
+				try {
+					return $axios.get(`/g/reverse-geocode`, {
+						params: { lat, lng },
+					});
+				} catch (error: any) {
+					return error;
+				}
+			},
+		},
 	},
 
 	auth: {
@@ -94,7 +102,6 @@ export const $api = {
 					return error;
 				}
 			},
-
 		},
 	},
 };
