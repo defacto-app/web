@@ -29,6 +29,16 @@ export const $api = {
 					return error;
 				}
 			},
+
+			details: async (place_id: any) => {
+				try {
+					return $axios.get(`/g/place-details`, {
+						params: { place_id },
+					});
+				} catch (error: any) {
+					return error;
+				}
+			},
 			reverse_geocode: async (lat: any, lng: any) => {
 				try {
 					return $axios.get(`/g/reverse-geocode`, {

@@ -35,7 +35,7 @@ export default function PickupModal() {
 	};
 
 	return (
-		<div className="relative">
+		<div className="relative ">
 			<AlertDialog defaultOpen={true}>
 				<AlertDialogTrigger asChild>
 					<div className="relative mb-8  cursor-pointer">
@@ -72,7 +72,7 @@ export default function PickupModal() {
 					</div>
 				</AlertDialogTrigger>
 
-				<AlertDialogContent id="dialog-trigger" className={`h-[500px]`}>
+				<AlertDialogContent id="dialog-trigger" className={`h-[600px] max-w-3xl`}>
 					<AlertDialogTitle className={`text-center`}>
 						<span>Add a delivery address</span>
 					</AlertDialogTitle>
@@ -82,6 +82,7 @@ export default function PickupModal() {
 					<div className={`absolute top-20 px-10`}>
 						<div className={`flex items-center`}>
 							<GoogleAddressInput/>
+
 						</div>
 					</div>
 				</AlertDialogContent>

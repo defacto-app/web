@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Label} from '@/components/ui/label';
-// import { Map } from 'lucide-react';
 import {Input} from '@/components/ui/input';
 import env, {isDev} from '@/config/env';
 import {$api} from '@/http/endpoints';
-import {APIProvider, Map, Marker, AdvancedMarker} from '@vis.gl/react-google-maps';
+import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 
 function GoogleAddressInput() {
     const [selectedAddress, setSelectedAddress] = useState("");
@@ -13,7 +12,7 @@ function GoogleAddressInput() {
     const [searchAttempted, setSearchAttempted] = useState(false);
     const [predictionListVisible, setPredictionListVisible] = useState(false);
     const [hasSelectedAddress, setHasSelectedAddress] = useState(false);
-    const [location, setLocation] = useState({lat: 9.05785, lng: 7.49508}); // Default to a location
+    const [location, setLocation] = useState({lat: 0, lng: 0}); // Default to a location
 
     // Custom hook for debouncing
     function useDebounce(value, delay) {
@@ -80,7 +79,7 @@ function GoogleAddressInput() {
         });
     };
 
-    const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    const handleChange = (e) => {
         setSelectedAddress(e.target.value);
         if (hasSelectedAddress) {
             setHasSelectedAddress(false);  // Reset selection state when user starts typing again
@@ -107,7 +106,7 @@ function GoogleAddressInput() {
                         {loading && <div>Loading...</div>}
                         <ul className="absolute z-10 list-none bg-white w-full shadow-lg mt-1">
                             {searchAttempted && (suggestions.predictions.length > 0 ? (
-                                suggestions.predictions.map((suggestion:any) => (
+                                suggestions.predictions.map((suggestion) => (
                                     <li
                                         key={suggestion.place_id}
                                         tabIndex={0}
@@ -133,12 +132,22 @@ function GoogleAddressInput() {
 
                     <Map
                         key={`${location.lat}-${location.lng}`}  // Changing key forces re-render
-                        style={{ height: '40vh'}}
+                        style={{height: '40vh'}}
                         center={location}
                         zoom={15}
-                        gestureHandling={'greedy'}
-                        disableDefaultUI={true}
-                    />
+                        gestureHandling={'auto'}  // Allows normal zooming and scrolling behavior
+                        options={{
+                            zoomControl: false,  // Ensures zoom controls are enabled
+                            streetViewControl: false,
+                            mapTypeControl: false,
+                            fullscreenControl: false,
+                            scrollwheel: true,  // Enables zooming with the scroll wheel
+                            draggable: true,    // Enables dragging of the map
+                        }}
+                    >
+                        <Marker position={location}/>
+                    </Map>
+
                 </APIProvider>
             </div>
         </div>
