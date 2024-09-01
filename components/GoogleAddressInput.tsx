@@ -14,6 +14,7 @@ function GoogleAddressInput() {
     const [hasSelectedAddress, setHasSelectedAddress] = useState(false);
     const [location, setLocation] = useState({lat: 6.210, lng: 6.740}); // Default to Asaba
     const [error, setError] = useState("");  // Error message state
+    const [showMap, setShowMap] = useState(false);  // State to control map display
 
     // Define the geographical boundaries for Asaba
     const asabaBounds = {
@@ -87,8 +88,10 @@ function GoogleAddressInput() {
         if (lat >= asabaBounds.south && lat <= asabaBounds.north && lng >= asabaBounds.west && lng <= asabaBounds.east) {
             setLocation({ lat, lng });
             setError("");  // Clear any previous error
+            setShowMap(true);  // Show the map once a valid location is selected
         } else {
             setError("The area is not supported");
+            setShowMap(false);  // Hide the map if the location is not supported
         }
     };
 
@@ -146,26 +149,30 @@ function GoogleAddressInput() {
                 </div>
             )}
 
-            <div className="w-[700px]  mt-8  ">
-                <APIProvider apiKey={env.google_map_api}>
-                    <Map
-                        key={`${location.lat}-${location.lng}`}  // Changing key forces re-render
-                        style={{ height: '40vh'}}
-                        center={location}
-                        zoom={15}
-                        gestureHandling={'auto'}
-                        options={{
-                            zoomControl: false,
-                            streetViewControl: false,
-                            mapTypeControl: false,
-                            fullscreenControl: false,
-                            scrollwheel: false,
-                            draggable: true,
-                        }}
-                    >
-                        <Marker position={location} />
-                    </Map>
-                </APIProvider>
+            <div className="w-[700px] mt-8">
+                {showMap ? (
+                    <APIProvider apiKey={env.google_map_api}>
+                        <Map
+                            key={`${location.lat}-${location.lng}`}  // Changing key forces re-render
+                            style={{ height: '40vh'}}
+                            center={location}
+                            zoom={15}
+                            gestureHandling={'auto'}
+                            options={{
+                                zoomControl: false,
+                                streetViewControl: false,
+                                mapTypeControl: false,
+                                fullscreenControl: false,
+                                scrollwheel: false,
+                                draggable: true,
+                            }}
+                        >
+                            <Marker position={location} />
+                        </Map>
+                    </APIProvider>
+                ) : (
+                    <img src={`blank-map.jpg`} alt="Default Map" style={{ height: '40vh', width: '100%' }} />
+                )}
             </div>
         </div>
     );
