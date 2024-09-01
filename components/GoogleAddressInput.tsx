@@ -25,7 +25,7 @@ function GoogleAddressInput() {
     };
 
     // Custom hook for debouncing
-    function useDebounce(value, delay) {
+    function useDebounce(value: any, delay: any) {
         const [debouncedValue, setDebouncedValue] = useState(value);
 
         useEffect(() => {
@@ -53,7 +53,7 @@ function GoogleAddressInput() {
         }
     }, [debouncedSearchTerm, hasSelectedAddress]);
 
-    const fetchSuggestions = async (input) => {
+    const fetchSuggestions = async (input: string | any[]) => {
         setLoading(true);
         if (input.length < 3) {
             setSuggestions({predictions: []});
@@ -75,18 +75,18 @@ function GoogleAddressInput() {
         }
     };
 
-    const handleSuggestionClick = async (suggestion) => {
+    const handleSuggestionClick = async (suggestion: any) => {
         setSelectedAddress(suggestion.description);
         setPredictionListVisible(false);
         setHasSelectedAddress(true);
 
         // Fetching the location details using place_id
         const locationDetails = await $api.guest.location.details(suggestion.place_id);
-        const { lat, lng } = locationDetails.result.geometry.location;
+        const {lat, lng} = locationDetails.result.geometry.location;
 
         // Check if the location is within Asaba bounds
         if (lat >= asabaBounds.south && lat <= asabaBounds.north && lng >= asabaBounds.west && lng <= asabaBounds.east) {
-            setLocation({ lat, lng });
+            setLocation({lat, lng});
             setError("");  // Clear any previous error
             setShowMap(true);  // Show the map once a valid location is selected
         } else {
@@ -95,7 +95,7 @@ function GoogleAddressInput() {
         }
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
         setSelectedAddress(e.target.value);
         if (hasSelectedAddress) {
             setHasSelectedAddress(false);  // Reset selection state when user starts typing again
@@ -122,7 +122,7 @@ function GoogleAddressInput() {
                         {loading && <div>Loading...</div>}
                         <ul className="absolute z-10 list-none bg-white w-full shadow-lg mt-1">
                             {searchAttempted && (suggestions.predictions.length > 0 ? (
-                                suggestions.predictions.map((suggestion) => (
+                                suggestions.predictions.map((suggestion: any) => (
                                     <li
                                         key={suggestion.place_id}
                                         tabIndex={0}
@@ -154,24 +154,22 @@ function GoogleAddressInput() {
                     <APIProvider apiKey={env.google_map_api}>
                         <Map
                             key={`${location.lat}-${location.lng}`}  // Changing key forces re-render
-                            style={{ height: '40vh'}}
+                            style={{height: '40vh'}}
                             center={location}
                             zoom={15}
                             gestureHandling={'auto'}
-                            options={{
-                                zoomControl: false,
-                                streetViewControl: false,
-                                mapTypeControl: false,
-                                fullscreenControl: false,
-                                scrollwheel: false,
-                                draggable: true,
-                            }}
+                            zoomControl={false}
+                            streetViewControl={false}
+                            mapTypeControl={false}
+                            fullscreenControl={false}
+                            scrollwheel={false}
+
                         >
-                            <Marker position={location} />
+                            <Marker position={location}/>
                         </Map>
                     </APIProvider>
                 ) : (
-                    <img src={`blank-map.jpg`} alt="Default Map" style={{ height: '40vh', width: '100%' }} />
+                    <img src={`blank-map.jpg`} alt="Default Map" style={{height: '40vh', width: '100%'}}/>
                 )}
             </div>
         </div>
