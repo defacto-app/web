@@ -12,7 +12,16 @@ function GoogleAddressInput() {
     const [searchAttempted, setSearchAttempted] = useState(false);
     const [predictionListVisible, setPredictionListVisible] = useState(false);
     const [hasSelectedAddress, setHasSelectedAddress] = useState(false);
-    const [location, setLocation] = useState({lat: 0, lng: 0}); // Default to a location
+    const [location, setLocation] = useState({lat: 6.210, lng: 6.740}); // Default to Asaba
+    const [error, setError] = useState("");  // Error message state
+
+    // Define the geographical boundaries for Asaba
+    const asabaBounds = {
+        north: 6.250,
+        south: 6.100,
+        east: 6.800,
+        west: 6.650
+    };
 
     // Custom hook for debouncing
     function useDebounce(value, delay) {
@@ -72,11 +81,15 @@ function GoogleAddressInput() {
 
         // Fetching the location details using place_id
         const locationDetails = await $api.guest.location.details(suggestion.place_id);
-        console.log(locationDetails.result.geometry.location.lat, locationDetails.result.geometry.location.lng);
-        setLocation({
-            lat: locationDetails.result.geometry.location.lat,
-            lng: locationDetails.result.geometry.location.lng,
-        });
+        const { lat, lng } = locationDetails.result.geometry.location;
+
+        // Check if the location is within Asaba bounds
+        if (lat >= asabaBounds.south && lat <= asabaBounds.north && lng >= asabaBounds.west && lng <= asabaBounds.east) {
+            setLocation({ lat, lng });
+            setError("");  // Clear any previous error
+        } else {
+            setError("The area is not supported");
+        }
     };
 
     const handleChange = (e) => {
@@ -127,27 +140,31 @@ function GoogleAddressInput() {
                 )}
             </div>
 
+            {error && (
+                <div className="mt-4 text-red-500">
+                    {error}
+                </div>
+            )}
+
             <div className="w-[700px]  mt-8  ">
                 <APIProvider apiKey={env.google_map_api}>
-
                     <Map
                         key={`${location.lat}-${location.lng}`}  // Changing key forces re-render
-                        style={{height: '40vh'}}
+                        style={{ height: '40vh'}}
                         center={location}
                         zoom={15}
-                        gestureHandling={'auto'}  // Allows normal zooming and scrolling behavior
+                        gestureHandling={'auto'}
                         options={{
-                            zoomControl: false,  // Ensures zoom controls are enabled
+                            zoomControl: false,
                             streetViewControl: false,
                             mapTypeControl: false,
                             fullscreenControl: false,
-                            scrollwheel: true,  // Enables zooming with the scroll wheel
-                            draggable: true,    // Enables dragging of the map
+                            scrollwheel: false,
+                            draggable: true,
                         }}
                     >
-                        <Marker position={location}/>
+                        <Marker position={location} />
                     </Map>
-
                 </APIProvider>
             </div>
         </div>
