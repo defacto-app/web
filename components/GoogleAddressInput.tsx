@@ -128,7 +128,7 @@ function GoogleAddressInput() {
                 )}
             </div>
 
-            <div className="w-[700px]  mt-8 ">
+            <div className="w-[700px]  mt-8  ">
                 <APIProvider apiKey={env.google_map_api}>
 
                     <Map
