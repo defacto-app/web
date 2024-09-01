@@ -89,6 +89,9 @@ function GoogleAddressInput() {
             setLocation({lat, lng});
             setError("");  // Clear any previous error
             setShowMap(true);  // Show the map once a valid location is selected
+
+            // Save the selected address to localStorage
+            localStorage.setItem('selectedAddress', suggestion.description);
         } else {
             setError("The area is not supported");
             setShowMap(false);  // Hide the map if the location is not supported
