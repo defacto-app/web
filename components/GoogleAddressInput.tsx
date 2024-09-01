@@ -4,6 +4,7 @@ import {Input} from '@/components/ui/input';
 import env, {isDev} from '@/config/env';
 import {$api} from '@/http/endpoints';
 import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
+import Image from "next/image";
 
 function GoogleAddressInput() {
     const [selectedAddress, setSelectedAddress] = useState("");
@@ -25,8 +26,8 @@ function GoogleAddressInput() {
     };
 
     // Custom hook for debouncing
-    function useDebounce(value: any, delay: any) {
-        const [debouncedValue, setDebouncedValue] = useState(value);
+    function useDebounce<T>(value: T, delay: number): T {
+        const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
         useEffect(() => {
             const handler = setTimeout(() => {
@@ -41,7 +42,8 @@ function GoogleAddressInput() {
         return debouncedValue;
     }
 
-    const debouncedSearchTerm = useDebounce(selectedAddress, 500);
+
+    const debouncedSearchTerm = useDebounce<string>(selectedAddress, 500);
 
     useEffect(() => {
         if (debouncedSearchTerm && !hasSelectedAddress) {
@@ -172,7 +174,13 @@ function GoogleAddressInput() {
                         </Map>
                     </APIProvider>
                 ) : (
-                    <img src={`blank-map.jpg`} alt="Default Map" style={{height: '40vh', width: '100%'}}/>
+                    <Image
+
+                        width={700}
+                        height={400}
+
+
+                        src={`/blank-map.jpg`} alt="Default Map" style={{height: '40vh', width: '100%'}}/>
                 )}
             </div>
         </div>
