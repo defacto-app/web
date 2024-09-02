@@ -6,7 +6,13 @@ import {$api} from '@/http/endpoints';
 import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 import Image from "next/image";
 
-function GoogleAddressInput() {
+
+type GoogleAddressInputProps = {
+    handleCloseModal: () => void;
+};
+
+
+function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
     const [selectedAddress, setSelectedAddress] = useState("");
     const [suggestions, setSuggestions] = useState({predictions: []});
     const [loading, setLoading] = useState(false);
@@ -15,7 +21,8 @@ function GoogleAddressInput() {
     const [hasSelectedAddress, setHasSelectedAddress] = useState(false);
     const [location, setLocation] = useState({lat: 6.210, lng: 6.740}); // Default to Asaba
     const [error, setError] = useState("");  // Error message state
-    const [showMap, setShowMap] = useState(false);  // State to control map display
+    const [showMap, setShowMap] = useState(true);  // State to control map display
+
 
     // Define the geographical boundaries for Asaba
     const asabaBounds = {
@@ -85,18 +92,19 @@ function GoogleAddressInput() {
         // Fetching the location details using place_id
         const locationDetails = await $api.guest.location.details(suggestion.place_id);
         const {lat, lng} = locationDetails.result.geometry.location;
+        setLocation({lat, lng});
 
-        // Check if the location is within Asaba bounds
+        setShowMap(true); // Check if the location is within Asaba bounds
+        /// close modal
+
         if (lat >= asabaBounds.south && lat <= asabaBounds.north && lng >= asabaBounds.west && lng <= asabaBounds.east) {
-            setLocation({lat, lng});
             setError("");  // Clear any previous error
-            setShowMap(true);  // Show the map once a valid location is selected
 
             // Save the selected address to localStorage
             localStorage.setItem('selectedAddress', suggestion.description);
+            handleCloseModal();
         } else {
             setError("The area is not supported");
-            setShowMap(false);  // Hide the map if the location is not supported
         }
     };
 
@@ -154,12 +162,11 @@ function GoogleAddressInput() {
                 </div>
             )}
 
-            <div className="w-[700px] mt-8">
+            <div className="w-screen h-screen mt-8">
                 {showMap ? (
                     <APIProvider apiKey={env.google_map_api}>
                         <Map
                             key={`${location.lat}-${location.lng}`}  // Changing key forces re-render
-                            style={{height: '40vh'}}
                             center={location}
                             zoom={15}
                             gestureHandling={'auto'}
@@ -168,7 +175,7 @@ function GoogleAddressInput() {
                             mapTypeControl={false}
                             fullscreenControl={false}
                             scrollwheel={false}
-
+                            className="w-96 lg:w-2/5 h-1/2 lg:h-2/3"
                         >
                             <Marker position={location}/>
                         </Map>
@@ -180,7 +187,7 @@ function GoogleAddressInput() {
                         height={400}
 
 
-                        src={`/blank-map.jpg`} alt="Default Map" style={{height: '40vh', width: '100%'}}/>
+                        src={`/blank-map.jpg`} alt="Default Map"/>
                 )}
             </div>
         </div>

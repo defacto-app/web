@@ -9,36 +9,39 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {Checkbox} from "../ui/checkbox";
-import PastAddresses from "./PastAddresses";
+
 import {Input} from "@/components/ui/input";
 import {VisuallyHidden} from "@radix-ui/react-visually-hidden";
-import {Label} from "@/components/ui/label";
 import GoogleAddressInput from "@/components/GoogleAddressInput";
-import { X } from 'lucide-react';
-const demoAddresses = [
-    "No 2 Asaba Street, Lagos",
-    "15 Aba Road, Port Harcourt",
-    "20 Enugu Crescent, Abuja",
-];
+import {X} from 'lucide-react';
 
-export default function PickupModal() {
-    const [selectedAddress, setSelectedAddress] = useState("");
+
+type PickupModalProps = {
+    handleOnSelect: (address: string) => void;
+}
+
+function PickupModal({handleOnSelect}: PickupModalProps) {
     const [savedAddress, setSavedAddress] = useState("");
 
     const [modalOpen, setModalOpen] = useState(true);
 
-    const handleAddressSelection = (address: string) => {
-        setSelectedAddress(address);
-    };
 
-    const handleSaveChanges = () => {
-        setSavedAddress(selectedAddress);
+    const handleCloseModal = () => {
+        setModalOpen(false);
+
+
+        const savedAddress = localStorage.getItem('selectedAddress') || "";
+
+
+        console.log(savedAddress, "savedAddress");
+
+        handleOnSelect(savedAddress);
+
     };
 
     return (
         <div className="relative ">
-            <AlertDialog defaultOpen={modalOpen} open={modalOpen} >
+            <AlertDialog defaultOpen={modalOpen} open={modalOpen}>
                 <AlertDialogTrigger asChild>
                     <div className="relative mb-8  cursor-pointer">
                         <Input
@@ -75,14 +78,14 @@ export default function PickupModal() {
                     </div>
                 </AlertDialogTrigger>
 
-                <AlertDialogContent id="dialog-trigger" className={`h-[600px] max-w-3xl`}>
+                <AlertDialogContent id="dialog-trigger" className={`h-full lg:h-[670px] max-w-2xl`}>
 
                     <button
 
                         onClick={() => setModalOpen(false)}
 
                         role={`button`} className={`absolute top-4 right-2 bg-gray-200 rounded-full p-2`}>
-                        <X className={`w-4 h-4`} />
+                        <X className={`w-4 h-4`}/>
                     </button>
                     <AlertDialogTitle className={`text-center`}>
                         <span>Add a delivery address</span>
@@ -92,7 +95,13 @@ export default function PickupModal() {
                     </VisuallyHidden>
                     <div className={`absolute top-20 px-10`}>
                         <div className={`flex items-center`}>
-                            <GoogleAddressInput/>
+                            <GoogleAddressInput
+
+                                handleCloseModal={
+
+                                    handleCloseModal
+                                }
+                            />
 
                         </div>
                     </div>
@@ -101,3 +110,6 @@ export default function PickupModal() {
         </div>
     );
 }
+
+
+export default PickupModal;
