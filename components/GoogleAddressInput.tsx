@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import type React from 'react';
+import {useEffect, useState} from 'react';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import env, {isDev} from '@/config/env';
 import {$api} from '@/http/endpoints';
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 import Image from "next/image";
 
@@ -21,7 +23,7 @@ function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
     const [hasSelectedAddress, setHasSelectedAddress] = useState(false);
     const [location, setLocation] = useState({lat: 6.210, lng: 6.740}); // Default to Asaba
     const [error, setError] = useState("");  // Error message state
-    const [showMap, setShowMap] = useState(true);  // State to control map display
+    const [showMap, setShowMap] = useState(false);  // State to control map display
 
 
     // Define the geographical boundaries for Asaba
@@ -101,7 +103,9 @@ function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
             setError("");  // Clear any previous error
 
             // Save the selected address to localStorage
-            localStorage.setItem('selectedAddress', suggestion.description);
+            const existingAddresses = JSON.parse(localStorage.getItem('selectedAddresses') || '[]');
+            existingAddresses.push(suggestion.description);
+            localStorage.setItem('selectedAddresses', JSON.stringify(existingAddresses));
             handleCloseModal();
         } else {
             setError("The area is not supported");
@@ -133,7 +137,7 @@ function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
                 {predictionListVisible && (
                     <section>
                         {loading && <div>Loading...</div>}
-                        <ul className="absolute z-10 list-none bg-white w-full shadow-lg mt-1">
+                        <ul className="absolute z-10 list-none bg-white  w-80 shadow-lg mt-1">
                             {searchAttempted && (suggestions.predictions.length > 0 ? (
                                 suggestions.predictions.map((suggestion: any) => (
                                     <li
@@ -175,7 +179,7 @@ function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
                             mapTypeControl={false}
                             fullscreenControl={false}
                             scrollwheel={false}
-                            className="w-96 lg:w-2/5 h-1/2 lg:h-2/3"
+                            className="w-96 lg:w-2/5 h-1/2 lg:h-2/4"
                         >
                             <Marker position={location}/>
                         </Map>
@@ -183,11 +187,12 @@ function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
                 ) : (
                     <Image
 
-                        width={700}
+                        width={600}
                         height={400}
 
+                        className={`w-auto lg:w-2/5 h-1/2 lg:h-2/4`}
 
-                        src={`/blank-map.jpg`} alt="Default Map"/>
+                        src={`/blank-map.png`} alt="Default Map"/>
                 )}
             </div>
         </div>

@@ -12,7 +12,7 @@ $axios.interceptors.request.use(
 		const token = getToken("user");
 
 		if (token) {
-			config.headers.Authorization = token;
+			config.headers.Authorization = `Bearer ${token}`;
 		}
 		return config;
 	},

@@ -70,7 +70,7 @@ export default function SendPackage() {
       </div>
       <div>
         <h1 className="text-lg mb-2 text-start font-semibold">Pickup Address</h1>
-      <PickupModal/>
+      {/*<PickupModal/>*/}
 
       </div><div>
         <h1 className="text-lg mt-5 mb-2 text-start font-semibold">Dropoff Address</h1>

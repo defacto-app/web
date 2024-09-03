@@ -21,7 +21,8 @@ import { isDev } from "@/config/env";
 import { $api } from "@/http/endpoints";
 import FormError from "@/components/ui/FormError";
 import PasswordInput from "@/components/ui/PasswordInput";
-import {setToken} from "@/utils/auth";
+import { setToken } from "@/utils/auth";
+import { toast } from "react-toastify";
 
 function Email() {
 	const authSteps = [
@@ -46,7 +47,7 @@ a new one.`,
 
 	type authState = "default" | "new-user" | "existing-user";
 	const [authState, setAuthState] = useState<authState>("default");
-	const { currentStep, setCurrentStep,setIsLoggedIn } = useAuthContext();
+	const { currentStep, setCurrentStep, setIsLoggedIn } = useAuthContext();
 
 	const getCurrentStep = () => {
 		return authSteps.find((step) => step.id === authState);
@@ -129,29 +130,22 @@ a new one.`,
 
 	const login_user = async () => {
 		setLoading(true);
-		console.log("Email Submitted");
-
+		console.log("Email Submitted ???");
+		toast.success("Login Successful");
 		try {
-		/*	const res = await $api.auth.user.email_login({
+			const res = await $api.auth.user.email_login({
 				email: formData.email,
 				password: formData.password,
 			});
 
-			console.log(res);*/
+			console.log(res);
 
-			const data = await fetch(`/api/auth/login`, {
-				method: "POST",
-				body: JSON.stringify(formData),
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
+			// toast.success("Login Successful");
 
-			const res = await data.json();
 
-			const token = res.data.data.token
+			const token = res.data.token
 
-			console.log(res.data.data.token);
+			console.log(res.data.token);
 
 			setToken('user',token);
 

@@ -1,13 +1,7 @@
-'use client'
+"use client";
 
 import type React from "react";
 
 export default function Template({ children }: { children: React.ReactNode }) {
-  return (
-
-      <main>
-      {children}
-
-      </main>
-  )
+	return <main>{children}</main>;
 }

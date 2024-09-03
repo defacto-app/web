@@ -82,7 +82,7 @@ export default function Paymentpage() {
                           <p>{truncateText(senderAddress, 10)}</p>
                         </div>
                         <div className="col-span-1">
-                          <PickupModal />
+                          {/*<PickupModal />*/}
                         </div>
                       </div>
                     </div>

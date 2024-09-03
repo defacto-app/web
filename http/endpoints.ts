@@ -107,11 +107,19 @@ export const $api = {
 			},
 			email_register: async (body: any) => {
 				try {
-					return $axios.post(`/auth/email-register`, body);
-				} catch (error: any) {
+z				} catch (error: any) {
 					return error;
 				}
 			},
+
+			me: async () => {
+				try {
+					return $axios.get(`/auth/ping`);
+				} catch (error: any) {
+
+					return error;
+				}
+			}
 		},
 	},
 };

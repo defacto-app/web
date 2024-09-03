@@ -66,7 +66,7 @@ function FoodHero() {
                             <label htmlFor="email" className="sr-only">
                               Email address
                             </label>
-                            <PickupModal />
+                            {/*<PickupModal />*/}
                           </div>
                           <div className="mt-3 sm:ml-3 sm:mt-0">
                             <Button

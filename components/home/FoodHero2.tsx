@@ -1,6 +1,6 @@
 "use client"
 import {BikeIcon} from "lucide-react";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button} from "../ui/button";
 import Image from "next/image";
 import RotateBetween from "./RotataBetween";
@@ -64,6 +64,15 @@ export default function FoodHero2() {
         console.log(address, "address");
         // You can also perform any other actions with the selected address here
     };
+
+    // get address from local storage
+
+    useEffect(() => {
+        const savedAddresses = JSON.parse(localStorage.getItem('selectedAddresses') || '[]');
+        const lastAddress = savedAddresses.length > 0 ? savedAddresses[savedAddresses.length - 1] : "";
+
+        setSelectedAddress(lastAddress);
+    }, []);
     return (
         <div className="">
             <div className="flex flex-col lg:flex-row items-center justify-between">

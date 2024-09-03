@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import Welcome from "@/components/Welcome";
 import Email from "@/components/Email";
-import Password from "@/components/Password";
 import { useAuthContext } from "@/app/provider/auth.context";
-import { MoveLeft } from "lucide-react";
-import ConfirmEmail from "../Confirm";
 
 export default function SignInModal() {
 	const { form, setForm, setCurrentStep, setModalOpen, currentStep, goBack } =
@@ -28,7 +24,6 @@ export default function SignInModal() {
 				<div>
 					{currentStep === "welcome" && <Welcome />}
 					{currentStep === "email" && <Email />}
-
 					{/*{currentStep === "password" && <Password />}*/}
 					{/*{currentStep === "confirm-email" && <ConfirmEmail />}*/}
 					{currentStep === "success" && <LoginSuccessful />}

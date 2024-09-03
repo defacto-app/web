@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import EditUserModal from "./EditUserModal";
 import EditUserNumberModal from "./EditUserNumberModal";
 import EditUserPasswordModal from "./EditUserPasswordModal";
@@ -29,6 +29,8 @@ export default function UserPopoverItem() {
 		setIsLoggedIn(false);
 		localStorage.setItem("isLoggedIn", JSON.stringify(false));
 	}
+
+
 
 	return (
 		<div>

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { AdminFooter, AdminHeader } from "@/app/admin/components/admin.header";
 import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
-import React from "react";
+import type React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "@/components/Footer";
 import UserHeader from "@/components/user/UserHeader";
