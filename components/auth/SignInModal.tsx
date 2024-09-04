@@ -26,7 +26,7 @@ export default function SignInModal() {
 					{currentStep === "email" && <Email />}
 					{/*{currentStep === "password" && <Password />}*/}
 					{/*{currentStep === "confirm-email" && <ConfirmEmail />}*/}
-					{currentStep === "success" && <LoginSuccessful />}
+					{/* {currentStep === "success" && <LoginSuccessful />} */}
 				</div>
 			</div>
 		</div>

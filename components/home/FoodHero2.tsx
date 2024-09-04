@@ -5,6 +5,7 @@ import {Button} from "../ui/button";
 import Image from "next/image";
 import RotateBetween from "./RotataBetween";
 import PickupModal from "../user/PickupModal";
+import Loader from "../Loader";
 
 export default function FoodHero2() {
     const words = [

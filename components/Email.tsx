@@ -29,8 +29,7 @@ function Email() {
 		{
 			id: "default",
 			title: "Let's start with your email",
-			description: `We will check if you already have an account, if not, we'll create
-a new one.`,
+			description: `We will check if you already have an account, if not, we'll create a new one.`,
 		},
 		{
 			id: "new-user",

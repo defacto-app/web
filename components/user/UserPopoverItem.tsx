@@ -17,11 +17,6 @@ interface User {
 export default function UserPopoverItem() {
 	const {
 		setIsLoggedIn,
-		isLoggedIn,
-		currentStep,
-		goBack,
-		modalOpen,
-		setModalOpen,
 	} = useAuthContext();
 
 	const [user, setUser] = useState<User>({});
