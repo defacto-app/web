@@ -39,15 +39,7 @@ export default function UserAuth() {
 		return !shouldShow.includes(currentStep);
 	}
 
-	const getMe = async () => {
-		const { data } = await $api.auth.user.me();
 
-        console.log(data);
-	};
-
-    useEffect(() => {
-        getMe();
-    }, []);
 
 
 	useEffect(() => {

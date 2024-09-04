@@ -52,6 +52,7 @@
     "dotenv": "^16.4.5",
     "eslint-plugin-next-on-pages": "^1.13.2",
     "input-otp": "^1.2.4",
+    "jotai": "^2.9.3",
     "jsonbank-env": "^1.0.2",
     "lucide-react": "^0.368.0",
     "next": "14.2.1",
