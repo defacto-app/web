@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./../globals.css";
 import { cn } from "@/lib/utils";
-import { AdminFooter, AdminHeader } from "@/app/admin/components/admin.header";
 import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
 import type React from "react";

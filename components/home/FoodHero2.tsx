@@ -6,8 +6,11 @@ import Image from "next/image";
 import RotateBetween from "./RotataBetween";
 import PickupModal from "../user/PickupModal";
 import Loader from "../Loader";
+import {useAtomAuthContext} from "@/app/store/authAtom";
 
 export default function FoodHero2() {
+    const { currentStep,modalOpen, goBack } = useAtomAuthContext();
+
     const words = [
         "Cravings",
         "Joy",
@@ -81,6 +84,7 @@ export default function FoodHero2() {
                     <p className="inline-flex space-x-6 mb-8">
            <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
              <span>Riders Available</span>
+
              <BikeIcon className="text-primary-600"/>
            </span>
                     </p>

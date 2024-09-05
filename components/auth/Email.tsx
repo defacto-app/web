@@ -6,23 +6,19 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
-	Card,
 	CardContent,
 	CardDescription,
-	CardHeader,
-	CardTitle,
+
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Mail } from "lucide-react";
-import { useRouter } from "next/router";
-import { useAuthContext } from "@/app/provider/auth.context";
 import { isDev } from "@/config/env";
 import { $api } from "@/http/endpoints";
 import FormError from "@/components/ui/FormError";
 import PasswordInput from "@/components/ui/PasswordInput";
 import { setToken } from "@/utils/auth";
 import { toast } from "react-toastify";
+import { useAtomAuthContext } from "@/app/store/authAtom";
 
 function Email() {
 	const authSteps = [
@@ -46,18 +42,13 @@ function Email() {
 
 	type authState = "default" | "new-user" | "existing-user";
 	const [authState, setAuthState] = useState<authState>("default");
-	const { currentStep, setCurrentStep, setIsLoggedIn } = useAuthContext();
+	const { setCurrentStep, setIsLoggedIn,getMe } = useAtomAuthContext();
 
 	const getCurrentStep = () => {
 		return authSteps.find((step) => step.id === authState);
 	};
 
 	const currentStepDetails = getCurrentStep();
-	const schema = z.object({
-		email: z.string().email({
-			message: "Invalid email address e.g example@gmail.com",
-		}),
-	});
 
 	const [formData, setFormData] = useState({
 		email: isDev ? "kats.com.ng@gmail.com" : "",
@@ -70,36 +61,16 @@ function Email() {
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+		event.preventDefault();
 		const { name, value } = event.target;
 		setFormData({ ...formData, [name]: value });
 	};
 
-	const handleSubmit = () => {
-		console.log("Email Submitted");
-		setErrors({});
-		const result = schema.safeParse(formData);
-		if (!result.success) {
-			const formattedErrors: any = {};
-			for (const error of result.error.errors) {
-				const fieldName = error.path[0];
-				formattedErrors[fieldName] = error.message;
-			}
-			setErrors(formattedErrors);
-			return;
-		}
-		setCurrentStep("success");
 
-		setFormData({
-			email: formData.email,
-			password: "",
-		});
-
-		console.log("Email submitted:", formData.email);
-	};
 
 	const check_email_exists = async () => {
 		setLoading(true);
-		console.log("Email Submitted");
 
 		try {
 			const res = await $api.auth.user.email_exists({
@@ -127,7 +98,10 @@ function Email() {
 		}
 	};
 
+
+
 	const login_user = async () => {
+
 		setLoading(true);
 		console.log("Email Submitted ???");
 		toast.success("Login Successful");
@@ -137,22 +111,15 @@ function Email() {
 				password: formData.password,
 			});
 
-			console.log(res);
-
 			// toast.success("Login Successful");
 
-
-			const token = res.data.token
-
-			console.log(res.data.token);
-
-			setToken('user',token);
+			setToken("user", res.data.token);
 
 			setLoading(false);
 
-
 			setIsLoggedIn(true);
 			setCurrentStep("success");
+			getMe();
 		} catch (error: any) {
 			console.log(error);
 

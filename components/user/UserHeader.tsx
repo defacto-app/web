@@ -9,6 +9,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import UserPopover from "./UserPopover";
 import HistoryPopover from "./HistoryPopover";
+import { useAtomAuthContext } from "@/app/store/authAtom";
 
 interface NavigationItem {
 	name: string;
@@ -24,6 +25,12 @@ const navigation = [
 export default function UserHeader() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const [isSticky, setIsSticky] = useState(false);
+	const { getMe } = useAtomAuthContext();
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		getMe();
+	}, []);
 
 	useEffect(() => {
 		const handleScroll = () => {

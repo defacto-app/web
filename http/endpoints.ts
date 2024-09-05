@@ -52,30 +52,7 @@ export const $api = {
 	},
 
 	auth: {
-		admin: {
-			sendEmailOtp: async (body: any) => {
-				try {
-					const res = await fetch(
-						"https://api.defactoapp.com.ng/api/v1/auth/admin-login",
-						{
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(body),
-						},
-					);
 
-					if (!res.ok) {
-						return res.json();
-					}
-
-					return await res.json();
-				} catch (error: any) {
-					return error;
-				}
-			},
-		},
 		user: {
 			confirm_phone_login: async (body: any) => {
 				try {
@@ -107,7 +84,8 @@ export const $api = {
 			},
 			email_register: async (body: any) => {
 				try {
-z				} catch (error: any) {
+					return $axios.post(`/auth/email-register`, body);
+				} catch (error: any) {
 					return error;
 				}
 			},
@@ -116,10 +94,11 @@ z				} catch (error: any) {
 				try {
 					return $axios.get(`/auth/ping`);
 				} catch (error: any) {
-
 					return error;
 				}
-			}
+			},
 		},
 	},
 };
+
+

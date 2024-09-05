@@ -16,6 +16,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useAuthContext } from "@/app/provider/auth.context";
 import UserPopover from "@/components/user/UserPopover";
 import { $api } from "@/http/endpoints";
+import {useAtomAuthContext} from "@/app/store/authAtom";
 
 export default function UserAuth() {
 	const {
@@ -25,12 +26,12 @@ export default function UserAuth() {
 		goBack,
 		modalOpen,
 		setModalOpen,
-	} = useAuthContext();
+	} = useAtomAuthContext();
 
 	const [hideCloseButton, setHideCloseButton] = useState(false);
 
 	useEffect(() => {
-		const shouldShow = ["welcome", "email"];
+		const shouldShow = ["welcome", "confirm-email", "success"];
 		setHideCloseButton(!shouldShow.includes(currentStep));
 	}, [currentStep]);
 
@@ -50,7 +51,6 @@ export default function UserAuth() {
 	return (
 		<div>
 			<div className={`flex items-center`}>
-				{JSON.stringify(isLoggedIn)}
 				{isLoggedIn ? (
 					<UserPopover />
 				) : (

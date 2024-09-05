@@ -8,9 +8,10 @@ import { Button } from "@/components/ui/button";
 import FormError from "@/components/ui/FormError";
 import { InputOTPPattern } from "@/components/ui/InputOTPPattern";
 import { useAuthContext } from "@/app/provider/auth.context";
+import {useAtomAuthContext} from "@/app/store/authAtom";
 
 const PhoneNumberValidation = () => {
-	const { setCurrentStep, currentStep, goBack } = useAuthContext();
+	const { setCurrentStep} = useAtomAuthContext();
 	const [form, setForm] = useState<any>({
 		code: "+234",
 		phoneNumber: "08063145125",

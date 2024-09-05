@@ -8,10 +8,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
 
+
   const cookieStore = cookies()
 
   const user = cookieStore.get('user-token')
-
   console.log(user)
   return (
     <html lang="en" suppressHydrationWarning>

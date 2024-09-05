@@ -62,7 +62,7 @@ export default function FaqAccordion() {
 
 						<AccordionItem value={`item-${index}`}>
 							<AccordionTrigger>{faq.question}</AccordionTrigger>
-							<AccordionContent className="max-w-3xl p-4">
+							<AccordionContent className="max-w-5xl p-4">
 								{faq.answer}
 							</AccordionContent>
 						</AccordionItem>

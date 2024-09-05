@@ -14,7 +14,7 @@ export default function faqpage() {
           and we’ll get back to you as soon as we can.
         </p>
     </div>
-    <div className='container'>
+    <div >
     <FaqAccordion/>
 
     </div>

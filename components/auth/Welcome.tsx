@@ -9,16 +9,27 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 
-import { useAuthContext } from "@/app/provider/auth.context";
-import PhoneNo from "./PhoneLogin";
+import { useAtomAuthContext } from "@/app/store/authAtom";
+import PhoneLogin from "../PhoneLogin";
 import "react-phone-input-2/lib/style.css";
 import { EnvelopeClosedIcon } from "@radix-ui/react-icons";
 
 
 export default function Welcome() {
-	const { form, setForm, setCurrentStep, currentStep } = useAuthContext();
+	const {
+		form,
+		setForm,
+		currentStep,
+		setCurrentStep,
+		goBack,
+		isLoggedIn,
+		logOut,
+		modalOpen,
+		setModalOpen,
+	} = useAtomAuthContext();
 
 	async function handleNext(event: React.MouseEvent<HTMLButtonElement>) {
+
 		event.preventDefault();
 
 		setCurrentStep("email");
@@ -35,7 +46,7 @@ export default function Welcome() {
 				<div>
 					<div className="grid place-content-center">
 						<div className="py-4">
-							<PhoneNo />
+							<PhoneLogin />
 						</div>
 
 						<div className="flex justify-between items-center mb-4">

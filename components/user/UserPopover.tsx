@@ -2,20 +2,32 @@ import React from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import { MixerHorizontalIcon, Cross2Icon } from '@radix-ui/react-icons';
 import UserPopoverItem from './UserPopoverItem';
-import { UserIcon } from 'lucide-react';
+import {ChevronDown, UserIcon} from 'lucide-react';
 import {Button} from "@/components/ui/button";
+import {useAtomAuthContext} from "@/app/store/authAtom";
 
 export default function UserPopover() {
+
+  const { setModalOpen,setCurrentStep ,authUser} = useAtomAuthContext();
+
   return (
     <div>
        <Popover.Root>
     <Popover.Trigger asChild>
       <Button
-          variant={`ghost`}
+          variant={`outline`}
+          className={`rounded-full`}
         aria-label="Update dimensions"
       >
         {/* <MixerHorizontalIcon /> */}
-        <UserIcon className='text-primary-600'/>
+ <div className="flex items-center gap-x-2">
+   <UserIcon className='text-primary-600'/>
+   <p>
+     {authUser?.firstName}
+
+   </p>
+   <ChevronDown />
+ </div>
       </Button>
     </Popover.Trigger>
     <Popover.Portal>

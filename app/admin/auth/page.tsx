@@ -16,7 +16,8 @@ import { Label } from "@/components/ui/label";
 import { InputOTPPattern } from "@/components/ui/InputOTPPattern";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { $api } from "@/http/endpoints";
+import {$admin_api} from "@/http/admin-endpoint";
+
 
 export default function AdminLogin() {
 	const router = useRouter();
@@ -55,15 +56,12 @@ export default function AdminLogin() {
 	const handleSubmit = async () => {
 		setIsPending(true);
 		try {
-			const data = await fetch(`/api/auth`, {
-				method: "POST",
-				body: JSON.stringify(formData),
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
 
-			const res = await data.json();
+
+			const res = await $admin_api.auth.admin.login({
+				email: formData.email,
+				otp: formData.otp,
+			});
 
 			// save to local storage
 
@@ -76,7 +74,7 @@ export default function AdminLogin() {
 			setIsPending(false);
 		} catch (error: any) {
 			console.log(error);
-			toast.error("Login credentials are invalid");
+			toast.error(error.message);
 			console.log(error);
 			setIsPending(false);
 		}
@@ -117,7 +115,7 @@ export default function AdminLogin() {
 		setIsPending(true);
 
 		try {
-			const res = await $api.auth.admin.sendEmailOtp(body);
+			const res = await $admin_api.auth.admin.sendEmailOtp(body);
 			setIsPending(false);
 			console.log(res);
 		} catch (error) {

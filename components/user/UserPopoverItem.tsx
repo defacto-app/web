@@ -7,56 +7,47 @@ import { Button } from "@/components/ui/button";
 import { clearToken } from "@/utils/auth";
 import { useAuthContext } from "@/app/provider/auth.context";
 import { $api } from "@/http/endpoints";
+import { useAtomAuthContext } from "@/app/store/authAtom";
 
 interface User {
-  firstName?: string;
-  email?: string;
-  phone?: string;
+	firstName?: string;
+	email?: string;
+	phone?: string;
 }
 
 export default function UserPopoverItem() {
-	const {
-		setIsLoggedIn,
-	} = useAuthContext();
-
-	const [user, setUser] = useState<User>({});
-
+	const { setIsLoggedIn, logOut, authUser, setAuthUser } = useAtomAuthContext();
 
 	async function logout() {
-		clearToken("user");
-
 		const data = await fetch(`/api/auth/logout`);
-
-		setIsLoggedIn(false);
-		localStorage.setItem("isLoggedIn", JSON.stringify(false));
+		logOut();
 	}
 
-	const getMe = async () => {
-		const { data } = await $api.auth.user.me();
 
-		setUser(data.user);
-	};
-
-	useEffect(() => {
-		getMe();
-	}, []);
 
 	return (
 		<div>
 			<div className="">
-				<h1 className="mb-4 font-bold text-2xl">Hello {user.firstName}!</h1>
+				<h1 className="mb-4 font-bold text-2xl">Hello {authUser.firstName}!</h1>
 				<div className="border-b border-gray-500" />
 			</div>
+
+			<Link href={`/user/account`} >
+				Account
+			</Link>
+			<Link href={`/user/order/history`} >
+				Order history
+			</Link>
 
 			<div className="flex justify-between mb-7 mt-4">
 				<div className="flex flex-col gap-y-2">
 					<div className="">
 						<h1 className="mt-2 text-gray-500">Name</h1>
-						<h2>{user.firstName}</h2>
+						<h2>{authUser.firstName}</h2>
 					</div>
 					<div>
 						<h1 className="text-gray-500">Email</h1>
-						<h1>{user.email}</h1>
+						<h1>{authUser.email}</h1>
 					</div>
 				</div>
 				<div className="mt-2">
@@ -69,7 +60,7 @@ export default function UserPopoverItem() {
 					<div>
 						<div>
 							<h1 className="mt-2 text-gray-500">Phone</h1>
-							<h2>{user.phone || 'not set'}</h2>
+							<h2>{authUser.phone || "not set"}</h2>
 						</div>
 					</div>
 					<div className="mt-2">
@@ -77,7 +68,6 @@ export default function UserPopoverItem() {
 					</div>
 				</div>
 				<div className="border-b mb-2 mt-2 border-gray-500" />
-
 			</div>
 			<div className="flex justify-between mb-4">
 				<div>
