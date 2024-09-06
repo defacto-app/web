@@ -33,4 +33,42 @@ export const $admin_api = {
 				return error;
 			}
 	},
+
+	restaurants: {
+		all: async () => {
+			try {
+				return $axios_admin.get(`/restaurants`);
+			} catch (error: any) {
+				return error;
+			}
+		},
+		one: async (id: string) => {
+			try {
+				return $axios_admin.get(`/restaurants/${id}`);
+			} catch (error: any) {
+				return error;
+			}
+		},
+		create: async (body: any) => {
+			try {
+				return $axios_admin.post(`/restaurants`, body);
+			} catch (error: any) {
+				return error;
+			}
+		},
+		update: async (id: string, body: any) => {
+			try {
+				return $axios_admin.put(`/restaurants/${id}`, body);
+			} catch (error: any) {
+				return error;
+			}
+		},
+		delete: async (id: string) => {
+			try {
+				return $axios_admin.delete(`/restaurants/${id}`);
+			} catch (error: any) {
+				return error;
+			}
+		},
+	}
 };

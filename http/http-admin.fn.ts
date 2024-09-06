@@ -23,7 +23,7 @@ $axios_admin.interceptors.request.use(
 
 $axios_admin.interceptors.response.use(
 	(response) => {
-		return response.data; // Extract and return the data from the response
+		return response.data.data; // Extract and return the data from the response
 	},
 	(error) => {
 		return Promise.reject(error.response ? error.response.data : error);

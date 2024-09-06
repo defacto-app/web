@@ -42,6 +42,11 @@ const navigation = [
         href: "/admin/x/users"
     },
 
+    {
+        title: "Restaurants",
+        href: "/admin/x/restaurants"
+    },
+
 
 ]
 
