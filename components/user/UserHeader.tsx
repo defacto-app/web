@@ -27,10 +27,9 @@ export default function UserHeader() {
 	const [isSticky, setIsSticky] = useState(false);
 	const { getMe } = useAtomAuthContext();
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		getMe();
-	}, []);
+	}, [getMe]);
 
 	useEffect(() => {
 		const handleScroll = () => {
