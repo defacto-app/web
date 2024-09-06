@@ -34,7 +34,7 @@ export default function AdminLogin() {
 
 	const [formData, setFormData] = useState({
 		email: "kats.com.ng@gmail.com",
-		otp: "",
+		otp: "336065",
 	});
 	const [isPending, setIsPending] = useState(false);
 
@@ -59,7 +59,7 @@ export default function AdminLogin() {
 		try {
 
 
-			const res = await $admin_api.auth.admin.login({
+			const res = await $admin_api.auth.login({
 				email: formData.email,
 				otp: formData.otp,
 			});
@@ -91,32 +91,6 @@ export default function AdminLogin() {
 		}
 	};
 
-	/*    const handleSubmit = async () => {
-            try {
-                const url = `${env.base_url}/auth/admin-login`;
-                const options = {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(formData),
-                };
-
-                const res = await fetch(url, options);
-                const data = await res.json();
-
-                // save the token to local storage
-
-                localStorage.setItem("auth-token", data.token);
-
-                if (data.success){
-                    await router.push('/admin/');
-                }
-                console.log(data);
-            } catch (error) {
-                console.log(error);
-            }
-        };*/
 
 	async function sendEmailOtp() {
 		const body = {
@@ -126,9 +100,11 @@ export default function AdminLogin() {
 		setIsPending(true);
 
 		try {
-			const res = await $admin_api.auth.admin.sendEmailOtp(body);
+			const res = await $admin_api.auth.sendEmailOtp(body);
 			setIsPending(false);
 			console.log(res);
+
+			toast.success("OTP sent to your email");
 		} catch (error) {
 			console.log(error);
 

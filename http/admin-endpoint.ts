@@ -2,21 +2,19 @@ import { $axios_admin } from "@/http/http-admin.fn";
 
 export const $admin_api = {
 	auth: {
-		admin: {
-			sendEmailOtp: async (body: any) => {
-				try {
-					return $axios_admin.post(`/auth/send-otp `, body);
-				} catch (error: any) {
-					return error;
-				}
-			},
-			login: async (body: any) => {
-				try {
-					return $axios_admin.post(`/auth/login`, body);
-				} catch (error: any) {
-					return error;
-				}
-			},
+		sendEmailOtp: async (body: any) => {
+			try {
+				return $axios_admin.post(`/auth/send-otp `, body);
+			} catch (error: any) {
+				return error;
+			}
+		},
+		login: async (body: any) => {
+			try {
+				return $axios_admin.post(`/auth/login`, body);
+			} catch (error: any) {
+				return error;
+			}
 		},
 
 		ping: async () => {
@@ -26,5 +24,13 @@ export const $admin_api = {
 				return error;
 			}
 		},
+	},
+
+	dashboard:  async () => {
+			try {
+				return $axios_admin.get(`/dashboard`);
+			} catch (error: any) {
+				return error;
+			}
 	},
 };

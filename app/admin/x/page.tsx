@@ -1,50 +1,39 @@
 "use client";
-import React, {useEffect} from "react";
-import {Dashboard} from "@/app/admin/admin-dash";
-import {$adminHttp} from "@/app/config/http";
-import env from "@/config/env";
+import React, { useEffect } from "react";
 
+import { $admin_api } from "@/http/admin-endpoint";
 
 export default function AdminIndex() {
+	const [data, setData] = React.useState<any>(null);
 
-    const [data, setData] = React.useState<any>(null);
-
-    const [isLoading, setLoading] = React.useState<boolean>(true);
-
-    const [serverError, setServerError] = React.useState<any>(null);
-
-    useEffect(() => {
-        const getData = async () => {
-            setLoading(true);
-            const url = `${env.base_url}/admin/dashboard`;
-            try {
-                const res = await $adminHttp(url, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
-                })
-
-                setData(res);
-                setLoading(false);
-            } catch (error) {
-                setServerError(error);
-                setLoading(false);
-            }
-        };
-
-        getData();
-    }, []);
-    return (
+	const [isLoading, setLoading] = React.useState<boolean>(true);
 
 
-        <div>
-            {/*<Dashboard/>*/}
+	useEffect(() => {
+		const getData = async () => {
+			setLoading(true);
+			try {
+				const res = await $admin_api.dashboard();
+				setLoading(false);
 
-            {JSON.stringify(data)}
-            welcome
-        </div>
-    );
+				console.log(res);
+
+				setData(res);
+				setLoading(false);
+			} catch (error) {
+				setLoading(false);
+			}
+		};
+
+		getData();
+	}, []);
+	return (
+		<div>
+			{/*<Dashboard/>*/}
+			{JSON.stringify(data)}
+			welcome
+		</div>
+	);
 }
 
-export const runtime = 'edge';
+export const runtime = "edge";
