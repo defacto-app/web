@@ -3,11 +3,11 @@ import { getToken } from "@/utils/auth";
 import env from "@/config/env";
 
 
-const $axios = axios.create({
+const $axios_admin = axios.create({
 	baseURL: `${env.base_url}/admin`,
 });
 
-$axios.interceptors.request.use(
+$axios_admin.interceptors.request.use(
 	async (config) => {
 		const token = getToken("admin");
 
@@ -21,7 +21,7 @@ $axios.interceptors.request.use(
 	},
 );
 
-$axios.interceptors.response.use(
+$axios_admin.interceptors.response.use(
 	(response) => {
 		return response.data; // Extract and return the data from the response
 	},
@@ -32,4 +32,4 @@ $axios.interceptors.response.use(
 
 
 
-export { $axios };
+export { $axios_admin };

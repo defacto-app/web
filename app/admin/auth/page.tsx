@@ -17,6 +17,7 @@ import { InputOTPPattern } from "@/components/ui/InputOTPPattern";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import {$admin_api} from "@/http/admin-endpoint";
+import {setToken} from "@/utils/auth";
 
 
 export default function AdminLogin() {
@@ -33,7 +34,7 @@ export default function AdminLogin() {
 
 	const [formData, setFormData] = useState({
 		email: "kats.com.ng@gmail.com",
-		otp: "457303",
+		otp: "",
 	});
 	const [isPending, setIsPending] = useState(false);
 
@@ -65,7 +66,19 @@ export default function AdminLogin() {
 
 			// save to local storage
 
-			localStorage.setItem("auth-token", res.data.token);
+
+			setToken("admin", res.data.token);
+
+			// Send token to the server to set the cookie
+			await fetch("/api/auth/admin", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					token: res.data.token,
+				}),
+			});
 
 			toast.success("Login successful");
 
@@ -73,8 +86,6 @@ export default function AdminLogin() {
 
 			setIsPending(false);
 		} catch (error: any) {
-			console.log(error);
-			toast.error(error.message);
 			console.log(error);
 			setIsPending(false);
 		}
@@ -109,8 +120,8 @@ export default function AdminLogin() {
 
 	async function sendEmailOtp() {
 		const body = {
-			email: "kats.com.ng@gmail.com",
-			otp: "457303",
+			email: "kats.com.ng@gmail.com"
+
 		};
 		setIsPending(true);
 

@@ -21,29 +21,23 @@ export function UserNav() {
   const router = useRouter();
 
   async function handleLogout() {
-
     try {
-
+      // Call the API to clear cookies on the server
       await fetch(`/api/auth/logout`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-      })
+      });
 
+      // Clear local storage on the client-side
+      localStorage.removeItem("auth-token");
+
+      // Redirect to the login page
+      router.push("/admin/login");
     } catch (error) {
       console.log(error);
     }
-
-    // clear the token
-
-    localStorage.removeItem("auth-token")
-
-    router.push("/admin/login")
-
-    // redirect to login page
-
-
   }
   return (
     <DropdownMenu>

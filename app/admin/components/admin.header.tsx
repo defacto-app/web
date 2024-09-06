@@ -134,7 +134,7 @@ export function AdminHeader() {
 export function AdminFooter() {
 
     return (
-        <div className={`border-2 fixed bottom-0 w-full p-2`}>
+        <div className={`border-2 fixed bottom-0 w-full p-2 bg-gray-200`}>
             Admin Footer
         </div>
     )
