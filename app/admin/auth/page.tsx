@@ -16,9 +16,8 @@ import { Label } from "@/components/ui/label";
 import { InputOTPPattern } from "@/components/ui/InputOTPPattern";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import {$admin_api} from "@/http/admin-endpoint";
-import {setToken} from "@/utils/auth";
-
+import { $admin_api } from "@/http/admin-endpoint";
+import { setToken } from "@/utils/auth";
 
 export default function AdminLogin() {
 	const router = useRouter();
@@ -51,22 +50,17 @@ export default function AdminLogin() {
 	const handleInputChange = (event: any) => {
 		const { name, value } = event.target;
 		setFormData({ ...formData, [name]: value });
-		console.log(name, value);
+
 	};
 
 	const handleSubmit = async () => {
 		setIsPending(true);
 		try {
-
-
 			const res = await $admin_api.auth.login({
 				email: formData.email,
 				otp: formData.otp,
 			});
-
 			// save to local storage
-
-
 			setToken("admin", res.data.token);
 
 			// Send token to the server to set the cookie
@@ -91,18 +85,16 @@ export default function AdminLogin() {
 		}
 	};
 
-
 	async function sendEmailOtp() {
 		const body = {
-			email: "kats.com.ng@gmail.com"
-
+			email: "kats.com.ng@gmail.com",
 		};
 		setIsPending(true);
 
 		try {
 			const res = await $admin_api.auth.sendEmailOtp(body);
 			setIsPending(false);
-			console.log(res);
+
 
 			toast.success("OTP sent to your email");
 		} catch (error) {

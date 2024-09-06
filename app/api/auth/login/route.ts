@@ -8,7 +8,6 @@ export async function POST(request: any) {
     try {
         const body = await request.json();
 
-
         const url = `${env.base_url}/auth/email-login`;
         const options = {
             method: "POST",

@@ -34,7 +34,7 @@ function PickupModal({ handleOnSelect }: PickupModalProps) {
 				? savedAddresses[savedAddresses.length - 1]
 				: "";
 
-		console.log(lastAddress, "lastAddress");
+
 
 		handleOnSelect(lastAddress);
 	};

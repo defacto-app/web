@@ -1,18 +1,17 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { authenticate } from "@/app/lib";
+import {authenticate, authenticateUser} from "@/app/lib";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-    const authToken = request.cookies.get("admin-token");
+    const adminToken = request.cookies.get("admin-token");
     const userToken = request.cookies.get("user-token");
 
-    console.log(authToken?.value, "authToken");
+    console.log(adminToken?.value, "adminToken");
     console.log(userToken?.value, "userToken");
 
-    const isAuthenticatedAdmin = await authenticate(authToken?.value);
-    const isAuthenticatedUser = await authenticate(userToken?.value);
-    const url = request.nextUrl.clone();
+    const isAuthenticatedAdmin = await authenticate(adminToken?.value);
+    const isAuthenticatedUser = await authenticateUser(userToken?.value);
 
     // Handle Admin Authentication
     if (request.nextUrl.pathname.startsWith('/admin')) {
@@ -27,12 +26,11 @@ export async function middleware(request: NextRequest) {
 
     // Handle User Authentication
     if (request.nextUrl.pathname.startsWith('/user')) {
-        if (isAuthenticatedUser && !request.nextUrl.pathname.startsWith('/user/dashboard')) {
-            return NextResponse.redirect(new URL('/user/dashboard', request.url));
-        }
 
-        if (!isAuthenticatedUser && !request.nextUrl.pathname.startsWith('/user/login')) {
-            return NextResponse.redirect(new URL('/user/login', request.url));
+
+        // If user is not authenticated, redirect to the home page
+        if (!isAuthenticatedUser) {
+            return NextResponse.redirect(new URL('/', request.url));
         }
     }
 

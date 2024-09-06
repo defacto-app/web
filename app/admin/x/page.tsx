@@ -16,7 +16,7 @@ export default function AdminIndex() {
 				const res = await $admin_api.dashboard();
 				setLoading(false);
 
-				console.log(res);
+
 
 				setData(res);
 				setLoading(false);

@@ -12,7 +12,7 @@ export default function RootLayout({
   const cookieStore = cookies()
 
   const user = cookieStore.get('user-token')
-  console.log(user)
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body>{children}</body>

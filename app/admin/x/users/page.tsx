@@ -1,28 +1,22 @@
 import React from "react";
 
-import {columns, Payment} from "./columns"
-import {DataTable} from "./data-table"
-import {getAllUsers} from "@/app/lib";
-
+import { columns, type Payment } from "./columns";
+import { DataTable } from "./data-table";
+import { getAllUsers } from "@/app/lib";
 
 async function getData(): Promise<Payment[]> {
-
-
-    return await getAllUsers()
+	return await getAllUsers();
 }
 
 export default async function AllUsers() {
+	const data = await getData();
 
-    const data = await getData()
-
-    return (
-        <div className="container mx-auto py-10">
-            {JSON.stringify(data.length)}
-            {/*// sen to tables*/}
-            <DataTable columns={columns} data={data}/>
-        </div>
-    )
+	return (
+		<div className="container mx-auto py-10">
+			{JSON.stringify(data.length)}
+			<DataTable columns={columns} data={data} />
+		</div>
+	);
 }
 
-
-export const runtime = 'edge';
+export const runtime = "edge";

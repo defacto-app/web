@@ -8,7 +8,7 @@ import { clearToken } from "@/utils/auth";
 import { useAuthContext } from "@/app/provider/auth.context";
 import { $api } from "@/http/endpoints";
 import { useAtomAuthContext } from "@/app/store/authAtom";
-
+import { useRouter } from "next/navigation";
 interface User {
 	firstName?: string;
 	email?: string;
@@ -17,9 +17,11 @@ interface User {
 
 export default function UserPopoverItem() {
 	const { setIsLoggedIn, logOut, authUser, setAuthUser } = useAtomAuthContext();
-
+	const router = useRouter();
 	async function logout() {
 		const data = await fetch(`/api/auth/logout`);
+
+		router.push("/");
 		logOut();
 	}
 

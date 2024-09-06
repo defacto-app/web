@@ -8,7 +8,7 @@ export async function logout() {
 }
 
 export async function authenticate(data: any) {
-	console.log(data, "checking data");
+
 
 	// ping the server to check if the token is valid
 
@@ -25,6 +25,34 @@ export async function authenticate(data: any) {
 	const _data = await result.json();
 
 	console.log(_data, "checking result");
+
+	if (_data.error) {
+		return false;
+	}
+
+	if (_data.success) {
+		return true;
+	}
+}
+
+export async function authenticateUser(data: any) {
+
+
+	// ping the server to check if the token is valid
+
+	const result = await fetch(`${env.base_url}/auth/ping`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${data}`,
+		},
+	});
+
+	console.log("checking auth user url");
+
+	const _data = await result.json();
+
+
 
 	if (_data.error) {
 		return false;

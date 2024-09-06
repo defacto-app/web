@@ -77,7 +77,7 @@ function Email() {
 				email: formData.email,
 			});
 
-			console.log(res.data.exists);
+
 
 			if (res.data.exists) {
 				setAuthState("existing-user");
@@ -103,8 +103,6 @@ function Email() {
 	const login_user = async () => {
 
 		setLoading(true);
-		console.log("Email Submitted ???");
-		toast.success("Login Successful");
 		try {
 			const res = await $api.auth.user.email_login({
 				email: formData.email,
@@ -115,7 +113,19 @@ function Email() {
 
 			setToken("user", res.data.token);
 
+			// Send token to the server to set the cookie
+			await fetch("/api/auth/user", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					token: res.data.token,
+				}),
+			});
+
 			setLoading(false);
+			toast.success("Login Successful");
 
 			setIsLoggedIn(true);
 			setCurrentStep("success");
@@ -142,7 +152,7 @@ function Email() {
 				password: formData.password,
 			});
 
-			console.log(res);
+
 
 			setLoading(false);
 
