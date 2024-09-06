@@ -41,9 +41,12 @@ export default function Header() {
 		};
 	}, []);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		getMe();
-	}, [getMe]);
+	}, []);
+
+
 
 	return (
 		<header
