@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link"
 import {
     Activity,
@@ -26,6 +27,8 @@ import {Input} from "@/components/ui/input"
 import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet"
 import AdminUserAction from "@/app/admin/components/AdminUserAction";
 import {UserNav} from "@/app/admin/x/orders/components/user-nav";
+import {useEffect} from "react";
+import {useAtomAuthContext} from "@/app/store/admin/authAtom";
 
 const navigation = [
     {
@@ -51,10 +54,11 @@ const navigation = [
 ]
 
 export function AdminHeader() {
+    const { getMe } = useAtomAuthContext();
 
-    function handleLogout() {
-        console.log("Logout")
-    }
+    useEffect(() => {
+        getMe();
+    }, [getMe]);
 
     return (
         <div className="flex w-full flex-col">
@@ -118,14 +122,7 @@ export function AdminHeader() {
                 </Sheet>
                 <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
                     <form className="ml-auto flex-1 sm:flex-initial">
-                        <div className="relative">
-                            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
-                            <Input
-                                type="search"
-                                placeholder="Search products..."
-                                className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-                            />
-                        </div>
+
                     </form>
                     <UserNav/>
 
