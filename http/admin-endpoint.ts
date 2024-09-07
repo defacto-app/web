@@ -35,13 +35,16 @@ export const $admin_api = {
 	},
 
 	restaurants: {
-		all: async () => {
+		all: async ({ page = 1, perPage = 10, searchTerm = "" }) => {
 			try {
-				return $axios_admin.get(`/restaurants`);
+				return $axios_admin.get(`/restaurants`, {
+					params: { page, perPage, search: searchTerm }
+				});
 			} catch (error: any) {
 				return error;
 			}
 		},
+
 		one: async (id: string) => {
 			try {
 				return $axios_admin.get(`/restaurants/${id}`);
