@@ -7,6 +7,20 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {formatDateFromNow} from "@/lib/utils";
 
 export const columns: ColumnDef<any>[] = [
+
+	{
+		accessorKey: "S/N",
+		header: ({ column }) => <div>S/N</div>,
+		cell: ({ row }) => {
+			return (
+				<div className="flex space-x-2">
+          <span className="max-w-[500px] truncate font-medium">
+            {row.index + 1}.
+          </span>
+				</div>
+			);
+		},
+	},
 	{
 		accessorKey: "name",
 		header: "Name",

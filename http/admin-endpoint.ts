@@ -35,7 +35,7 @@ export const $admin_api = {
 	},
 
 	restaurants: {
-		all: async ({ page = 1, perPage = 10, searchTerm = "" }) => {
+		all: async ({ page = 1, perPage = 20, searchTerm = "" }) => {
 			try {
 				return $axios_admin.get(`/restaurants`, {
 					params: { page, perPage, search: searchTerm }

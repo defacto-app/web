@@ -8,6 +8,7 @@ import { columns } from "@/app/admin/x/restaurants/columns";
 import { $admin_api } from "@/http/admin-endpoint";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { DataTableLoading } from "@/components/table/data-table-loading";
 
 // Updated function to fetch restaurants with a search query parameter
 const fetchRestaurants = async (
@@ -26,7 +27,13 @@ const fetchRestaurants = async (
 function Page() {
 	const [searchTerm, setSearchTerm] = useState(""); // Track the search term
 	const [page, setPage] = useState(1); // Track current page
-	const [perPage, setPerPage] = useState(10); // Track items per page
+	const [perPage, setPerPage] = useState(20); // Track items per page
+	const [isMounted, setIsMounted] = useState(false); // Ensure the component is mounted
+
+	// Ensure this only runs on the client side to avoid SSR mismatches
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
 
 	// Use React Query's useQuery hook to fetch data, and pass searchTerm as part of the key
 	const { data, error, isLoading, refetch } = useQuery(
@@ -44,12 +51,11 @@ function Page() {
 
 	// Trigger refetch when the search term changes
 	useEffect(() => {
-		if (searchTerm.length > 0) {
-			refetch(); // Fetch new data when searchTerm changes
-		}
+		refetch(); // Fetch new data when searchTerm changes
 	}, [searchTerm, refetch]);
 
-	if (isLoading) return <div>Loading...</div>;
+	// Prevent rendering during SSR to avoid mismatch
+	if (!isMounted) return null;
 
 	if (error) return <div>Error loading data...</div>;
 
@@ -68,8 +74,12 @@ function Page() {
 					/>
 				</div>
 
-				{/* Data Table */}
-				<DataTable columns={columns} data={data} />
+				{/* Render the DataTableLoading with loading state */}
+				<DataTableLoading
+					loading={isLoading}
+					columns={columns}
+					data={data ?? []}
+				/>
 			</div>
 		</div>
 	);

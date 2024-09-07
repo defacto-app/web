@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/table"
 
 import { DataTablePagination } from "../../x/orders/components/data-table-pagination"
-import { DataTableToolbar } from "../../x/orders/components/data-table-toolbar"
+import { DataTableToolbar } from "../../../../components/table/data-table-toolbar"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
