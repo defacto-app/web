@@ -55,7 +55,6 @@
     "jotai": "^2.9.3",
     "jsonbank-env": "^1.0.2",
     "lucide-react": "^0.368.0",
-    "moment": "^2.30.1",
     "next": "14.2.1",
     "next-themes": "^0.3.0",
     "react": "^18",

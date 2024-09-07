@@ -1,5 +1,5 @@
 import { atom, useAtomValue, useSetAtom } from 'jotai';
-import { useEffect } from "react";
+import {useCallback, useEffect} from "react";
 import { clearToken, isUserLoggedIn } from "@/utils/auth";
 import {$api} from "@/http/endpoints";
 
@@ -81,11 +81,15 @@ export const useAtomAuthContext = () => {
 	const setAuthUser = useSetAtom(authUserAtom);
 
 	// Define the getMe function
-	const getMe = async () => {
-		const { data } = await $api.auth.user.me();
-		setAuthUser(data.user);
-	};
-
+	const getMe = useCallback(async () => {
+		try {
+			const { data } = await $api.auth.user.me();
+			setAuthUser(data.user);
+		} catch (error) {
+			console.error("Failed to fetch user data", error);
+			// Handle error (e.g., log the user out or display a message)
+		}
+	}, [setAuthUser]);
 
 	// Sync `isLoggedIn` with localStorage
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>

@@ -30,7 +30,7 @@ export default function UserHeader() {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		getMe();
-	}, []);
+	}, [getMe]);
 
 	useEffect(() => {
 		const handleScroll = () => {
