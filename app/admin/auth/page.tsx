@@ -50,7 +50,6 @@ export default function AdminLogin() {
 	const handleInputChange = (event: any) => {
 		const { name, value } = event.target;
 		setFormData({ ...formData, [name]: value });
-
 	};
 
 	const handleSubmit = async () => {
@@ -61,7 +60,7 @@ export default function AdminLogin() {
 				otp: formData.otp,
 			});
 			// save to local storage
-			setToken("admin", res.data.token);
+			setToken("admin", res.token);
 
 			// Send token to the server to set the cookie
 			await fetch("/api/auth/admin", {
@@ -70,7 +69,7 @@ export default function AdminLogin() {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					token: res.data.token,
+					token: res.token,
 				}),
 			});
 
@@ -94,7 +93,6 @@ export default function AdminLogin() {
 		try {
 			const res = await $admin_api.auth.sendEmailOtp(body);
 			setIsPending(false);
-
 
 			toast.success("OTP sent to your email");
 		} catch (error) {
