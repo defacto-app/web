@@ -42,9 +42,6 @@ export function DataTableLoading<TData, TValue>({
 		},
 	});
 
-	// Debugging: log the rows from the table instance
-	console.log("Rows generated: ", table.getRowModel().rows.length);
-	console.log("Rows content: ", table.getRowModel().rows);
 
 	return (
 		<div className="rounded-md border">

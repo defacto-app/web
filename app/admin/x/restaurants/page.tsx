@@ -50,6 +50,7 @@ function Page() {
 	};
 
 	// Trigger refetch when the search term changes
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		refetch(); // Fetch new data when searchTerm changes
 	}, [searchTerm, refetch]);

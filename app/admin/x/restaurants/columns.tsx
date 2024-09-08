@@ -5,6 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import {formatDateFromNow} from "@/lib/utils";
+import Link from "next/link";
 
 export const columns: ColumnDef<any>[] = [
 
@@ -24,6 +25,10 @@ export const columns: ColumnDef<any>[] = [
 	{
 		accessorKey: "name",
 		header: "Name",
+		cell: ({ row }) => {
+			const { name } = row.original;
+			return <Link href={`/admin/x/restaurants/${row.original.publicId}`}>{name}</Link>;
+		}
 	},
 	{
 		accessorKey: "address",
