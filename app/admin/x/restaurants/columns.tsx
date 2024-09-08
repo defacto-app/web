@@ -4,20 +4,19 @@ import type { ColumnDef } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import {formatDateFromNow} from "@/lib/utils";
+import { formatDateFromNow } from "@/lib/utils";
 import Link from "next/link";
 
 export const columns: ColumnDef<any>[] = [
-
 	{
 		accessorKey: "S/N",
 		header: ({ column }) => <div>S/N</div>,
 		cell: ({ row }) => {
 			return (
 				<div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
-            {row.index + 1}.
-          </span>
+					<span className="max-w-[500px] truncate font-medium">
+						{row.index + 1}.
+					</span>
 				</div>
 			);
 		},
@@ -27,8 +26,15 @@ export const columns: ColumnDef<any>[] = [
 		header: "Name",
 		cell: ({ row }) => {
 			const { name } = row.original;
-			return <Link href={`/admin/x/restaurants/${row.original.publicId}`}>{name}</Link>;
-		}
+			return (
+				<Link
+					className={`font-medium underline`}
+					href={`/admin/x/restaurants/${row.original.publicId}`}
+				>
+					{name}
+				</Link>
+			);
+		},
 	},
 	{
 		accessorKey: "address",
@@ -39,10 +45,9 @@ export const columns: ColumnDef<any>[] = [
 		header: "Phone",
 	},
 
-
 	{
-		accessorKey: 'createdAt',
-		header: 'Created At',
+		accessorKey: "createdAt",
+		header: "Created At",
 		cell: ({ row }) => {
 			const { createdAt } = row.original;
 			const formattedDate = formatDateFromNow(createdAt);
@@ -50,7 +55,7 @@ export const columns: ColumnDef<any>[] = [
 		},
 	},
 	{
-		accessorKey:"updatedAt",
+		accessorKey: "updatedAt",
 		header: "Updated At",
 		cell: ({ row }) => {
 			const { updatedAt } = row.original;
@@ -58,5 +63,4 @@ export const columns: ColumnDef<any>[] = [
 			return <span>{formattedDate}</span>;
 		},
 	},
-
 ];
