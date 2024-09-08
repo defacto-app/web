@@ -36,3 +36,19 @@ export interface Restaurant {
     price: string;
   }[];
 }
+
+export interface RestaurantFormType {
+  name: string;
+  rating: number;
+  deliveryTime: string;
+  category: string;
+  image: string;
+  address: string;
+  phone: string;
+  email: string;
+  openingHours: string;
+  createdAt: string;
+  updatedAt: string;
+  publicId: string;
+  menuItems: any[]; // Add more specific typing if you know the structure of menu items
+}
