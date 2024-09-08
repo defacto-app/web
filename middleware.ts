@@ -7,8 +7,7 @@ export async function middleware(request: NextRequest) {
     const adminToken = request.cookies.get("admin-token");
     const userToken = request.cookies.get("user-token");
 
-    console.log(adminToken?.value, "adminToken");
-    console.log(userToken?.value, "userToken");
+
 
     const isAuthenticatedAdmin = await authenticate(adminToken?.value);
     const isAuthenticatedUser = await authenticateUser(userToken?.value);

@@ -18,9 +18,7 @@ export const RestaurantFormComponent = ({
 										}: RestaurantFormProps) => {
 	return (
 		<div>
-			<Button loading={loading} onClick={submitHandler}>
-				Submit
-			</Button>
+
 			{restaurant && (
 				<div className={`grid grid-cols-2 gap-4`}>
 					<div>
@@ -105,6 +103,9 @@ export const RestaurantFormComponent = ({
 					</div>
 				</div>
 			)}
+			<Button variant={`primary`} className={`w-40 mt-8`} loading={loading} onClick={submitHandler}>
+				Submit
+			</Button>
 		</div>
 	);
 };

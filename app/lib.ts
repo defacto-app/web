@@ -8,8 +8,6 @@ export async function logout() {
 }
 
 export async function authenticate(data: any) {
-
-
 	// ping the server to check if the token is valid
 
 	const result = await fetch(`${env.base_url}/admin/auth/ping`, {
@@ -20,11 +18,7 @@ export async function authenticate(data: any) {
 		},
 	});
 
-	console.log("checking auth url");
-
 	const _data = await result.json();
-
-	console.log(_data, "checking result");
 
 	if (_data.error) {
 		return false;
@@ -36,8 +30,6 @@ export async function authenticate(data: any) {
 }
 
 export async function authenticateUser(data: any) {
-
-
 	// ping the server to check if the token is valid
 
 	const result = await fetch(`${env.base_url}/auth/ping`, {
@@ -51,8 +43,6 @@ export async function authenticateUser(data: any) {
 	console.log("checking auth user url");
 
 	const _data = await result.json();
-
-
 
 	if (_data.error) {
 		return false;

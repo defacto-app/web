@@ -9,6 +9,8 @@ import { $admin_api } from "@/http/admin-endpoint";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { DataTableLoading } from "@/components/table/data-table-loading";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 // Updated function to fetch restaurants with a search query parameter
 const fetchRestaurants = async (
@@ -63,6 +65,9 @@ function Page() {
 	return (
 		<div>
 			<div className="container mx-auto py-10">
+				<Link href={"/admin/x/restaurants/create"}>
+					<Button variant="outline">Create Restaurant</Button>
+				</Link>
 				{/* Search Input */}
 				<div className="relative pb-6">
 					<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

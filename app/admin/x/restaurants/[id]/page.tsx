@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
 import type { RestaurantFormType } from "@/lib/types";
-import {RestaurantFormComponent} from "@/app/admin/x/restaurants/RestaurantForm";
+import { RestaurantFormComponent } from "@/app/admin/x/restaurants/RestaurantForm";
 
 function Page({ params }: { params: { id: string } }) {
 	const [restaurant, setRestaurant] = useState<RestaurantFormType | null>(null);
@@ -15,12 +15,11 @@ function Page({ params }: { params: { id: string } }) {
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		setRestaurant((prevRestaurant:any) => ({
+		setRestaurant((prevRestaurant: any) => ({
 			...prevRestaurant,
 			[name]: value ?? "", // Fallback to empty string if value is undefined
 		}));
 	};
-
 
 	// Fetch restaurant data
 	useEffect(() => {
