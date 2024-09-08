@@ -1,7 +1,7 @@
-import { atom, useAtomValue, useSetAtom } from 'jotai';
-import {useCallback, useEffect} from "react";
+import { atom, useAtomValue, useSetAtom } from "jotai";
+import { useCallback, useEffect } from "react";
 import { clearToken, isUserLoggedIn } from "@/utils/auth";
-import {$api} from "@/http/endpoints";
+import { $api } from "@/http/endpoints";
 
 // Define the steps
 export const authSteps = ["welcome", "email", "phone", "success"] as const;
@@ -18,7 +18,7 @@ type authUserType = {
 	firstName: string;
 	email: string;
 	phone: string;
-}
+};
 
 // Atoms for global state management using Jotai
 export const formAtom = atom<registerFormType>({
@@ -40,26 +40,20 @@ export const authUserAtom = atom<authUserType>({
 });
 
 // Define a derived atom to handle `goBack` function
-export const goBackAtom = atom(
-	null,
-	(get, set) => {
-		const currentStep = get(currentStepAtom);
-		const currentIndex = authSteps.indexOf(currentStep);
-		if (currentIndex > 0) {
-			set(currentStepAtom, authSteps[currentIndex - 1]);
-		}
+export const goBackAtom = atom(null, (get, set) => {
+	const currentStep = get(currentStepAtom);
+	const currentIndex = authSteps.indexOf(currentStep);
+	if (currentIndex > 0) {
+		set(currentStepAtom, authSteps[currentIndex - 1]);
 	}
-);
+});
 
 // Define a derived atom to handle `logOut` function
-export const logOutAtom = atom(
-	null,
-	(get, set) => {
-		clearToken("user");
-		set(isLoggedInAtom, false);
-		localStorage.setItem("isLoggedIn", JSON.stringify(false));
-	}
-);
+export const logOutAtom = atom(null, (get, set) => {
+	clearToken("user");
+	set(isLoggedInAtom, false);
+	localStorage.setItem("isLoggedIn", JSON.stringify(false));
+});
 
 // Create the hook to use the atoms in components
 export const useAtomAuthContext = () => {
@@ -80,20 +74,25 @@ export const useAtomAuthContext = () => {
 	const logOut = useSetAtom(logOutAtom);
 	const setAuthUser = useSetAtom(authUserAtom);
 
+
+
 	// Define the getMe function
-	const getMe = useCallback(async () => {
+		const getMe = useCallback(async () => {
 		try {
 			const { data } = await $api.auth.user.me();
 			setAuthUser(data.user);
 		} catch (error) {
+			setIsLoggedIn(false);
+
+			clearToken("user");
+
+
 			console.error("Failed to fetch user data", error);
 			// Handle error (e.g., log the user out or display a message)
 		}
-	}, [setAuthUser]);
+	}, [setAuthUser,setIsLoggedIn]);
 
-	// Sync `isLoggedIn` with localStorage
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-		useEffect(() => {
+	useEffect(() => {
 		setIsLoggedIn(isUserLoggedIn());
 	}, [setIsLoggedIn]);
 

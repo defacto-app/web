@@ -5,11 +5,7 @@ import { z } from "zod";
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-	CardContent,
-	CardDescription,
-
-} from "@/components/ui/card";
+import { CardContent, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { isDev } from "@/config/env";
@@ -42,7 +38,7 @@ function Email() {
 
 	type authState = "default" | "new-user" | "existing-user";
 	const [authState, setAuthState] = useState<authState>("default");
-	const { setCurrentStep, setIsLoggedIn,getMe } = useAtomAuthContext();
+	const { setCurrentStep, setIsLoggedIn, getMe } = useAtomAuthContext();
 
 	const getCurrentStep = () => {
 		return authSteps.find((step) => step.id === authState);
@@ -61,13 +57,10 @@ function Email() {
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-
 		event.preventDefault();
 		const { name, value } = event.target;
 		setFormData({ ...formData, [name]: value });
 	};
-
-
 
 	const check_email_exists = async () => {
 		setLoading(true);
@@ -76,8 +69,6 @@ function Email() {
 			const res = await $api.auth.user.email_exists({
 				email: formData.email,
 			});
-
-
 
 			if (res.data.exists) {
 				setAuthState("existing-user");
@@ -98,10 +89,7 @@ function Email() {
 		}
 	};
 
-
-
 	const login_user = async () => {
-
 		setLoading(true);
 		try {
 			const res = await $api.auth.user.email_login({
@@ -131,12 +119,11 @@ function Email() {
 			setCurrentStep("success");
 			getMe();
 		} catch (error: any) {
-			console.log(error);
-
 			setErrors({
 				...errors,
-				password: error.error.password,
+				password: error.password,
 			});
+			toast.error(error.message);
 
 			setLoading(false);
 		}
@@ -151,8 +138,6 @@ function Email() {
 				email: formData.email,
 				password: formData.password,
 			});
-
-
 
 			setLoading(false);
 

@@ -16,7 +16,6 @@ function Page() {
 		publicId: "",
 		updatedAt: "",
 		name: "",
-		rating: 0,
 		category: "",
 		address: "",
 		phone: "",
@@ -51,7 +50,7 @@ function Page() {
 					publicId: "",
 					updatedAt: "",
 					name: "",
-					rating: 0,
+
 					category: "",
 					address: "",
 					phone: "",
@@ -59,6 +58,9 @@ function Page() {
 					openingHours: "",
 				},
 			); // Reset the form after successful creation
+
+
+
 		} catch (e) {
 			setCreating(false);
 			toast.error("An error occurred while creating the restaurant");

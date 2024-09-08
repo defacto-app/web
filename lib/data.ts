@@ -5,7 +5,6 @@ export const restaurants: Restaurant[] = [
 	{
 		id: "1",
 		name: "Cold Stone Creamery",
-		rating: 4.5,
 		time: "5-20 mins",
 		image: "/rest/cold.jpg",
 		background: "/rest/cold.jpg",
@@ -22,7 +21,6 @@ export const restaurants: Restaurant[] = [
 					description: "Fresh veggies with a touch of dressing.",
 					price: "₦5,000",
 					imageUrl: "/rest/ms.jpg",
-					rating: 4.7,
 					stars: 5,
 					isBestSeller: true,
 				},
@@ -32,7 +30,6 @@ export const restaurants: Restaurant[] = [
 					description: "A delightful mix of fruits and spices.",
 					price: "₦5,000",
 					imageUrl: "/rest/fs.jpg",
-					rating: 4.6,
 					stars: 5,
 					isBestSeller: true,
 				},
@@ -44,7 +41,6 @@ export const restaurants: Restaurant[] = [
 					description: "Cold and sweet ice cream.",
 					price: "₦3,000",
 					imageUrl: "/rest/ic.jpg",
-					rating: 4.8,
 					stars: 5,
 					isBestSeller: false,
 				},
@@ -55,7 +51,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦4,000",
 					imageUrl: "/rest/ic.jpg",
 
-					rating: 4.9,
 					stars: 5,
 					isBestSeller: false,
 				},
@@ -67,7 +62,6 @@ export const restaurants: Restaurant[] = [
 					description: "Refreshing fruit smoothie.",
 					price: "₦2,000",
 					imageUrl: "/rest/sm.jpg",
-					rating: 4.5,
 					stars: 4,
 					isBestSeller: false,
 				},
@@ -77,7 +71,6 @@ export const restaurants: Restaurant[] = [
 					description: "Creamy milkshake with various flavors.",
 					price: "₦2,500",
 					imageUrl: "/rest/milks.jpg",
-					rating: 4.6,
 					stars: 5,
 					isBestSeller: true,
 				},
@@ -87,7 +80,6 @@ export const restaurants: Restaurant[] = [
 	{
 		id: "2",
 		name: "Mr.Biggs",
-		rating: 4.0,
 		time: "5-20 mins",
 		image: "/rest/biggs.jpg",
 		background: "/rest/biggs.jpg",
@@ -105,8 +97,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦4,500",
 					imageUrl: "/rest/milks.jpg",
 
-					rating: 4.4,
-					stars: 5,
 					isBestSeller: true,
 				},
 				{
@@ -116,8 +106,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦4,000",
 					imageUrl: "/rest/milks.jpg",
 
-					rating: 4.3,
-					stars: 4,
 					isBestSeller: false,
 				},
 			],
@@ -129,8 +117,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦1,500",
 					imageUrl: "/rest/sm.jpg",
 
-					rating: 4.1,
-					stars: 4,
 					isBestSeller: false,
 				},
 				{
@@ -140,8 +126,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦1,200",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.2,
-					stars: 4,
 					isBestSeller: false,
 				},
 			],
@@ -153,8 +137,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦800",
 					imageUrl: "/rest/milks.jpg",
 
-					rating: 3.9,
-					stars: 3,
 					isBestSeller: false,
 				},
 				{
@@ -164,8 +146,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦1,000",
 					imageUrl: "/rest/milks.jpg",
 
-					rating: 4.5,
-					stars: 4,
 					isBestSeller: false,
 				},
 			],
@@ -174,7 +154,6 @@ export const restaurants: Restaurant[] = [
 	{
 		id: "3",
 		name: "Chicken Republic",
-		rating: 4.3,
 		time: "10-30 mins",
 		image: "/rest/chickenrep.jpg",
 		background: "/rest/chickenrep.jpg",
@@ -192,8 +171,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦5,500",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.8,
-					stars: 5,
 					isBestSeller: true,
 				},
 				{
@@ -203,8 +180,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦5,000",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.7,
-					stars: 5,
 					isBestSeller: true,
 				},
 			],
@@ -216,7 +191,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦2,000",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.5,
 					stars: 4,
 					isBestSeller: false,
 				},
@@ -227,8 +201,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦3,500",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.6,
-					stars: 5,
 					isBestSeller: false,
 				},
 			],
@@ -240,8 +212,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦1,500",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.2,
-					stars: 4,
 					isBestSeller: false,
 				},
 				{
@@ -251,8 +221,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦1,000",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.3,
-					stars: 4,
 					isBestSeller: false,
 				},
 			],
@@ -261,7 +229,6 @@ export const restaurants: Restaurant[] = [
 	{
 		id: "4",
 		name: "KFC",
-		rating: 4.6,
 		time: "5-20 mins",
 		image: "/rest/kfc1.jpg",
 		background: "/rest/kfc1.jpg",
@@ -279,8 +246,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦6,000",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.8,
-					stars: 5,
 					isBestSeller: true,
 				},
 				{
@@ -290,8 +255,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦2,000",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.4,
-					stars: 4,
 					isBestSeller: true,
 				},
 			],
@@ -303,8 +266,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦2,500",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.6,
-					stars: 5,
 					isBestSeller: false,
 				},
 				{
@@ -314,8 +275,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦2,000",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.3,
-					stars: 4,
 					isBestSeller: false,
 				},
 			],
@@ -327,8 +286,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦800",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.0,
-					stars: 4,
 					isBestSeller: false,
 				},
 				{
@@ -338,8 +295,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦1,500",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.2,
-					stars: 4,
 					isBestSeller: false,
 				},
 			],
@@ -348,7 +303,6 @@ export const restaurants: Restaurant[] = [
 	{
 		id: "5",
 		name: "Dominos Pizza",
-		rating: 4.7,
 		time: "10-30 mins",
 		image: "/rest/dominos.jpg",
 		background: "/rest/dominos.jpg",
@@ -366,7 +320,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦8,000",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.9,
 					stars: 5,
 					isBestSeller: true,
 				},
@@ -377,7 +330,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦7,500",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.7,
 					stars: 5,
 					isBestSeller: true,
 				},
@@ -390,7 +342,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦4,000",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.8,
 					stars: 5,
 					isBestSeller: false,
 				},
@@ -401,7 +352,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦3,000",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.6,
 					stars: 4,
 					isBestSeller: false,
 				},
@@ -414,8 +364,6 @@ export const restaurants: Restaurant[] = [
 					price: "₦900",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.5,
-					stars: 4,
 					isBestSeller: false,
 				},
 				{
@@ -425,15 +373,12 @@ export const restaurants: Restaurant[] = [
 					price: "₦900",
 					imageUrl: "/rest/fs.jpg",
 
-					rating: 4.4,
-					stars: 4,
 					isBestSeller: false,
 				},
 			],
 		},
 	},
 ];
-
 
 export const predictionJson = {
 	predictions: [

@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import type { RestaurantFormType } from "@/lib/types";
-import {Label} from "@/components/ui/label";
+import { Label } from "@/components/ui/label";
 
 interface RestaurantFormProps {
 	restaurant: RestaurantFormType | null;
@@ -11,14 +11,13 @@ interface RestaurantFormProps {
 }
 
 export const RestaurantFormComponent = ({
-											restaurant,
-											handleInputChange,
-											submitHandler,
-											loading,
-										}: RestaurantFormProps) => {
+	restaurant,
+	handleInputChange,
+	submitHandler,
+	loading,
+}: RestaurantFormProps) => {
 	return (
 		<div>
-
 			{restaurant && (
 				<div className={`grid grid-cols-2 gap-4`}>
 					<div>
@@ -31,16 +30,7 @@ export const RestaurantFormComponent = ({
 							placeholder="Name"
 						/>
 					</div>
-					<div>
-						<Label htmlFor="rating">Rating</Label>
-						<Input
-							id="rating"
-							name="rating"
-							value={restaurant.rating}
-							onChange={handleInputChange}
-							placeholder="Rating"
-						/>
-					</div>
+
 					<div>
 						<Label htmlFor="deliveryTime">Delivery Time</Label>
 						<Input
@@ -103,7 +93,12 @@ export const RestaurantFormComponent = ({
 					</div>
 				</div>
 			)}
-			<Button variant={`primary`} className={`w-40 mt-8`} loading={loading} onClick={submitHandler}>
+			<Button
+				variant={`primary`}
+				className={`w-40 mt-8`}
+				loading={loading}
+				onClick={submitHandler}
+			>
 				Submit
 			</Button>
 		</div>

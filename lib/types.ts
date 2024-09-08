@@ -5,7 +5,6 @@ export interface MenuItem {
   name: string;
   description: string;
   price: string;
-  rating: number;
   stars: number;
   imageUrl: string;
   isBestSeller: boolean;
@@ -20,7 +19,6 @@ export interface RestaurantProduct {
 export interface Restaurant {
   id: string;
   name: string;
-  rating: number;
   time: string;
   image: string;
   background: string;
@@ -39,7 +37,6 @@ export interface Restaurant {
 
 export interface RestaurantFormType {
   name: string;
-  rating: number;
   deliveryTime: string;
   category: string;
   image: string;
