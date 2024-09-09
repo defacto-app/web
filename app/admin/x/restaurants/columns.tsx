@@ -37,6 +37,10 @@ export const columns: ColumnDef<any>[] = [
 		},
 	},
 	{
+		accessorKey: "menuCount",
+		header: "Menu Count",
+	},
+	{
 		accessorKey: "address",
 		header: "Address",
 	},

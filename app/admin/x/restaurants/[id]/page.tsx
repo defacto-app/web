@@ -7,6 +7,17 @@ import { toast } from "react-toastify";
 import type { RestaurantFormType } from "@/lib/types";
 import { RestaurantFormComponent } from "@/app/admin/x/restaurants/RestaurantForm";
 import ImageUploader from "@/app/admin/components/ImageUploader";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 function Page({ params }: { params: { id: string } }) {
 	const [restaurant, setRestaurant] = useState<RestaurantFormType | null>(null);
@@ -62,8 +73,9 @@ function Page({ params }: { params: { id: string } }) {
 	return (
 		<div className="container mx-auto py-10">
 			<h1>Update Restaurant</h1>
-			<img src={restaurant?.image} alt={restaurant?.name} className="w-32 h-32" />
+			<img src={restaurant?.image} alt={restaurant?.name} className="w-full h-64 object-cover" />
 			<ImageUploader params={params} onUploadComplete={fetchRestaurantData} />
+
 
 
 			<RestaurantFormComponent
