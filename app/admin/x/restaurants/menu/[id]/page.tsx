@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, {useEffect, useState} from "react";
@@ -28,3 +27,4 @@ function Page({ params }: { params: { id: string } }) {
 	return <div>Page menu {JSON.stringify(menu.length)}</div>;
 }
 export default Page;
+//
