@@ -12,7 +12,8 @@
 				"noExplicitAny": "off"
 			},
 			"style": {
-				"noUnusedTemplateLiteral": "off"
+				"noUnusedTemplateLiteral": "off",
+				"useSelfClosingElements": "off"
 			}
 
 		}

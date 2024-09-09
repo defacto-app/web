@@ -36,9 +36,7 @@ export default function AdminRootLayout({
 				<ToastContainer position="top-center" />
 				{children}
 
-				<div>
-					<AdminFooter />
-				</div>
+
 			</body>
 		</html>
 	);

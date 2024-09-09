@@ -30,7 +30,7 @@ export default function AdminIndex() {
 	return (
 		<div>
 			{/*<Dashboard/>*/}
-			{JSON.stringify(data)}
+			{/*{JSON.stringify(data)}*/}
 			welcome
 		</div>
 	);

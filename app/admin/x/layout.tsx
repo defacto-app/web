@@ -26,7 +26,6 @@ export default function AdminRootLayout({
 			<div lang="en">
 				<div className={cn("bg-background font-sans antialiased", fontSans.variable)}>
 					<AdminHeader/>
-					<ToastContainer position="top-center"/>
 
 					<div>{children}</div>
 

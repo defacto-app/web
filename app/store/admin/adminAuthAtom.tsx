@@ -58,7 +58,6 @@ export const useAtomAuthContext = () => {
 
 			setAuthUser(response.user);
 
-			console.log(response.user, "response.user");
 		} catch (error) {
 			console.error("Failed to fetch user data", error);
 			// Handle error (e.g., log the user out or display a message)

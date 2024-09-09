@@ -8,6 +8,7 @@ interface RestaurantFormProps {
 	handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	submitHandler: () => void;
 	loading: boolean;
+	action: "create" | "update";
 }
 
 export const RestaurantFormComponent = ({
@@ -15,6 +16,7 @@ export const RestaurantFormComponent = ({
 	handleInputChange,
 	submitHandler,
 	loading,
+	action,
 }: RestaurantFormProps) => {
 	return (
 		<div>
@@ -99,7 +101,7 @@ export const RestaurantFormComponent = ({
 				loading={loading}
 				onClick={submitHandler}
 			>
-				Submit
+				{action === "create" ? "New Restaurant" : "Update Restaurant"}
 			</Button>
 		</div>
 	);

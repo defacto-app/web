@@ -5,8 +5,12 @@ import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
 import type { RestaurantFormType } from "@/lib/types";
 import { RestaurantFormComponent } from "@/app/admin/x/restaurants/RestaurantForm";
+import { router } from "next/client";
+import { useRouter } from "next/navigation";
 
 function Page() {
+	const router = useRouter();
+
 	// Initialize the state with empty fields
 	const [restaurant, setRestaurant] = useState<RestaurantFormType>({
 		createdAt: "",
@@ -37,7 +41,7 @@ function Page() {
 	const createRestaurant = async () => {
 		setCreating(true);
 		try {
-			await $admin_api.restaurants.create(restaurant); // Assuming create method exists in your API
+			const res = await $admin_api.restaurants.create(restaurant); // Assuming create method exists in your API
 			setCreating(false);
 			toast.success("Restaurant created successfully");
 			setRestaurant(
@@ -59,8 +63,7 @@ function Page() {
 				},
 			); // Reset the form after successful creation
 
-
-
+			router.push(`/admin/x/restaurants/${res.publicId}`);
 		} catch (e) {
 			setCreating(false);
 			toast.error("An error occurred while creating the restaurant");
@@ -71,6 +74,7 @@ function Page() {
 		<div className="container mx-auto py-10">
 			<h1>Create New Restaurant</h1>
 			<RestaurantFormComponent
+				action={"create"}
 				restaurant={restaurant}
 				handleInputChange={handleInputChange}
 				submitHandler={createRestaurant}

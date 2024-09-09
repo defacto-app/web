@@ -28,7 +28,7 @@ import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet"
 import AdminUserAction from "@/app/admin/components/AdminUserAction";
 import {UserNav} from "@/app/admin/x/orders/components/user-nav";
 import {useEffect} from "react";
-import {useAtomAuthContext} from "@/app/store/admin/authAtom";
+import {useAtomAuthContext} from "@/app/store/admin/adminAuthAtom";
 
 const navigation = [
     {

@@ -79,8 +79,9 @@ export default function AdminLogin() {
 
 			setIsPending(false);
 		} catch (error: any) {
-			console.log(error);
 			setIsPending(false);
+
+			toast.error(error.message);
 		}
 	};
 

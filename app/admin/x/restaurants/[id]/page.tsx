@@ -61,6 +61,7 @@ function Page({ params }: { params: { id: string } }) {
 				handleInputChange={handleInputChange}
 				submitHandler={updateRestaurant}
 				loading={updating}
+				action="update"
 			/>
 		</div>
 	);

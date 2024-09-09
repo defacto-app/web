@@ -18,7 +18,7 @@ export default function Navbar() {
 					onClick={toggleMobileNav}
 					className="flex flex-col space-y-1 relative z-10"
 				>
-					<motion.span
+<motion.span
 						variants={{
 							hide: {
 								rotate: 0,

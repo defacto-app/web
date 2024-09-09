@@ -12,7 +12,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-import { useAtomAuthContext } from "@/app/store/admin/authAtom";
+import { useAtomAuthContext } from "@/app/store/admin/adminAuthAtom";
 import { UserCog } from "lucide-react";
 
 export function UserNav() {
