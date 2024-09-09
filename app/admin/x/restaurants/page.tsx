@@ -42,7 +42,8 @@ function Page() {
 		["restaurants", page, perPage, searchTerm], // The query key includes page, perPage, and search term
 		() => fetchRestaurants(page, perPage, searchTerm),
 		{
-			keepPreviousData: true, // Keep the previous data while fetching new data
+			// keepPreviousData: true,
+			// Keep the previous data while fetching new data
 		},
 	);
 

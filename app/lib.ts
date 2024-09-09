@@ -33,6 +33,7 @@ export async function authenticateUser(data: any) {
 	// ping the server to check if the token is valid
 
 	const result = await fetch(`${env.base_url}/auth/ping`, {
+		cache:"force-cache",
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
@@ -40,7 +41,6 @@ export async function authenticateUser(data: any) {
 		},
 	});
 
-	console.log("checking auth user url");
 
 	const _data = await result.json();
 

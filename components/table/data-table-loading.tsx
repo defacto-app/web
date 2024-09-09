@@ -29,6 +29,7 @@ export function DataTableLoading<TData, TValue>({
 	data,
 	loading,
 }: DataTableProps<TData, TValue>) {
+	// Initialize the table with default data
 	const table = useReactTable({
 		data,
 		columns,
@@ -42,7 +43,7 @@ export function DataTableLoading<TData, TValue>({
 		},
 	});
 
-
+	// Render the table only when not loading
 	return (
 		<div className="rounded-md border">
 			<Table>
@@ -65,8 +66,9 @@ export function DataTableLoading<TData, TValue>({
 					))}
 				</TableHeader>
 
+				{/* Show Skeleton if loading */}
 				{loading ? (
-					<TableSkeleton table={table} />
+					<TableSkeleton table={table} /> // Only show the skeleton when loading
 				) : (
 					<TableBody>
 						{table.getRowModel().rows?.length ? (

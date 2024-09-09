@@ -1,4 +1,5 @@
 import { $axios_admin } from "@/http/http-admin.fn";
+import {$axios} from "@/http/http.fn";
 
 export const $admin_api = {
 	auth: {
@@ -73,5 +74,22 @@ export const $admin_api = {
 				return error;
 			}
 		},
-	}
+		image: async (id: string, body: any) => {
+			try {
+				return $axios_admin.post(`/restaurants/${id}`, body);
+			} catch (error: any) {
+				return error;
+			}
+		},
+	},
+
+/*	upload:{
+		image: async (id: string, body: any) => {
+			try {
+				return $axios_admin.post(`/restaurants/${id}`, body);
+			} catch (error: any) {
+				return error;
+			}
+		},
+	}*/
 };

@@ -11,6 +11,9 @@
 			"suspicious": {
 				"noExplicitAny": "off"
 			},
+			"correctness": {
+				"useExhaustiveDependencies": "off"
+			},
 			"style": {
 				"noUnusedTemplateLiteral": "off",
 				"useSelfClosingElements": "off"

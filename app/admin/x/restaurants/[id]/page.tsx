@@ -6,6 +6,7 @@ import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
 import type { RestaurantFormType } from "@/lib/types";
 import { RestaurantFormComponent } from "@/app/admin/x/restaurants/RestaurantForm";
+import ImageUploader from "@/app/admin/components/ImageUploader";
 
 function Page({ params }: { params: { id: string } }) {
 	const [restaurant, setRestaurant] = useState<RestaurantFormType | null>(null);
@@ -21,20 +22,25 @@ function Page({ params }: { params: { id: string } }) {
 		}));
 	};
 
+
 	// Fetch restaurant data
+	const fetchRestaurantData = async () => {
+		try {
+			const response = await $admin_api.restaurants.one(params.id);
+			setRestaurant(response); // Set the restaurant data
+			setLoading(false); // Turn off loading
+		} catch (error: any) {
+			setError(error.message || "An error occurred while fetching the data");
+			setLoading(false);
+		}
+	};
+
+
 	useEffect(() => {
-		const getData = async () => {
-			try {
-				const response = await $admin_api.restaurants.one(params.id);
-				setRestaurant(response); // Set the restaurant data
-				setLoading(false); // Turn off loading
-			} catch (error: any) {
-				setError(error.message || "An error occurred while fetching the data");
-				setLoading(false);
-			}
-		};
-		getData();
+		fetchRestaurantData();
 	}, [params.id]);
+
+
 
 	// Update restaurant
 	const updateRestaurant = async () => {
@@ -56,6 +62,10 @@ function Page({ params }: { params: { id: string } }) {
 	return (
 		<div className="container mx-auto py-10">
 			<h1>Update Restaurant</h1>
+			<img src={restaurant?.image} alt={restaurant?.name} className="w-32 h-32" />
+			<ImageUploader params={params} onUploadComplete={fetchRestaurantData} />
+
+
 			<RestaurantFormComponent
 				restaurant={restaurant}
 				handleInputChange={handleInputChange}
