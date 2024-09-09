@@ -39,6 +39,17 @@ export const columns: ColumnDef<any>[] = [
 	{
 		accessorKey: "menuCount",
 		header: "Menu Count",
+		cell: ({ row }) => {
+			const { menuCount } = row.original;
+			return (
+				<Link
+					className={`font-medium underline`}
+					href={`/admin/x/restaurants/menu/${row.original.publicId}`}
+				>
+					{menuCount}
+				</Link>
+			);
+		},
 	},
 	{
 		accessorKey: "address",

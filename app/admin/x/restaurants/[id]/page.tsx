@@ -7,17 +7,7 @@ import { toast } from "react-toastify";
 import type { RestaurantFormType } from "@/lib/types";
 import { RestaurantFormComponent } from "@/app/admin/x/restaurants/RestaurantForm";
 import ImageUploader from "@/app/admin/components/ImageUploader";
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+
 
 function Page({ params }: { params: { id: string } }) {
 	const [restaurant, setRestaurant] = useState<RestaurantFormType | null>(null);

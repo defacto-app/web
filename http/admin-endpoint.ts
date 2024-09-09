@@ -81,6 +81,19 @@ export const $admin_api = {
 				return error;
 			}
 		},
+
+
+		menu:{
+
+			one: async (id: string) => {
+				try {
+					return $axios_admin.get(`/restaurants/menu/${id}`);
+				} catch (error: any) {
+					return error;
+				}
+			},
+			create: async (id: string, body: any) => {},
+		}
 	},
 
 /*	upload:{

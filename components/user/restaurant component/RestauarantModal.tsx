@@ -10,7 +10,6 @@ interface MenuItem {
   description: string;
   price: string;
   imageUrl: string;
-  rating: number;
   stars: number;
   isBestSeller: boolean;
   options?: Array<{
