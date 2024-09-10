@@ -6,18 +6,15 @@ import { useQuery } from "react-query";
 import { DataTable } from "@/app/admin/x/users/data-table";
 import { columns } from "@/app/admin/x/restaurants/columns";
 import { $admin_api } from "@/http/admin-endpoint";
-import {ChevronRight, Search} from "lucide-react";
+import { ChevronRight, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { DataTableLoading } from "@/components/table/data-table-loading";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import {useDebounce} from "react-haiku";
 
 // Updated function to fetch restaurants with a search query parameter
-const fetchRestaurants = async (
-	page: number,
-	perPage: number,
-	searchTerm: string,
-) => {
+const fetchRestaurants = async (page: number, perPage: number, searchTerm: string) => {
 	const response = await $admin_api.restaurants.all({
 		page,
 		perPage,
@@ -31,19 +28,19 @@ function Page() {
 	const [page, setPage] = useState(1); // Track current page
 	const [perPage, setPerPage] = useState(20); // Track items per page
 	const [isMounted, setIsMounted] = useState(false); // Ensure the component is mounted
+	const debouncedSearchTerm = useDebounce(searchTerm, 500); // Debounce search term by 500ms
 
 	// Ensure this only runs on the client side to avoid SSR mismatches
 	useEffect(() => {
 		setIsMounted(true);
 	}, []);
 
-	// Use React Query's useQuery hook to fetch data, and pass searchTerm as part of the key
+	// Use React Query's useQuery hook to fetch data, and pass debouncedSearchTerm as part of the key
 	const { data, error, isLoading, refetch } = useQuery(
-		["restaurants", page, perPage, searchTerm], // The query key includes page, perPage, and search term
-		() => fetchRestaurants(page, perPage, searchTerm),
+		["restaurants", page, perPage, debouncedSearchTerm], // The query key includes page, perPage, and debounced search term
+		() => fetchRestaurants(page, perPage, debouncedSearchTerm),
 		{
-			// keepPreviousData: true,
-			// Keep the previous data while fetching new data
+			keepPreviousData: true, // Keep the previous data while fetching new data
 		},
 	);
 
@@ -52,10 +49,10 @@ function Page() {
 		setSearchTerm(e.target.value);
 	};
 
-	// Trigger refetch when the search term changes
+	// Trigger refetch when the debounced search term changes
 	useEffect(() => {
-		refetch(); // Fetch new data when searchTerm changes
-	}, [searchTerm, refetch]);
+		refetch(); // Fetch new data when debouncedSearchTerm changes
+	}, [debouncedSearchTerm, refetch]);
 
 	// Prevent rendering during SSR to avoid mismatch
 	if (!isMounted) return null;
@@ -65,12 +62,10 @@ function Page() {
 	return (
 		<div className={``}>
 			<div className="">
-
 				{/* Search Input */}
-				<div className={`bg-white shadow-sm rounded  mb-6 p-6 flex justify-between`}>
-					<div className="relative  ">
-
-						<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
+				<div className={`bg-white shadow-sm rounded mb-6 p-6 flex justify-between`}>
+					<div className="relative">
+						<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 						<Input
 							type="search"
 							value={searchTerm} // Bind input value to state
@@ -78,22 +73,18 @@ function Page() {
 							placeholder="Search Restaurant..."
 							className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
 						/>
-
 					</div>
 					<Link href={"/admin/x/restaurants/create"} prefetch={true}>
-						<Button variant="outlinePrimary" >Create Restaurant <ChevronRight /></Button>
+						<Button variant="outlinePrimary">
+							Create Restaurant <ChevronRight />
+						</Button>
 					</Link>
 				</div>
 
 				{/* Render the DataTableLoading with loading state */}
-				<div className={`bg-white shadow-sm rounded `}>
-					<DataTableLoading
-						loading={isLoading}
-						columns={columns}
-						data={data ?? []}
-					/>
+				<div className={`bg-white shadow-sm rounded`}>
+					<DataTableLoading loading={isLoading} columns={columns} data={data ?? []} />
 				</div>
-
 			</div>
 		</div>
 	);

@@ -28,6 +28,7 @@ export const columns: ColumnDef<any>[] = [
 			const { name } = row.original;
 			return (
 				<Link
+					prefetch={true}
 					className={`font-medium underline`}
 					href={`/admin/x/restaurants/${row.original.publicId}`}
 				>
@@ -43,6 +44,7 @@ export const columns: ColumnDef<any>[] = [
 			const { menuCount } = row.original;
 			return (
 				<Link
+					prefetch={true}
 					className={`font-medium underline`}
 					href={`/admin/x/restaurants/${row.original.publicId}/menu`}
 				>
