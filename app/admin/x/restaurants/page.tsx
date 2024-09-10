@@ -100,14 +100,18 @@ function Page() {
 						<DataTableSkeleton columns={columns} />
 					) : (
 						<>
-							<Button onClick={() => handlePageChange(page + 1)}>next</Button>
-							{JSON.stringify(data.meta)}
+
 							<TablePagination
 								page={page}
 								totalPages={data?.meta.totalPages || 1}
 								onPageChange={handlePageChange}
 							/>
 							<DataTable columns={columns} data={data.data} />
+							<TablePagination
+								page={page}
+								totalPages={data?.meta.totalPages || 1}
+								onPageChange={handlePageChange}
+							/>
 						</>
 					)}
 				</div>
