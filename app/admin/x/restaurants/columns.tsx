@@ -44,7 +44,7 @@ export const columns: ColumnDef<any>[] = [
 			return (
 				<Link
 					className={`font-medium underline`}
-					href={`/admin/x/restaurants/menu/${row.original.publicId}`}
+					href={`/admin/x/restaurants/${row.original.publicId}/menu`}
 				>
 					{menuCount}
 				</Link>

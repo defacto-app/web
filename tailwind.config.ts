@@ -50,6 +50,8 @@ const config = {
       },
       yellow: colors.yellow,
       black: colors.black,
+      zinc: colors.zinc,
+      neutral: colors.neutral,
     },
     container: {
       center: true,

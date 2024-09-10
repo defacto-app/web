@@ -14,6 +14,9 @@
 			"correctness": {
 				"useExhaustiveDependencies": "off"
 			},
+			"a11y": {
+				"noSvgWithoutTitle": "off"
+			},
 			"style": {
 				"noUnusedTemplateLiteral": "off",
 				"useSelfClosingElements": "off"

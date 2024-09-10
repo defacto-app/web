@@ -31,7 +31,7 @@ export default function PickupModal() {
     <div className="relative">
       <Dialog>
       <DialogTrigger asChild>
-      <Button variant= "primary2" className="w-full text-left border rounded px-3 py-2">
+      <Button variant= "primary" className="w-full text-left border rounded px-3 py-2">
             <div className="flex items-center">
               <Map className="mr-2" />
               <span className="text-gray-200">Add your address</span>

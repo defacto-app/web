@@ -24,7 +24,7 @@ export default function AdminRootLayout({
 	return (
 		<QueryClientProvider client={queryClient}>
 			<div lang="en">
-				<div className={cn("bg-background font-sans antialiased", fontSans.variable)}>
+				<div className={cn("font-sans antialiased", fontSans.variable)}>
 					<AdminHeader/>
 
 					<div>{children}</div>

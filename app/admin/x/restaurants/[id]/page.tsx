@@ -61,7 +61,7 @@ function Page({ params }: { params: { id: string } }) {
 	if (error) return <div>Error: {error}</div>;
 
 	return (
-		<div className="container mx-auto py-10">
+		<div className="container mx-auto py-10 bg-white rounded-md border border-zinc-200">
 			<h1>Update Restaurant</h1>
 			<img src={restaurant?.image} alt={restaurant?.name} className="w-full h-64 object-cover" />
 			<ImageUploader params={params} onUploadComplete={fetchRestaurantData} />

@@ -104,55 +104,56 @@ export default function AdminLogin() {
 	}
 
 	return (
-		<Card className="mx-auto max-w-sm">
-			<CardHeader>
-				<CardTitle className="text-2xl">Login</CardTitle>
-				<CardDescription>
-					Enter your email below to login to your account
-				</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<div className="grid gap-4">
-					<div className="grid gap-2">
-						<Label htmlFor="email">Email</Label>
-						{formData.email}
-						<div className={"flex gap-x-2"}>
-							<Input
-								id="email"
-								name="email"
-								type="email"
-								placeholder="m@example.com"
-								required
-								value={formData.email}
-								onChange={handleInputChange}
-							/>
-							<Button
-								onClick={sendEmailOtp}
-								variant={"ghost"}
-								className={`w-20`}
-							>
-								Send OTP
-							</Button>
-						</div>
+		<div className="flex items-center justify-center min-h-screen">
+			<Card className="mx-auto max-w-lg">
+				<CardHeader>
+					<CardDescription className={`text-center`}>
+						Administrator Access
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<div className="grid gap-4">
+						<div className="grid gap-2">
+							<Label htmlFor="email">Email</Label>
+							{formData.email}
+							<div className={"flex gap-x-2"}>
+								<Input
+									id="email"
+									name="email"
+									type="email"
+									placeholder="m@example.com"
+									required
+									value={formData.email}
+									onChange={handleInputChange}
+								/>
+								<Button
+									onClick={sendEmailOtp}
+									variant={"outline"}
+									className={`w-20`}
+								>
+									Send OTP
+								</Button>
+							</div>
 
-						{errors.email && (
-							<p className={`text-red-500 p-4`}>{errors.email}</p>
-						)}
+							{errors.email && (
+								<p className={`text-red-500 p-4`}>{errors.email}</p>
+							)}
+						</div>
+						<InputOTPPattern setOtp={setOtp} defaultValue={formData.otp} />
+						{errors.otp && <p className={"text-red-500 p-4"}>{errors.otp}</p>}
+						<Button
+							variant="primary"
+							loading={isPending}
+							onClick={handleSubmit}
+							type="submit"
+							className="w-full"
+						>
+							Login
+						</Button>
 					</div>
-					<InputOTPPattern setOtp={setOtp} defaultValue={formData.otp} />
-					{errors.otp && <p className={"text-red-500 p-4"}>{errors.otp}</p>}
-					<Button
-						variant="primary"
-						loading={isPending}
-						onClick={handleSubmit}
-						type="submit"
-						className="w-full"
-					>
-						Login
-					</Button>
-				</div>
-			</CardContent>
-		</Card>
+				</CardContent>
+			</Card>
+		</div>
 	);
 }
 

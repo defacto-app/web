@@ -6,7 +6,7 @@ import { useQuery } from "react-query";
 import { DataTable } from "@/app/admin/x/users/data-table";
 import { columns } from "@/app/admin/x/restaurants/columns";
 import { $admin_api } from "@/http/admin-endpoint";
-import { Search } from "lucide-react";
+import {ChevronRight, Search} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { DataTableLoading } from "@/components/table/data-table-loading";
 import { Button } from "@/components/ui/button";
@@ -53,7 +53,6 @@ function Page() {
 	};
 
 	// Trigger refetch when the search term changes
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		refetch(); // Fetch new data when searchTerm changes
 	}, [searchTerm, refetch]);
@@ -64,29 +63,37 @@ function Page() {
 	if (error) return <div>Error loading data...</div>;
 
 	return (
-		<div>
-			<div className="container mx-auto py-10">
-				<Link href={"/admin/x/restaurants/create"}>
-					<Button variant="outline">Create Restaurant</Button>
-				</Link>
+		<div className={``}>
+			<div className="container mx-auto py-10 ">
+
 				{/* Search Input */}
-				<div className="relative pb-6">
-					<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-					<Input
-						type="search"
-						value={searchTerm} // Bind input value to state
-						onChange={handleSearchChange} // Update state on input change
-						placeholder="Search Restaurant..."
-						className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-					/>
+				<div className={`bg-white  mb-6 p-6 flex justify-between`}>
+					<div className="relative  ">
+
+						<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
+						<Input
+							type="search"
+							value={searchTerm} // Bind input value to state
+							onChange={handleSearchChange} // Update state on input change
+							placeholder="Search Restaurant..."
+							className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+						/>
+
+					</div>
+					<Link href={"/admin/x/restaurants/create"} prefetch={true}>
+						<Button variant="outlinePrimary" >Create Restaurant <ChevronRight /></Button>
+					</Link>
 				</div>
 
 				{/* Render the DataTableLoading with loading state */}
-				<DataTableLoading
-					loading={isLoading}
-					columns={columns}
-					data={data ?? []}
-				/>
+				<div className={`bg-white`}>
+					<DataTableLoading
+						loading={isLoading}
+						columns={columns}
+						data={data ?? []}
+					/>
+				</div>
+
 			</div>
 		</div>
 	);
