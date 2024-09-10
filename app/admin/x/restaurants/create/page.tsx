@@ -45,7 +45,9 @@ function Page() {
 			setCreating(false);
 			toast.success("Restaurant created successfully");
 
-			router.push(`/admin/x/restaurants/${res.publicId}`);
+			console.log("res", res.data.data.publicId);
+			router.push(`/admin/x/restaurants/${res.data.data.publicId}`);
+
 			setRestaurant(
 				// Reset the form after successful creation
 				{

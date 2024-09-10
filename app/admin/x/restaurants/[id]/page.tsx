@@ -58,21 +58,18 @@ const RestaurantPage = () => {
 
 	return (
 		<div>
+			<ImageUploader id={restaurant.publicId} onUploadComplete={refreshData} />
+
 			<Image
 				priority={true}
 				width={500}
 				height={500}
-				loader={
-					({ src }) => {
-						return src;
-					}
-				}
+
 				src={restaurant?.image}
 				alt={restaurant?.name}
 				className="w-full h-64 object-cover"
 			/>
 
-			<ImageUploader id={restaurant.publicId} onUploadComplete={refreshData} />
 			<RestaurantFormComponent
 				restaurant={restaurantData}
 				handleInputChange={handleInputChange}

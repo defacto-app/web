@@ -30,7 +30,7 @@ export const columns: ColumnDef<any>[] = [
 			return (
                 <Link
                     className={`font-medium underline flex items-center gap-x-2`}
-                    href={`/admin/x/restaurants/${row.original.publicId}`}
+                    href={`/admin/x/restaurants/${row.original.parent}/menu/${row.original.publicId}`}
                 >
                     <img src={image} alt="restaurant" className="max-w-md object-cover h-14 rounded-sm"/>
 
