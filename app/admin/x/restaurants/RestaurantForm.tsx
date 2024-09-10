@@ -19,7 +19,7 @@ export const RestaurantFormComponent = ({
 	action,
 }: RestaurantFormProps) => {
 	return (
-		<div>
+		<div className={`bg-white rounded-md  p-4 border mt-4`}>
 			{restaurant && (
 				<div className={`grid grid-cols-2 gap-4`}>
 					<div>

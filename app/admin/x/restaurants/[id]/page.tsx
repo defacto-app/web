@@ -1,53 +1,53 @@
 "use client";
 
+import type React from "react";
 import { useEffect, useState } from "react";
-
+import { useAtomRestaurantContext } from "@/app/admin/x/restaurants/[id]/resturant.atom";
+import Image from "next/image";
+import ImageUploader from "@/app/admin/components/ImageUploader";
+import { useParams } from "next/navigation";
+import type { RestaurantFormType } from "@/lib/types";
 import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
-import type { RestaurantFormType } from "@/lib/types";
 import { RestaurantFormComponent } from "@/app/admin/x/restaurants/RestaurantForm";
-import ImageUploader from "@/app/admin/components/ImageUploader";
 
-
-function Page({ params }: { params: { id: string } }) {
-	const [restaurant, setRestaurant] = useState<RestaurantFormType | null>(null);
-	const [loading, setLoading] = useState<boolean>(true);
+const RestaurantPage = () => {
+	const { restaurant, getRestaurant, loading } = useAtomRestaurantContext();
 	const [updating, setUpdating] = useState<boolean>(false);
-	const [error, setError] = useState<string | null>(null);
+
+	const refreshData = async () => {
+		getRestaurant(restaurant.publicId);
+	};
+	const [restaurantData, setRestaurantData] =
+		useState<any>({
+			createdAt: "",
+			menuItems: [],
+			publicId: "",
+			updatedAt: "",
+			name: restaurant.name,
+			image: restaurant.image,
+			address: restaurant.address,
+			phone: restaurant.phone,
+			email: restaurant.email,
+			openingHours: restaurant.openingHours,
+			deliveryTime: restaurant.deliveryTime,
+			category: restaurant.category,
+			description: restaurant.description,
+		});
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		setRestaurant((prevRestaurant: any) => ({
+		setRestaurantData((prevRestaurant: any) => ({
 			...prevRestaurant,
 			[name]: value ?? "", // Fallback to empty string if value is undefined
 		}));
 	};
 
-
-	// Fetch restaurant data
-	const fetchRestaurantData = async () => {
-		try {
-			const response = await $admin_api.restaurants.one(params.id);
-			setRestaurant(response); // Set the restaurant data
-			setLoading(false); // Turn off loading
-		} catch (error: any) {
-			setError(error.message || "An error occurred while fetching the data");
-			setLoading(false);
-		}
-	};
-
-
-	useEffect(() => {
-		fetchRestaurantData();
-	}, [params.id]);
-
-
-
-	// Update restaurant
 	const updateRestaurant = async () => {
 		setUpdating(true);
 		try {
-			await $admin_api.restaurants.update(params.id, restaurant);
+			await $admin_api.restaurants.update(restaurant.publicId, restaurantData);
+			await refreshData();
 			setUpdating(false);
 			toast.success("Restaurant updated successfully");
 		} catch (e) {
@@ -56,20 +56,25 @@ function Page({ params }: { params: { id: string } }) {
 		}
 	};
 
-	// Loading state
-	if (loading) return <div>Loading...</div>;
-	if (error) return <div>Error: {error}</div>;
-
 	return (
-		<div className="container mx-auto py-10 bg-white rounded-md border border-zinc-200">
-			<h1>Update Restaurant</h1>
-			<img src={restaurant?.image} alt={restaurant?.name} className="w-full h-64 object-cover" />
-			<ImageUploader params={params} onUploadComplete={fetchRestaurantData} />
+		<div>
+			<Image
+				priority={true}
+				width={500}
+				height={500}
+				loader={
+					({ src }) => {
+						return src;
+					}
+				}
+				src={restaurant?.image}
+				alt={restaurant?.name}
+				className="w-full h-64 object-cover"
+			/>
 
-
-
+			<ImageUploader id={restaurant.publicId} onUploadComplete={refreshData} />
 			<RestaurantFormComponent
-				restaurant={restaurant}
+				restaurant={restaurantData}
 				handleInputChange={handleInputChange}
 				submitHandler={updateRestaurant}
 				loading={updating}
@@ -77,6 +82,6 @@ function Page({ params }: { params: { id: string } }) {
 			/>
 		</div>
 	);
-}
+};
 
-export default Page;
+export default RestaurantPage;

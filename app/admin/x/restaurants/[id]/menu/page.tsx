@@ -24,7 +24,7 @@ function Page({ params }: { params: { id: string } }) {
 	}, [params.id]);
 	if (loading) return <div>Loading...</div>;
 	if (error) return <div>Error: {error}</div>;
-	return <div>Page menu {JSON.stringify(menu)}</div>;
+	return <div>Page menu {JSON.stringify(menu.data.data)}</div>;
 }
 export default Page;
 //

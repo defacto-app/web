@@ -17,12 +17,14 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 function ImageUploader({
-	params,
+	id,
 	onUploadComplete,
-}: { params: { id: string }; onUploadComplete: () => void }) {
+}: {
+	id: string ;
+	onUploadComplete: () => void;
+}) {
 	const [file, setFile] = useState<File | null>(null);
 	const [uploading, setUploading] = useState(false);
-	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [open, setOpen] = useState(false);
 
@@ -52,7 +54,7 @@ function ImageUploader({
 		formData.append("image", file); // Use "image" as the key to match the Multer setup
 
 		try {
-			const response = await $admin_api.restaurants.image(params.id, formData); // Upload using your admin_api setup
+			const response = await $admin_api.restaurants.image(id, formData); // Upload using your admin_api setup
 
 			if (response) {
 				setError(null);
@@ -74,8 +76,12 @@ function ImageUploader({
 		<div>
 			<AlertDialog open={open} defaultOpen={open}>
 				<AlertDialogTrigger asChild>
-					<Button className={`mt-4 text-blue-500`} onClick={() => setOpen(true)} variant="outline">
-					Update Restaurant Image
+					<Button
+						className={`mt-4 text-blue-500`}
+						onClick={() => setOpen(true)}
+						variant="outline"
+					>
+						Update Restaurant Image
 					</Button>
 				</AlertDialogTrigger>
 				<AlertDialogContent>
