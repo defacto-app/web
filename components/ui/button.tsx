@@ -17,13 +17,12 @@ const buttonVariants = cva(
 					"bg-red-500 text-gray-50 shadow-sm hover:bg-red-500/90 dark:bg-red-900 dark:text-gray-50 dark:hover:bg-red-900/90",
 				outlinePrimary:
 					"border border-primary-500 text-primary-500 border-2 rounded-full bg-white shadow-sm hover:bg-primary-500 hover:text-white dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50",
-
 				outline:
 					"border border-primary-500 border-2 rounded-full bg-white shadow-sm hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50",
 				secondary:
 					"bg-gray-400 text-gray-900 shadow-sm hover:bg-gray-100/80 dark:bg-gray-800 dark:text-gray-50 dark:hover:bg-gray-800/80",
 				ghost:
-					"hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-50",
+					"text-gray-900 dark:text-gray-50", // Removed hover styles
 				link: "text-primary-600 dark:text-gray-50 underline-offset-4 font-bold hover:underline ",
 			},
 			size: {
@@ -37,8 +36,9 @@ const buttonVariants = cva(
 			variant: "default",
 			size: "default",
 		},
-	},
+	}
 );
+
 
 export interface ButtonProps
 	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -51,7 +51,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	(
 		{
 			className,
-			variant,
+			variant = "default",
 			children,
 			loading = false,
 			size,
@@ -62,11 +62,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	) => {
 		const Comp = asChild ? Slot : "button";
 
+		// Conditionally apply the scale effect only for specific variants
+		const scaleEffectClasses =
+			variant === "primary" || variant === "outlinePrimary" ||  variant === "destructive" // Add scale effect only to specific variants
+				? "transition-transform transform hover:scale-105 active:scale-95"
+				: "";
+
 		return (
 			<Comp
 				className={cn(
 					buttonVariants({ variant, size, className }),
-					"transition-transform transform hover:scale-105 active:scale-95", // Add scale effect here
+					scaleEffectClasses // Add scale effect conditionally
 				)}
 				ref={ref}
 				disabled={loading}
@@ -86,6 +92,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button";
 
 export { Button, buttonVariants };
+
 
 function SvgSpinners3DotsScaleMiddle(
 	props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>,

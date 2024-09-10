@@ -71,7 +71,7 @@ function Page() {
 	};
 
 	return (
-		<div className="container mx-auto py-10">
+		<div className="container mx-auto py-10 bg-white">
 			<h1>Create New Restaurant</h1>
 
 			<RestaurantFormComponent

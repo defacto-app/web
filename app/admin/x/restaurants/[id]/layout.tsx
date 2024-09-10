@@ -1,43 +1,62 @@
-import type React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { $admin_api } from "@/http/admin-endpoint";
 import Link from "next/link";
+import {Button} from "@/components/ui/button";
+import {ArrowLeft, ChevronLeft} from "lucide-react";
 
 export default function RestaurantLayout({
-	children,
-}: { children: React.ReactNode }) {
+											 children,
+											 params,
+										 }: {
+	children: React.ReactNode;
+	params: { id: string };
+}) {
+	const [restaurant, setRestaurant] = useState<any>(null); // You can adjust this type according to your data structure
+	const [loading, setLoading] = useState<boolean>(true);
+	const [error, setError] = useState<string | null>(null);
+
+	// Fetch restaurant data
+	const fetchRestaurantData = async () => {
+		try {
+			const response = await $admin_api.restaurants.one(params.id);
+			setRestaurant(response); // Set the restaurant data
+			setLoading(false); // Turn off loading
+		} catch (error: any) {
+			setError(error.message || "An error occurred while fetching the data");
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchRestaurantData();
+	}, [params.id]);
+
+	// Loading and Error states
+	if (loading) return <div>Loading...</div>;
+	if (error) return <div>Error: {error}</div>;
+
 	return (
-		<div
-			style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-		>
+		<div className="min-h-screen">
 			{/* Header Section */}
-			<header
-				style={{
-					padding: "20px",
-					background: "#f5f5f5",
-					borderBottom: "1px solid #ddd",
-				}}
-			>
-				<h1>Restaurant Menu</h1>
-				<nav>
-				{/*	<Link href={`/restaurants`}>
-						<a>Back to Restaurants</a>
-					</Link>*/}
-					{/* Add other navigation links if needed */}
-				</nav>
+			<header className={` bg-white shadow-sm`}>
+				<div className="container flex items-center justify-between p-4">
+					<h1> {restaurant?.name}</h1>
+					<nav>
+						<Link className={`flex items-center`} href={`/admin/x/restaurants`}>
+							<ChevronLeft/>
+							<Button variant={`ghost`}>Back to Restaurants</Button>
+						</Link>
+					</nav>
+				</div>
 			</header>
 
 			{/* Main Content Section */}
-			<main style={{ flex: 1, padding: "20px" }}>{children}</main>
-
-			{/* Footer Section */}
-			<footer
-				style={{
-					padding: "20px",
-					background: "#f5f5f5",
-					borderTop: "1px solid #ddd",
-				}}
-			>
-				<p>&copy; 2024 Your Restaurant App</p>
-			</footer>
+			<main className="py-10">
+				{/* Pass restaurant data to children components */}
+				{React.cloneElement(children as React.ReactElement, {restaurant})}
+			</main>
 		</div>
 	);
 }

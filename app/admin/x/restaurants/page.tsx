@@ -64,10 +64,10 @@ function Page() {
 
 	return (
 		<div className={``}>
-			<div className="container mx-auto py-10 ">
+			<div className="">
 
 				{/* Search Input */}
-				<div className={`bg-white  mb-6 p-6 flex justify-between`}>
+				<div className={`bg-white shadow-sm rounded  mb-6 p-6 flex justify-between`}>
 					<div className="relative  ">
 
 						<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
@@ -86,7 +86,7 @@ function Page() {
 				</div>
 
 				{/* Render the DataTableLoading with loading state */}
-				<div className={`bg-white`}>
+				<div className={`bg-white shadow-sm rounded `}>
 					<DataTableLoading
 						loading={isLoading}
 						columns={columns}
