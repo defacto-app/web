@@ -86,7 +86,6 @@ const RestaurantArea = () => {
 							</span>
 							<h3 className="text-lg font-semibold">{restaurant.name}</h3>
 							<div className="flex items-center mt-2">
-								<Star className="text-yellow-500 mr-1" />
 								<span className="text-gray-600">{restaurant.rating}</span>
 								<span className="text-gray-600 mx-2">•</span>
 								<span className="text-gray-600">{restaurant.time}</span>
