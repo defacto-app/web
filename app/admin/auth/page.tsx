@@ -60,7 +60,7 @@ export default function AdminLogin() {
 				otp: formData.otp,
 			});
 			// save to local storage
-			setToken("admin", res.token);
+			setToken("admin", res.data.data.token);
 
 			// Send token to the server to set the cookie
 			await fetch("/api/auth/admin", {
@@ -69,7 +69,7 @@ export default function AdminLogin() {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					token: res.token,
+					token: res.data.data.token,
 				}),
 			});
 

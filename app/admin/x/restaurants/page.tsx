@@ -25,7 +25,7 @@ const fetchRestaurants = async (
 		perPage,
 		searchTerm,
 	});
-	return response.data; // Assuming response.data contains the restaurant list
+	return response.data.data; // Assuming response.data contains the restaurant list
 };
 
 function Page() {
@@ -52,6 +52,12 @@ function Page() {
 	// Handle search input change
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(e.target.value);
+	};
+
+	const handlePageChange = (newPage: number) => {
+		setPage(newPage);
+
+		console.log("handlePageChange", newPage);
 	};
 
 	// Trigger refetch when the debounced search term changes
@@ -94,8 +100,14 @@ function Page() {
 						<DataTableSkeleton columns={columns} />
 					) : (
 						<>
-							<DataTable columns={columns} data={data} />
-							<TablePagination />
+							<Button onClick={() => handlePageChange(page + 1)}>next</Button>
+							{JSON.stringify(data.meta)}
+							<TablePagination
+								page={page}
+								totalPages={data?.totalPages || 1}
+								onPageChange={handlePageChange}
+							/>
+							<DataTable columns={columns} data={data.data} />
 						</>
 					)}
 				</div>

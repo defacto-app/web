@@ -56,7 +56,7 @@ export const useAtomAuthContext = () => {
 		try {
 			const response = await $admin_api.auth.ping();
 
-			setAuthUser(response.user);
+			setAuthUser(response.data.data.user);
 
 		} catch (error) {
 			console.error("Failed to fetch user data", error);

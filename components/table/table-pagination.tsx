@@ -1,38 +1,37 @@
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination"
 
-export function TablePagination() {
-    return (
-        <Pagination>
-            <PaginationContent>
-                <PaginationItem>
-                    <PaginationPrevious href="#" />
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink href="#">1</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink href="#" isActive>
-                        2
-                    </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink href="#">3</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationNext href="#" />
-                </PaginationItem>
-            </PaginationContent>
-        </Pagination>
-    )
+import { Button } from "@/components/ui/button";
+
+interface TablePaginationProps {
+	page: number;
+	totalPages: number;
+	onPageChange: (page: number) => void;
+}
+
+export function TablePagination({
+	page,
+	totalPages,
+	onPageChange,
+}: TablePaginationProps) {
+	const handlePrevious = () => {
+		if (page > 1) onPageChange(page - 1);
+		console.log('handlePrevious', page);
+
+	};
+
+	const handleNext = () => {
+		if (page < totalPages) {
+			onPageChange(page + 1);
+			console.log('handleNext', page, totalPages);
+
+		}
+
+	};
+
+	return (
+		<div>
+			<Button onClick={handlePrevious}>Previous</Button>
+
+			<Button onClick={handleNext}>Next</Button>
+		</div>
+	);
 }
