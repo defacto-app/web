@@ -104,7 +104,7 @@ function Page() {
 							{JSON.stringify(data.meta)}
 							<TablePagination
 								page={page}
-								totalPages={data?.totalPages || 1}
+								totalPages={data?.meta.totalPages || 1}
 								onPageChange={handlePageChange}
 							/>
 							<DataTable columns={columns} data={data.data} />

@@ -29,6 +29,7 @@ export function TablePagination({
 
 	return (
 		<div>
+			{JSON.stringify({ page, totalPages })}
 			<Button onClick={handlePrevious}>Previous</Button>
 
 			<Button onClick={handleNext}>Next</Button>
