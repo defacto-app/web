@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import { $admin_api } from "@/http/admin-endpoint";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -42,7 +43,7 @@ export default function RestaurantLayout({
 			{/* Main Content Section */}
 			<main className="py-10">
 				{/* Pass restaurant data to children components */}
-				{React.cloneElement(children as React.ReactElement, { restaurant })}
+				{children}
 			</main>
 		</div>
 	);

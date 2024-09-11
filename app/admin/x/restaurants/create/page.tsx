@@ -4,7 +4,7 @@ import { useState } from "react";
 import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
 import type { RestaurantFormType } from "@/lib/types";
-import { RestaurantFormComponent } from "@/app/admin/x/restaurants/RestaurantForm";
+import { RestaurantFormComponent } from "@/app/admin/x/restaurants/components/RestaurantForm";
 import { router } from "next/client";
 import { useRouter } from "next/navigation";
 
@@ -44,7 +44,6 @@ function Page() {
 			const res = await $admin_api.restaurants.create(restaurant); // Assuming create method exists in your API
 			setCreating(false);
 			toast.success("Restaurant created successfully");
-
 			console.log("res", res.data.data.publicId);
 			router.push(`/admin/x/restaurants/${res.data.data.publicId}`);
 

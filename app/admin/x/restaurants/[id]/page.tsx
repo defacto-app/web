@@ -9,7 +9,7 @@ import { useParams } from "next/navigation";
 import type { RestaurantFormType } from "@/lib/types";
 import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
-import { RestaurantFormComponent } from "@/app/admin/x/restaurants/RestaurantForm";
+import { RestaurantFormComponent } from "@/app/admin/x/restaurants/components/RestaurantForm";
 
 const RestaurantPage = () => {
 	const { restaurant, getRestaurant, loading } = useAtomRestaurantContext();

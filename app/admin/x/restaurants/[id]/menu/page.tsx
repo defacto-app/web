@@ -5,10 +5,10 @@ import { $admin_api } from "@/http/admin-endpoint";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { columns } from "@/app/admin/x/restaurants/[id]/menu/columns";
 import { DataTable } from "@/app/admin/x/users/data-table";
-import {useQuery} from "react-query";
+import { useQuery } from "react-query";
 
 function fetchMenu(id: string) {
-	return $admin_api.restaurants.menu.one(id); // Assuming this returns a promise with the menu data
+	return $admin_api.restaurants.menu(id); // Assuming this returns a promise with the menu data
 }
 
 function Page({ params }: { params: { id: string } }) {
@@ -26,10 +26,8 @@ function Page({ params }: { params: { id: string } }) {
 			{isLoading ? (
 				<DataTableSkeleton columns={columns} />
 			) : (
-
 				<div>
 					<DataTable columns={columns} data={data.data.data.data} />
-
 				</div>
 			)}
 		</div>

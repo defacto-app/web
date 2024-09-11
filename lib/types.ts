@@ -49,3 +49,17 @@ export interface RestaurantFormType {
   publicId: string;
   menuItems: any[]; // Add more specific typing if you know the structure of menu items
 }
+
+export interface MenuItemType {
+  available: boolean;
+  category: string;
+  createdAt: string;
+  image: string;
+  menuType: string;
+  name: string;
+  parent: string;
+  price: string;
+  publicId: string;
+  slug: string;
+  updatedAt: string;
+}

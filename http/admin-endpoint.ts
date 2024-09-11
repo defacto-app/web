@@ -83,18 +83,37 @@ export const $admin_api = {
 		},
 
 
-		menu:{
-
-			one: async (id: string) => {
-				try {
-					return $axios_admin.get(`/restaurants/menu/${id}`);
-				} catch (error: any) {
-					return error;
-				}
-			},
-			create: async (id: string, body: any) => {},
-		}
+		menu: async (id: string) => {
+			try {
+				return $axios_admin.get(`/restaurants/menu/${id}`);
+			} catch (error: any) {
+				return error;
+			}
+		},
 	},
+
+	menu: {
+		one: async (id: string) => {
+			try {
+				return $axios_admin.get(`/menu/${id}`);
+			} catch (error: any) {
+				return error;
+			}
+		},
+
+		update: async (id: string, body: any) => {
+			try {
+				return $axios_admin.put(`/menu/${id}`, body);
+			} catch (error: any) {
+				return error;
+			}
+		},
+
+
+
+		create: async (id: string, body: any) => {},
+
+	}
 
 /*	upload:{
 		image: async (id: string, body: any) => {

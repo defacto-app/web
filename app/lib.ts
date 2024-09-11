@@ -33,14 +33,13 @@ export async function authenticateUser(data: any) {
 	// ping the server to check if the token is valid
 
 	const result = await fetch(`${env.base_url}/auth/ping`, {
-		cache:"force-cache",
+		cache: "force-cache",
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${data}`,
 		},
 	});
-
 
 	const _data = await result.json();
 
@@ -51,17 +50,4 @@ export async function authenticateUser(data: any) {
 	if (_data.success) {
 		return true;
 	}
-}
-
-export async function getAllUsers() {
-	const authToken = cookies().get("auth-token")?.value;
-	const result = await fetch(`${env.base_url}/admin/dashboard`, {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${authToken}`,
-		},
-	});
-
-	return await result.json();
 }
