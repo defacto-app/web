@@ -31,8 +31,11 @@ function Page({ params }: { params: { id: string } }) {
 			const res = await $admin_api.menu.create(params.id, menuData); // Assuming create method exists in your API
 			setCreating(false);
 			toast.success("Restaurant created successfully");
-			console.log("res", res.data.data.publicId);
-			// router.push(`/admin/x/restaurants/${res.data.data.publicId}`);
+			console.log("res", res.data.data);
+			console.log("params", params);
+			router.push(
+				`/admin/x/restaurants/${res.data.data.parent}/menu/${res.data.data.publicId}`,
+			);
 
 			setMenuData(
 				// Reset the form after successful creation
