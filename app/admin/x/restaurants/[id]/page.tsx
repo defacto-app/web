@@ -58,7 +58,7 @@ const RestaurantPage = () => {
 	return (
 		<div>
 			<div className={`relative`}>
-				<div className={`absolute `}>
+				<div className={`absolute right-0 bottom-0`}>
 					<ImageUploader
 						id={restaurant.publicId}
 						onUploadComplete={refreshData}

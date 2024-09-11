@@ -88,18 +88,18 @@ function ImageUploader({
 	};
 
 	return (
-		<div className="h-80">
+		<div >
 			<AlertDialog open={open} onOpenChange={setOpen}>
 				<AlertDialogTrigger asChild>
 					<Button
-						className="mt-4 text-blue-500"
+						className=""
 						onClick={() => setOpen(true)}
-						variant="outline"
+						variant="default"
 					>
 						Update Restaurant Image
 					</Button>
 				</AlertDialogTrigger>
-				<AlertDialogContent>
+				<AlertDialogContent className={`h-96`}>
 					<AlertDialogHeader>
 						<AlertDialogTitle>Upload Restaurant Image</AlertDialogTitle>
 						<AlertDialogDescription>
