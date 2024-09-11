@@ -7,8 +7,7 @@ import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
 import {
 	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
+
 	AlertDialogContent,
 	AlertDialogDescription,
 	AlertDialogFooter,
