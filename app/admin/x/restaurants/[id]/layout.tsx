@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ChevronLeft } from "lucide-react";
 import { useAtomRestaurantContext } from "@/app/admin/x/restaurants/[id]/resturant.atom";
+import {Separator} from "@/components/ui/separator";
 
 export default function RestaurantLayout({
 	children,
@@ -29,33 +30,35 @@ export default function RestaurantLayout({
 		<div>
 			{/* Header Section */}
 			<header className={`bg-white shadow-sm`}>
-				<div className="container flex items-center justify-between p-4">
-					<div className={`flex items-center gap-x-2`}>
-						<Link href={`/admin/x/restaurants/${params.id}`} prefetch={true}>
-							<Button variant={`link`}> {restaurant?.name}</Button>
-						</Link>
-						|
-						<Link
-							href={`/admin/x/restaurants/${params.id}/menu`}
-							prefetch={true}
-						>
-							<Button variant={`link`}> Menu</Button>
-						</Link>
-						|
-						<Link
-							href={`/admin/x/restaurants/${params.id}/menu/create`}
-							prefetch={true}
-						>
-							<Button variant={`link`}>Add Menu</Button>
-						</Link>
+				<div className={` py-4 mb-4`}>
+
+					<div className="flex h-5 items-center space-x-4 text-sm">
+						<div>
+							<Link href={`/admin/x/restaurants/${params.id}`} prefetch={true}>
+								<Button className={`text-xl`} variant={`ghost`}> {restaurant?.name}</Button>
+							</Link>
+						</div>
+						<Separator orientation="vertical"/>
+						<div>
+							<Link
+								href={`/admin/x/restaurants/${params.id}/menu`}
+								prefetch={true}
+							>
+								<Button variant={`ghost`}> Menu</Button>
+							</Link>
+						</div>
+						<Separator orientation="vertical"/>
+						<div>
+							<Link
+								href={`/admin/x/restaurants/${params.id}/menu/create`}
+								prefetch={true}
+							>
+								<Button variant={`ghost`}>Add Menu</Button>
+							</Link>
+						</div>
 					</div>
-					<nav>
-						<Link className={`flex items-center`} href={`/admin/x/restaurants`}>
-							<ChevronLeft />
-							<Button variant={`ghost`}>All Restaurants</Button>
-						</Link>
-					</nav>
 				</div>
+
 			</header>
 
 			{/* Main Content Section */}

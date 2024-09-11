@@ -94,7 +94,7 @@ function ImageUploader({
 					<Button
 						className=""
 						onClick={() => setOpen(true)}
-						variant="default"
+						variant="primary"
 					>
 						Update Restaurant Image
 					</Button>

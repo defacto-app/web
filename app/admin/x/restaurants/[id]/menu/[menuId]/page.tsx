@@ -3,8 +3,10 @@
 import type React from "react";
 import { useEffect, useState } from "react";
 import { $admin_api } from "@/http/admin-endpoint";
-import {toast} from "react-toastify";
-import {MenuForm} from "@/app/admin/x/restaurants/components/menuForm";
+import { toast } from "react-toastify";
+import { MenuForm } from "@/app/admin/x/restaurants/components/menuForm";
+import Image from "next/image";
+import ImageUploader from "@/app/admin/components/ImageUploader";
 
 function Page({ params }: { params: { menuId: string } }) {
 	const [menuData, setMenuData] = useState<any>(null);
@@ -19,11 +21,12 @@ function Page({ params }: { params: { menuId: string } }) {
 			setMenuData(res.data.data); // Assuming res.data holds the getMenu data
 			setLoading(false);
 		} catch (e: any) {
-			setError(e.message || "An error occurred while fetching the getMenu data");
+			setError(
+				e.message || "An error occurred while fetching the getMenu data",
+			);
 			setLoading(false);
 		}
 	};
-
 
 	useEffect(() => {
 		getData();
@@ -41,7 +44,7 @@ function Page({ params }: { params: { menuId: string } }) {
 		setUpdating(true);
 		try {
 			await $admin_api.menu.update(menuData.publicId, menuData);
-			await 	getData();
+			await getData();
 			setUpdating(false);
 			toast.success("Menu updated successfully");
 		} catch (e) {
@@ -58,10 +61,27 @@ function Page({ params }: { params: { menuId: string } }) {
 	// Render getMenu data once fetched
 	return (
 		<div className={`bg-white rounded-md  p-4 border mt-4`}>
-			<h1 className={`py-4 text-lg`}>Menu Page for Menu ID: {params.menuId}</h1>
+			<h1 className={`py-4 text-lg`}>Update Menu</h1>
 
+			<div className={`flex justify-start`}>
+			<div className={`flex items-center`}>
+				<Image
+					priority={true}
+					width={500}
+					height={500}
+					src={menuData?.image}
+					alt={menuData?.name}
+					className="rounded-sm h-64  object-cover"
+				/>
+				<ImageUploader
+
+					id={menuData.publicId}
+					onUploadComplete={getData}
+				/>
+			</div>
+
+			</div>
 			<MenuForm
-
 				data={menuData}
 				handleInputChange={handleInputChange}
 				submitHandler={updateMenu}
@@ -69,10 +89,8 @@ function Page({ params }: { params: { menuId: string } }) {
 				action="update"
 			/>
 
-
 		</div>
 	);
 }
 
 export default Page;
-

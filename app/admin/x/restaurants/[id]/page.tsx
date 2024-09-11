@@ -1,12 +1,11 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useAtomRestaurantContext } from "@/app/admin/x/restaurants/[id]/resturant.atom";
 import Image from "next/image";
 import ImageUploader from "@/app/admin/components/ImageUploader";
-import { useParams } from "next/navigation";
-import type { RestaurantFormType } from "@/lib/types";
+
 import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
 import { RestaurantFormComponent } from "@/app/admin/x/restaurants/components/RestaurantForm";
