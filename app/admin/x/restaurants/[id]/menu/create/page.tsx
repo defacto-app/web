@@ -55,8 +55,8 @@ function Page({ params }: { params: { id: string } }) {
 
 	return (
 		<div>
-			<div className="container mx-auto py-10 bg-white">
-				<h1>Create New Restaurant</h1>
+			<div className={`bg-white rounded-md  p-4 border mt-4`}>
+				<h1 className={`py-4 text-lg`}>Create New Menu</h1>
 
 				<MenuForm
 					action={"create"}

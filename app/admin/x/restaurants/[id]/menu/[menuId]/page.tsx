@@ -57,8 +57,8 @@ function Page({ params }: { params: { menuId: string } }) {
 
 	// Render getMenu data once fetched
 	return (
-		<div>
-			<h1>Menu Page for Menu ID: {params.menuId}</h1>
+		<div className={`bg-white rounded-md  p-4 border mt-4`}>
+			<h1 className={`py-4 text-lg`}>Menu Page for Menu ID: {params.menuId}</h1>
 
 			<MenuForm
 

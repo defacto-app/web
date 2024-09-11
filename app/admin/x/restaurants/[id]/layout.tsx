@@ -31,7 +31,17 @@ export default function RestaurantLayout({
 			<header className={`bg-white shadow-sm`}>
 				<div className="container flex items-center justify-between p-4">
 					<div className={`flex items-center gap-x-2`}>
-						<h1 className={`text-2xl`}> {restaurant?.name}</h1> |
+						<Link href={`/admin/x/restaurants/${params.id}`} prefetch={true}>
+							<Button variant={`link`}> {restaurant?.name}</Button>
+						</Link>
+						|
+						<Link
+							href={`/admin/x/restaurants/${params.id}/menu`}
+							prefetch={true}
+						>
+							<Button variant={`link`}> Menu</Button>
+						</Link>
+						|
 						<Link
 							href={`/admin/x/restaurants/${params.id}/menu/create`}
 							prefetch={true}

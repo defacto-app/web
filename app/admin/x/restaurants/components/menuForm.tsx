@@ -18,7 +18,7 @@ export const MenuForm = ({
 	action,
 }: MenuFormProps) => {
 	return <div>
-		<div className={`bg-white rounded-md  p-4 border mt-4`}>
+		<div >
 			{data && (
 				<div className="grid grid-cols-2 gap-4">
 					<div>
