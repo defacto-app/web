@@ -57,7 +57,8 @@ const RestaurantPage = () => {
 	};
 
 	return (
-		<div>
+		<div >
+		<div className={`relative`}>
 			<ImageUploader id={restaurant.publicId} onUploadComplete={refreshData} />
 
 			<Image
@@ -67,8 +68,9 @@ const RestaurantPage = () => {
 
 				src={restaurant?.image}
 				alt={restaurant?.name}
-				className="w-full h-64 object-cover"
+				className="w-full rounded-sm h-64 object-cover"
 			/>
+		</div>
 
 			<RestaurantFormComponent
 				restaurant={restaurantData}

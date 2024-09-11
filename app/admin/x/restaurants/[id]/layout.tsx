@@ -26,22 +26,25 @@ export default function RestaurantLayout({
 	if (error) return <div>Error: {error}</div>;
 
 	return (
-		<div className="min-h-screen">
+		<div >
 			{/* Header Section */}
-			<header className={` bg-white shadow-sm`}>
+			<header className={`bg-white shadow-sm`}>
 				<div className="container flex items-center justify-between p-4">
-					<h1> {restaurant?.name}</h1>
+					<div className={`flex items-center gap-x-2`}>
+						<h1 className={`text-2xl`}> {restaurant?.name}</h1> |
+						<Button variant={`outlinePrimary`}>Add Menu</Button>
+					</div>
 					<nav>
 						<Link className={`flex items-center`} href={`/admin/x/restaurants`}>
 							<ChevronLeft />
-							<Button variant={`ghost`}>Back to Restaurants</Button>
+							<Button variant={`ghost`}>All Restaurants</Button>
 						</Link>
 					</nav>
 				</div>
 			</header>
 
 			{/* Main Content Section */}
-			<main className="py-10">
+			<main className="pb-10">
 				{/* Pass restaurant data to children components */}
 				{children}
 			</main>
