@@ -4,7 +4,7 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { DataTable } from "@/app/admin/x/users/data-table";
-import { columns } from "@/app/admin/x/restaurants/columns";
+import { restaurantColumns } from "@/app/admin/x/restaurants/restaurant.columns";
 import { $admin_api } from "@/http/admin-endpoint";
 import { ChevronRight, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -97,7 +97,7 @@ function Page() {
 				{/* Render the DataTableLoading with loading state */}
 				<div className={`bg-white shadow-sm rounded`}>
 					{isLoading ? (
-						<DataTableSkeleton columns={columns} />
+						<DataTableSkeleton columns={restaurantColumns} />
 					) : (
 						<>
 
@@ -106,7 +106,7 @@ function Page() {
 								totalPages={data?.meta.totalPages || 1}
 								onPageChange={handlePageChange}
 							/>
-							<DataTable columns={columns} data={data.data} />
+							<DataTable columns={restaurantColumns} data={data.data} />
 							<TablePagination
 								page={page}
 								totalPages={data?.meta.totalPages || 1}

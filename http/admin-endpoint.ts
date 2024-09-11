@@ -1,5 +1,5 @@
 import { $axios_admin } from "@/http/http-admin.fn";
-import {$axios} from "@/http/http.fn";
+import { $axios } from "@/http/http.fn";
 
 export const $admin_api = {
 	auth: {
@@ -27,19 +27,19 @@ export const $admin_api = {
 		},
 	},
 
-	dashboard:  async () => {
-			try {
-				return $axios_admin.get(`/dashboard`);
-			} catch (error: any) {
-				return error;
-			}
+	dashboard: async () => {
+		try {
+			return $axios_admin.get(`/dashboard`);
+		} catch (error: any) {
+			return error;
+		}
 	},
 
 	restaurants: {
 		all: async ({ page = 1, perPage = 20, searchTerm = "" }) => {
 			try {
 				return $axios_admin.get(`/restaurants`, {
-					params: { page, perPage, search: searchTerm }
+					params: { page, perPage, search: searchTerm },
 				});
 			} catch (error: any) {
 				return error;
@@ -82,8 +82,7 @@ export const $admin_api = {
 			}
 		},
 
-
-		menu: async (id: string) => {
+		getMenu: async (id: string) => {
 			try {
 				return $axios_admin.get(`/restaurants/menu/${id}`);
 			} catch (error: any) {
@@ -109,13 +108,16 @@ export const $admin_api = {
 			}
 		},
 
+		create: async (id: string, body: any) => {
+			try {
+				return $axios_admin.post(`/restaurants/menu/${id}`, body);
+			} catch (error: any) {
+				return error;
+			}
+		},
+	},
 
-
-		create: async (id: string, body: any) => {},
-
-	}
-
-/*	upload:{
+	/*	upload:{
 		image: async (id: string, body: any) => {
 			try {
 				return $axios_admin.post(`/restaurants/${id}`, body);

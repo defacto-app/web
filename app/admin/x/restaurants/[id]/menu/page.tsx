@@ -3,12 +3,12 @@
 import React from "react";
 import { $admin_api } from "@/http/admin-endpoint";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
-import { columns } from "@/app/admin/x/restaurants/[id]/menu/columns";
+import { menuColumns } from "@/app/admin/x/restaurants/[id]/menu/menu.columns";
 import { DataTable } from "@/app/admin/x/users/data-table";
 import { useQuery } from "react-query";
 
 function fetchMenu(id: string) {
-	return $admin_api.restaurants.menu(id); // Assuming this returns a promise with the menu data
+	return $admin_api.restaurants.getMenu(id); // Assuming this returns a promise with the getMenu data
 }
 
 function Page({ params }: { params: { id: string } }) {
@@ -24,10 +24,10 @@ function Page({ params }: { params: { id: string } }) {
 	return (
 		<div className={`bg-white shadow-sm rounded`}>
 			{isLoading ? (
-				<DataTableSkeleton columns={columns} />
+				<DataTableSkeleton columns={menuColumns} />
 			) : (
 				<div>
-					<DataTable columns={columns} data={data.data.data.data} />
+					<DataTable columns={menuColumns} data={data.data.data.data} />
 				</div>
 			)}
 		</div>

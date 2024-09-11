@@ -13,12 +13,10 @@ function Page() {
 
 	// Initialize the state with empty fields
 	const [restaurant, setRestaurant] = useState<RestaurantFormType>({
-		createdAt: "",
 		deliveryTime: "",
 		image: "",
 		menuItems: [],
 		publicId: "",
-		updatedAt: "",
 		name: "",
 		category: "",
 		address: "",
@@ -50,14 +48,11 @@ function Page() {
 			setRestaurant(
 				// Reset the form after successful creation
 				{
-					createdAt: "",
 					deliveryTime: "",
 					image: "",
 					menuItems: [],
 					publicId: "",
-					updatedAt: "",
 					name: "",
-
 					category: "",
 					address: "",
 					phone: "",

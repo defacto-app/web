@@ -12,14 +12,14 @@ function Page({ params }: { params: { menuId: string } }) {
 	const [error, setError] = useState<string | null>(null);
 	const [updating, setUpdating] = useState<boolean>(false);
 
-	// Fetch menu data
+	// Fetch getMenu data
 	const getData = async () => {
 		try {
 			const res = await $admin_api.menu.one(params.menuId);
-			setMenuData(res.data.data); // Assuming res.data holds the menu data
+			setMenuData(res.data.data); // Assuming res.data holds the getMenu data
 			setLoading(false);
 		} catch (e: any) {
-			setError(e.message || "An error occurred while fetching the menu data");
+			setError(e.message || "An error occurred while fetching the getMenu data");
 			setLoading(false);
 		}
 	};
@@ -37,7 +37,7 @@ function Page({ params }: { params: { menuId: string } }) {
 		}));
 	};
 
-	const updateRestaurant = async () => {
+	const updateMenu = async () => {
 		setUpdating(true);
 		try {
 			await $admin_api.menu.update(menuData.publicId, menuData);
@@ -55,7 +55,7 @@ function Page({ params }: { params: { menuId: string } }) {
 	// Render error state
 	if (error) return <div>Error: {error}</div>;
 
-	// Render menu data once fetched
+	// Render getMenu data once fetched
 	return (
 		<div>
 			<h1>Menu Page for Menu ID: {params.menuId}</h1>
@@ -64,7 +64,7 @@ function Page({ params }: { params: { menuId: string } }) {
 
 				data={menuData}
 				handleInputChange={handleInputChange}
-				submitHandler={updateRestaurant}
+				submitHandler={updateMenu}
 				loading={updating}
 				action="update"
 			/>

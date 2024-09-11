@@ -26,13 +26,18 @@ export default function RestaurantLayout({
 	if (error) return <div>Error: {error}</div>;
 
 	return (
-		<div >
+		<div>
 			{/* Header Section */}
 			<header className={`bg-white shadow-sm`}>
 				<div className="container flex items-center justify-between p-4">
 					<div className={`flex items-center gap-x-2`}>
 						<h1 className={`text-2xl`}> {restaurant?.name}</h1> |
-						<Button variant={`outlinePrimary`}>Add Menu</Button>
+						<Link
+							href={`/admin/x/restaurants/${params.id}/menu/create`}
+							prefetch={true}
+						>
+							<Button variant={`link`}>Add Menu</Button>
+						</Link>
 					</div>
 					<nav>
 						<Link className={`flex items-center`} href={`/admin/x/restaurants`}>

@@ -44,10 +44,8 @@ export interface RestaurantFormType {
   phone: string;
   email: string;
   openingHours: string;
-  createdAt: string;
-  updatedAt: string;
   publicId: string;
-  menuItems: any[]; // Add more specific typing if you know the structure of menu items
+  menuItems: any[]; // Add more specific typing if you know the structure of getMenu items
 }
 
 export interface MenuItemType {

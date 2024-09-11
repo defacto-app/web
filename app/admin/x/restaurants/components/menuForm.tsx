@@ -20,7 +20,7 @@ export const MenuForm = ({
 	return <div>
 		<div className={`bg-white rounded-md  p-4 border mt-4`}>
 			{data && (
-				<div className={`grid grid-cols-2 gap-4`}>
+				<div className="grid grid-cols-2 gap-4">
 					<div>
 						<Label htmlFor="name">Name</Label>
 						<Input
@@ -28,12 +28,45 @@ export const MenuForm = ({
 							name="name"
 							value={data.name}
 							onChange={handleInputChange}
-							placeholder="Name"
+							placeholder="Enter food name"
 						/>
 					</div>
 
+					<div>
+						<Label htmlFor="category">Category</Label>
+						<Input
+							id="category"
+							name="category"
+							value={data.category}
+							onChange={handleInputChange}
+							placeholder="Enter category"
+						/>
+					</div>
 
+					<div>
+						<Label htmlFor="menuType">Menu Type</Label>
+						<Input
+							id="menuType"
+							name="menuType"
+							value={data.menuType}
+							onChange={handleInputChange}
+							placeholder="Enter menu type"
+						/>
+					</div>
+
+					<div>
+						<Label htmlFor="price">Price</Label>
+						<Input
+							type="number"
+							id="price"
+							name="price"
+							value={data.price}
+							onChange={handleInputChange}
+							placeholder="Enter price"
+						/>
+					</div>
 				</div>
+
 			)}
 			<Button
 				variant={`primary`}
@@ -41,7 +74,7 @@ export const MenuForm = ({
 				loading={loading}
 				onClick={submitHandler}
 			>
-				{action === "create" ? "New Restaurant" : "Update Restaurant"}
+				{action === "create" ? "New Menu" : "Update Menu"}
 			</Button>
 		</div>
 
