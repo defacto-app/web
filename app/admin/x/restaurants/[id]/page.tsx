@@ -18,22 +18,21 @@ const RestaurantPage = () => {
 	const refreshData = async () => {
 		getRestaurant(restaurant.publicId);
 	};
-	const [restaurantData, setRestaurantData] =
-		useState<any>({
-			createdAt: "",
-			menuItems: [],
-			publicId: "",
-			updatedAt: "",
-			name: restaurant.name,
-			image: restaurant.image,
-			address: restaurant.address,
-			phone: restaurant.phone,
-			email: restaurant.email,
-			openingHours: restaurant.openingHours,
-			deliveryTime: restaurant.deliveryTime,
-			category: restaurant.category,
-			description: restaurant.description,
-		});
+	const [restaurantData, setRestaurantData] = useState<any>({
+		createdAt: "",
+		menuItems: [],
+		publicId: "",
+		updatedAt: "",
+		name: restaurant.name,
+		image: restaurant.image,
+		address: restaurant.address,
+		phone: restaurant.phone,
+		email: restaurant.email,
+		openingHours: restaurant.openingHours,
+		deliveryTime: restaurant.deliveryTime,
+		category: restaurant.category,
+		description: restaurant.description,
+	});
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -57,20 +56,24 @@ const RestaurantPage = () => {
 	};
 
 	return (
-		<div >
-		<div className={`relative`}>
-			<ImageUploader id={restaurant.publicId} onUploadComplete={refreshData} />
+		<div>
+			<div className={`relative`}>
+				<div className={`absolute right-4 bottom-0 `}>
+					<ImageUploader
+						id={restaurant.publicId}
+						onUploadComplete={refreshData}
+					/>
+				</div>
 
-			<Image
-				priority={true}
-				width={500}
-				height={500}
-
-				src={restaurant?.image}
-				alt={restaurant?.name}
-				className="w-full rounded-sm h-64 object-cover"
-			/>
-		</div>
+				<Image
+					priority={true}
+					width={500}
+					height={500}
+					src={restaurant?.image}
+					alt={restaurant?.name}
+					className="w-full rounded-sm h-64 object-cover"
+				/>
+			</div>
 
 			<RestaurantFormComponent
 				restaurant={restaurantData}
