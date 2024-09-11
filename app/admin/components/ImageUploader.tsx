@@ -1,13 +1,9 @@
-import type React from "react";
 import { useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { $admin_api } from "@/http/admin-endpoint";
-import { toast } from "react-toastify";
 import {
 	AlertDialog,
-
 	AlertDialogContent,
 	AlertDialogDescription,
 	AlertDialogFooter,
@@ -17,96 +13,53 @@ import {
 } from "@/components/ui/alert-dialog";
 
 function ImageUploader({
-	id,
-	onUploadComplete,
-}: {
+						   id,
+						   onUploadComplete,
+						   handleUpload, // Accept handleUpload function as a prop
+					   }: {
 	id: string;
 	onUploadComplete: () => void;
+	handleUpload: (file: File | null, id: string, setPreviewUrl: (url: string | null) => void, setOpen: (open: boolean) => void) => Promise<void>; // Use this function for custom upload logic
 }) {
 	const [file, setFile] = useState<File | null>(null);
 	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-	const [uploading, setUploading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
 	const [open, setOpen] = useState(false);
 
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-	// Handle file selection
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const selectedFile = event.target.files ? event.target.files[0] : null;
 		if (selectedFile) {
 			setFile(selectedFile);
-			setError(null);
-			// Generate a preview URL for the selected file
 			setPreviewUrl(URL.createObjectURL(selectedFile));
 		}
 	};
 
-	// Trigger file input click
 	const handleButtonClick = () => {
 		fileInputRef.current?.click();
 	};
 
-	// Cancel the upload process
 	const cancelUpload = () => {
 		setOpen(false);
 		setFile(null);
-		setError(null);
-		setPreviewUrl(null); // Clear the preview
-	};
-
-	// Handle file upload
-	const handleUpload = async () => {
-		if (!file) {
-			setError("No file selected");
-			return;
-		}
-
-		setUploading(true);
-
-		const formData = new FormData();
-		formData.append("image", file); // Append the file as "image"
-
-		try {
-			const response = await $admin_api.restaurants.image(id, formData); // Upload the image using the API
-
-			if (response) {
-				setError(null);
-				onUploadComplete();
-				setOpen(false);
-				setPreviewUrl(null); // Clear the preview after successful upload
-			} else {
-				setError("Upload failed");
-			}
-			toast.success("Image uploaded successfully");
-		} catch (error) {
-			console.error("Error uploading file:", error);
-			setError("Error uploading file");
-		} finally {
-			setUploading(false);
-		}
+		setPreviewUrl(null);
 	};
 
 	return (
-		<div >
+		<div>
 			<AlertDialog open={open} onOpenChange={setOpen}>
 				<AlertDialogTrigger asChild>
-					<Button
-						className=""
-						onClick={() => setOpen(true)}
-						variant="primary"
-					>
+					<Button onClick={() => setOpen(true)} variant="primary">
 						Update Restaurant Image
 					</Button>
 				</AlertDialogTrigger>
-				<AlertDialogContent className={`h-96`}>
+				<AlertDialogContent className="h-96">
 					<AlertDialogHeader>
 						<AlertDialogTitle>Upload Restaurant Image</AlertDialogTitle>
 						<AlertDialogDescription>
 							<div className="grid w-full items-center gap-1.5">
 								<Label htmlFor="picture"></Label>
 
-								{/* Display the preview if an image is selected */}
 								{previewUrl ? (
 									<div className="mt-4">
 										<img
@@ -118,7 +71,7 @@ function ImageUploader({
 											variant="ghost"
 											onClick={() => {
 												setFile(null);
-												setPreviewUrl(null); // Clear the preview
+												setPreviewUrl(null);
 											}}
 											className="mt-2 text-center"
 										>
@@ -126,13 +79,11 @@ function ImageUploader({
 										</Button>
 									</div>
 								) : (
-									<div
+									// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+<div
 										onClick={handleButtonClick}
-										onKeyDown={(e: any) =>
-											e.key === "Enter" && handleButtonClick()
-										}
-										tabIndex={0} // Makes the div focusable with the keyboard
-										role="button" // Ensures assistive technologies recognize it as a clickable element
+										tabIndex={0}
+										role="button"
 										className="mt-2 flex cursor-pointer justify-center rounded-lg border border-dashed border-gray-900/25 px-6 h-40"
 									>
 										<div className="text-center">
@@ -144,7 +95,6 @@ function ImageUploader({
 												className="sr-only"
 												onChange={handleFileChange}
 											/>
-											{error && <p className="text-red-500">{error}</p>}
 										</div>
 
 										<p className="flex flex-col justify-center">
@@ -165,10 +115,10 @@ function ImageUploader({
 						</Button>
 						<Button
 							variant="primary"
-							onClick={handleUpload}
-							disabled={!file || uploading}
+							onClick={() => handleUpload(file, id, setPreviewUrl, setOpen)}
+							disabled={!file}
 						>
-							{uploading ? "Uploading..." : "Upload Image"}
+							Upload Image
 						</Button>
 					</AlertDialogFooter>
 				</AlertDialogContent>

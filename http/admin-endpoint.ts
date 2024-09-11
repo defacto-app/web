@@ -115,6 +115,13 @@ export const $admin_api = {
 				return error;
 			}
 		},
+		image: async (id: string, body: any) => {
+			try {
+				return $axios_admin.post(`/menu/${id}`, body);
+			} catch (error: any) {
+				return error;
+			}
+		},
 	},
 
 	/*	upload:{

@@ -54,13 +54,41 @@ const RestaurantPage = () => {
 		}
 	};
 
+	const uploadRestaurantImage = async (
+		file: File | null,
+		id: string,
+		setPreviewUrl: (url: string | null) => void,
+		setOpen: (open: boolean) => void
+	) => {
+		if (!file) return;
+
+		const formData = new FormData();
+		formData.append("image", file);
+
+		try {
+			const response = await $admin_api.restaurants.image(id, formData);
+			if (response) {
+				toast.success("Restaurant image uploaded successfully");
+				setOpen(false);
+				setPreviewUrl(null);
+				await refreshData(); // Refresh restaurant data
+			}
+		} catch (error) {
+			toast.error("Error uploading restaurant image");
+			console.error(error);
+		}
+	};
+
 	return (
 		<div>
 			<div className={`relative`}>
 				<div className={`absolute right-0 bottom-0`}>
+
+
 					<ImageUploader
 						id={restaurant.publicId}
 						onUploadComplete={refreshData}
+						handleUpload={uploadRestaurantImage}
 					/>
 				</div>
 

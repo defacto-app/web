@@ -58,6 +58,31 @@ function Page({ params }: { params: { menuId: string } }) {
 	// Render error state
 	if (error) return <div>Error: {error}</div>;
 
+	const uploadRestaurantImage = async (
+		file: File | null,
+		id: string,
+		setPreviewUrl: (url: string | null) => void,
+		setOpen: (open: boolean) => void
+	) => {
+		if (!file) return;
+
+		const formData = new FormData();
+		formData.append("image", file);
+
+		try {
+			const response = await $admin_api.menu.image(id, formData);
+			if (response) {
+				toast.success("Menu image uploaded successfully");
+				setOpen(false);
+				setPreviewUrl(null);
+				await getData(); // Refresh restaurant data
+			}
+		} catch (error) {
+			toast.error("Error uploading restaurant image");
+			console.error(error);
+		}
+	};
+
 	// Render getMenu data once fetched
 	return (
 		<div className={`bg-white rounded-md  p-4 border mt-4`}>
@@ -73,7 +98,10 @@ function Page({ params }: { params: { menuId: string } }) {
 					alt={menuData?.name}
 					className="rounded-sm h-64  object-cover"
 				/>
+
 				<ImageUploader
+
+					handleUpload={uploadRestaurantImage}
 
 					id={menuData.publicId}
 					onUploadComplete={getData}
