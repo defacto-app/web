@@ -2,10 +2,8 @@
 
 import type React from "react";
 import { useEffect, useState } from "react";
-import { $admin_api } from "@/http/admin-endpoint";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ChevronLeft } from "lucide-react";
 import { useAtomRestaurantContext } from "@/app/admin/x/restaurants/[id]/resturant.atom";
 import {Separator} from "@/components/ui/separator";
 
@@ -30,9 +28,9 @@ export default function RestaurantLayout({
 		<div>
 			{/* Header Section */}
 			<header className={`bg-white shadow-sm`}>
-				<div className={` py-4 mb-4`}>
+				<div className={` py-2 mb-4 flex justify-between items-center px-4`}>
 
-					<div className="flex h-5 items-center space-x-4 text-sm">
+					<div className="flex h-5 items-center space-x-2 text-sm">
 						<div>
 							<Link href={`/admin/x/restaurants/${params.id}`} prefetch={true}>
 								<Button className={`text-xl`} variant={`ghost`}> {restaurant?.name}</Button>
@@ -56,6 +54,15 @@ export default function RestaurantLayout({
 								<Button variant={`ghost`}>Add Menu</Button>
 							</Link>
 						</div>
+					</div>
+
+					<div>
+						<Link
+							href={`/admin/x/restaurants/`}
+							prefetch={true}
+						>
+							<Button variant={`ghost`}>All Restaurants</Button>
+						</Link>
 					</div>
 				</div>
 

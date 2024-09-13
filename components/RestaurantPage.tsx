@@ -1,33 +1,27 @@
 // components/RestaurantPage.tsx
-import React from 'react';
-import { PhoneIcon, Star } from 'lucide-react';
-import Image from 'next/image';
-import { EnvelopeOpenIcon } from '@radix-ui/react-icons';
-import RestaurantHeader from './user/restaurant component/RestaurantHeader';
-import OperatingHours from './user/restaurant component/OperatingHours';
-import Categories from './user/restaurant component/Categories';
-import Products from './user/restaurant component/Products';
-import { restaurants } from '@/lib/data';
-import { MenuTab } from './user/restaurant component/MenuTab';
+import React from "react";
+import { PhoneIcon, Star } from "lucide-react";
+import Image from "next/image";
+import { EnvelopeOpenIcon } from "@radix-ui/react-icons";
+import RestaurantHeader from "@/components/user/restaurantComponent/RestaurantHeader";
+import OperatingHours from "@/components/user/restaurantComponent/OperatingHours";
 
-const RestaurantPage = ({ params }: { params: { restaurantId: string } }) => {
-  const restaurant = restaurants.find(r => r.id === params.restaurantId);
+import { restaurants } from "@/lib/data";
+import { MenuTab } from "@/components/user/restaurantComponent/MenuTab";
 
-  if (!restaurant) {
-    return <div>Restaurant not found</div>;
-  }
+function Page({ params }: { params: { slug: string } }) {
 
-  return (
-    <div className="container mx-auto px-4 py-8">
-     <div className="container mx-auto px-4 py-8">
-      <RestaurantHeader restaurant={restaurant} />
-      {/* <Categories /> */}
-      {/* <Products products={restaurant.products} /> */}
-<MenuTab restaurant={restaurant}/>
 
-    </div>
-    </div>
-  );
+
+	return (
+		<div className="container mx-auto px-4 py-8">
+			<div className="container mx-auto px-4 py-8">
+				{JSON.stringify(params)}
+			{/*	<RestaurantHeader restaurant={restaurant} />
+				<MenuTab restaurant={restaurant} />*/}
+			</div>
+		</div>
+	);
 };
 
-export default RestaurantPage;
+export default Page;

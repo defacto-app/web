@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatDateFromNow } from "@/lib/utils";
 import Link from "next/link";
+import {formatPrice} from "@/utils";
 
 export const menuColumns: ColumnDef<any>[] = [
 	{
@@ -45,17 +46,11 @@ export const menuColumns: ColumnDef<any>[] = [
 		header: "Price",
 		cell: ({ row }) => {
 			const { price } = row.original;
-
-			const formattedPrice = new Intl.NumberFormat('en-NG', {
-				style: 'currency',
-				currency: 'NGN',
-				minimumFractionDigits: 0
-			}).format(price);
+			const formattedPrice = formatPrice(price); // Use the reusable function
 
 			return <span>{formattedPrice}</span>;
 		},
 	},
-
     {
         accessorKey: "createdAt",
         header: "Created At",

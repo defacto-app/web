@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatDateFromNow } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
 
 export const restaurantColumns: ColumnDef<any>[] = [
 	{
@@ -25,13 +26,25 @@ export const restaurantColumns: ColumnDef<any>[] = [
 		accessorKey: "name",
 		header: "Name",
 		cell: ({ row }) => {
-			const { name } = row.original;
+			const { name,image } = row.original;
 			return (
 				<Link
 					prefetch={true}
-					className={`font-medium underline`}
+					className={`font-medium underline flex items-center gap-x-2`}
 					href={`/admin/x/restaurants/${row.original.publicId}`}
 				>
+					<Image
+						priority={true}
+						width={100}
+						height={100}
+						src={image}
+						alt="restaurant"
+						className="max-w-md object-cover h-14 rounded-sm"
+						placeholder="blur" // Blurred loading effect
+						blurDataURL="data:image/png;base64,..." // Placeholder image in base64 format
+
+					/>
+
 					{name}
 				</Link>
 			);
@@ -40,8 +53,8 @@ export const restaurantColumns: ColumnDef<any>[] = [
 	{
 		accessorKey: "menuCount",
 		header: "Menu Count",
-		cell: ({ row }) => {
-			const { menuCount } = row.original;
+		cell: ({row}) => {
+			const {menuCount } = row.original;
 			return (
 				<Link
 					prefetch={true}

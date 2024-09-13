@@ -1,9 +1,28 @@
 // components/Restaurants.tsx
-
+"use client";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { $api } from "@/http/endpoints";
+import {useEffect, useState} from "react";
+
+type RestaurantType = {
+	name: string; // The name of the restaurant
+	address: string; // The address of the restaurant
+	category: string; // The category of food (e.g., "Pasta")
+	deliveryTime: string; // Estimated delivery time (e.g., "11-22 mins")
+	email: string; // Email address of the restaurant
+	phone: string; // Phone number of the restaurant
+	image: string; // URL of the restaurant's image
+	openingHours: string; // The restaurant's opening hours
+	publicId: string; // Public ID for the restaurant (possibly for image or other resources)
+	rating: number; // The restaurant's rating (e.g., 4.4)
+	slug: string; // URL-friendly identifier for the restaurant
+	createdAt: string; // ISO 8601 date string representing when the restaurant was created
+	updatedAt: string; // ISO 8601 date string representing when the restaurant was last updated
+};
+
 
 const restaurants = [
 	{
@@ -59,16 +78,31 @@ const restaurants = [
 ];
 
 const RestaurantArea = () => {
+	const [data, setData] = useState<RestaurantType[]>([]);
+	const getData = async () => {
+		try {
+			const res = await $api.guest.restaurant.all();
+
+			setData(res.data.data);
+		} catch (e) {
+			console.log("error", e);
+		}
+	};
+
+	useEffect(() => {
+		getData();
+	}, []);
+
 	return (
 		<div className="container mx-auto px-4 py-8">
 			<h2 className="text-2xl font-bold text-center mb-8">
 				Restaurants you might like
 			</h2>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-				{restaurants.map((restaurant, index) => (
+				{data.map((restaurant:RestaurantType, index:any) => (
 					<Link
-						href={`user/restaurants/${restaurant.id}`}
-						key={restaurant.id}
+						href={`/restaurants/${restaurant.slug}`}
+						key={restaurant.publicId}
 						className="bg-white rounded-lg shadow-md overflow-hidden"
 					>
 						<div className="relative h-48">
@@ -88,7 +122,7 @@ const RestaurantArea = () => {
 							<div className="flex items-center mt-2">
 								<span className="text-gray-600">{restaurant.rating}</span>
 								<span className="text-gray-600 mx-2">•</span>
-								<span className="text-gray-600">{restaurant.time}</span>
+								<span className="text-gray-600">{restaurant.deliveryTime}</span>
 							</div>
 						</div>
 					</Link>

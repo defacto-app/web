@@ -1,10 +1,27 @@
-import { $axios } from "@/http/http.fn";
+import { $axios, fetchWithAuth } from "@/http/http.fn";
 import env from "@/config/env";
+import { $axios_admin } from "@/http/http-admin.fn";
 
 export const $api = {
 	guest: {
 		restaurant: {
 			all: async () => {
+				try {
+					return $axios.get(`/restaurants`, {});
+				} catch (error: any) {
+					return error;
+				}
+			},
+
+			one: async (slug: string) => {
+				try {
+					return $axios.get(`/restaurants/${slug}`, {});
+				} catch (error: any) {
+					return error;
+				}
+			},
+
+			/*		all: async () => {
 				try {
 					const res = await fetch(
 						`${env.base_url}/restaurant/all?page=1&perPage=10`,
@@ -17,7 +34,16 @@ export const $api = {
 					console.log(error);
 					throw error; // Re-throw the error to handle it outside if needed
 				}
-			},
+			},*/
+			/*	all: async ({ page = 1, perPage = 20, searchTerm = "" }) => {
+				try {
+					return $axios_admin.get(`/restaurants`, {
+						params: { page, perPage, search: searchTerm },
+					});
+				} catch (error: any) {
+					return error;
+				}
+			},*/
 		},
 		location: {
 			autocomplete: async (input: any) => {
@@ -52,7 +78,6 @@ export const $api = {
 	},
 
 	auth: {
-
 		user: {
 			confirm_phone_login: async (body: any) => {
 				try {
@@ -92,13 +117,12 @@ export const $api = {
 
 			me: async () => {
 				try {
-					return $axios.get(`/auth/ping`);
+					return await fetchWithAuth("/auth/ping", {}, "no-cache");
 				} catch (error: any) {
-					return error;
+					console.error(error);
+					throw error; // You can re-throw it or handle it differently
 				}
 			},
 		},
 	},
 };
-
-
