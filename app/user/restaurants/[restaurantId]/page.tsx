@@ -1,4 +1,4 @@
-import RestaurantPage from '@/components/RestaurantPage';
+import RestaurantPage from '@/components/restaurant/RestaurantPage';
 import React from 'react'
 
 export default function Page({ params }: { params: { restaurantId: string } }) {

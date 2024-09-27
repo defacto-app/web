@@ -5,9 +5,11 @@ import { $axios_admin } from "@/http/http-admin.fn";
 export const $api = {
 	guest: {
 		restaurant: {
-			all: async () => {
+			all: async ({ page = 1, perPage = 20, searchTerm = "" }) => {
 				try {
-					return $axios.get(`/restaurants`, {});
+					return $axios.get(`/restaurants`, {
+						params: { page, perPage, search: searchTerm },
+					});
 				} catch (error: any) {
 					return error;
 				}

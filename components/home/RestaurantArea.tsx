@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { $api } from "@/http/endpoints";
 import { useEffect, useState } from "react";
-import RestaurantGrid from "@/components/RestaurantGrid";
+import RestaurantGrid from "@/components/restaurant/RestaurantGrid";
 import type {RestaurantType} from "@/lib/types";
 
 
