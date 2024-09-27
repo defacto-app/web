@@ -12,7 +12,7 @@ function MenuArea({ data }: any) {
 				<div>
 					<h2>Menu</h2>
 					{data.length > 0 ? (
-						<ul className={`grid grid-cols-3 gap-12`}>
+						<ul className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
 							{data.map((item: any) => (
 								<li key={item._id}>
 									<div className={`bg-white border  rounded-sm `}>
@@ -23,7 +23,7 @@ function MenuArea({ data }: any) {
 											width={150}
 											height={400}
 										/>
-										<div className={`h-32`}>
+										<div className={`h-32 p-4`}>
 											<h3>{item.name}</h3>
 											<p>Price: {formatPrice(item.price)}</p>
 										</div>

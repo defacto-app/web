@@ -135,28 +135,40 @@ const UpperRowCard = ({
 
 export default function MarqueeSlide() {
 	return (
-        <div className="bg-primary-900 relative flex  w-full gap-9 py-5 flex-col items-center justify-center overflow-hidden rounded-lg   ">
-			<div className="absolute top-0 right-0 w-1/4 h-1/4">
-				<Image
-                    src="/bg.png"
-                    alt="Background"
-					fill
-					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-					style={{ objectFit: 'cover' }} />
+		<div>
+			<div className="text-center bg-primary-900 pt-10 pb-10">
+				<h1 className="text-xl pb-5 font-bold text-primary-200">Our Reviews</h1>
+				<h2 className="text-4xl font-bold text-primary-200">
+					Our Happy Customers
+				</h2>
 			</div>
-			<Marquee pauseOnHover className="[--duration:20s] ">
-				{upperRowContent.map((item, index) => (
-					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-					<UpperRowCard key={index} {...item} />
-				))}
-			</Marquee>
-			<Marquee reverse pauseOnHover className="[--duration:20s]">
-				{reviews.map((review) => (
-					<ReviewCard key={review.username} {...review} />
-				))}
-			</Marquee>
-			<div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-primary-900 dark:from-background" />
-			<div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-primary-900 dark:from-background" />
+			<div
+				className="bg-primary-900 relative flex  w-full gap-9 py-5 flex-col items-center justify-center overflow-hidden   ">
+				<div className="absolute top-0 right-0 w-1/4 h-1/4">
+					<Image
+						src="/bg.png"
+						alt="Background"
+						fill
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+						style={{objectFit: 'cover'}}/>
+				</div>
+				<Marquee pauseOnHover className="[--duration:20s] ">
+					{upperRowContent.map((item, index) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+						<UpperRowCard key={index} {...item} />
+					))}
+				</Marquee>
+				<Marquee reverse pauseOnHover className="[--duration:20s]">
+					{reviews.map((review) => (
+						<ReviewCard key={review.username} {...review} />
+					))}
+				</Marquee>
+				<div
+					className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-primary-900 dark:from-background"/>
+				<div
+					className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-primary-900 dark:from-background"/>
+			</div>
+
 		</div>
-    );
+	);
 }

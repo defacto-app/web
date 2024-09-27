@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { $api } from "@/http/endpoints";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 type RestaurantType = {
 	name: string; // The name of the restaurant
@@ -22,7 +22,6 @@ type RestaurantType = {
 	createdAt: string; // ISO 8601 date string representing when the restaurant was created
 	updatedAt: string; // ISO 8601 date string representing when the restaurant was last updated
 };
-
 
 const restaurants = [
 	{
@@ -99,7 +98,7 @@ const RestaurantArea = () => {
 				Restaurants you might like
 			</h2>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-				{data.map((restaurant:RestaurantType, index:any) => (
+				{data.map((restaurant: RestaurantType, index: any) => (
 					<Link
 						href={`/restaurants/${restaurant.slug}`}
 						key={restaurant.publicId}
@@ -129,9 +128,11 @@ const RestaurantArea = () => {
 				))}
 			</div>
 			<div className="text-center mt-8">
-				<Button className="bg-blue-500 text-white px-4 py-2 rounded-full">
-					Show more
-				</Button>
+				<Link href="/restaurants">
+					<Button className="bg-blue-500 text-white px-4 py-2 rounded-full">
+						Show more
+					</Button>
+				</Link>
 			</div>
 		</div>
 	);

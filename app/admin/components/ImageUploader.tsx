@@ -13,13 +13,18 @@ import {
 } from "@/components/ui/alert-dialog";
 
 function ImageUploader({
-						   id,
-						   onUploadComplete,
-						   handleUpload, // Accept handleUpload function as a prop
-					   }: {
+	id,
+	onUploadComplete,
+	handleUpload, // Accept handleUpload function as a prop
+}: {
 	id: string;
 	onUploadComplete: () => void;
-	handleUpload: (file: File | null, id: string, setPreviewUrl: (url: string | null) => void, setOpen: (open: boolean) => void) => Promise<void>; // Use this function for custom upload logic
+	handleUpload: (
+		file: File | null,
+		id: string,
+		setPreviewUrl: (url: string | null) => void,
+		setOpen: (open: boolean) => void,
+	) => Promise<void>; // Use this function for custom upload logic
 }) {
 	const [file, setFile] = useState<File | null>(null);
 	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -80,7 +85,7 @@ function ImageUploader({
 									</div>
 								) : (
 									// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
-<div
+									<div
 										onClick={handleButtonClick}
 										tabIndex={0}
 										role="button"
