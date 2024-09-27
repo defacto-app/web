@@ -35,6 +35,23 @@ export interface Restaurant {
   }[];
 }
 
+export type RestaurantType = {
+  name: string; // The name of the restaurant
+  address: string; // The address of the restaurant
+  category: string; // The category of food (e.g., "Pasta")
+  deliveryTime: string; // Estimated delivery time (e.g., "11-22 mins")
+  email: string; // Email address of the restaurant
+  phone: string; // Phone number of the restaurant
+  image: string; // URL of the restaurant's image
+  openingHours: string; // The restaurant's opening hours
+  publicId: string; // Public ID for the restaurant (possibly for image or other resources)
+  rating: number; // The restaurant's rating (e.g., 4.4)
+  slug: string; // URL-friendly identifier for the restaurant
+  createdAt: string; // ISO 8601 date string representing when the restaurant was created
+  updatedAt: string; // ISO 8601 date string representing when the restaurant was last updated
+};
+
+
 export interface RestaurantFormType {
   name: string;
   deliveryTime: string;
