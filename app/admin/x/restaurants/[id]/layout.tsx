@@ -51,7 +51,7 @@ export default function RestaurantLayout({
 								href={`/admin/x/restaurants/${params.id}/menu/create`}
 								prefetch={true}
 							>
-								<Button variant={`ghost`}>Add Menu</Button>
+								<Button variant={`ghost`}>Add Menu Item</Button>
 							</Link>
 						</div>
 					</div>

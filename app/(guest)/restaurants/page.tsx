@@ -3,7 +3,6 @@
 import type React from "react";
 import { useEffect, useState } from "react";
 import RestaurantGrid from "@/components/restaurant/RestaurantGrid";
-import type { RestaurantType } from "@/lib/types";
 import { $api } from "@/http/endpoints";
 import { Input } from "@/components/ui/input";
 import SideBarRestaurant from "@/components/restaurant/SideBarRestaurant";
@@ -30,7 +29,7 @@ const fetchRestaurants = async (
 export default function Page() {
 	const [searchTerm, setSearchTerm] = useState(""); // Track the search term
 	const [page, setPage] = useState(1); // Track current page
-	const [perPage, setPerPage] = useState(10); // Track items per page
+	const [perPage, setPerPage] = useState(30); // Track items per page
 	const [isMounted, setIsMounted] = useState(false); // Ensure the component is mounted
 	const debouncedSearchTerm = useDebounce(searchTerm, 500); // Debounce search term by 500ms
 
@@ -67,7 +66,7 @@ export default function Page() {
 
 	return (
 		<div>
-			<div className={`bg-blue-200`}>
+			<div className={`bg-blue-200 sticky top-0 z-10`}>
 				{/* Search Input */}
 				<Input
 					type="search"
@@ -81,23 +80,24 @@ export default function Page() {
 					you by searching for restaurants.
 				</p>
 			</div>
-			<div className=" pt-4 pb-20">
+			<div className="pt-4 pb-20">
 				<div className="grid grid-cols-1 md:grid-cols-4">
 					{/* SideBarRestaurant - Hidden on mobile, shown on medium screens and up */}
-					<div className="hidden md:block">
-						<SideBarRestaurant />
+					<div className="hidden md:block sticky top-0 h-screen">
+						<SideBarRestaurant/>
 					</div>
 
 					{/* RestaurantGrid takes full width on mobile, 3/4 width on medium screens and up */}
 					<div className="col-span-1 md:col-span-3">
 						{isLoading ? (
-							<RestaurantGridLoading />
+							<RestaurantGridLoading/>
 						) : (
-							<RestaurantGrid data={data?.data?.data} />
+							<RestaurantGrid data={data?.data?.data}/>
 						)}
 					</div>
 				</div>
 			</div>
 		</div>
+
 	);
 }

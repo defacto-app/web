@@ -86,6 +86,7 @@ const RestaurantPage = () => {
 
 
 					<ImageUploader
+						buttonText="Update Restaurant Image"
 						id={restaurant.publicId}
 						onUploadComplete={refreshData}
 						handleUpload={uploadRestaurantImage}

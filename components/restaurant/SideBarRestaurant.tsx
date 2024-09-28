@@ -24,7 +24,7 @@ const SideBarRestaurant = () => {
 	];
 
 	return (
-		<div className="bg-gray-50 p-6 rounded-xl shadow-lg max-w-xs">
+		<div className="bg-gray-50 p-6  rounded-xl shadow-lg max-w-xs overflow-y-scroll">
 			{/* Sort by Section */}
 			<div className="mb-8">
 				<h4 className="text-lg font-bold mb-4">Sort by</h4>

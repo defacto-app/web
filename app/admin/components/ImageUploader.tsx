@@ -13,10 +13,12 @@ import {
 } from "@/components/ui/alert-dialog";
 
 function ImageUploader({
+	buttonText,
 	id,
 	onUploadComplete,
 	handleUpload, // Accept handleUpload function as a prop
 }: {
+	buttonText: string;
 	id: string;
 	onUploadComplete: () => void;
 	handleUpload: (
@@ -55,7 +57,7 @@ function ImageUploader({
 			<AlertDialog open={open} onOpenChange={setOpen}>
 				<AlertDialogTrigger asChild>
 					<Button onClick={() => setOpen(true)} variant="primary">
-						Update Restaurant Image
+						{buttonText || "Update  Image"}
 					</Button>
 				</AlertDialogTrigger>
 				<AlertDialogContent className="h-96">

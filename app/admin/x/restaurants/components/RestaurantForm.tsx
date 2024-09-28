@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import type { RestaurantFormType } from "@/lib/types";
 import { Label } from "@/components/ui/label";
+import CategorySelect from "@/app/admin/x/restaurants/components/CategorySelect";
 
 interface RestaurantFormProps {
 	restaurant: RestaurantFormType | null;
@@ -44,6 +45,7 @@ export const RestaurantFormComponent = ({
 						/>
 					</div>
 					<div>
+						<CategorySelect/>
 						<Label htmlFor="category">Category</Label>
 						<Input
 							id="category"

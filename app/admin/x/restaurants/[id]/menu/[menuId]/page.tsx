@@ -100,7 +100,7 @@ function Page({ params }: { params: { menuId: string } }) {
 				/>
 
 				<ImageUploader
-
+buttonText={"Update  Image"}
 					handleUpload={uploadRestaurantImage}
 
 					id={menuData.publicId}
