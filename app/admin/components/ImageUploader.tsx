@@ -11,6 +11,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import Image from "next/image";
 
 function ImageUploader({
 	buttonText,
@@ -69,7 +70,9 @@ function ImageUploader({
 
 								{previewUrl ? (
 									<div className="mt-4">
-										<img
+										<Image
+											width={500}
+											height={500}
 											src={previewUrl}
 											alt="Selected preview"
 											className="w-full h-40 object-contain"

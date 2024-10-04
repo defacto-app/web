@@ -9,7 +9,7 @@ import OperatingHours from "@/components/user/restaurantComponent/OperatingHours
 import { restaurants } from "@/lib/data";
 import { MenuTab } from "@/components/user/restaurantComponent/MenuTab";
 
-function Page({ params }: { params: { slug: string } }) {
+function Page({ params }: { params: { restaurantId: string } }) {
 
 
 

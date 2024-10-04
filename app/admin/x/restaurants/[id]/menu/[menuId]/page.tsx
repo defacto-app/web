@@ -30,7 +30,7 @@ function Page({ params }: { params: { menuId: string } }) {
 
 	useEffect(() => {
 		getData();
-	}, [params.menuId]); // Re-fetch if menuId changes
+	}, [getData, params.menuId]); // Re-fetch if menuId changes
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;

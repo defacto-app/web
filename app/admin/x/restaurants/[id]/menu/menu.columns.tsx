@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { formatDateFromNow } from "@/lib/utils";
 import Link from "next/link";
 import {formatPrice} from "@/utils";
+import Image from "next/image";
 
 export const menuColumns: ColumnDef<any>[] = [
 	{
@@ -33,7 +34,7 @@ export const menuColumns: ColumnDef<any>[] = [
                     className={`font-medium underline flex items-center gap-x-2`}
                     href={`/admin/x/restaurants/${row.original.parent}/menu/${row.original.publicId}`}
                 >
-                    <img src={image} alt="restaurant" className="max-w-md object-cover h-14 rounded-sm"/>
+                    <Image src={image} alt="restaurant" className="max-w-md object-cover h-14 rounded-sm"/>
 
                     {name}
                 </Link>

@@ -14,7 +14,9 @@ const RestaurantArea = () => {
 	const [data, setData] = useState<RestaurantType[]>([]);
 	const getData = async () => {
 		try {
-			const res = await $api.guest.restaurant.all();
+			const res = await $api.guest.restaurant.all(
+				{ page: 1, perPage: 3 },
+			);
 
 			setData(res.data.data);
 		} catch (e) {
