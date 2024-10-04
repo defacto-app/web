@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Button } from "@/components/ui/button";
 
 const SideBarRestaurant = () => {
@@ -22,6 +22,15 @@ const SideBarRestaurant = () => {
 		{ id: "alcohol_beer", name: "Alcohol/Beer" },
 		{ id: "ice_cream", name: "Ice Cream" },
 	];
+
+
+	function  getDta(){
+
+	}
+
+	useEffect(() => {
+		getDta();
+	}, []);
 
 	return (
 		<div className="bg-gray-50 p-6  rounded-xl shadow-lg max-w-xs overflow-y-scroll">

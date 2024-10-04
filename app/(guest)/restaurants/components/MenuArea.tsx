@@ -16,14 +16,15 @@ function MenuArea({ data }: any) {
 							{data.map((item: any) => (
 								<li key={item._id}>
 									<div className={`bg-white border  rounded-sm `}>
+
 										<Image
 											src={item.image}
 											alt={item.name}
-											className={`rounded-sm h-64 w-full`}
+											className={`rounded-t-sm h-64 w-full object-cover`}
 											width={150}
 											height={400}
 										/>
-										<div className={`h-32 p-4`}>
+										<div className={` p-4`}>
 											<h3>{item.name}</h3>
 											<p>Price: {formatPrice(item.price)}</p>
 										</div>
