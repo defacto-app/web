@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 
 const frameworks = [
 	{ value: "next.js", label: "Next.js" },
@@ -34,7 +35,7 @@ export function ComboboxDemo() {
 
 	const toggleDropdown = () => setIsOpen(!isOpen);
 
-	const selectFramework = (selectedValue) => {
+	const selectFramework = (selectedValue: React.SetStateAction<string>) => {
 		setValue(selectedValue);
 		setIsOpen(false);
 		setSearchTerm("");
@@ -49,22 +50,16 @@ export function ComboboxDemo() {
 		<Popover open={isOpen} onOpenChange={setIsOpen}>
 			{/* Trigger button */}
 			<PopoverTrigger asChild>
-				<button
+				<Button
 					onClick={toggleDropdown}
-					style={{
-						width: "200px",
-						padding: "8px",
-						border: "1px solid #ccc",
-						display: "flex",
-						justifyContent: "space-between",
-						alignItems: "center",
-					}}
+					variant="outline"
+					className={`w-48 text-left`}
 				>
 					{value
 						? frameworks.find((f) => f.value === value)?.label
 						: "Select framework..."}
 					<span>▼</span> {/* Dropdown icon */}
-				</button>
+				</Button>
 			</PopoverTrigger>
 
 			{/* Popover content */}
