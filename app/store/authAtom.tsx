@@ -74,10 +74,8 @@ export const useAtomAuthContext = () => {
 	const logOut = useSetAtom(logOutAtom);
 	const setAuthUser = useSetAtom(authUserAtom);
 
-
-
 	// Define the getMe function
-		const getMe = useCallback(async () => {
+	const getMe = useCallback(async () => {
 		try {
 			const { data } = await $api.auth.user.me();
 			setAuthUser(data.user);
@@ -86,11 +84,10 @@ export const useAtomAuthContext = () => {
 
 			clearToken("user");
 
-
 			console.error("Failed to fetch user data", error);
 			// Handle error (e.g., log the user out or display a message)
 		}
-	}, [setAuthUser,setIsLoggedIn]);
+	}, [setAuthUser, setIsLoggedIn]);
 
 	useEffect(() => {
 		setIsLoggedIn(isUserLoggedIn());
