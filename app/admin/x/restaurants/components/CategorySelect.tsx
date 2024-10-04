@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { useQuery } from "react-query";
 import { useDebounce } from "react-haiku";
 import { $admin_api } from "@/http/admin-endpoint";
+import {ComboboxDemo} from "@/components/ui/ComboBox";
 
 // Fetch data from the API
 const getData = async (page: number, perPage: number, searchTerm: string) => {
@@ -58,6 +59,9 @@ function CategorySelect() {
 				placeholder="Search Category..."
 				className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
 			/>
+dd
+			<ComboboxDemo/>
+
 
 		{/*	<Select>
 				<SelectTrigger className="w-[180px]">
