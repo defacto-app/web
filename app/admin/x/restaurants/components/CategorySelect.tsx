@@ -59,14 +59,14 @@ function CategorySelect() {
 				className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
 			/>
 
-			<Select>
+		{/*	<Select>
 				<SelectTrigger className="w-[180px]">
 					<SelectValue placeholder="Select a category" />
 				</SelectTrigger>
 				<SelectContent>
 					<SelectGroup>
 						<SelectLabel>Categories</SelectLabel>
-						{/* Dynamically display the categories */}
+						 Dynamically display the categories
 						{isLoading ? (
 							<SelectItem disabled>Loading...</SelectItem>
 						) : categories.length > 0 ? (
@@ -83,7 +83,7 @@ function CategorySelect() {
 						)}
 					</SelectGroup>
 				</SelectContent>
-			</Select>
+			</Select>*/}
 		</div>
 	);
 }
