@@ -1,19 +1,11 @@
 import type React from "react";
 import { useEffect, useState } from "react";
-import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
+
 import { Input } from "@/components/ui/input";
 import { useQuery } from "react-query";
 import { useDebounce } from "react-haiku";
 import { $admin_api } from "@/http/admin-endpoint";
-import {ComboboxDemo} from "@/components/ui/ComboBox";
+import {SearchSelector} from "@/components/ui/SearchSelector";
 
 // Fetch data from the API
 const getData = async (page: number, perPage: number, searchTerm: string) => {
@@ -52,42 +44,11 @@ function CategorySelect() {
 	return (
 		<div>
 			{/* Search input stays outside the dropdown to prevent re-renders */}
-			<Input
-				type="search"
-				value={searchTerm} // Bind input value to state
-				onChange={handleSearchChange} // Update state on input change
-				placeholder="Search Category..."
-				className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-			/>
-dd
-			<ComboboxDemo/>
+
+			<SearchSelector/>
 
 
-		{/*	<Select>
-				<SelectTrigger className="w-[180px]">
-					<SelectValue placeholder="Select a category" />
-				</SelectTrigger>
-				<SelectContent>
-					<SelectGroup>
-						<SelectLabel>Categories</SelectLabel>
-						 Dynamically display the categories
-						{isLoading ? (
-							<SelectItem disabled>Loading...</SelectItem>
-						) : categories.length > 0 ? (
-							categories.map((category: any) => (
-								<SelectItem
-									key={category._id}
-									value={category.publicId}
-								>
-									{category.name}
-								</SelectItem>
-							))
-						) : (
-							<SelectItem disabled>No categories found</SelectItem>
-						)}
-					</SelectGroup>
-				</SelectContent>
-			</Select>*/}
+
 		</div>
 	);
 }
