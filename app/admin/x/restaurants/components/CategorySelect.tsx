@@ -1,11 +1,8 @@
-import type React from "react";
-import { useEffect, useState } from "react";
-
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { useDebounce } from "react-haiku";
 import { $admin_api } from "@/http/admin-endpoint";
-import {SearchSelector} from "@/components/ui/SearchSelector";
+import { SearchSelector } from "@/components/ui/SearchSelector";
 
 // Fetch data from the API
 const getData = async (page: number, perPage: number, searchTerm: string) => {
@@ -33,22 +30,27 @@ function CategorySelect() {
 		}
 	);
 
-	// Handle search input change
-	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchTerm(e.target.value); // Update search term
-	};
+	// Get the categories from the API response and map to desired format
+	const categories = data?.data?.data.map((category) => ({
+		value: category.slug, // Using slug as the value
+		label: category.name, // Using name as the label
+	})) || [];
 
-	// Get the categories from the API response
-	const categories = data?.data?.data || [];
+	// Handle selection of a category
+	const handleCategorySelect = (selectedValue: string) => {
+		console.log("Selected Category Slug:", selectedValue);
+		// Additional logic for category selection can go here
+	};
 
 	return (
 		<div>
-			{/* Search input stays outside the dropdown to prevent re-renders */}
-
-			<SearchSelector/>
-
-
-
+			{/* Reusable SearchSelector with debounced input */}
+			<SearchSelector
+				data={categories}
+				onSelect={handleCategorySelect}
+				placeholder="Search categories..."
+				debounceDelay={500} // Debounce search input by 500ms
+			/>
 		</div>
 	);
 }

@@ -45,15 +45,10 @@ export const RestaurantFormComponent = ({
 						/>
 					</div>
 					<div>
-						<CategorySelect/>
 						<Label htmlFor="category">Category</Label>
-						<Input
-							id="category"
-							name="category"
-							value={restaurant.category}
-							onChange={handleInputChange}
-							placeholder="Category"
-						/>
+
+						<CategorySelect/>
+
 					</div>
 					<div>
 						<Label htmlFor="address">Address</Label>
