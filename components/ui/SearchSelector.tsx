@@ -106,6 +106,7 @@ export function SearchSelector({
 												handleSelect(item.value);
 											}
 										}}
+										// biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
 										tabIndex={0} // Make items focusable
 										className={`px-4 py-2 cursor-pointer ${
 											index === highlightedIndex ? "bg-gray-100" : ""

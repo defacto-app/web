@@ -170,7 +170,7 @@ export default function FoodHero2() {
                     </div>
                 </div>
             </div>
-            <div className="container">
+         {/*   <div className="container">
                 <div className="  py-16 ">
                     <p className="text-start text-base font-semibold text-gray-500">
                         Trusted by over 30+ businesses
@@ -179,7 +179,7 @@ export default function FoodHero2() {
                         {logoElements}
                     </div>
                 </div>
-            </div>
+            </div>*/}
         </div>
     );
 }

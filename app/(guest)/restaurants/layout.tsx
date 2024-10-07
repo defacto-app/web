@@ -11,7 +11,7 @@ export default function RestaurantLayout({
 	const [queryClient] = useState(() => new QueryClient());
 	return (
 		<QueryClientProvider client={queryClient}>
-		<div className="container mx-auto  ">
+		<div className="">
 			{/* Main Content Section */}
 			<main className="pb-10">{children}</main>
 		</div>

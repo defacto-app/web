@@ -31,7 +31,7 @@ function CategorySelect() {
 	);
 
 	// Get the categories from the API response and map to desired format
-	const categories = data?.data?.data.map((category) => ({
+	const categories = data?.data?.data.map((category:any) => ({
 		value: category.slug, // Using slug as the value
 		label: category.name, // Using name as the label
 	})) || [];

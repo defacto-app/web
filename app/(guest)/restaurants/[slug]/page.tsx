@@ -6,7 +6,8 @@ import { formatPrice } from "@/utils";
 import MenuArea from "@/app/(guest)/restaurants/components/MenuArea";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { Button } from "@/components/ui/button"; // Assuming you have a button component
+import { Button } from "@/components/ui/button";
+import { MapPin, Clock1 } from "lucide-react"; // Assuming you have a button component
 
 function Page({ params }: { params: { slug: string } }) {
 	// State for restaurant and menu data
@@ -53,27 +54,39 @@ function Page({ params }: { params: { slug: string } }) {
 	return (
 		<div>
 			{/* Restaurant Information */}
-			<div >
+			<div className="relative">
 				{restaurant && (
-					<div >
-						<div className={`absolute top-40`}>
-							<h1>{restaurant.name}</h1>
-							<p>{restaurant.address}</p>
-							<p>{restaurant.deliveryTime}</p>
-							<p>{restaurant.openingHours}</p>
-							<p>{restaurant.address}</p>
+					<div>
+						<div className={`absolute top-40 text-white z-10 px-20 space-y-2`}>
+							{" "}
+							{/* Text is white */}
+							<h1 className={`text-5xl font-bold`}>{restaurant.name}</h1>
+							<div className={`flex items-center gap-x-2`}>
+								<MapPin />
+
+								<p className={`text-lg`}>{restaurant.address}</p>
+							</div>
+							<div className={`flex items-center gap-x-2`}>
+								<Clock1 />
+								<p className={`text-lg`}>{restaurant.deliveryTime}</p>
+							</div>
 							{/* Opening Hours */}
-							<div >
-								<p>Open: {restaurant.openingHours}</p>
+							<div>
+								<p>
+									<span className={`text-blue-500 text-xl`}>Open</span>:{" "}
+									{restaurant.openingHours}
+								</p>
 							</div>
 						</div>
-						<Image
-							width={1000}
-							height={100}
-							className={`h-[400px] w-full object-cover`}
-							src={restaurant.image}
-							alt={restaurant.name}
-						/>
+						<div className="relative">
+							<Image
+								width={1000}
+								height={100}
+								className={`h-[400px] w-full object-cover filter brightness-50`} // Darken the image
+								src={restaurant.image}
+								alt={restaurant.name}
+							/>
+						</div>
 					</div>
 				)}
 			</div>
