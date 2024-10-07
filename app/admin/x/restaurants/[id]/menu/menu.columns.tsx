@@ -34,7 +34,11 @@ export const menuColumns: ColumnDef<any>[] = [
                     className={`font-medium underline flex items-center gap-x-2`}
                     href={`/admin/x/restaurants/${row.original.parent}/menu/${row.original.publicId}`}
                 >
-                    <Image src={image} alt="restaurant" className="max-w-md object-cover h-14 rounded-sm"/>
+                    <Image
+
+						width={56}
+						height={56}
+						src={image} alt="restaurant" className="max-w-md object-cover h-14 rounded-sm"/>
 
                     {name}
                 </Link>
@@ -50,6 +54,14 @@ export const menuColumns: ColumnDef<any>[] = [
 			const formattedPrice = formatPrice(price); // Use the reusable function
 
 			return <span>{formattedPrice}</span>;
+		},
+	},	{
+		accessorKey: "menuType",
+		header: "menu Type",
+		cell: ({ row }) => {
+			const { menuType } = row.original;
+
+			return <span>{menuType}</span>;
 		},
 	},
     {

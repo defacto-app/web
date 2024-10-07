@@ -16,6 +16,7 @@ function Page({ params }: { params: { slug: string } }) {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [search, setSearch] = useState<string>("");
+	const [activeTab, setActiveTab] = useState<string>("All");
 
 	// Function to fetch restaurant and menu data
 	const getData = async () => {
@@ -37,10 +38,17 @@ function Page({ params }: { params: { slug: string } }) {
 		getData();
 	}, []);
 
-	// Filtered menu based on search input
-	const filteredMenu = menu.filter((item) =>
-		item.name.toLowerCase().includes(search.toLowerCase()),
-	);
+	// Extract unique menu types
+	const uniqueMenuTypes = ["All", ...new Set(menu.map((item) => item.menuType))];
+
+
+	// Filtered menu based on the active tab and search input
+	const filteredMenu = menu.filter((item) => {
+		const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase());
+		const matchesTab = activeTab === "All" || item.menuType === activeTab;
+		return matchesSearch && matchesTab;
+	});
+
 
 	// Conditional rendering
 	if (loading) {
@@ -93,11 +101,17 @@ function Page({ params }: { params: { slug: string } }) {
 
 			{/* Search Input and Menu */}
 			<div className={`container mx-auto py-8`}>
-				<div className="menu-filters">
-					<Button variant="outline">All</Button>
-					<Button variant="outline">For You</Button>
-					<Button variant="outline">Desserts</Button>
-					<Button variant="outline">Drinks</Button>
+
+				<div className="menu-filters flex space-x-4 mb-4">
+					{uniqueMenuTypes.map((type) => (
+						<Button
+							key={type}
+							variant={activeTab === type ? "primary" : "outline"}
+							onClick={() => setActiveTab(type)}
+						>
+							{type}
+						</Button>
+					))}
 				</div>
 
 				{/* Search Bar */}
@@ -110,7 +124,7 @@ function Page({ params }: { params: { slug: string } }) {
 
 				{/* Menu Area */}
 				<div className="menu-items">
-					<MenuArea data={filteredMenu.length > 0 ? filteredMenu : menu} />
+					<MenuArea data={filteredMenu.length > 0 ? filteredMenu : menu}/>
 				</div>
 			</div>
 		</div>
