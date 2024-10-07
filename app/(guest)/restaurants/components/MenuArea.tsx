@@ -1,9 +1,10 @@
 import React from "react";
 import { formatPrice } from "@/utils";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 function MenuArea({ data }: any) {
 	return (
-		<div >
+		<div>
 			<div>
 				{/* Display restaurant details */}
 				{/*{restaurant && <RestaurantPage restaurant={restaurant} />}*/}
@@ -16,7 +17,6 @@ function MenuArea({ data }: any) {
 							{data.map((item: any) => (
 								<li key={item._id}>
 									<div className={`bg-white border  rounded-sm `}>
-
 										<Image
 											src={item.image}
 											alt={item.name}
@@ -27,6 +27,12 @@ function MenuArea({ data }: any) {
 										<div className={` p-4`}>
 											<h3>{item.name}</h3>
 											<p>Price: {formatPrice(item.price)}</p>
+
+											<Button
+												className={`bg-blue-500 text-white p-2 rounded-sm mt-10`}
+											>
+												Add to Cart
+											</Button>
 										</div>
 									</div>
 								</li>
