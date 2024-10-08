@@ -8,6 +8,7 @@ import {
 	removeItemAtom,
 	updateItemQuantityAtom,
 } from "@/app/store/cartAtom";
+import { formatPrice } from "@/utils";
 
 function Page() {
 	// Access cart state and atom functions
@@ -16,19 +17,12 @@ function Page() {
 	const removeItem = useSetAtom(removeItemAtom);
 	const updateItemQuantity = useSetAtom(updateItemQuantityAtom);
 
+	const [deliveryFee, setDeliveryFee] = React.useState(500);
+	const [discount, setDiscount] = React.useState(25);
 	// Sample product to simulate adding to the cart
-	const sampleProduct = {
-		id: "1",
-		name: "Mixed Vegetable Salad",
-		price: 2000,
-		quantity: 1,
-		image: "https://via.placeholder.com/64",
-	};
 
-	// Add sample data to cart when the component loads
-	useEffect(() => {
-		addItem(sampleProduct);
-	}, [addItem]);
+
+
 
 	return (
 		<div className="p-8">
@@ -60,70 +54,66 @@ function Page() {
 					</div>
 
 					{/* Order Summary Section */}
-					<div className="space-y-6">
-						{cart.length > 0 ? (
-							cart.map((item) => (
-								<div
-									key={item.id}
-									className="flex items-center justify-between bg-white p-4 rounded-lg border"
-								>
-									<div className="flex items-center">
-										<img
-											src={item.image}
-											alt={item.name}
-											className="w-16 h-16 object-cover rounded-lg"
-										/>
-										<div className="ml-4">
-											<p className="font-semibold">{item.name}</p>
-											<p className="text-blue-500">₦{item.price}</p>
+					<div className={`bg-white p-4 border rounded-lg`}>
+						<div className="space-y-6  ">
+							{cart.length > 0 ? (
+								cart.map((item) => (
+									<div
+										key={item.id}
+										className="flex items-center justify-between p-4  border-b last:border-b-0"
+									>
+										<div className="flex items-center">
+											<img
+												src={item.image}
+												alt={item.name}
+												className="w-16 h-16 object-cover rounded-lg"
+											/>
+											<div className="ml-4">
+												<p className="font-semibold">{item.name}</p>
+												<p className="text-blue-500">₦{item.price}</p>
+											</div>
+										</div>
+										<div className="flex items-center space-x-2">
+											<Button
+												className="px-3 py-1 bg-gray-200 rounded-lg"
+												onClick={() =>
+													updateItemQuantity({
+														itemId: item.id,
+														quantity: item.quantity - 1,
+													})
+												}
+												disabled={item.quantity === 1} // Disable if the quantity is 1
+											>
+												-
+											</Button>
+											<span>{item.quantity}</span>
+											<Button
+												className="px-3 py-1 bg-gray-200 rounded-lg"
+												onClick={() =>
+													updateItemQuantity({
+														itemId: item.id,
+														quantity: item.quantity + 1,
+													})
+												}
+											>
+												+
+											</Button>
+											<Button
+												className="text-red-500"
+												onClick={() => removeItem(item.id)}
+											>
+												🗑
+											</Button>
 										</div>
 									</div>
-									<div className="flex items-center space-x-2">
-										<Button
-											className="px-3 py-1 bg-gray-200 rounded-lg"
-											onClick={() =>
-												updateItemQuantity({
-													itemId: item.id,
-													quantity: item.quantity - 1,
-												})
-											}
-											disabled={item.quantity === 1} // Disable if the quantity is 1
-										>
-											-
-										</Button>
-										<span>{item.quantity}</span>
-										<Button
-											className="px-3 py-1 bg-gray-200 rounded-lg"
-											onClick={() =>
-												updateItemQuantity({
-													itemId: item.id,
-													quantity: item.quantity + 1,
-												})
-											}
-										>
-											+
-										</Button>
-										<Button
-											className="text-red-500"
-											onClick={() => removeItem(item.id)}
-										>
-											🗑
-										</Button>
-									</div>
-								</div>
-							))
-						) : (
-							<p>Your cart is empty.</p>
-						)}
+								))
+							) : (
+								<p>Your cart is empty.</p>
+							)}
+						</div>
 					</div>
 
-					{/* Add Item Button */}
-					<Button
-						className="text-blue-500 font-medium"
-						onClick={() => addItem(sampleProduct)}
-					>
-						+ Add Another Mixed Vegetable Salad
-					</Button>
+
 				</div>
 
 				{/* Right Side (Order Summary and Checkout) */}
@@ -137,7 +127,7 @@ function Page() {
 						<div className="flex items-center justify-between">
 							<span>Get Discounts</span>
 							<Button className="bg-blue-500 text-white px-4 py-1 rounded-lg">
-								Discount 20%
+								Discount {discount}%
 							</Button>
 						</div>
 					</div>
@@ -148,32 +138,47 @@ function Page() {
 						<div className="flex justify-between">
 							<span>Subtotal</span>
 							<span className="font-semibold">
-								₦
-								{cart.reduce(
-									(acc, item) => acc + item.price * item.quantity,
-									0,
+								{formatPrice(
+									cart.reduce(
+										(acc, item) => acc + item.price * item.quantity,
+										0,
+									),
 								)}
 							</span>
 						</div>
 						<div className="flex justify-between text-red-500">
-							<span>Discount (-20%)</span>
-							<span>-₦2,000</span>
+							<span>Discount (-{discount}%)</span>
+							<span className="font-semibold">
+								-
+								{formatPrice(
+									cart.reduce(
+										(acc, item) => acc + item.price * item.quantity,
+										0,
+									) *
+										(discount / 100),
+								)}
+							</span>
 						</div>
 						<div className="flex justify-between">
 							<span>Delivery Fee</span>
-							<span className="font-semibold">₦500</span>
+							<span className="font-semibold">{formatPrice(deliveryFee)}</span>
 						</div>
 						<hr />
 						<div className="flex justify-between text-xl font-bold">
 							<span>Total</span>
 							<span>
-								₦
-								{cart.reduce(
-									(acc, item) => acc + item.price * item.quantity,
-									0,
-								) -
-									2000 +
-									500}
+								{formatPrice(
+									cart.reduce(
+										(acc, item) => acc + item.price * item.quantity,
+										0,
+									) -
+										cart.reduce(
+											(acc, item) => acc + item.price * item.quantity,
+											0,
+										) *
+											(discount / 100) +
+										deliveryFee,
+								)}
 							</span>
 						</div>
 						<div className="flex items-center space-x-2">
