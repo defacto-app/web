@@ -13,8 +13,11 @@ type CartItemType = {
 
 // Utility function to get the initial cart items from session storage
 const getInitialCartItems = (): CartItemType[] => {
-	const storedCart = sessionStorage.getItem("cart");
-	return storedCart ? JSON.parse(storedCart) : [];
+	if (typeof window !== "undefined") {
+		const storedCart = sessionStorage.getItem("cart");
+		return storedCart ? JSON.parse(storedCart) : [];
+	}
+	return [];
 };
 
 // Atom to store the cart items
@@ -31,7 +34,7 @@ export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
 	const currentCart = get(cartAtom);
 	const existingItem = currentCart.find((item) => item.id === newItem.id);
 
-	let updatedCart;
+	let updatedCart: CartItemType[];
 	if (existingItem) {
 		// Update the quantity if the item already exists
 		updatedCart = currentCart.map((item) =>

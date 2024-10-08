@@ -5,7 +5,7 @@ function UserCart() {
 	const { cartTotal, cart } = useCartContext();
 	return <div>
 
-		<Link href={`/user/cart`}>
+		<Link href={`/cart`}>
 			Cart items {JSON.stringify(cart.length)}
 		</Link>
 

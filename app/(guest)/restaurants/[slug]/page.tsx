@@ -119,7 +119,7 @@ function Page({ params }: { params: { slug: string } }) {
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
 					placeholder="Search menu..."
-					className="search-input"
+					className="w-1/3"
 				/>
 
 				{/* Menu Area */}
