@@ -2,19 +2,14 @@
 import { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import { X, Menu, UserRoundCogIcon, CircleUser, Bell } from "lucide-react";
-import { UserProvider } from "@/app/provider/auth.context";
-import env from "@/config/env";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import UserPopover from "./UserPopover";
 import HistoryPopover from "./HistoryPopover";
 import { useAtomAuthContext } from "@/app/store/authAtom";
+import UserCart from "@/components/user/UserCart";
 
-interface NavigationItem {
-	name: string;
-	href: string;
-}
 
 const navigation = [
 	{ name: "About", href: "/user/about" },
@@ -27,7 +22,7 @@ export default function UserHeader() {
 	const [isSticky, setIsSticky] = useState(false);
 	const { getMe } = useAtomAuthContext();
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+
 	useEffect(() => {
 		getMe();
 	}, [getMe]);
@@ -90,6 +85,8 @@ export default function UserHeader() {
 				<div className="flex flex-1 items-center justify-end gap-x-6">
 					<UserPopover />
 					<HistoryPopover />
+					<UserCart/>
+
 				</div>
 				<div className="flex lg:hidden">
 					<button

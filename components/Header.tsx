@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useAtomAuthContext } from "@/app/store/authAtom";
+import UserCart from "@/components/user/UserCart";
 
 interface NavigationItem {
 	name: string;
@@ -45,8 +46,6 @@ export default function Header() {
 	useEffect(() => {
 		getMe();
 	}, [getMe]);
-
-
 
 	return (
 		<header
@@ -85,6 +84,7 @@ export default function Header() {
 				<div className="flex flex-1 items-center justify-end gap-x-6">
 					{env.isDev && (
 						<div className={`flex gap-x-2`}>
+							<UserCart />
 							<Link href="/admin">
 								<UserRoundCogIcon className="text-red-500" size={20} />
 							</Link>

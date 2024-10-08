@@ -1,7 +1,35 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
+import { useAtomValue, useSetAtom } from "jotai";
 import { Button } from "@/components/ui/button";
+import {
+	cartAtom,
+	addItemAtom,
+	removeItemAtom,
+	updateItemQuantityAtom,
+} from "@/app/store/cartAtom";
 
 function Page() {
+	// Access cart state and atom functions
+	const cart = useAtomValue(cartAtom);
+	const addItem = useSetAtom(addItemAtom);
+	const removeItem = useSetAtom(removeItemAtom);
+	const updateItemQuantity = useSetAtom(updateItemQuantityAtom);
+
+	// Sample product to simulate adding to the cart
+	const sampleProduct = {
+		id: "1",
+		name: "Mixed Vegetable Salad",
+		price: 2000,
+		quantity: 1,
+		image: "https://via.placeholder.com/64",
+	};
+
+	// Add sample data to cart when the component loads
+	useEffect(() => {
+		addItem(sampleProduct);
+	}, [addItem]);
+
 	return (
 		<div className="p-8">
 			{/* Cart Header */}
@@ -33,36 +61,75 @@ function Page() {
 
 					{/* Order Summary Section */}
 					<div className="space-y-6">
-						{/* Single Item */}
-						<div className="flex items-center justify-between bg-white p-4 rounded-lg border">
-							<div className="flex items-center">
-								<img
-									src="https://via.placeholder.com/64"
-									alt="Mixed Vegetable Salad"
-									className="w-16 h-16 object-cover rounded-lg"
-								/>
-								<div className="ml-4">
-									<p className="font-semibold">Mixed Vegetable Salad</p>
-									<p className="text-blue-500">₦2,000</p>
+						{cart.length > 0 ? (
+							cart.map((item) => (
+								<div
+									key={item.id}
+									className="flex items-center justify-between bg-white p-4 rounded-lg border"
+								>
+									<div className="flex items-center">
+										<img
+											src={item.image}
+											alt={item.name}
+											className="w-16 h-16 object-cover rounded-lg"
+										/>
+										<div className="ml-4">
+											<p className="font-semibold">{item.name}</p>
+											<p className="text-blue-500">₦{item.price}</p>
+										</div>
+									</div>
+									<div className="flex items-center space-x-2">
+										<Button
+											className="px-3 py-1 bg-gray-200 rounded-lg"
+											onClick={() =>
+												updateItemQuantity({
+													itemId: item.id,
+													quantity: item.quantity - 1,
+												})
+											}
+											disabled={item.quantity === 1} // Disable if the quantity is 1
+										>
+											-
+										</Button>
+										<span>{item.quantity}</span>
+										<Button
+											className="px-3 py-1 bg-gray-200 rounded-lg"
+											onClick={() =>
+												updateItemQuantity({
+													itemId: item.id,
+													quantity: item.quantity + 1,
+												})
+											}
+										>
+											+
+										</Button>
+										<Button
+											className="text-red-500"
+											onClick={() => removeItem(item.id)}
+										>
+											🗑
+										</Button>
+									</div>
 								</div>
-							</div>
-							<div className="flex items-center space-x-2">
-								<Button className="px-3 py-1 bg-gray-200 rounded-lg">-</Button>
-								<span>1</span>
-								<Button className="px-3 py-1 bg-gray-200 rounded-lg">+</Button>
-								<Button className="text-red-500">🗑</Button>
-							</div>
-						</div>
-
-						{/* Add Item Button */}
-						<Button className="text-blue-500 font-medium">+ Add Item</Button>
+							))
+						) : (
+							<p>Your cart is empty.</p>
+						)}
 					</div>
+
+					{/* Add Item Button */}
+					<Button
+						className="text-blue-500 font-medium"
+						onClick={() => addItem(sampleProduct)}
+					>
+						+ Add Another Mixed Vegetable Salad
+					</Button>
 				</div>
 
 				{/* Right Side (Order Summary and Checkout) */}
 				<div className="w-full lg:w-1/3 space-y-8">
 					{/* Payment & Discount */}
-					<div className="bg-white p-6 rounded-lg shadow-md space-y-4">
+					<div className="bg-white p-6 rounded-lg border space-y-4">
 						<div className="flex items-center justify-between">
 							<span>Payment Methods</span>
 							<span className="text-blue-500 font-medium">E-Wallet</span>
@@ -76,11 +143,17 @@ function Page() {
 					</div>
 
 					{/* Order Summary Section */}
-					<div className="bg-white p-6 rounded-lg shadow-md space-y-4">
+					<div className="bg-white p-6 rounded-lg border space-y-4">
 						<h2 className="text-lg font-semibold">Order Summary</h2>
 						<div className="flex justify-between">
 							<span>Subtotal</span>
-							<span className="font-semibold">₦10,000</span>
+							<span className="font-semibold">
+								₦
+								{cart.reduce(
+									(acc, item) => acc + item.price * item.quantity,
+									0,
+								)}
+							</span>
 						</div>
 						<div className="flex justify-between text-red-500">
 							<span>Discount (-20%)</span>
@@ -93,7 +166,15 @@ function Page() {
 						<hr />
 						<div className="flex justify-between text-xl font-bold">
 							<span>Total</span>
-							<span>₦8,500</span>
+							<span>
+								₦
+								{cart.reduce(
+									(acc, item) => acc + item.price * item.quantity,
+									0,
+								) -
+									2000 +
+									500}
+							</span>
 						</div>
 						<div className="flex items-center space-x-2">
 							<input

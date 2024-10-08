@@ -16,7 +16,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useAuthContext } from "@/app/provider/auth.context";
 import UserPopover from "@/components/user/UserPopover";
 import { $api } from "@/http/endpoints";
-import {useAtomAuthContext} from "@/app/store/authAtom";
+import { useAtomAuthContext } from "@/app/store/authAtom";
 
 export default function UserAuth() {
 	const {
@@ -40,19 +40,19 @@ export default function UserAuth() {
 		return !shouldShow.includes(currentStep);
 	}
 
-
-
-
 	useEffect(() => {
 		localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
-
 	}, [isLoggedIn]);
 
 	return (
 		<div>
 			<div className={`flex items-center`}>
 				{isLoggedIn ? (
-					<UserPopover />
+					<div>
+						{" "}
+
+						<UserPopover />
+					</div>
 				) : (
 					<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
 						<AlertDialogTrigger
