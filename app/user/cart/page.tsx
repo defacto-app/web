@@ -7,22 +7,20 @@ import {
 	addItemAtom,
 	removeItemAtom,
 	updateItemQuantityAtom,
+	useCartContext,
+	useCartSummaryContext,
 } from "@/app/store/cartAtom";
 import { formatPrice } from "@/utils";
+import Link from "next/link";
+import OrderSummary from "@/app/user/checkout/OrderSummary";
 
 function Page() {
-	// Access cart state and atom functions
-	const cart = useAtomValue(cartAtom);
-	const addItem = useSetAtom(addItemAtom);
-	const removeItem = useSetAtom(removeItemAtom);
-	const updateItemQuantity = useSetAtom(updateItemQuantityAtom);
+	const { cart, removeItem, updateItemQuantity, cartTotal } = useCartContext();
 
-	const [deliveryFee, setDeliveryFee] = React.useState(500);
-	const [discount, setDiscount] = React.useState(25);
+	const { totalPrice, deliveryFee, discountAmount, discount } =
+		useCartSummaryContext();
+
 	// Sample product to simulate adding to the cart
-
-
-
 
 	return (
 		<div className="p-8">
@@ -112,8 +110,6 @@ function Page() {
 							)}
 						</div>
 					</div>
-
-
 				</div>
 
 				{/* Right Side (Order Summary and Checkout) */}
@@ -133,67 +129,8 @@ function Page() {
 					</div>
 
 					{/* Order Summary Section */}
-					<div className="bg-white p-6 rounded-lg border space-y-4">
-						<h2 className="text-lg font-semibold">Order Summary</h2>
-						<div className="flex justify-between">
-							<span>Subtotal</span>
-							<span className="font-semibold">
-								{formatPrice(
-									cart.reduce(
-										(acc, item) => acc + item.price * item.quantity,
-										0,
-									),
-								)}
-							</span>
-						</div>
-						<div className="flex justify-between text-red-500">
-							<span>Discount (-{discount}%)</span>
-							<span className="font-semibold">
-								-
-								{formatPrice(
-									cart.reduce(
-										(acc, item) => acc + item.price * item.quantity,
-										0,
-									) *
-										(discount / 100),
-								)}
-							</span>
-						</div>
-						<div className="flex justify-between">
-							<span>Delivery Fee</span>
-							<span className="font-semibold">{formatPrice(deliveryFee)}</span>
-						</div>
-						<hr />
-						<div className="flex justify-between text-xl font-bold">
-							<span>Total</span>
-							<span>
-								{formatPrice(
-									cart.reduce(
-										(acc, item) => acc + item.price * item.quantity,
-										0,
-									) -
-										cart.reduce(
-											(acc, item) => acc + item.price * item.quantity,
-											0,
-										) *
-											(discount / 100) +
-										deliveryFee,
-								)}
-							</span>
-						</div>
-						<div className="flex items-center space-x-2">
-							<input
-								type="text"
-								placeholder="Add promo code"
-								className="flex-1 border rounded-lg p-2"
-							/>
-							<Button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-								Apply
-							</Button>
-						</div>
-						<Button className="w-full bg-blue-500 text-white px-4 py-3 mt-4 rounded-lg">
-							Go to Checkout →
-						</Button>
+					<div>
+						<OrderSummary cartPage />
 					</div>
 				</div>
 			</div>

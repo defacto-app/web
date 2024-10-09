@@ -127,4 +127,14 @@ export const $api = {
 			},
 		},
 	},
+
+	payments:{
+		card: async (body: any) => {
+			try {
+				return $axios.post(`/payments/card-payment`, body);
+			} catch (error: any) {
+				return error;
+			}
+		},
+	},
 };

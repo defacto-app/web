@@ -1,16 +1,30 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { useCartContext } from "@/app/store/cartAtom";
 import Link from "next/link";
+
 function UserCart() {
 	const { cartTotal, cart } = useCartContext();
-	return <div>
+	const [isClient, setIsClient] = useState(false);
 
-		<Link href={`/cart`}>
-			Cart items {JSON.stringify(cart.length)}
-		</Link>
+	// Ensures this component only accesses the cart after mounting in the browser
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
 
-	</div>
+	if (!isClient) {
+		// Return null or some fallback (loading) UI on server-side
+		return null;
+	}
 
-
+	return (
+		<div>
+			<Link href={`/user/cart`}>
+				Cart items {JSON.stringify(cart.length)}
+			</Link>
+		</div>
+	);
 }
+
 export default UserCart;

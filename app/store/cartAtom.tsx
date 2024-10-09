@@ -80,6 +80,9 @@ export const useCartContext = () => {
 	const cart = useAtomValue(cartAtom); // Read the cart
 	const cartTotal = useAtomValue(cartTotalAtom); // Read the cart total
 
+	const deliveryFee = 1000; // Example delivery fee
+	const discount = 25; // Example discount
+
 	const addItem = useSetAtom(addItemAtom); // Add an item
 	const removeItem = useSetAtom(removeItemAtom); // Remove an item
 	const updateItemQuantity = useSetAtom(updateItemQuantityAtom); // Update item quantity
@@ -105,5 +108,24 @@ export const useCartContext = () => {
 		updateItemQuantity,
 		clearCart,
 		getCartSummary,
+
 	};
 };
+
+export const useCartSummaryContext = () => {
+	const cartTotal = useAtomValue(cartTotalAtom);
+	const deliveryFee = 1000; // Example delivery fee
+	const discount = 25; // Example discount
+
+	const subtotal = cartTotal;
+	const discountAmount = subtotal * (discount / 100);
+	const totalPrice = subtotal - discountAmount + deliveryFee;
+
+	return {
+		subtotal,
+		discountAmount,
+		deliveryFee,
+		discount,
+		totalPrice,
+	};
+}

@@ -1,67 +1,25 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useAtomValue, useSetAtom } from "jotai";
-import { Button } from "@/components/ui/button";
-import {
-	cartAtom,
-	addItemAtom,
-	removeItemAtom,
-	updateItemQuantityAtom,
-	useCartContext,
-	useCartSummaryContext,
-} from "@/app/store/cartAtom";
+import { useCartContext, useCartSummaryContext } from "@/app/store/cartAtom";
 import { formatPrice } from "@/utils";
-import Link from "next/link";
-import { $axios } from "@/http/http.fn";
-import { $api } from "@/http/endpoints";
+import { Button } from "@/components/ui/button";
+import OrderSummary from "@/app/user/checkout/OrderSummary";
 
 function CheckoutPage() {
-	const { cart, removeItem, updateItemQuantity, cartTotal } = useCartContext();
+	const { cart, removeItem, updateItemQuantity } = useCartContext();
 
-	const { totalPrice, deliveryFee, discountAmount, discount } =
-		useCartSummaryContext();
+	useEffect(() => {
+		const script = document.createElement("script");
+		script.src = "https://checkout.flutterwave.com/v3.js";
+		script.async = true;
+		document.body.appendChild(script);
+		return () => {
+			document.body.removeChild(script);
+		};
+	}, []);
 
-	// Access cart state and atom functions
+	// Initiate Flutterwave Payment
 
-	// Sample product to simulate adding to the cart
-	const [loading, setLoading] = useState(false);
-
-	const totalAmount =
-		cart.reduce((acc, item) => acc + item.price * item.quantity, 0) -
-		cart.reduce((acc, item) => acc + item.price * item.quantity, 0) *
-			(discount / 100) +
-		deliveryFee;
-
-	const initiatePayment = async () => {
-		setLoading(true);
-
-		try {
-			const response = await $api.payments.card({
-				amount: totalAmount,
-				email: "customer@example.com", // Replace with actual user email
-				phone_number: "08012345678", // Replace with actual user phone number
-				fullname: "Customer Name", // Replace with actual user name
-			});
-
-			console.log("Payment initiated:", response);
-
-			// Handle the response from your backend
-			if (response.data.status === "success") {
-				// For example, if your backend returns a payment link
-
-				console.log("Payment initiated:", response.data.payment_link);
-				// Redirect the user to the payment page if necessary
-				/*		window.location.href = response.data.data.
-					auth_url;*/
-			} else {
-				console.error("Payment initiation failed:", response.data.error);
-			}
-		} catch (error) {
-			console.error("Error initiating payment:", error);
-		} finally {
-			setLoading(false);
-		}
-	};
 	return (
 		<div className="p-8">
 			{/* Cart Header */}
@@ -89,13 +47,13 @@ function CheckoutPage() {
 						</div>
 					</div>
 
-					<div className={`bg-white p-4 border rounded-lg`}>
-						<div className="space-y-6  ">
+					<div className="bg-white p-4 border rounded-lg">
+						<div className="space-y-6">
 							{cart.length > 0 ? (
 								cart.map((item) => (
 									<div
 										key={item.id}
-										className="flex items-center justify-between p-4  border-b last:border-b-0"
+										className="flex items-center justify-between p-4 border-b last:border-b-0"
 									>
 										<div className="flex items-center">
 											<img
@@ -117,7 +75,7 @@ function CheckoutPage() {
 														quantity: item.quantity - 1,
 													})
 												}
-												disabled={item.quantity === 1} // Disable if the quantity is 1
+												disabled={item.quantity === 1}
 											>
 												-
 											</Button>
@@ -150,76 +108,15 @@ function CheckoutPage() {
 				</div>
 
 				{/* Right Side (Order Summary and Checkout) */}
-				<div className="w-full lg:w-1/3 space-y-8">
-					{/* Payment & Discount */}
 
-					{/* Order Summary Section */}
-					<div className="bg-white p-6 rounded-lg border space-y-4">
-						<h2 className="text-lg font-semibold">Order Summary</h2>
-						<div className="flex justify-between">
-							<span>Subtotal</span>
-							<span className="font-semibold">
-								{formatPrice(
-									cart.reduce(
-										(acc, item) => acc + item.price * item.quantity,
-										0,
-									),
-								)}
-							</span>
-						</div>
-						<div className="flex justify-between text-red-500">
-							<span>Discount (-{discount}%)</span>
-							<span className="font-semibold">
-								-
-								{formatPrice(
-									cart.reduce(
-										(acc, item) => acc + item.price * item.quantity,
-										0,
-									) *
-										(discount / 100),
-								)}
-							</span>
-						</div>
-						<div className="flex justify-between">
-							<span>Delivery Fee</span>
-							<span className="font-semibold">{formatPrice(deliveryFee)}</span>
-						</div>
-						<hr />
-						<div className="flex justify-between text-xl font-bold">
-							<span>Total</span>
-							<span>
-								{formatPrice(
-									totalAmount -
-										cart.reduce(
-											(acc, item) => acc + item.price * item.quantity,
-											0,
-										) *
-											(discount / 100) +
-										deliveryFee,
-								)}
-							</span>
-						</div>
-						<div className="flex items-center space-x-2">
-							<input
-								type="text"
-								placeholder="Add promo code"
-								className="flex-1 border rounded-lg p-2"
-							/>
-							<Button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-								Apply
-							</Button>
-						</div>
-						<Button
-							onClick={initiatePayment}
-							className="w-full bg-blue-500 text-white text- px-4 py-3 mt-4 rounded-lg"
-						>
-							Confirm order
-						</Button>
+				<div className="w-full lg:w-1/3 space-y-8">
+					<div>
+						<OrderSummary checkoutPage />
+					</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	);
-}
+			);
+			}
 
-export default CheckoutPage;
+			export default CheckoutPage;
