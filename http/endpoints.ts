@@ -125,6 +125,32 @@ export const $api = {
 					throw error; // You can re-throw it or handle it differently
 				}
 			},
+
+			address:{
+				all: async () => {
+					try {
+						return $axios.get(`/address`);
+					} catch (error: any) {
+						return error;
+					}
+				},
+
+				create: async (body: any) => {
+					try {
+						return $axios.post(`/auth/address`, body);
+					} catch (error: any) {
+						return error;
+					}
+				},
+
+				delete: async (id: string) => {
+					try {
+						return $axios.delete(`/auth/address/${id}`);
+					} catch (error: any) {
+						return error;
+					}
+				},
+			}
 		},
 	},
 

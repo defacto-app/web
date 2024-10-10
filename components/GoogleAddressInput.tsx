@@ -13,18 +13,16 @@ type GoogleAddressInputProps = {
     handleCloseModal: () => void;
 };
 
-
-function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
+function GoogleAddressInput({ handleCloseModal }: GoogleAddressInputProps) {
     const [selectedAddress, setSelectedAddress] = useState("");
-    const [suggestions, setSuggestions] = useState({predictions: []});
+    const [suggestions, setSuggestions] = useState({ predictions: [] });
     const [loading, setLoading] = useState(false);
     const [searchAttempted, setSearchAttempted] = useState(false);
     const [predictionListVisible, setPredictionListVisible] = useState(false);
     const [hasSelectedAddress, setHasSelectedAddress] = useState(false);
-    const [location, setLocation] = useState({lat: 6.210, lng: 6.740}); // Default to Asaba
+    const [location, setLocation] = useState({ lat: 6.210, lng: 6.740 }); // Default to Asaba
     const [error, setError] = useState("");  // Error message state
     const [showMap, setShowMap] = useState(false);  // State to control map display
-
 
     // Define the geographical boundaries for Asaba
     const asabaBounds = {
@@ -51,7 +49,6 @@ function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
         return debouncedValue;
     }
 
-
     const debouncedSearchTerm = useDebounce<string>(selectedAddress, 500);
 
     useEffect(() => {
@@ -59,7 +56,7 @@ function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
             fetchSuggestions(debouncedSearchTerm);
             setSearchAttempted(true);
         } else {
-            setSuggestions({predictions: []});
+            setSuggestions({ predictions: [] });
             setSearchAttempted(false);
         }
     }, [debouncedSearchTerm, hasSelectedAddress]);
@@ -67,7 +64,7 @@ function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
     const fetchSuggestions = async (input: string | any[]) => {
         setLoading(true);
         if (input.length < 3) {
-            setSuggestions({predictions: []});
+            setSuggestions({ predictions: [] });
             setLoading(false);
             setPredictionListVisible(false);
             return;
@@ -80,7 +77,7 @@ function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
             setLoading(false);
         } catch (error) {
             console.error("Error fetching suggestions:", error);
-            setSuggestions({predictions: []});
+            setSuggestions({ predictions: [] });
             setLoading(false);
             setPredictionListVisible(false);
         }
@@ -93,19 +90,19 @@ function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
 
         // Fetching the location details using place_id
         const locationDetails = await $api.guest.location.details(suggestion.place_id);
-        const {lat, lng} = locationDetails.result.geometry.location;
-        setLocation({lat, lng});
+        const { lat, lng } = locationDetails.result.geometry.location;
+        setLocation({ lat, lng });
 
         setShowMap(true); // Check if the location is within Asaba bounds
-        /// close modal
 
         if (lat >= asabaBounds.south && lat <= asabaBounds.north && lng >= asabaBounds.west && lng <= asabaBounds.east) {
             setError("");  // Clear any previous error
 
-            // Save the selected address to localStorage
-            const existingAddresses = JSON.parse(localStorage.getItem('selectedAddresses') || '[]');
+            // Save the selected address to sessionStorage
+            const existingAddresses = JSON.parse(sessionStorage.getItem('selectedAddresses') || '[]');
             existingAddresses.push(suggestion.description);
-            localStorage.setItem('selectedAddresses', JSON.stringify(existingAddresses));
+            sessionStorage.setItem('selectedAddresses', JSON.stringify(existingAddresses));
+
             handleCloseModal();
         } else {
             setError("The area is not supported");
@@ -181,22 +178,23 @@ function GoogleAddressInput({handleCloseModal}: GoogleAddressInputProps) {
                             scrollwheel={false}
                             className="w-96 lg:w-2/5 h-1/2 lg:h-2/4"
                         >
-                            <Marker position={location}/>
+                            <Marker position={location} />
                         </Map>
                     </APIProvider>
                 ) : (
                     <Image
-
                         width={600}
                         height={400}
-
                         className={`w-auto lg:w-2/5 h-1/2 lg:h-2/4`}
-
-                        src={`/blank-map.png`} alt="Default Map"/>
+                        src={`/blank-map.png`}
+                        alt="Default Map"
+                    />
                 )}
             </div>
         </div>
     );
 }
+
+
 
 export default GoogleAddressInput;

@@ -27,7 +27,7 @@ function PickupModal({ handleOnSelect }: PickupModalProps) {
 		setModalOpen(false);
 
 		const savedAddresses = JSON.parse(
-			localStorage.getItem("selectedAddresses") || "[]",
+			sessionStorage.getItem("selectedAddresses") || "[]",
 		);
 		const lastAddress =
 			savedAddresses.length > 0

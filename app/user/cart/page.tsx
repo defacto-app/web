@@ -13,6 +13,7 @@ import {
 import { formatPrice } from "@/utils";
 import Link from "next/link";
 import OrderSummary from "@/app/user/checkout/OrderSummary";
+import UserAddresses from "@/components/user/UserAddresses";
 
 function Page() {
 	const { cart, removeItem, updateItemQuantity, cartTotal } = useCartContext();
@@ -32,24 +33,7 @@ function Page() {
 				{/* Left Side (Items and Delivery Info) */}
 				<div className="flex-1 space-y-8">
 					{/* Delivery Section */}
-					<div className="bg-white p-6 rounded-lg border">
-						<h2 className="text-lg font-semibold mb-2">Deliver to</h2>
-						<div className="flex items-center justify-between bg-gray-100 p-4 rounded-lg">
-							<div className="flex items-center">
-								<span className="text-blue-500 mr-4">📍</span>
-								<div>
-									<p className="font-semibold">
-										Home{" "}
-										<span className="text-sm text-blue-500">(Default)</span>
-									</p>
-									<p className="text-sm text-gray-500">
-										Times Square NYC, Manhattan
-									</p>
-								</div>
-							</div>
-							<Button className="text-blue-500 font-medium">Edit</Button>
-						</div>
-					</div>
+					<UserAddresses />
 
 					{/* Order Summary Section */}
 					<div className={`bg-white p-4 border rounded-lg`}>
@@ -68,7 +52,9 @@ function Page() {
 											/>
 											<div className="ml-4">
 												<p className="font-semibold">{item.name}</p>
-												<p className="text-blue-500">{ formatPrice(item.price)}</p>
+												<p className="text-blue-500">
+													{formatPrice(item.price)}
+												</p>
 											</div>
 										</div>
 										<div className="flex items-center space-x-2">

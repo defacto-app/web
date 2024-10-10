@@ -2,7 +2,8 @@ import React from "react";
 import { useCartContext } from "@/app/store/cartAtom"; // Adjust the path as per your project structure
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus } from "lucide-react"; // Adjust the path for your price formatting utility
+import { Minus, Plus } from "lucide-react";
+import Link from "next/link";
 
 function OrderCart() {
 	// Get the cart items, removeItem, and updateItemQuantity functions from the context
@@ -70,15 +71,17 @@ function OrderCart() {
 			)}
 
 			{/* Order button */}
-			<Button
-				variant={`primary`}
-				className=" text-white font-bold py-3 rounded-lg w-full mt-4"
-			>
-				Order {cart.length} for {""}
-				{formatPrice(
-					cart.reduce((total, item) => total + item.price * item.quantity, 0),
-				)}
-			</Button>
+			<Link href={`/user/cart`}>
+				<Button
+					variant={`primary`}
+					className=" text-white font-bold py-3 rounded-lg w-full mt-4"
+				>
+					Order {cart.length} for {""}
+					{formatPrice(
+						cart.reduce((total, item) => total + item.price * item.quantity, 0),
+					)}
+				</Button>
+			</Link>
 		</div>
 	);
 }

@@ -72,7 +72,7 @@ export default function FoodHero2() {
     // get address from local storage
 
     useEffect(() => {
-        const savedAddresses = JSON.parse(localStorage.getItem('selectedAddresses') || '[]');
+        const savedAddresses = JSON.parse(sessionStorage.getItem('selectedAddresses') || '[]');
         const lastAddress = savedAddresses.length > 0 ? savedAddresses[savedAddresses.length - 1] : "";
 
         setSelectedAddress(lastAddress);

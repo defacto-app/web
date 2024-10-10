@@ -31,7 +31,7 @@ export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
 	const currentCart = get(cartAtom);
 	const existingItem = currentCart.find((item) => item.id === newItem.id);
 
-	let updatedCart;
+	let updatedCart:any;
 	if (existingItem) {
 		// Update the quantity if the item already exists
 		updatedCart = currentCart.map((item) =>
