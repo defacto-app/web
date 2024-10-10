@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { $admin_api } from "@/http/admin-endpoint";
 import { $api } from "@/http/endpoints";
 import {
 	AlertDialog,
@@ -13,14 +12,17 @@ import {
 	AlertDialogAction,
 	AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
+import { useCartContext } from "@/app/store/cartAtom"; // Import the cart context
+
 function UserAddresses() {
 	const [data, setData] = React.useState<any>(null);
-
 	const [modalOpen, setModalOpen] = React.useState(true);
-
+	
 	const [isLoading, setLoading] = React.useState<boolean>(true);
-
 	const [selectedAddress, setSelectedAddress] = React.useState<any>(null);
+
+	// Get the setSelectedAddress function from the cart context
+	const { setSelectedAddress: setCartAddress } = useCartContext();
 
 	useEffect(() => {
 		const getData = async () => {
@@ -28,9 +30,7 @@ function UserAddresses() {
 			try {
 				const res = await $api.auth.user.address.all();
 				setLoading(false);
-
 				setData(res.data);
-				setLoading(false);
 			} catch (error) {
 				setLoading(false);
 			}
@@ -38,6 +38,13 @@ function UserAddresses() {
 
 		getData();
 	}, []);
+
+	const handleSelectAddress = (address: any) => {
+		setSelectedAddress(address);
+		setCartAddress(address); // Update the cart with the selected address
+		setModalOpen(false); // Close the modal after selection
+	};
+
 	return (
 		<div>
 			<div className="bg-white p-6 rounded-lg border">
@@ -70,14 +77,14 @@ function UserAddresses() {
 								Edit
 							</Button>
 						</AlertDialogTrigger>
-						<AlertDialogContent className={` lg:h-[400px]`}>
+						<AlertDialogContent className={` lg:h-[450px]`}>
 							<AlertDialogHeader>
 								<AlertDialogTitle>Manage Delivery Locations</AlertDialogTitle>
+
+								<Button variant={`outline`}>New Address</Button>
 								<AlertDialogDescription>
 									{data && data.length > 0 ? (
 										<div className="space-y-2 max-h-60 overflow-y-auto">
-											{" "}
-											{/* Added fixed height and scroll */}
 											{data.map((address: any, index: number) => (
 												<div
 													key={address.publicId}
@@ -89,7 +96,7 @@ function UserAddresses() {
 															<div>
 																<p className="font-semibold">
 																	<span className={`capitalize`}>
-																		{address.label}{" "}
+																		{address.label}
 																	</span>
 																</p>
 															</div>
@@ -103,6 +110,7 @@ function UserAddresses() {
 														<Button
 															variant="outline"
 															className="text-blue-500 font-medium"
+															onClick={() => handleSelectAddress(address)}
 														>
 															Select
 														</Button>

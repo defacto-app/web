@@ -11,6 +11,17 @@ type CartItemType = {
 	image: string;
 };
 
+export const selectedAddressAtom = atom<any>(null);
+
+// Function to set the selected address in the cart
+export const setSelectedAddressAtom = atom(
+	null,
+	(get, set, selectedAddress: any) => {
+		set(selectedAddressAtom, selectedAddress);
+		sessionStorage.setItem("selectedAddress", JSON.stringify(selectedAddress));
+	}
+);
+
 // Utility function to get the initial cart items from session storage
 const getInitialCartItems = (): CartItemType[] => {
 	const storedCart = sessionStorage.getItem("cart");
@@ -79,6 +90,7 @@ export const clearCartAtom = atom(null, (get, set) => {
 export const useCartContext = () => {
 	const cart = useAtomValue(cartAtom); // Read the cart
 	const cartTotal = useAtomValue(cartTotalAtom); // Read the cart total
+	const selectedAddress = useAtomValue(selectedAddressAtom); // Read the selected address
 
 	const deliveryFee = 1000; // Example delivery fee
 	const discount = 25; // Example discount
@@ -87,6 +99,7 @@ export const useCartContext = () => {
 	const removeItem = useSetAtom(removeItemAtom); // Remove an item
 	const updateItemQuantity = useSetAtom(updateItemQuantityAtom); // Update item quantity
 	const clearCart = useSetAtom(clearCartAtom); // Clear the cart
+	const setSelectedAddress = useSetAtom(setSelectedAddressAtom); // Set selected address
 
 	// Persist the cart in session storage whenever it changes
 	useEffect(() => {
@@ -108,6 +121,8 @@ export const useCartContext = () => {
 		updateItemQuantity,
 		clearCart,
 		getCartSummary,
+		setSelectedAddress,
+		selectedAddress,
 
 	};
 };

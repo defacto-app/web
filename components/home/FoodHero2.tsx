@@ -65,8 +65,6 @@ export default function FoodHero2() {
     const handleAddressSelect = (address: string) => {
         setSelectedAddress(address);
 
-        console.log(address, "address");
-        // You can also perform any other actions with the selected address here
     };
 
     // get address from local storage
@@ -74,7 +72,6 @@ export default function FoodHero2() {
     useEffect(() => {
         const savedAddresses = JSON.parse(sessionStorage.getItem('selectedAddresses') || '[]');
         const lastAddress = savedAddresses.length > 0 ? savedAddresses[savedAddresses.length - 1] : "";
-
         setSelectedAddress(lastAddress);
     }, []);
     return (

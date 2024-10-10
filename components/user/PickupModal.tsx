@@ -80,7 +80,7 @@ function PickupModal({ handleOnSelect }: PickupModalProps) {
 
 				<AlertDialogContent
 					id="dialog-trigger"
-					className={`h-full lg:h-[670px] max-w-2xl`}
+					className={`h-full lg:h-[570px] max-w-2xl`}
 				>
 					<button
 						type="button"
