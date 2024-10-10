@@ -68,7 +68,7 @@ function Page() {
 											/>
 											<div className="ml-4">
 												<p className="font-semibold">{item.name}</p>
-												<p className="text-blue-500">₦{item.price}</p>
+												<p className="text-blue-500">{ formatPrice(item.price)}</p>
 											</div>
 										</div>
 										<div className="flex items-center space-x-2">

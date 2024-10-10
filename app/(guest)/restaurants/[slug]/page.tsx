@@ -7,7 +7,8 @@ import MenuArea from "@/app/(guest)/restaurants/components/MenuArea";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { MapPin, Clock1 } from "lucide-react"; // Assuming you have a button component
+import { MapPin, Clock1 } from "lucide-react";
+import OrderCart from "@/app/user/checkout/OrderCart"; // Assuming you have a button component
 
 function Page({ params }: { params: { slug: string } }) {
 	// State for restaurant and menu data
@@ -39,16 +40,19 @@ function Page({ params }: { params: { slug: string } }) {
 	}, []);
 
 	// Extract unique menu types
-	const uniqueMenuTypes = ["All", ...new Set(menu.map((item) => item.menuType))];
-
+	const uniqueMenuTypes = [
+		"All",
+		...new Set(menu.map((item) => item.menuType)),
+	];
 
 	// Filtered menu based on the active tab and search input
 	const filteredMenu = menu.filter((item) => {
-		const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase());
+		const matchesSearch = item.name
+			.toLowerCase()
+			.includes(search.toLowerCase());
 		const matchesTab = activeTab === "All" || item.menuType === activeTab;
 		return matchesSearch && matchesTab;
 	});
-
 
 	// Conditional rendering
 	if (loading) {
@@ -100,8 +104,7 @@ function Page({ params }: { params: { slug: string } }) {
 			</div>
 
 			{/* Search Input and Menu */}
-			<div className={`container mx-auto py-8`}>
-
+			<div className={`lg:container mx-auto py-8`}>
 				<div className="menu-filters flex space-x-4 mb-4">
 					{uniqueMenuTypes.map((type) => (
 						<Button
@@ -123,8 +126,12 @@ function Page({ params }: { params: { slug: string } }) {
 				/>
 
 				{/* Menu Area */}
-				<div className="menu-items">
-					<MenuArea data={filteredMenu.length > 0 ? filteredMenu : menu}/>
+				<div className="grid grid-cols-5 gap-x-4 items-start">
+					<div className={`col-span-4`}>
+						<MenuArea data={filteredMenu.length > 0 ? filteredMenu : menu} />
+					</div>
+
+					<div><OrderCart/></div>
 				</div>
 			</div>
 		</div>
