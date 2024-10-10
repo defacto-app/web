@@ -11,8 +11,6 @@ import { QueryClient, useQuery } from "react-query";
 import { $admin_api } from "@/http/admin-endpoint";
 import { useDebounce } from "react-haiku";
 import RestaurantGridLoading from "@/components/restaurant/RestaurantGridLoading";
-// Create a QueryClient instance
-const queryClient = new QueryClient();
 const fetchRestaurants = async (
 	page: number,
 	perPage: number,
@@ -66,38 +64,36 @@ export default function Page() {
 
 	return (
 		<div>
-			<div className={`bg-blue-200 sticky top-0 z-10`}>
-				{/* Search Input */}
-				<Input
-					type="search"
-					value={searchTerm} // Bind input value to state
-					onChange={handleSearchChange} // Update state on input change
-					placeholder="Search Restaurant..."
-					className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-				/>
-				<p>
-					These eateries are located in Asaba; look for eateries that deliver to
-					you by searching for restaurants.
-				</p>
-			</div>
 			<div className="pt-4 pb-20">
-				<div className="grid grid-cols-1 md:grid-cols-4">
+				<div className="flex  px-2">
 					{/* SideBarRestaurant - Hidden on mobile, shown on medium screens and up */}
-					<div className="hidden md:block sticky top-0 h-screen">
-						<SideBarRestaurant/>
+					<div className="hidden md:block sticky top-0 h-screen w-[400px]">
+						<SideBarRestaurant />
 					</div>
 
 					{/* RestaurantGrid takes full width on mobile, 3/4 width on medium screens and up */}
-					<div className="col-span-1 md:col-span-3">
-						{isLoading ? (
-							<RestaurantGridLoading/>
-						) : (
-							<RestaurantGrid data={data?.data?.data}/>
-						)}
+					<div className="w-full">
+						<div className={`sticky top-0 z-10 bg-white w-full p-4 `}>
+							{/* Search Input */}
+							<Input
+								type="search"
+								value={searchTerm} // Bind input value to state
+								onChange={handleSearchChange} // Update state on input change
+								placeholder="Search Restaurant..."
+								className="py-4 mt-4 h-10 sm:w-[300px] md:w-[600px] "
+							/>
+							<p className={`py-4`}>These eateries are located in Asaba;</p>
+						</div>
+						<div className={`px-6  pb-40`}>
+							{isLoading ? (
+								<RestaurantGridLoading />
+							) : (
+								<RestaurantGrid data={data?.data?.data} />
+							)}
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	);
 }

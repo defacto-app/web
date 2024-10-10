@@ -1,8 +1,8 @@
 import React from "react";
 import { useCartContext } from "@/app/store/cartAtom"; // Adjust the path as per your project structure
 import { formatPrice } from "@/utils";
-import {Button} from "@/components/ui/button";
-import {Minus, Plus} from "lucide-react"; // Adjust the path for your price formatting utility
+import { Button } from "@/components/ui/button";
+import { Minus, Plus } from "lucide-react"; // Adjust the path for your price formatting utility
 
 function OrderCart() {
 	// Get the cart items, removeItem, and updateItemQuantity functions from the context
@@ -44,7 +44,7 @@ function OrderCart() {
 							{/* Quantity Display */}
 							<span>{item.quantity}</span>
 							{/* Increase quantity button */}
-							<button
+							<Button
 								className="bg-gray-200 rounded-full p-2 text-green-600"
 								onClick={() =>
 									updateItemQuantity({
@@ -54,15 +54,14 @@ function OrderCart() {
 								}
 							>
 								<Plus />
-
-							</button>
+							</Button>
 							{/* Remove item button */}
-							<button
+							<Button
 								className="text-red-500"
 								onClick={() => removeItem(item.id)}
 							>
 								🗑
-							</button>
+							</Button>
 						</div>
 					</div>
 				))
@@ -71,8 +70,11 @@ function OrderCart() {
 			)}
 
 			{/* Order button */}
-			<Button variant={`primary`} className=" text-white font-bold py-3 rounded-lg w-full mt-4">
-				Order {cart.length} for  {""}
+			<Button
+				variant={`primary`}
+				className=" text-white font-bold py-3 rounded-lg w-full mt-4"
+			>
+				Order {cart.length} for {""}
 				{formatPrice(
 					cart.reduce((total, item) => total + item.price * item.quantity, 0),
 				)}

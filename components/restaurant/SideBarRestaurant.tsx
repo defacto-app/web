@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 const SideBarRestaurant = () => {
@@ -23,17 +23,14 @@ const SideBarRestaurant = () => {
 		{ id: "ice_cream", name: "Ice Cream" },
 	];
 
-
-	function  getDta(){
-
-	}
+	function getDta() {}
 
 	useEffect(() => {
 		getDta();
 	}, []);
 
 	return (
-		<div className="bg-gray-50 p-6  rounded-xl shadow-lg max-w-xs overflow-y-scroll">
+		<div className="bg-gray-50 p-6  rounded-xl shadow-md max-w-xs overflow-y-scroll">
 			{/* Sort by Section */}
 			<div className="mb-8">
 				<h4 className="text-lg font-bold mb-4">Sort by</h4>
