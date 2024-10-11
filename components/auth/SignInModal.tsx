@@ -11,14 +11,14 @@ export default function SignInModal() {
 	const { currentStep } = useAtomAuthContext();
 
 	return (
-		<div className="  rounded-xl">
+		<div className="rounded-xl">
 			<div>
 				<div>
 					{currentStep === "welcome" && <Welcome />}
 					{currentStep === "email" && <Email />}
 					{/*{currentStep === "password" && <Password />}*/}
 					{/*{currentStep === "confirm-email" && <ConfirmEmail />}*/}
-					{currentStep === "success" && <LoginSuccessful />}
+					{/*{currentStep === "success" && <LoginSuccessful />}*/}
 				</div>
 			</div>
 		</div>

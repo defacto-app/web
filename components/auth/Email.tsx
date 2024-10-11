@@ -31,14 +31,14 @@ function Email() {
 
 		{
 			id: "existing-user",
-			title: `Welcome back!\nEnter your password`,
+			title: `Welcome back! <br/>Enter your password`,
 			description: "Use your password to log in to your existing account.",
 		},
 	];
 
 	type authState = "default" | "new-user" | "existing-user";
 	const [authState, setAuthState] = useState<authState>("default");
-	const { setCurrentStep, setIsLoggedIn, getMe } = useAtomAuthContext();
+	const { setCurrentStep, setIsLoggedIn, getMe,setModalOpen } = useAtomAuthContext();
 
 	const getCurrentStep = () => {
 		return authSteps.find((step) => step.id === authState);
@@ -116,7 +116,7 @@ function Email() {
 			toast.success("Login Successful");
 
 			setIsLoggedIn(true);
-			setCurrentStep("success");
+			// setCurrentStep("success");
 			getMe();
 		} catch (error: any) {
 			setErrors({
@@ -141,7 +141,7 @@ function Email() {
 
 			setLoading(false);
 
-			setCurrentStep("success");
+			// setCurrentStep("success");
 		} catch (error: any) {
 			console.log(error);
 
@@ -157,12 +157,16 @@ function Email() {
 	return (
 		<div>
 			<CardContent>
-				<div className={`py-4 w-96`}>
-					<div className="text-2xl  font-bold">
-						{" "}
-						{/* eslint-disable-next-line react/no-unescaped-entities */}
-						{currentStepDetails?.title}
-						{}
+				<div className={`py-4 `}>
+					<div className="lg:text-xl font-bold">
+						{currentStepDetails?.title.split("<br/>").map((line, index) => (
+							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+							<span key={index}>
+								{line}
+								{index <
+									currentStepDetails?.title.split("<br/>").length - 1 && <br />}
+							</span>
+						))}
 					</div>
 
 					<CardDescription className="text-left whitespace-pre-wrap">
@@ -183,75 +187,78 @@ function Email() {
 								onChange={handleInputChange}
 							/>
 
-							<FormError error={errors.email} />
-							<Button
-								loading={loading}
-								variant="primary"
-								onClick={check_email_exists}
-								type="button"
-								className="w-full mt-4"
-							>
-								Continue
-							</Button>
+							<FormError error={errors.email}/>
+							<div className={`flex justify-center`}>
+								<Button
+									loading={loading}
+									variant="primary"
+									onClick={check_email_exists}
+									type="button"
+									className="w-72 mt-4"
+								>
+									Continue
+								</Button></div>
+							</div>
+							)}
+
+							{
+								// Show password field if user is existing
+								authState === "existing-user" && (
+									<div className=" py-2">
+										<Label htmlFor="password">Password</Label>
+										<PasswordInput
+											placeholder="Enter your password"
+											name="password"
+											value={formData.password}
+											handleInputChange={handleInputChange}
+											required
+										/>
+										<FormError error={errors.password}/>
+
+										<div className={`flex justify-center`}>
+											<Button
+												loading={loading}
+												variant="primary"
+												onClick={login_user}
+												type="button"
+												className="w-72 mt-4"
+											>
+												Continue
+											</Button>
+										</div>
+									</div>
+								)
+							}
+							{
+								// Show password field if user is new
+								authState === "new-user" && (
+									<div className=" py-2">
+										<Label htmlFor="password">Password</Label>
+										<PasswordInput
+											placeholder="Enter your password"
+											name="password"
+											value={formData.password}
+											handleInputChange={handleInputChange}
+											required
+										/>
+										<FormError error={errors.password}/>
+
+										<Button
+											loading={loading}
+											variant="primary"
+											onClick={register_user}
+											type="button"
+											className="w-full mt-4"
+										>
+											Continue
+										</Button>
+									</div>
+								)
+							}
 						</div>
-					)}
-
-					{
-						// Show password field if user is existing
-						authState === "existing-user" && (
-							<div className=" py-2">
-								<Label htmlFor="password">Password</Label>
-								<PasswordInput
-									placeholder="Enter your password"
-									name="password"
-									value={formData.password}
-									handleInputChange={handleInputChange}
-									required
-								/>
-								<FormError error={errors.password} />
-
-								<Button
-									loading={loading}
-									variant="primary"
-									onClick={login_user}
-									type="button"
-									className="w-full mt-4"
-								>
-									Continue
-								</Button>
-							</div>
-						)
+						</CardContent>
+						</div>
+						);
 					}
-					{
-						// Show password field if user is new
-						authState === "new-user" && (
-							<div className=" py-2">
-								<Label htmlFor="password">Password</Label>
-								<PasswordInput
-									placeholder="Enter your password"
-									name="password"
-									value={formData.password}
-									handleInputChange={handleInputChange}
-									required
-								/>
-								<FormError error={errors.password} />
 
-								<Button
-									loading={loading}
-									variant="primary"
-									onClick={register_user}
-									type="button"
-									className="w-full mt-4"
-								>
-									Continue
-								</Button>
-							</div>
-						)
-					}
-				</div>
-			</CardContent>
-		</div>
-	);
-}
-
-export default Email;
+					export default Email;
