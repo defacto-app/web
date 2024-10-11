@@ -4,7 +4,7 @@ import { clearToken, isUserLoggedIn } from "@/utils/auth";
 import { $api } from "@/http/endpoints";
 
 // Define the steps
-export const authSteps = ["welcome", "email", "phone", "success"] as const;
+export const authSteps = ["welcome", "email", "phone"] as const;
 export type AuthStep = (typeof authSteps)[number];
 
 // Define the form type

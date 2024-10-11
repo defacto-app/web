@@ -7,9 +7,11 @@ import RotateBetween from "./RotataBetween";
 import PickupModal from "../user/PickupModal";
 import Loader from "../Loader";
 import {useAtomAuthContext} from "@/app/store/authAtom";
+import {useGoogleAddressAtomContext} from "@/app/store/addressAtom";
 
 export default function FoodHero2() {
     const { currentStep,modalOpen, goBack } = useAtomAuthContext();
+   const {savedAddress, setSavedAddress }=  useGoogleAddressAtomContext()
 
     const words = [
         "Cravings",
@@ -70,10 +72,11 @@ export default function FoodHero2() {
     // get address from local storage
 
     useEffect(() => {
-        const savedAddresses = JSON.parse(sessionStorage.getItem('selectedAddresses') || '[]');
+        const savedAddresses = JSON.parse(localStorage.getItem('selectedAddresses') || '[]');
         const lastAddress = savedAddresses.length > 0 ? savedAddresses[savedAddresses.length - 1] : "";
         setSelectedAddress(lastAddress);
-    }, []);
+        setSavedAddress(lastAddress); // Update the context with the last address
+    }, [setSavedAddress]);
     return (
         <div className="">
             <div className="flex flex-col lg:flex-row items-center justify-between">
@@ -98,7 +101,7 @@ export default function FoodHero2() {
                     </p>
                     <div>
                         <PickupModal handleOnSelect={handleAddressSelect}/>
-                        <p>Selected Address: {selectedAddress}</p>
+                        <p>Selected Address: {savedAddress}</p>
                     </div>
                 </div>
 

@@ -16,16 +16,17 @@ interface User {
 }
 
 export default function UserPopoverItem() {
-	const { setIsLoggedIn, logOut, authUser, setAuthUser } = useAtomAuthContext();
+	const {  logOut, authUser, setModalOpen } =
+		useAtomAuthContext();
 	const router = useRouter();
 	async function logout() {
 		const data = await fetch(`/api/auth/logout`);
 
 		router.push("/");
 		logOut();
+
+		setModalOpen(false);
 	}
-
-
 
 	return (
 		<div>
@@ -34,12 +35,8 @@ export default function UserPopoverItem() {
 				<div className="border-b border-gray-500" />
 			</div>
 
-			<Link href={`/user/account`} >
-				Account
-			</Link>
-			<Link href={`/user/order/history`} >
-				Order history
-			</Link>
+			<Link href={`/user/account`}>Account</Link>
+			<Link href={`/user/order/history`}>Order history</Link>
 
 			<div className="flex justify-between mb-7 mt-4">
 				<div className="flex flex-col gap-y-2">
