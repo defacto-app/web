@@ -1,11 +1,11 @@
-import type React from 'react';
-import { useEffect, useState } from 'react';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import env, { isDev } from '@/config/env';
-import { $api } from '@/http/endpoints';
+import type React from "react";
+import { useEffect, useState } from "react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import env, { isDev } from "@/config/env";
+import { $api } from "@/http/endpoints";
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
-import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
+import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import Image from "next/image";
 import { useGoogleAddressAtomContext } from "@/app/store/addressAtom"; // Use the Pickup Modal Context
 
@@ -15,26 +15,22 @@ function GoogleAddressInput() {
 	const [searchAttempted, setSearchAttempted] = useState(false);
 	const [predictionListVisible, setPredictionListVisible] = useState(false);
 	const [hasSelectedAddress, setHasSelectedAddress] = useState(false);
-	const [location, setLocation] = useState({ lat: 6.210, lng: 6.740 }); // Default to Asaba
-	const [error, setError] = useState("");  // Error message state
-	const [showMap, setShowMap] = useState(false);  // State to control map display
+	const [location, setLocation] = useState({ lat: 6.21, lng: 6.74 }); // Default to Asaba
+	const [error, setError] = useState(""); // Error message state
+	const [showMap, setShowMap] = useState(false); // State to control map display
 
 	// Access modal state and actions from useGoogleAddressAtomContext
-	const {
-		modalOpen,
-		setSavedAddress,
-		openModal,
-		handleCloseModal
-	} = useGoogleAddressAtomContext();
+	const { modalOpen, setSavedAddress, openModal, handleCloseModal } =
+		useGoogleAddressAtomContext();
 
 	const [googleAddress, setGoogleAddress] = useState(""); // Local state for input value
 
 	// Define the geographical boundaries for Asaba
 	const asabaBounds = {
-		north: 6.250,
-		south: 6.100,
-		east: 6.800,
-		west: 6.650
+		north: 6.25,
+		south: 6.1,
+		east: 6.8,
+		west: 6.65,
 	};
 
 	// Custom hook for debouncing
@@ -94,22 +90,34 @@ function GoogleAddressInput() {
 		setHasSelectedAddress(true);
 
 		// Fetching the location details using place_id
-		const locationDetails = await $api.guest.location.details(suggestion.place_id);
+		const locationDetails = await $api.guest.location.details(
+			suggestion.place_id,
+		);
 		const { lat, lng } = locationDetails.result.geometry.location;
 		setLocation({ lat, lng });
 
 		setShowMap(true);
 
 		// Check if the location is within Asaba bounds
-		if (lat >= asabaBounds.south && lat <= asabaBounds.north && lng >= asabaBounds.west && lng <= asabaBounds.east) {
-			setError("");  // Clear any previous error
+		if (
+			lat >= asabaBounds.south &&
+			lat <= asabaBounds.north &&
+			lng >= asabaBounds.west &&
+			lng <= asabaBounds.east
+		) {
+			setError(""); // Clear any previous error
 
 			// Save the selected address to sessionStorage
 
-			const existingAddresses = JSON.parse(localStorage.getItem('selectedAddresses') || '[]');
+			const existingAddresses = JSON.parse(
+				localStorage.getItem("selectedAddresses") || "[]",
+			);
 
 			existingAddresses.push(suggestion.description);
-			localStorage.setItem('selectedAddresses', JSON.stringify(existingAddresses));
+			localStorage.setItem(
+				"selectedAddresses",
+				JSON.stringify(existingAddresses),
+			);
 
 			handleCloseModal(); // Close the modal after selection
 		} else {
@@ -117,12 +125,13 @@ function GoogleAddressInput() {
 		}
 	};
 
-	const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-
-		setGoogleAddress(e.target.value);  // Update the local state for input value
+	const handleChange = (e: {
+		target: { value: React.SetStateAction<string> };
+	}) => {
+		setGoogleAddress(e.target.value); // Update the local state for input value
 		if (hasSelectedAddress) {
-			setHasSelectedAddress(false);  // Reset selection state when user starts typing again
-			setPredictionListVisible(true);  // Allow showing predictions again as user types
+			setHasSelectedAddress(false); // Reset selection state when user starts typing again
+			setPredictionListVisible(true); // Allow showing predictions again as user types
 		}
 	};
 
@@ -144,43 +153,41 @@ function GoogleAddressInput() {
 					<section>
 						{loading && <div>Loading...</div>}
 						<ul className="absolute z-10 list-none bg-white  w-80 shadow-lg mt-1">
-							{searchAttempted && (suggestions.predictions.length > 0 ? (
-								suggestions.predictions.map((suggestion: any) => (
-									<li
-										key={suggestion.place_id}
-										// biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
-										tabIndex={0}
-										className="p-2 hover:bg-gray-100 cursor-pointer"
-										onClick={() => handleSuggestionClick(suggestion)}
-										onKeyDown={(e) => {
-											if (e.key === 'Enter') handleSuggestionClick(suggestion);
-										}}
-									>
-										{suggestion.description}
-									</li>
-								))
-							) : (
-								<li className="p-2">No suggestions found</li>
-							))}
+							{searchAttempted &&
+								(suggestions.predictions.length > 0 ? (
+									suggestions.predictions.map((suggestion: any) => (
+										<li
+											key={suggestion.place_id}
+											// biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
+											tabIndex={0}
+											className="p-2 hover:bg-gray-100 cursor-pointer"
+											onClick={() => handleSuggestionClick(suggestion)}
+											onKeyDown={(e) => {
+												if (e.key === "Enter")
+													handleSuggestionClick(suggestion);
+											}}
+										>
+											{suggestion.description}
+										</li>
+									))
+								) : (
+									<li className="p-2">No suggestions found</li>
+								))}
 						</ul>
 					</section>
 				)}
 			</div>
 
-			{error && (
-				<div className="mt-4 text-red-500">
-					{error}
-				</div>
-			)}
+			{error && <div className="mt-4 text-red-500">{error}</div>}
 
 			<div className="w-screen h-screen mt-8">
 				{showMap ? (
 					<APIProvider apiKey={env.google_map_api}>
 						<Map
-							key={`${location.lat}-${location.lng}`}  // Changing key forces re-render
+							key={`${location.lat}-${location.lng}`} // Changing key forces re-render
 							center={location}
 							zoom={15}
-							gestureHandling={'auto'}
+							gestureHandling={"auto"}
 							zoomControl={false}
 							streetViewControl={false}
 							mapTypeControl={false}
