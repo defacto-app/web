@@ -8,10 +8,10 @@ import { MoveLeft } from "lucide-react";
 import LoginSuccessful from "@/components/auth/LoginSuccessful";
 
 export default function SignInModal() {
-	const { currentStep, goBack, modalOpen } = useAtomAuthContext();
+	const { currentStep } = useAtomAuthContext();
 
 	return (
-		<div className="mx-auto max-w-md rounded-xl">
+		<div className="  rounded-xl">
 			<div>
 				<div>
 					{currentStep === "welcome" && <Welcome />}

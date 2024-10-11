@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import PhoneNumberValidation from "@/components/PhoneLogin";
 
 export default function SenderModal() {
   return (
