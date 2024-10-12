@@ -8,10 +8,10 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
-import { X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import GoogleAddressInput from "@/components/GoogleAddressInput";
 import { useGoogleAddressAtomContext } from "@/app/store/addressAtom";
-
+import { MapPin } from "lucide-react";
 type PickupModalProps = {
 	handleOnSelect: (address: string) => void;
 };
@@ -22,38 +22,45 @@ function PickupModal({ handleOnSelect }: PickupModalProps) {
 
 	return (
 		<div className="relative">
-			{savedAddress} --
 			<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
 				<AlertDialogTrigger asChild>
-					<div className="relative mb-8 cursor-pointer">
-						<Input
-							onClick={openModal}
-							type="text"
-							placeholder={
-								savedAddress ? savedAddress : "What's your address ?"
-							}
-						/>
-						<Button
-							variant="primary"
-							className="absolute right-0 top-0 mt-3 mr-4"
-							disabled
-							type="button"
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								className="h-6 w-6 text-blue-600"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth="2"
-									d="M14 5l7 7m0 0l-7 7m7-7H3"
+					<div>
+						{savedAddress ? (
+							<div>
+								<span className="text-blue-500 lg:hidden">Deliver Here:</span>
+								<Button
+									variant={`outline`}
+									onClick={openModal}
+									className={`pr-4 py-1 gap-x-4 w-80 lg:w-full`} // Removed `px-4`
+								>
+									<div className="w-full truncate flex items-center">
+										<span className="text-blue-500 hidden lg:block">Deliver Here:</span>
+										<span className="truncate ml-1">{savedAddress}</span>
+									</div>
+
+									<ChevronDown size={`30`} className={`text-blue-500`} />
+								</Button>
+
+							</div>
+						) : (
+							<div className="relative mb-8 cursor-pointer">
+								<Input
+									onClick={openModal}
+									type="text"
+									placeholder={
+										savedAddress ? savedAddress : "What's your address ?"
+									}
 								/>
-							</svg>
-						</Button>
+								<Button
+									variant="ghost"
+									className="absolute right-0 top-0 "
+									disabled
+									type="button"
+								>
+									<MapPin />
+								</Button>
+							</div>
+						)}
 					</div>
 				</AlertDialogTrigger>
 
@@ -70,7 +77,7 @@ function PickupModal({ handleOnSelect }: PickupModalProps) {
 					</AlertDialogTitle>
 					<div className="absolute top-20 px-10">
 						<div className="flex items-center">
-							<GoogleAddressInput  />
+							<GoogleAddressInput />
 						</div>
 					</div>
 				</AlertDialogContent>

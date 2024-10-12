@@ -101,8 +101,16 @@ export default function FoodHero2() {
                     </p>
                     <div>
                         <PickupModal handleOnSelect={handleAddressSelect}/>
-                        <p>Selected Address: {savedAddress}</p>
+
                     </div>
+{/*
+                    <div>
+                        {savedAddress ? (
+                            <p>Selected Address: {savedAddress}</p>
+                        ) : (
+                            <PickupModal handleOnSelect={handleAddressSelect}/>
+                        )}
+                    </div>*/}
                 </div>
 
                 <div className="relative bg-primary-900 lg:rounded-tl-full lg:w-1/2 w-full">
