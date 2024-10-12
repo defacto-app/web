@@ -139,6 +139,21 @@ function Email() {
 				password: formData.password,
 			});
 
+			console.log(res, "otp res");
+			setToken("user", res.data.token);
+
+			await fetch("/api/auth/user", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					token: res.data.token,
+				}),
+			});
+
+			toast.success("Registration Succesful");
+
 			setLoading(false);
 
 			// setCurrentStep("success");
