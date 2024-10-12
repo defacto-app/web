@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { useCartContext, useCartSummaryContext } from "@/app/store/cartAtom";
@@ -9,6 +9,18 @@ function CartItemList() {
 
 	const { totalPrice, deliveryFee, discountAmount, discount } =
 		useCartSummaryContext();
+
+
+	const [isMounted, setIsMounted] = useState(false);
+
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
+
+	// Don't render content until the component has mounted on the client
+	if (!isMounted) {
+		return null;
+	}
 
 	return (
 		<div>

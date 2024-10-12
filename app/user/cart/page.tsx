@@ -14,8 +14,8 @@ import { formatPrice } from "@/utils";
 import Link from "next/link";
 import OrderSummary from "@/app/user/checkout/OrderSummary";
 import UserAddresses from "@/components/user/UserAddresses";
-import CartItemList from "@/app/user/cart/CartItemList";
-
+import dynamic from "next/dynamic";
+const CartItemList = dynamic(() => import('./CartItemList'), { ssr: false });
 function CartPage() {
 	const { cart, removeItem, updateItemQuantity, cartTotal } = useCartContext();
 
