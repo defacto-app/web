@@ -7,9 +7,13 @@ import { Button } from "@/components/ui/button";
 import FormError from "@/components/ui/FormError";
 import { InputOTPPattern } from "@/components/ui/InputOTPPattern";
 import { useAtomAuthContext } from "@/app/store/authAtom";
+import {setToken} from "@/utils/auth";
+import {toast} from "react-toastify";
 
 const PhoneNumberValidation = () => {
-	const { setCurrentStep } = useAtomAuthContext();
+
+
+	const { setCurrentStep ,getMe,setIsLoggedIn} = useAtomAuthContext();
 	const [form, setForm] = useState<any>({
 		code: "+234",
 		phoneNumber: "08063145125",
@@ -99,9 +103,31 @@ const PhoneNumberValidation = () => {
 				otp: form.otp,
 			});
 
+
+			console.log(res, "otp res");
+			setToken("user", res.data.token);
+
+			await fetch("/api/auth/user", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					token: res.data.token,
+				}),
+			});
+
+
+			toast.success("Login Successful");
+
 			setState({
 				loading: false,
 			});
+			setIsLoggedIn(true);
+			// setCurrentStep("success");
+			getMe();
+
+
 			// setCurrentStep("success");
 		} catch (error: any) {
 			console.log(error, "otp error");
