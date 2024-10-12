@@ -23,7 +23,7 @@ type registerFormType = {
 type authUserType = {
 	firstName: string;
 	email: string;
-	phone: string;
+	phoneNumber: string;
 };
 
 // Atoms for global state management using Jotai
@@ -42,7 +42,7 @@ export const modalOpenAtom = atom<boolean>(false);
 export const authUserAtom = atom<authUserType>({
 	firstName: "",
 	email: "",
-	phone: "",
+	phoneNumber: "",
 });
 
 // Define a derived atom to handle `goBack` function

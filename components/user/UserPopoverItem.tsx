@@ -34,10 +34,10 @@ export default function UserPopoverItem() {
 				<h1 className="mb-4 font-bold text-xl">
 					Hello{" "}
 					{truncateText(
-						authUser.firstName || authUser.email || authUser.phone,
+						authUser.firstName || authUser.email || authUser.phoneNumber,
 						15,
 					)}
-					!
+
 				</h1>
 
 				<div className="border-b border-gray-500" />
@@ -67,7 +67,7 @@ export default function UserPopoverItem() {
 					<div>
 						<div>
 							<h1 className="mt-2 text-gray-500">Phone</h1>
-							<h2>{authUser.phone || "not set"}</h2>
+							<h2>{authUser.phoneNumber || "not set"}</h2>
 						</div>
 					</div>
 					<div className="mt-2">

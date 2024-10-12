@@ -7,13 +7,11 @@ import { Button } from "@/components/ui/button";
 import FormError from "@/components/ui/FormError";
 import { InputOTPPattern } from "@/components/ui/InputOTPPattern";
 import { useAtomAuthContext } from "@/app/store/authAtom";
-import {setToken} from "@/utils/auth";
-import {toast} from "react-toastify";
+import { setToken } from "@/utils/auth";
+import { toast } from "react-toastify";
 
 const PhoneNumberValidation = () => {
-
-
-	const { setCurrentStep ,getMe,setIsLoggedIn} = useAtomAuthContext();
+	const { setCurrentStep, getMe, setIsLoggedIn } = useAtomAuthContext();
 	const [form, setForm] = useState<any>({
 		code: "+234",
 		phoneNumber: "08063145125",
@@ -98,13 +96,13 @@ const PhoneNumberValidation = () => {
 		});
 
 		try {
+			setCurrentStep("login-success");
+
 			const res = await $api.auth.user.phone_login({
 				phoneNumber: `${form.code}${form.phoneNumber}`,
 				otp: form.otp,
 			});
 
-
-			console.log(res, "otp res");
 			setToken("user", res.data.token);
 
 			await fetch("/api/auth/user", {
@@ -117,16 +115,13 @@ const PhoneNumberValidation = () => {
 				}),
 			});
 
-
-			toast.success("Login Successful");
+			// toast.success("Login Successful");
 
 			setState({
 				loading: false,
 			});
-			setIsLoggedIn(true);
-			// setCurrentStep("success");
+			// setIsLoggedIn(true);
 			getMe();
-
 
 			// setCurrentStep("success");
 		} catch (error: any) {

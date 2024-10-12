@@ -11,7 +11,7 @@ export default function SignInModal() {
 	return (
 		<div className="rounded-xl">
 			<div>
-				{currentStep}
+
 				<div>
 					{currentStep === "welcome" && <Welcome />}
 					{currentStep === "email" && <Email />}

@@ -112,7 +112,6 @@ function Email() {
 				}),
 			});
 
-			console.log("Current step after login:", "login-success");
 			getMe();
 
 
