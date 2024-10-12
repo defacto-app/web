@@ -96,7 +96,7 @@ const PhoneNumberValidation = () => {
 		});
 
 		try {
-			setCurrentStep("login-success");
+			// setCurrentStep("login-success");
 
 			const res = await $api.auth.user.phone_login({
 				phoneNumber: `${form.code}${form.phoneNumber}`,
@@ -115,12 +115,13 @@ const PhoneNumberValidation = () => {
 				}),
 			});
 
-			// toast.success("Login Successful");
+			toast.success("Login Successful");
 
 			setState({
 				loading: false,
 			});
 			// setIsLoggedIn(true);
+			setIsLoggedIn(true);
 			getMe();
 
 			// setCurrentStep("success");

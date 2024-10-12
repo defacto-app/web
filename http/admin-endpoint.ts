@@ -102,6 +102,39 @@ export const $admin_api = {
 		},
 	},
 
+	users:{
+		all: async ({ page = 1, perPage = 20, searchTerm = "" }) => {
+			try {
+				return $axios_admin.get(`/users`, {
+					params: { page, perPage, search: searchTerm },
+				});
+			} catch (error: any) {
+				return error;
+			}
+		},
+	/*	one: async (id: string) => {
+			try {
+				return $axios_admin.get(`/users/${id}`);
+			} catch (error: any) {
+				return error;
+			}
+		},
+		update: async (id: string, body: any) => {
+			try {
+				return $axios_admin.put(`/users/${id}`, body);
+			} catch (error: any) {
+				return error;
+			}
+		},
+		delete: async (id: string) => {
+			try {
+				return $axios_admin.delete(`/users/${id}`);
+			} catch (error: any) {
+				return error;
+			}
+		},*/
+	},
+
 	menu: {
 		one: async (id: string) => {
 			try {

@@ -38,7 +38,7 @@ function Email() {
 
 	type authState = "default" | "new-user" | "existing-user";
 	const [authState, setAuthState] = useState<authState>("default");
-	const { setCurrentStep, setIsLoggedIn, getMe,setModalOpen } = useAtomAuthContext();
+	const { setCurrentStep, getMe ,setIsLoggedIn} = useAtomAuthContext();
 
 	const getCurrentStep = () => {
 		return authSteps.find((step) => step.id === authState);
@@ -92,13 +92,21 @@ function Email() {
 	const login_user = async () => {
 		setLoading(true);
 		try {
-			setCurrentStep("login-success");
-
 			const res = await $api.auth.user.email_login({
 				email: formData.email,
 				password: formData.password,
 			});
 
+			// Check if the token exists
+			if (res.data.token) {
+				// Set the current step to 'login-success' after receiving the token
+				// setCurrentStep("login-success");
+				console.log("Login successful, setting step to 'login-success'");
+			} else {
+				throw new Error("Token not received");
+			}
+
+			// Store token in localStorage or cookie
 			setToken("user", res.data.token);
 
 			// Send token to the server to set the cookie
@@ -112,25 +120,32 @@ function Email() {
 				}),
 			});
 
-			getMe();
-
+			toast.success("Login Successful");
+			setIsLoggedIn(true);
+			// Fetch user information
+			await getMe();
 
 			setLoading(false);
-			// toast.success("Login Successful");
 		} catch (error: any) {
+			console.error("Login failed:", error);
+
+			// Set form errors if any
 			setErrors({
 				...errors,
-				password: error.password,
+				password: error.password || "Login failed",
 			});
-			toast.error(error.message);
+
+			// Display error message using toast
+			toast.error(error.message || "An error occurred during login");
 
 			setLoading(false);
 		}
 	};
+
 	const register_user = async () => {
 		setLoading(true);
 		console.log("Email Submitted");
-		setCurrentStep("registration-success");
+		// setCurrentStep("registration-success");
 
 		try {
 			const res = await $api.auth.user.email_register({
@@ -150,13 +165,10 @@ function Email() {
 				}),
 			});
 
-			toast.success("Registration Succesful");
+			toast.success("Registration Successful");
 
 			setLoading(false);
 			getMe();
-
-
-			// setCurrentStep("success");
 		} catch (error: any) {
 			console.log(error);
 
@@ -202,7 +214,7 @@ function Email() {
 								onChange={handleInputChange}
 							/>
 
-							<FormError error={errors.email}/>
+							<FormError error={errors.email} />
 							<div className={`flex justify-center`}>
 								<Button
 									loading={loading}
@@ -212,68 +224,69 @@ function Email() {
 									className="w-72 mt-4"
 								>
 									Continue
-								</Button></div>
+								</Button>
 							</div>
-							)}
-
-							{
-								// Show password field if user is existing
-								authState === "existing-user" && (
-									<div className=" py-2">
-										<Label htmlFor="password">Password</Label>
-										<PasswordInput
-											placeholder="Enter your password"
-											name="password"
-											value={formData.password}
-											handleInputChange={handleInputChange}
-											required
-										/>
-										<FormError error={errors.password}/>
-
-										<div className={`flex justify-center`}>
-											<Button
-												loading={loading}
-												variant="primary"
-												onClick={login_user}
-												type="button"
-												className="w-72 mt-4"
-											>
-												Continue
-											</Button>
-										</div>
-									</div>
-								)
-							}
-							{
-								// Show password field if user is new
-								authState === "new-user" && (
-									<div className=" py-2">
-										<Label htmlFor="password">Password</Label>
-										<PasswordInput
-											placeholder="Enter your password"
-											name="password"
-											value={formData.password}
-											handleInputChange={handleInputChange}
-											required
-										/>
-										<FormError error={errors.password}/>
-
-										<Button
-											loading={loading}
-											variant="primary"
-											onClick={register_user}
-											type="button"
-											className="w-full mt-4"
-										>
-											Continue
-										</Button>
-									</div>
-								)
-							}
 						</div>
-						</CardContent>
-						</div>
-						);
+					)}
+
+					{
+						// Show password field if user is existing
+						authState === "existing-user" && (
+							<div className=" py-2">
+								<Label htmlFor="password">Password</Label>
+								<PasswordInput
+									placeholder="Enter your password"
+									name="password"
+									value={formData.password}
+									handleInputChange={handleInputChange}
+									required
+								/>
+								<FormError error={errors.password} />
+
+								<div className={`flex justify-center`}>
+									<Button
+										loading={loading}
+										variant="primary"
+										onClick={login_user}
+										type="button"
+										className="w-72 mt-4"
+									>
+										Continue
+									</Button>
+								</div>
+							</div>
+						)
 					}
+					{
+						// Show password field if user is new
+						authState === "new-user" && (
+							<div className=" py-2">
+								<Label htmlFor="password">Password</Label>
+								<PasswordInput
+									placeholder="Enter your password"
+									name="password"
+									value={formData.password}
+									handleInputChange={handleInputChange}
+									required
+								/>
+								<FormError error={errors.password} />
 
-					export default Email;
+								<Button
+									loading={loading}
+									variant="primary"
+									onClick={register_user}
+									type="button"
+									className="w-full mt-4"
+								>
+									Continue
+								</Button>
+							</div>
+						)
+					}
+				</div>
+			</CardContent>
+		</div>
+	);
+}
+
+export default Email;
