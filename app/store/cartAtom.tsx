@@ -24,8 +24,11 @@ export const setSelectedAddressAtom = atom(
 
 // Utility function to get the initial cart items from session storage
 const getInitialCartItems = (): CartItemType[] => {
-	const storedCart = sessionStorage.getItem("cart");
-	return storedCart ? JSON.parse(storedCart) : [];
+	if (typeof window !== "undefined") {
+		const storedCart = sessionStorage.getItem("cart");
+		return storedCart ? JSON.parse(storedCart) : [];
+	}
+	return [];
 };
 
 // Atom to store the cart items

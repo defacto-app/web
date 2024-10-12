@@ -1,11 +1,9 @@
 import React from "react";
-
 import Welcome from "@/components/auth/Welcome";
 import Email from "@/components/auth/Email";
-import { modalOpenAtom, useAtomAuthContext } from "@/app/store/authAtom";
-import { Button } from "@/components/ui/button";
-import { MoveLeft } from "lucide-react";
+import { useAtomAuthContext } from "@/app/store/authAtom";
 import LoginSuccessful from "@/components/auth/LoginSuccessful";
+import RegistrationSuccessful from "@/components/auth/RegistrationSuccessful";
 
 export default function SignInModal() {
 	const { currentStep } = useAtomAuthContext();
@@ -13,12 +11,12 @@ export default function SignInModal() {
 	return (
 		<div className="rounded-xl">
 			<div>
+				{currentStep}
 				<div>
 					{currentStep === "welcome" && <Welcome />}
 					{currentStep === "email" && <Email />}
-					{/*{currentStep === "password" && <Password />}*/}
-					{/*{currentStep === "confirm-email" && <ConfirmEmail />}*/}
-					{/*{currentStep === "success" && <LoginSuccessful />}*/}
+					{currentStep === "login-success" && <LoginSuccessful />}
+					{currentStep === "registration-success" && <RegistrationSuccessful />}
 				</div>
 			</div>
 		</div>

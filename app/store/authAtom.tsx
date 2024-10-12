@@ -4,7 +4,13 @@ import { clearToken, isUserLoggedIn } from "@/utils/auth";
 import { $api } from "@/http/endpoints";
 
 // Define the steps
-export const authSteps = ["welcome", "email", "phone"] as const;
+export const authSteps = [
+	"welcome",
+	"email",
+	"phone",
+	"login-success",
+	"registration-success",
+] as const;
 export type AuthStep = (typeof authSteps)[number];
 
 // Define the form type
@@ -90,7 +96,9 @@ export const useAtomAuthContext = () => {
 	}, [setAuthUser, setIsLoggedIn]);
 
 	useEffect(() => {
-		setIsLoggedIn(isUserLoggedIn());
+		const loggedIn = isUserLoggedIn();
+		console.log("User logged in status:", loggedIn);
+		setIsLoggedIn(loggedIn);
 	}, [setIsLoggedIn]);
 
 	return {

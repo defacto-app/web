@@ -92,12 +92,12 @@ function Email() {
 	const login_user = async () => {
 		setLoading(true);
 		try {
+			setCurrentStep("login-success");
+
 			const res = await $api.auth.user.email_login({
 				email: formData.email,
 				password: formData.password,
 			});
-
-			// toast.success("Login Successful");
 
 			setToken("user", res.data.token);
 
@@ -112,12 +112,12 @@ function Email() {
 				}),
 			});
 
-			setLoading(false);
-			toast.success("Login Successful");
-
-			setIsLoggedIn(true);
-			// setCurrentStep("success");
+			console.log("Current step after login:", "login-success");
 			getMe();
+
+
+			setLoading(false);
+			// toast.success("Login Successful");
 		} catch (error: any) {
 			setErrors({
 				...errors,
@@ -128,10 +128,10 @@ function Email() {
 			setLoading(false);
 		}
 	};
-
 	const register_user = async () => {
 		setLoading(true);
 		console.log("Email Submitted");
+		setCurrentStep("registration-success");
 
 		try {
 			const res = await $api.auth.user.email_register({
@@ -139,7 +139,6 @@ function Email() {
 				password: formData.password,
 			});
 
-			console.log(res, "otp res");
 			setToken("user", res.data.token);
 
 			await fetch("/api/auth/user", {
