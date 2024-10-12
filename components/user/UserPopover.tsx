@@ -21,7 +21,7 @@ export default function UserPopover() {
 						{/* <MixerHorizontalIcon /> */}
 						<div className="flex items-center gap-x-2">
 							<UserIcon className="text-primary-600" />
-							<p>{authUser?.firstName}</p>
+							<p>{authUser?.firstName || authUser.email}</p>
 							<ChevronDown />
 						</div>
 					</Button>

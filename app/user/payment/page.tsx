@@ -9,13 +9,10 @@ import SenderModal from "@/components/user/SenderModal";
 import { BanknoteIcon, CheckCircleIcon, CreditCardIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
+import {truncateText} from "@/utils";
 
 export default function Paymentpage() {
-  const truncateText = (text: string, maxLength: number): string => {
-    return text.length > maxLength
-      ? `${text.substring(0, maxLength)}...`
-      : text;
-  };
+
   const senderAddress = "1234 Sender Street, City, Country";
   const receiverAddress = "5678 Receiver Street, City, Country";
 

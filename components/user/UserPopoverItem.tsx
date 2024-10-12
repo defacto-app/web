@@ -9,6 +9,7 @@ import { useAuthContext } from "@/app/provider/auth.context";
 import { $api } from "@/http/endpoints";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import { useRouter } from "next/navigation";
+import { truncateText } from "@/utils";
 interface User {
 	firstName?: string;
 	email?: string;
@@ -16,8 +17,7 @@ interface User {
 }
 
 export default function UserPopoverItem() {
-	const {  logOut, authUser, setModalOpen } =
-		useAtomAuthContext();
+	const { logOut, authUser, setModalOpen } = useAtomAuthContext();
 	const router = useRouter();
 	async function logout() {
 		const data = await fetch(`/api/auth/logout`);
@@ -31,7 +31,15 @@ export default function UserPopoverItem() {
 	return (
 		<div>
 			<div className="">
-				<h1 className="mb-4 font-bold text-2xl">Hello {authUser.firstName}!</h1>
+				<h1 className="mb-4 font-bold text-xl">
+					Hello{" "}
+					{truncateText(
+						authUser.firstName || authUser.email || authUser.phone,
+						15,
+					)}
+					!
+				</h1>
+
 				<div className="border-b border-gray-500" />
 			</div>
 
@@ -42,7 +50,7 @@ export default function UserPopoverItem() {
 				<div className="flex flex-col gap-y-2">
 					<div className="">
 						<h1 className="mt-2 text-gray-500">Name</h1>
-						<h2>{authUser.firstName}</h2>
+						<h2>{authUser.firstName || authUser.email}</h2>
 					</div>
 					<div>
 						<h1 className="text-gray-500">Email</h1>
