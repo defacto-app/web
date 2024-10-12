@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from "react";
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";

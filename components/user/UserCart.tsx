@@ -19,10 +19,8 @@ function UserCart() {
 	}
 
 	return (
-		<div>
-			<Link href={`/user/cart`}>
-				Cart items {JSON.stringify(cart.length)}
-			</Link>
+		<div className={`hidden lg:block`}>
+			<Link href={`/user/cart`}>Cart items {JSON.stringify(cart.length)}</Link>
 		</div>
 	);
 }

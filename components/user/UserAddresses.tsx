@@ -72,10 +72,8 @@ function UserAddresses() {
 					</div>
 
 					<AlertDialog>
-						<AlertDialogTrigger>
-							<Button variant={`outline`} className="text-blue-500 font-medium">
+						<AlertDialogTrigger className={`border py-2 rounded-full px-4  border-blue-500`}>
 								Edit
-							</Button>
 						</AlertDialogTrigger>
 						<AlertDialogContent className={` lg:h-[450px]`}>
 							<AlertDialogHeader>

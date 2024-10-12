@@ -90,14 +90,12 @@ export const useAtomAuthContext = () => {
 
 			clearToken("user");
 
-			console.error("Failed to fetch user data", error);
 			// Handle error (e.g., log the user out or display a message)
 		}
 	}, [setAuthUser, setIsLoggedIn]);
 
 	useEffect(() => {
 		const loggedIn = isUserLoggedIn();
-		console.log("User logged in status:", loggedIn);
 		setIsLoggedIn(loggedIn);
 	}, [setIsLoggedIn]);
 

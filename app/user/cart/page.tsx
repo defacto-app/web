@@ -14,8 +14,9 @@ import { formatPrice } from "@/utils";
 import Link from "next/link";
 import OrderSummary from "@/app/user/checkout/OrderSummary";
 import UserAddresses from "@/components/user/UserAddresses";
+import CartItemList from "@/app/user/cart/CartItemList";
 
-function Page() {
+function CartPage() {
 	const { cart, removeItem, updateItemQuantity, cartTotal } = useCartContext();
 
 	const { totalPrice, deliveryFee, discountAmount, discount } =
@@ -36,71 +37,13 @@ function Page() {
 					<UserAddresses />
 
 					{/* Order Summary Section */}
-					<div className={`bg-white p-4 border rounded-lg`}>
-						<div className="space-y-6  ">
-							{cart.length > 0 ? (
-								cart.map((item) => (
-									<div
-										key={item.id}
-										className="flex items-center justify-between p-4  border-b last:border-b-0"
-									>
-										<div className="flex items-center">
-											<img
-												src={item.image}
-												alt={item.name}
-												className="w-16 h-16 object-cover rounded-lg"
-											/>
-											<div className="ml-4">
-												<p className="font-semibold">{item.name}</p>
-												<p className="text-blue-500">
-													{formatPrice(item.price)}
-												</p>
-											</div>
-										</div>
-										<div className="flex items-center space-x-2">
-											<Button
-												className="px-3 py-1 bg-gray-200 rounded-lg"
-												onClick={() =>
-													updateItemQuantity({
-														itemId: item.id,
-														quantity: item.quantity - 1,
-													})
-												}
-												disabled={item.quantity === 1} // Disable if the quantity is 1
-											>
-												-
-											</Button>
-											<span>{item.quantity}</span>
-											<Button
-												className="px-3 py-1 bg-gray-200 rounded-lg"
-												onClick={() =>
-													updateItemQuantity({
-														itemId: item.id,
-														quantity: item.quantity + 1,
-													})
-												}
-											>
-												+
-											</Button>
-											<Button
-												className="text-red-500"
-												onClick={() => removeItem(item.id)}
-											>
-												🗑
-											</Button>
-										</div>
-									</div>
-								))
-							) : (
-								<p>Your cart is empty.</p>
-							)}
-						</div>
-					</div>
+
+					<CartItemList />
 				</div>
 
 				{/* Right Side (Order Summary and Checkout) */}
 				<div className="w-full lg:w-1/3 space-y-8">
-					{/* Payment & Discount */}
+					Payment & Discount
 					<div className="bg-white p-6 rounded-lg border space-y-4">
 						<div className="flex items-center justify-between">
 							<span>Payment Methods</span>
@@ -113,8 +56,7 @@ function Page() {
 							</Button>
 						</div>
 					</div>
-
-					{/* Order Summary Section */}
+					Order Summary Section
 					<div>
 						<OrderSummary cartPage />
 					</div>
@@ -124,4 +66,4 @@ function Page() {
 	);
 }
 
-export default Page;
+export default CartPage;
