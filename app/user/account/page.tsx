@@ -1,79 +1,49 @@
+"use client";
 import React from "react";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import { useAtomAuthContext } from "@/app/store/authAtom";
+import EditUserModal from "@/components/user/EditUserModal";
+import EditUserNumberModal from "@/components/user/EditUserNumberModal";
 
 function AccountPage() {
+	const { authUser } = useAtomAuthContext();
+
 	return (
-		<div className={`container mx-auto`}>
-			<div className=" flex flex-col items-center justify-center">
-				<div className="w-full  bg-white rounded-lg  p-6 py-40">
+		<div className="container mx-auto">
+			<div className="flex flex-col items-center justify-center">
+				<div className="w-full bg-white rounded-lg p-6 py-40">
 					<h1 className="text-2xl font-bold mb-6">Account</h1>
 					<div className="space-y-6">
-						{/* Username */}
-						<div className="flex justify-between items-center">
-							<div className="flex items-center space-x-3">
-								<i className="fas fa-user text-lg"></i>
-								<span>sam</span>
+						{/* User Info Section */}
+						<div className="flex justify-between mb-7 mt-4">
+							<div className="flex flex-col gap-y-2">
+								<div>
+									<h1 className="mt-2 text-gray-500">Name</h1>
+									<h2>{authUser.firstName || authUser.email}</h2>
+								</div>
+								<div>
+									<h1 className="text-gray-500">Email</h1>
+									<h1>{authUser.email}</h1>
+								</div>
 							</div>
-							<Button variant={`outline`}  className=" hover:underline">
-								Edit
-							</Button>
+							<div className="mt-2">
+								<EditUserModal />
+							</div>
 						</div>
+						<div className="border-b border-gray-500" />
 
-						{/* Email */}
-						<div className={`space-y-14`}>
-							<div className="flex justify-between items-center">
-								<div className="flex items-center space-x-3">
-									<i className="fas fa-envelope text-lg"></i>
-									<span>samuelnmeje@gmail.com</span>
+						{/* Phone Section */}
+						<div>
+							<div className="flex justify-between mb-4">
+								<div>
+									<h1 className="mt-2 text-gray-500">Phone</h1>
+									<h2>{authUser.phoneNumber || "not set"}</h2>
 								</div>
-								<Button variant={`outline`} className=" hover:underline">
-									Edit
-								</Button>
-							</div>
-
-							{/* Change Password */}
-							<div className="flex justify-between items-center">
-								<div className="flex items-center space-x-3">
-									<i className="fas fa-lock text-lg"></i>
-									<span>Change password</span>
+								<div className="mt-2">
+									<EditUserNumberModal />
 								</div>
-								<Button variant={`outline`} className=" hover:underline">
-									Edit
-								</Button>
 							</div>
-
-							{/* Change Phone Number */}
-							<div className="flex justify-between items-center">
-								<div className="flex items-center space-x-3">
-									<i className="fas fa-phone text-lg"></i>
-									<span>Change phone number</span>
-								</div>
-								<Button variant={`outline`} className=" hover:underline">
-									Edit
-								</Button>
-							</div>
-
-							{/* Payment Methods */}
-							<div className="flex justify-between items-center">
-								<div className="flex items-center space-x-3">
-									<i className="fas fa-credit-card text-lg"></i>
-									<span>Payment methods</span>
-								</div>
-								<Button variant={`outline`} className=" hover:underline">
-									Edit
-								</Button>
-							</div>
-
-							{/* Manage Privacy */}
-							<div className="flex justify-between items-center">
-								<div className="flex items-center space-x-3">
-									<i className="fas fa-bullhorn text-lg"></i>
-									<span>Manage privacy</span>
-								</div>
-								<Button variant={`outline`} className=" hover:underline">
-									Edit
-								</Button>
-							</div>
+							<div className="border-b mb-2 mt-2 border-gray-500" />
 						</div>
 					</div>
 				</div>

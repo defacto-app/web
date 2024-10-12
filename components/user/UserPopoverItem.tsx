@@ -37,14 +37,22 @@ export default function UserPopoverItem() {
 						authUser.firstName || authUser.email || authUser.phoneNumber,
 						15,
 					)}
-
 				</h1>
 
 				<div className="border-b border-gray-500" />
 			</div>
 
-			<Link href={`/user/account`}>Account</Link>
-			<Link href={`/user/order/history`}>Order history</Link>
+			<div className={`flex flex-col gap-y-4 mt-4`}>
+				<Link href={`/user/account`}>Account</Link>
+				<Link href={`/user/order/history`}>Order history</Link>
+				<Button
+					onClick={logout}
+					variant={`outline`}
+					className="text-red-500 font-bold w-40"
+				>
+					Log out
+				</Button>
+			</div>
 
 			<div className="flex justify-between mb-7 mt-4">
 				<div className="flex flex-col gap-y-2">
@@ -80,15 +88,7 @@ export default function UserPopoverItem() {
 				<div>
 					<div />
 				</div>
-				<div>
-					<Button
-						onClick={logout}
-						variant={`ghost`}
-						className="text-red-500 font-bold"
-					>
-						Log out
-					</Button>
-				</div>
+				<div></div>
 			</div>
 		</div>
 	);
