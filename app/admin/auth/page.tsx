@@ -105,7 +105,7 @@ export default function AdminLogin() {
 
 	return (
 		<div className="flex items-center justify-center min-h-screen">
-			<Card className="mx-auto max-w-lg">
+			<Card className="mx-auto w-[500px] px-10">
 				<CardHeader>
 					<CardDescription className={`text-center`}>
 						Administrator Access
@@ -115,8 +115,7 @@ export default function AdminLogin() {
 					<div className="grid gap-4">
 						<div className="grid gap-2">
 							<Label htmlFor="email">Email</Label>
-							{formData.email}
-							<div className={"flex gap-x-2"}>
+							<div className={"flex flex-col gap-x-2"}>
 								<Input
 									id="email"
 									name="email"
@@ -126,21 +125,30 @@ export default function AdminLogin() {
 									value={formData.email}
 									onChange={handleInputChange}
 								/>
-								<Button
-									onClick={sendEmailOtp}
-									variant={"outline"}
-									className={`w-20`}
-								>
-									Send OTP
-								</Button>
+
+								{/* Wrap the Button in a flex container and use justify-end */}
+								<div className="flex justify-end">
+									<Button
+										onClick={sendEmailOtp}
+										variant={"ghost"}
+										className={``}
+									>
+										Send OTP
+									</Button>
+								</div>
 							</div>
+
 
 							{errors.email && (
 								<p className={`text-red-500 p-4`}>{errors.email}</p>
 							)}
 						</div>
-						<InputOTPPattern setOtp={setOtp} defaultValue={formData.otp} />
-						{errors.otp && <p className={"text-red-500 p-4"}>{errors.otp}</p>}
+					<div className={`flex justify-center`}>
+						<div>
+							<InputOTPPattern setOtp={setOtp} defaultValue={formData.otp}/>
+							{errors.otp && <p className={"text-red-500 p-4"}>{errors.otp}</p>}
+						</div>
+					</div>
 						<Button
 							variant="primary"
 							loading={isPending}

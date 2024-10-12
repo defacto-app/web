@@ -155,6 +155,8 @@ function Email() {
 			toast.success("Registration Succesful");
 
 			setLoading(false);
+			getMe();
+
 
 			// setCurrentStep("success");
 		} catch (error: any) {
