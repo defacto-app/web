@@ -1,5 +1,4 @@
 import type React from "react";
-import {cookies} from 'next/headers'
 export const metadata = {};
 
 export default function RootLayout({
@@ -9,9 +8,7 @@ export default function RootLayout({
 }) {
 
 
-  const cookieStore = cookies()
 
-  const user = cookieStore.get('user-token')
 
   return (
     <html lang="en" suppressHydrationWarning>

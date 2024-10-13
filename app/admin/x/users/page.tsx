@@ -14,10 +14,10 @@ import {Button} from "@/components/ui/button";
 import {DataTableSkeleton} from "@/components/table/data-table-skeleton";
 import {restaurantColumns} from "@/app/admin/x/restaurants/restaurant.columns";
 import {TablePagination} from "@/components/table/table-pagination";
-
+import { useRouter, useSearchParams } from 'next/navigation';
 
 // Updated function to fetch restaurants with a search query parameter
-const fetchRestaurants = async (
+const fetchUsers = async (
 	page: number,
 	perPage: number,
 	searchTerm: string,
@@ -35,18 +35,26 @@ function AllUserPage() {
 	const [perPage, setPerPage] = useState(10); // Track items per page
 	const [isMounted, setIsMounted] = useState(false); // Ensure the component is mounted
 	const debouncedSearchTerm = useDebounce(searchTerm, 500); // Debounce search term by 500ms
-
+	const router = useRouter();
+	const searchParams = useSearchParams();
 
 	// Ensure this only runs on the client side to avoid SSR mismatches
 	useEffect(() => {
 		setIsMounted(true);
 	}, []);
+	useEffect(() => {
+		const pageParam = searchParams.get('page');
+		setPage(pageParam ? Number(pageParam) : 1);
+
+		const perPageParam = searchParams.get('perPage');
+		setPerPage(perPageParam ? Number(perPageParam) : 10);
+	}, [searchParams]);
 
 
 	// Use React Query's useQuery hook to fetch data, and pass debouncedSearchTerm as part of the key
 	const { data, error, isLoading, refetch } = useQuery(
 		["users", page, perPage, debouncedSearchTerm], // The query key includes page, perPage, and debounced search term
-		() => fetchRestaurants(page, perPage, debouncedSearchTerm),
+		() => fetchUsers(page, perPage, debouncedSearchTerm),
 		{
 			// keepPreviousData: true, // Keep the previous data while fetching new data
 		},
@@ -56,12 +64,27 @@ function AllUserPage() {
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(e.target.value);
 	};
-
 	const handlePageChange = (newPage: number) => {
 		setPage(newPage);
 
-		console.log("handlePageChange", newPage);
+		// Update the URL without reloading the page
+		const params = new URLSearchParams(Array.from(searchParams.entries()));
+		params.set('page', newPage.toString());
+		router.push(`?${params.toString()}`);
 	};
+
+	const handlePerPageChange = (newPerPage: number) => {
+		setPerPage(newPerPage);
+		setPage(1); // Reset to first page when perPage changes
+
+		// Update the URL without reloading the page
+		const params = new URLSearchParams(Array.from(searchParams.entries()));
+		params.set('perPage', newPerPage.toString());
+		params.set('page', '1');
+		router.push(`?${params.toString()}`);
+	};
+
+
 
 	// Trigger refetch when the debounced search term changes
 	useEffect(() => {
