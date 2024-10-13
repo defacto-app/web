@@ -112,6 +112,13 @@ export const $admin_api = {
 				return error;
 			}
 		},
+		delete: async (userId: string) => {
+			try {
+				return $axios_admin.delete(`/users/${userId}`);
+			} catch (error: any) {
+				return error;
+			}
+		},
 	/*	one: async (id: string) => {
 			try {
 				return $axios_admin.get(`/users/${id}`);
@@ -126,13 +133,7 @@ export const $admin_api = {
 				return error;
 			}
 		},
-		delete: async (id: string) => {
-			try {
-				return $axios_admin.delete(`/users/${id}`);
-			} catch (error: any) {
-				return error;
-			}
-		},*/
+		*/
 	},
 
 	menu: {

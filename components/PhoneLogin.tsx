@@ -10,7 +10,7 @@ import { useAtomAuthContext } from "@/app/store/authAtom";
 import { setToken } from "@/utils/auth";
 import { toast } from "react-toastify";
 
-const PhoneNumberValidation = () => {
+const PhoneLogin = () => {
 	const { setCurrentStep, getMe, setIsLoggedIn } = useAtomAuthContext();
 	const [form, setForm] = useState<any>({
 		code: "+234",
@@ -202,4 +202,4 @@ const PhoneNumberValidation = () => {
 	);
 };
 
-export default PhoneNumberValidation;
+export default PhoneLogin;

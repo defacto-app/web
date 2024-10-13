@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 
 import { useAtomAuthContext } from "@/app/store/authAtom";
-import PhoneLogin from "../PhoneLogin";
+import PhoneLogin from "../../../components/PhoneLogin";
 import "react-phone-input-2/lib/style.css";
 import { EnvelopeClosedIcon } from "@radix-ui/react-icons";
 
@@ -24,7 +24,7 @@ export default function Welcome() {
 	}
 
 	return (
-			<div className="rounded-xl h-80 md:px-10">
+			<div className="rounded-xl h-80  w-[500px]">
 				<div>
 					<h3 className="text-xl text-left font-bold">Welcome</h3>
 					<CardDescription className="text-left">
@@ -32,7 +32,7 @@ export default function Welcome() {
 					</CardDescription>
 				</div>
 				<div>
-					<div className="grid place-content-center">
+					<div >
 						<div className="py-4">
 							<PhoneLogin />
 						</div>
@@ -54,20 +54,6 @@ export default function Welcome() {
 								</div>
 							</Button>
 						</div>
-						<p className="text-center text-xs pt-4 text-gray-600">
-							By creating an account, you automatically accept our{" "}
-							<Link className={`underline`} href="/terms-of-service">
-								Terms of Service
-							</Link>
-							,{" "}
-							<Link className={`underline`} href="/privacy-policy">
-								Privacy Policy
-							</Link>
-							, and{" "}
-							<Link className={`underline`} href="/cookies-policy">
-								Cookies Policy
-							</Link>
-						</p>
 					</div>
 				</div>
 			</div>

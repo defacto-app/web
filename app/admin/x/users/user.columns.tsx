@@ -11,9 +11,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { formatDateFromNow } from "@/lib/utils";
+import { $admin_api } from "@/http/admin-endpoint";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
+
+const deleteUser = async (id: string) => {
+	try {
+		const res = await $admin_api.users.delete(id);
+		console.log(res);
+	} catch (e) {
+		console.error(e);
+	}
+};
 
 export const userColumns: ColumnDef<any>[] = [
 	{
@@ -30,26 +41,61 @@ export const userColumns: ColumnDef<any>[] = [
 		},
 	},
 
-
-
-
 	{
 		accessorKey: "email",
 		header: "Email",
-	},	{
+	},
+	{
 		accessorKey: "firstName",
 		header: "first Name",
 	},
+
 	{
 		accessorKey: "phoneNumber",
 		header: "Phone Number",
 	},
+
 	{
-		accessorKey: "provider",
-		header: "Provider",
+		accessorKey: "lastSeenAt",
+		header: "Last Seen",
+		cell: ({ row }) => {
+			const { lastSeenAt } = row.original;
+			const formattedDate = formatDateFromNow(lastSeenAt);
+			return <span>{formattedDate}</span>;
+		},
 	},
 
+	{
+		id: "actions",
+		cell: ({ row }) => {
+			const { userId } = row.original;
+			console.log(userId);
 
+			return (
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button variant="ghost" className="h-8 w-8 p-0">
+							<span className="sr-only">Open menu</span>
+							<MoreHorizontal className="h-4 w-4" />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent align="end">
+						<DropdownMenuLabel>Actions</DropdownMenuLabel>
+						<DropdownMenuItem
+							onClick={() => navigator.clipboard.writeText(userId)}
+						>
+							Copy payment ID
+						</DropdownMenuItem>
+						<DropdownMenuSeparator />
+						<DropdownMenuItem onClick={() => deleteUser(userId)}>
+							Delete User
+						</DropdownMenuItem>
+						<DropdownMenuItem>View payment details</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			);
+		},
+	},
 ];
 
 /*	{

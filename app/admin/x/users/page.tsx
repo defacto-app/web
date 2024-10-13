@@ -1,20 +1,21 @@
-"use client"
-import React, {useEffect, useState} from "react";
+"use client";
+import type React from "react";
+import { useEffect, useState } from "react";
 
 import { userColumns } from "./user.columns";
 import { DataTable } from "./data-table";
-import {$admin_api} from "@/http/admin-endpoint";
+import { $admin_api } from "@/http/admin-endpoint";
 import Page from "@/app/admin/x/restaurants/page";
-import {useDebounce} from "react-haiku";
-import {useQuery} from "react-query";
-import {ChevronRight, Search} from "lucide-react";
-import {Input} from "@/components/ui/input";
+import { useDebounce } from "react-haiku";
+import { useQuery } from "react-query";
+import { ChevronRight, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import {Button} from "@/components/ui/button";
-import {DataTableSkeleton} from "@/components/table/data-table-skeleton";
-import {restaurantColumns} from "@/app/admin/x/restaurants/restaurant.columns";
-import {TablePagination} from "@/components/table/table-pagination";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { Button } from "@/components/ui/button";
+import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
+import { restaurantColumns } from "@/app/admin/x/restaurants/restaurant.columns";
+import { TablePagination } from "@/components/table/table-pagination";
+import { useRouter, useSearchParams } from "next/navigation";
 
 // Updated function to fetch restaurants with a search query parameter
 const fetchUsers = async (
@@ -43,13 +44,12 @@ function AllUserPage() {
 		setIsMounted(true);
 	}, []);
 	useEffect(() => {
-		const pageParam = searchParams.get('page');
+		const pageParam = searchParams.get("page");
 		setPage(pageParam ? Number(pageParam) : 1);
 
-		const perPageParam = searchParams.get('perPage');
+		const perPageParam = searchParams.get("perPage");
 		setPerPage(perPageParam ? Number(perPageParam) : 10);
 	}, [searchParams]);
-
 
 	// Use React Query's useQuery hook to fetch data, and pass debouncedSearchTerm as part of the key
 	const { data, error, isLoading, refetch } = useQuery(
@@ -69,7 +69,7 @@ function AllUserPage() {
 
 		// Update the URL without reloading the page
 		const params = new URLSearchParams(Array.from(searchParams.entries()));
-		params.set('page', newPage.toString());
+		params.set("page", newPage.toString());
 		router.push(`?${params.toString()}`);
 	};
 
@@ -79,12 +79,10 @@ function AllUserPage() {
 
 		// Update the URL without reloading the page
 		const params = new URLSearchParams(Array.from(searchParams.entries()));
-		params.set('perPage', newPerPage.toString());
-		params.set('page', '1');
+		params.set("perPage", newPerPage.toString());
+		params.set("page", "1");
 		router.push(`?${params.toString()}`);
 	};
-
-
 
 	// Trigger refetch when the debounced search term changes
 	useEffect(() => {
@@ -96,7 +94,6 @@ function AllUserPage() {
 
 	if (error) return <div>Error loading data...</div>;
 
-
 	return (
 		<div className={`container mx-auto mt-4 pb-20`}>
 			<div className="">
@@ -105,8 +102,7 @@ function AllUserPage() {
 					className={`bg-white shadow-sm rounded mb-6 p-6 flex justify-between`}
 				>
 					<div className="relative">
-
-						<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"/>
+						<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 						<Input
 							type="search"
 							value={searchTerm} // Bind input value to state
@@ -115,32 +111,30 @@ function AllUserPage() {
 							className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
 						/>
 					</div>
-
 				</div>
 
 				{/* Render the DataTableLoading with loading state */}
 				<div className={`bg-white shadow-sm rounded`}>
 					{isLoading ? (
-						<DataTableSkeleton columns={userColumns}/>
+						<DataTableSkeleton columns={userColumns} />
 					) : (
 						<>
-
 							<TablePagination
 								page={page}
 								totalPages={data?.meta.totalPages || 1}
 								onPageChange={handlePageChange}
 							/>
-							<DataTable columns={userColumns} data={data.data}
-
-									   pageCount={data.meta.totalPages}
-									   pageIndex={page}
-									   perPage={perPage}
+							<DataTable
+								columns={userColumns}
+								data={data.data}
+								pageCount={data.meta.totalPages}
+								pageIndex={page}
+								perPage={perPage}
 							/>
 							<TablePagination
 								page={page}
 								totalPages={data?.meta.totalPages || 1}
 								onPageChange={handlePageChange}
-
 							/>
 						</>
 					)}
@@ -151,5 +145,3 @@ function AllUserPage() {
 }
 
 export default AllUserPage;
-
-

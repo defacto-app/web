@@ -31,6 +31,7 @@ export default function Layout({
       </Head>
       <body
         className={cn("bg-[#FFFBFE] font-sans antialiased", fontSans.variable)}
+
       >
         <UserHeader />
 

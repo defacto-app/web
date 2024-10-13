@@ -38,7 +38,7 @@ function Email() {
 
 	type authState = "default" | "new-user" | "existing-user";
 	const [authState, setAuthState] = useState<authState>("default");
-	const { setCurrentStep, getMe ,setIsLoggedIn} = useAtomAuthContext();
+	const { setCurrentStep, getMe, setIsLoggedIn } = useAtomAuthContext();
 
 	const getCurrentStep = () => {
 		return authSteps.find((step) => step.id === authState);
@@ -125,6 +125,8 @@ function Email() {
 			// Fetch user information
 			await getMe();
 
+			setCurrentStep("login-success");
+
 			setLoading(false);
 		} catch (error: any) {
 			console.error("Login failed:", error);
@@ -169,6 +171,8 @@ function Email() {
 
 			setLoading(false);
 			getMe();
+
+			setCurrentStep("registration-success");
 		} catch (error: any) {
 			console.log(error);
 
@@ -270,16 +274,17 @@ function Email() {
 									required
 								/>
 								<FormError error={errors.password} />
-
-								<Button
-									loading={loading}
-									variant="primary"
-									onClick={register_user}
-									type="button"
-									className="w-full mt-4"
-								>
-									Continue
-								</Button>
+								<div className={`flex justify-center`}>
+									<Button
+										loading={loading}
+										variant="primary"
+										onClick={register_user}
+										type="button"
+										className="w-72 mt-4"
+									>
+										Continue
+									</Button>
+								</div>
 							</div>
 						)
 					}
