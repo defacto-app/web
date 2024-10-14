@@ -52,6 +52,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 						className="h-full w-full object-cover"
 						width={500}
 						height={500}
+						priority={true}
 					/>
 				</div>
 			</body>

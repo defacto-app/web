@@ -1,21 +1,17 @@
 "use client";
 import type React from "react";
 import { useEffect, useState } from "react";
-
 import { userColumns } from "./user.columns";
 import { DataTable } from "./data-table";
 import { $admin_api } from "@/http/admin-endpoint";
-import Page from "@/app/admin/x/restaurants/page";
 import { useDebounce } from "react-haiku";
 import { useQuery } from "react-query";
-import { ChevronRight, Search } from "lucide-react";
+import {  Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
-import { restaurantColumns } from "@/app/admin/x/restaurants/restaurant.columns";
 import { TablePagination } from "@/components/table/table-pagination";
 import { useRouter, useSearchParams } from "next/navigation";
+import {useRefetchContext} from "@/app/store/tableAtom";
 
 // Updated function to fetch restaurants with a search query parameter
 const fetchUsers = async (
@@ -31,6 +27,7 @@ const fetchUsers = async (
 	return response.data.data; // Assuming response.data contains the restaurant list
 };
 function AllUserPage() {
+	const { shouldRefetch, triggerRefetch } = useRefetchContext(); // Use the custom hook
 	const [searchTerm, setSearchTerm] = useState(""); // Track the search term
 	const [page, setPage] = useState(1); // Track current page
 	const [perPage, setPerPage] = useState(10); // Track items per page
@@ -84,6 +81,15 @@ function AllUserPage() {
 		router.push(`?${params.toString()}`);
 	};
 
+	// Trigger refetch when shouldRefetchAtom is true
+	// Trigger refetch when shouldRefetchAtom is true
+	useEffect(() => {
+		if (shouldRefetch) {
+			refetch();
+			triggerRefetch(); // Reset the refetch state
+		}
+	}, [shouldRefetch, refetch, triggerRefetch]);
+
 	// Trigger refetch when the debounced search term changes
 	useEffect(() => {
 		refetch(); // Fetch new data when debouncedSearchTerm changes
@@ -125,6 +131,7 @@ function AllUserPage() {
 								onPageChange={handlePageChange}
 							/>
 							<DataTable
+
 								columns={userColumns}
 								data={data.data}
 								pageCount={data.meta.totalPages}

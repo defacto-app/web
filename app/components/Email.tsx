@@ -74,7 +74,10 @@ function Email() {
 				setAuthState("existing-user");
 			} else {
 				setAuthState("new-user");
+				// save to session storage
+				sessionStorage.setItem("new-email", formData.email);
 			}
+
 
 			setLoading(false);
 		} catch (error: any) {
