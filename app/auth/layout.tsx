@@ -1,6 +1,6 @@
 "use client"; // Mark this component as a client component
 
-import React from "react";
+import type React from "react";
 import "./../globals.css";
 import { Inter as FontSans } from "next/font/google";
 import { ToastContainer } from "react-toastify";
@@ -37,7 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 					{ "flex-row-reverse": !imageOnRight },
 				)}
 			>
-				{/*<ToastContainer position="top-center" />*/}
+				<ToastContainer position="top-center" />
 
 				{/* Form Section */}
 				<div className="flex flex-col justify-center w-full max-w-xl p-8 bg-white shadow-lg">

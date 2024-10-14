@@ -24,7 +24,7 @@ export default function Welcome() {
 	}
 
 	return (
-			<div className="rounded-xl h-80  w-[500px]">
+			<div className="rounded-xl h-80 ">
 				<div>
 					<h3 className="text-xl text-left font-bold">Welcome</h3>
 					<CardDescription className="text-left">

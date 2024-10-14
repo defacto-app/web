@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 
 const PhoneLogin = () => {
 	const { setCurrentStep, getMe, setIsLoggedIn } = useAtomAuthContext();
+
+	const [sendingOtp, setSendingOtp] = useState(false);
 	const [form, setForm] = useState<any>({
 		code: "+234",
 		phoneNumber: "08063145125",
@@ -43,6 +45,7 @@ const PhoneLogin = () => {
 		event: React.MouseEvent<HTMLButtonElement>,
 	) {
 		setState({
+			...state, // Preserve the current state
 			loading: true,
 		});
 		event.preventDefault();
@@ -62,11 +65,13 @@ const PhoneLogin = () => {
 			}
 
 			console.log(res);
+			// Keep showOtp true when OTP is resent
 			setState({
 				...state,
-				showOtp: true,
+				showOtp: true, // Ensure this remains true
 				loading: false,
 			});
+			toast.success("OTP sent successfully");
 		} catch (error: any) {
 			console.log(error, "error.error");
 			setErrors({
@@ -124,7 +129,7 @@ const PhoneLogin = () => {
 			setIsLoggedIn(true);
 			getMe();
 
-			// setCurrentStep("success");
+			setCurrentStep("login-success");
 		} catch (error: any) {
 			console.log(error, "otp error");
 
@@ -143,29 +148,46 @@ const PhoneLogin = () => {
 
 	return (
 		<div>
+			{JSON.stringify(state.showOtp)}
 			{state.showOtp ? (
-				<div className={`flex justify-center`}>
+				<div className={``}>
 					<div>
-						<p className={`text-gray-500`}>
-							{form.code} {form.phoneNumber}
-						</p>
-						<InputOTPPattern
-							setOtp={(otp: string) => {
-								setForm({
-									...form,
-									otp,
-								});
-							}}
-							defaultValue={form.otp}
-						/>
+						<p className={`text-gray-500`}></p>
+						<div className={`space-y-4`}>
+							<div>
+								<Input
+									className={`border-2`}
+									value={`${form.code} ${form.phoneNumber}`}
+									disabled={true}
+								/>
+							</div>
+							<div className={`flex items-center gap-x-4`}>
+								<InputOTPPattern
+									setOtp={(otp: string) => {
+										setForm({
+											...form,
+											otp,
+										});
+									}}
+									defaultValue={form.otp}
+								/>
+								<Button
+									loading={state.loading}
+									onClick={confirm_phone_login}
+									variant={`outline`}
+								>
+									Re Send
+								</Button>
+							</div>
+						</div>
 						<FormError error={errors.otp} />
 
-						<div className="flex justify-between items-center">
+						<div className="flex justify-center items-center">
 							<Button
 								loading={state.loading}
 								onClick={login}
 								variant="primary"
-								className="w-full mt-4"
+								className="w-72 mt-4"
 							>
 								Login
 							</Button>
