@@ -1,13 +1,13 @@
 "use client";
-import PhoneLogin from "@/components/PhoneLogin";
+import PhoneLogin from "@/app/components/PhoneLogin";
 import { Button } from "@/components/ui/button";
 import { EnvelopeClosedIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useAtomAuthContext } from "@/app/store/authAtom";
-import Welcome from "@/app/components/auth/Welcome";
-import Email from "@/app/components/auth/Email";
-import LoginSuccessful from "@/app/components/auth/LoginSuccessful";
-import RegistrationSuccessful from "@/app/components/auth/RegistrationSuccessful";
+import Welcome from "@/app/components/Welcome";
+import Email from "@/app/components/Email";
+import LoginSuccessful from "@/app/components/LoginSuccessful";
+import RegistrationSuccessful from "@/app/components/RegistrationSuccessful";
 import React from "react";
 
 export default function LoginPage() {

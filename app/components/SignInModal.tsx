@@ -1,9 +1,9 @@
 import React from "react";
-import Welcome from "@/app/components/auth/Welcome";
-import Email from "@/app/components/auth/Email";
+import Welcome from "@/app/components/Welcome";
+import Email from "@/app/components/Email";
 import { useAtomAuthContext } from "@/app/store/authAtom";
-import LoginSuccessful from "@/app/components/auth/LoginSuccessful";
-import RegistrationSuccessful from "@/app/components/auth/RegistrationSuccessful";
+import LoginSuccessful from "@/app/components/LoginSuccessful";
+import RegistrationSuccessful from "@/app/components/RegistrationSuccessful";
 
 export default function SignInModal() {
 	const { currentStep } = useAtomAuthContext();

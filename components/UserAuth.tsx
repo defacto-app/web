@@ -8,7 +8,7 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import SignInModal from "@/app/components/auth/SignInModal";
+import SignInModal from "@/app/components/SignInModal";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, MoveLeft, X } from "lucide-react";
 
@@ -59,7 +59,6 @@ export default function UserAuth() {
 						<div>
 							<Link href={`/auth/login`}>
 								<Button variant={`primary`}>Get Started</Button>
-								Login
 							</Link>
 						</div>
 					</div>

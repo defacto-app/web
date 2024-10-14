@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 
 import { useAtomAuthContext } from "@/app/store/authAtom";
-import PhoneLogin from "../../../components/PhoneLogin";
+import PhoneLogin from "./PhoneLogin";
 import "react-phone-input-2/lib/style.css";
 import { EnvelopeClosedIcon } from "@radix-ui/react-icons";
 

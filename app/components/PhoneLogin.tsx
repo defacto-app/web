@@ -9,6 +9,7 @@ import { InputOTPPattern } from "@/components/ui/InputOTPPattern";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import { setToken } from "@/utils/auth";
 import { toast } from "react-toastify";
+import ResendOTPButton from "@/app/components/ResendOTPButton";
 
 const PhoneLogin = () => {
 	const { setCurrentStep, getMe, setIsLoggedIn } = useAtomAuthContext();
@@ -32,6 +33,7 @@ const PhoneLogin = () => {
 		login_success: false,
 	});
 
+	// Handle input change
 	function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const newValue = event.target.value;
 
@@ -41,14 +43,12 @@ const PhoneLogin = () => {
 		});
 	}
 
-	async function confirm_phone_login(
-		event: React.MouseEvent<HTMLButtonElement>,
-	) {
+	// Function to send OTP
+	async function confirm_phone_login() {
 		setState({
 			...state, // Preserve the current state
 			loading: true,
 		});
-		event.preventDefault();
 
 		setErrors({
 			phoneNumber: "",
@@ -64,8 +64,6 @@ const PhoneLogin = () => {
 				console.log("OTP sent successfully");
 			}
 
-			console.log(res);
-			// Keep showOtp true when OTP is resent
 			setState({
 				...state,
 				showOtp: true, // Ensure this remains true
@@ -86,10 +84,9 @@ const PhoneLogin = () => {
 		}
 	}
 
+	// Function to login
 	async function login(event: React.MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
-
-		// 894150
 
 		setErrors({
 			phoneNumber: "",
@@ -101,8 +98,6 @@ const PhoneLogin = () => {
 		});
 
 		try {
-			// setCurrentStep("login-success");
-
 			const res = await $api.auth.user.phone_login({
 				phoneNumber: `${form.code}${form.phoneNumber}`,
 				otp: form.otp,
@@ -125,15 +120,12 @@ const PhoneLogin = () => {
 			setState({
 				loading: false,
 			});
-			// setIsLoggedIn(true);
 			setIsLoggedIn(true);
 			getMe();
-
 			setCurrentStep("login-success");
 		} catch (error: any) {
 			console.log(error, "otp error");
 
-			// console.log(error);
 			setErrors({
 				...errors,
 				otp: error.error.otp,
@@ -171,13 +163,11 @@ const PhoneLogin = () => {
 									}}
 									defaultValue={form.otp}
 								/>
-								<Button
+								{/* Replace existing resend button with ResendOTPButton */}
+								<ResendOTPButton
+									onResend={confirm_phone_login}
 									loading={state.loading}
-									onClick={confirm_phone_login}
-									variant={`outline`}
-								>
-									Re Send
-								</Button>
+								/>
 							</div>
 						</div>
 						<FormError error={errors.otp} />
