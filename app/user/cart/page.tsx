@@ -43,7 +43,6 @@ function CartPage() {
 
 				{/* Right Side (Order Summary and Checkout) */}
 				<div className="w-full lg:w-1/3 space-y-8">
-					Payment & Discount
 					<div className="bg-white p-6 rounded-lg border space-y-4">
 						<div className="flex items-center justify-between">
 							<span>Payment Methods</span>
@@ -56,7 +55,6 @@ function CartPage() {
 							</Button>
 						</div>
 					</div>
-					Order Summary Section
 					<div>
 						<OrderSummary cartPage />
 					</div>

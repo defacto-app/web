@@ -5,10 +5,10 @@ import type { Table } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DataTableViewOptions } from "@/app/admin/x/orders/components/data-table-view-options"
+import { DataTableViewOptions } from "@/app/admin/x/demo/components/data-table-view-options"
 
-import { priorities, statuses } from "@/app/admin/x/orders/data/data"
-import { DataTableFacetedFilter } from "@/app/admin/x/orders/components/data-table-faceted-filter"
+import { priorities, statuses } from "@/app/admin/x/demo/data/data"
+import { DataTableFacetedFilter } from "@/app/admin/x/demo/components/data-table-faceted-filter"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>

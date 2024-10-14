@@ -26,7 +26,7 @@ import {
 import {Input} from "@/components/ui/input"
 import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet"
 import AdminUserAction from "@/app/admin/components/AdminUserAction";
-import {UserNav} from "@/app/admin/x/orders/components/user-nav";
+import {UserNav} from "@/app/admin/x/demo/components/user-nav";
 import {useEffect} from "react";
 import {useAtomAuthContext} from "@/app/store/admin/adminAuthAtom";
 
@@ -39,6 +39,11 @@ const navigation = [
         title: "Orders",
         href: "/admin/x/orders"
     },
+    {
+        title: "Demo",
+        href: "/admin/x/demo"
+    },
+
 
     {
         title: "Users",

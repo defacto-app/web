@@ -169,6 +169,25 @@ export const $admin_api = {
 		},
 	},
 
+	orders:{
+		all: async ({ page = 1, perPage = 20, searchTerm = "" }) => {
+			try {
+				return $axios_admin.get(`/orders`, {
+					params: { page, perPage, search: searchTerm },
+				});
+			} catch (error: any) {
+				return error;
+			}
+		},
+		delete: async (publicId: string) => {
+			try {
+				return $axios_admin.delete(`/order/${publicId}`);
+			} catch (error: any) {
+				return error;
+			}
+		},
+	}
+
 	/*	upload:{
 		image: async (id: string, body: any) => {
 			try {
