@@ -107,7 +107,12 @@ function Page() {
 								totalPages={data?.meta.totalPages || 1}
 								onPageChange={handlePageChange}
 							/>
-							<DataTable columns={restaurantColumns} data={data.data} />
+							<DataTable
+
+								pageCount={data.meta.totalPages}
+								pageIndex={page}
+								perPage={perPage}
+								columns={restaurantColumns} data={data.data} />
 							<TablePagination
 								page={page}
 								totalPages={data?.meta.totalPages || 1}
