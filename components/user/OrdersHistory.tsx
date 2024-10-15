@@ -37,7 +37,7 @@ const orders: Order[] = [
   },
 ];
 
-const OrdersSection = () => {
+const OrdersHistory = () => {
   return (
    <div className="bg-white container px-8 py-4 rounded-md mt-4">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">Recent Deliveries</h2>
@@ -88,4 +88,4 @@ const getStatusTextColor = (status: Order["status"]) => {
   }
 };
 
-export default OrdersSection;
+export default OrdersHistory;

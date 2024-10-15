@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 // Define the type for a cart item
 type CartItemType = {
-	id: string;
+	publicId: string;
 	name: string;
 	price: number;
 	quantity: number;
@@ -43,13 +43,13 @@ export const cartTotalAtom = atom((get) => {
 // Add item atom to add new items to the cart
 export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
 	const currentCart = get(cartAtom);
-	const existingItem = currentCart.find((item) => item.id === newItem.id);
+	const existingItem = currentCart.find((item) => item.publicId === newItem.publicId);
 
 	let updatedCart:any;
 	if (existingItem) {
 		// Update the quantity if the item already exists
 		updatedCart = currentCart.map((item) =>
-			item.id === newItem.id
+			item.publicId === newItem.publicId
 				? { ...item, quantity: item.quantity + newItem.quantity }
 				: item,
 		);
@@ -65,7 +65,7 @@ export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
 // Atom to remove an item from the cart
 export const removeItemAtom = atom(null, (get, set, itemId: string) => {
 	const currentCart = get(cartAtom);
-	const updatedCart = currentCart.filter((item) => item.id !== itemId);
+	const updatedCart = currentCart.filter((item) => item.publicId !== itemId);
 	set(cartAtom, updatedCart);
 	sessionStorage.setItem("cart", JSON.stringify(updatedCart));
 });
@@ -76,7 +76,7 @@ export const updateItemQuantityAtom = atom(
 	(get, set, { itemId, quantity }: { itemId: string; quantity: number }) => {
 		const currentCart = get(cartAtom);
 		const updatedCart = currentCart.map((item) =>
-			item.id === itemId ? { ...item, quantity } : item,
+			item.publicId === itemId ? { ...item, quantity } : item,
 		);
 		set(cartAtom, updatedCart);
 		sessionStorage.setItem("cart", JSON.stringify(updatedCart));

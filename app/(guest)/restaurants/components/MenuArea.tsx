@@ -12,7 +12,7 @@ function MenuArea({ data }: any) {
 	// Handle adding an item to the cart
 	const handleAddToCart = (item: any) => {
 		const cartItem = {
-			id: item._id,
+			publicId: item.publicId,
 			name: item.name,
 			price: item.price,
 			quantity: 1, // Default to adding one item

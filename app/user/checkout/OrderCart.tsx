@@ -16,7 +16,7 @@ function OrderCart() {
 			{/* Check if the cart has items */}
 			{cart.length > 0 ? (
 				cart.map((item) => (
-					<div key={item.id} className=" mb-4">
+					<div key={item.publicId} className=" mb-4">
 						<div className="flex-1">
 							<div className="flex items-center mb-1">
 								<span className="font-semibold">{item.quantity}x</span>
@@ -34,7 +34,7 @@ function OrderCart() {
 								className="bg-gray-200 rounded-full p-2 text-green-600 "
 								onClick={() =>
 									updateItemQuantity({
-										itemId: item.id,
+										itemId: item.publicId,
 										quantity: item.quantity - 1,
 									})
 								}
@@ -49,7 +49,7 @@ function OrderCart() {
 								className="bg-gray-200 rounded-full p-2 text-green-600"
 								onClick={() =>
 									updateItemQuantity({
-										itemId: item.id,
+										itemId: item.publicId,
 										quantity: item.quantity + 1,
 									})
 								}
@@ -59,7 +59,7 @@ function OrderCart() {
 							{/* Remove item button */}
 							<Button
 								className="text-red-500"
-								onClick={() => removeItem(item.id)}
+								onClick={() => removeItem(item.publicId)}
 							>
 								🗑
 							</Button>

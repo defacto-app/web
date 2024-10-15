@@ -15,7 +15,7 @@ import Link from "next/link";
 import OrderSummary from "@/app/user/checkout/OrderSummary";
 import UserAddresses from "@/components/user/UserAddresses";
 import dynamic from "next/dynamic";
-const CartItemList = dynamic(() => import('./CartItemList'), { ssr: false });
+const CartItemList = dynamic(() => import("./CartItemList"), { ssr: false });
 function CartPage() {
 	const { cart, removeItem, updateItemQuantity, cartTotal } = useCartContext();
 
@@ -43,7 +43,7 @@ function CartPage() {
 
 				{/* Right Side (Order Summary and Checkout) */}
 				<div className="w-full lg:w-1/3 space-y-8">
-					<div className="bg-white p-6 rounded-lg border space-y-4">
+				{/*	<div className="bg-white p-6 rounded-lg border space-y-4">
 						<div className="flex items-center justify-between">
 							<span>Payment Methods</span>
 							<span className="text-blue-500 font-medium">E-Wallet</span>
@@ -55,7 +55,7 @@ function CartPage() {
 							</Button>
 						</div>
 					</div>
-					<div>
+					*/}<div>
 						<OrderSummary cartPage />
 					</div>
 				</div>

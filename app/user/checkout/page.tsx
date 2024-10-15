@@ -23,6 +23,7 @@ function CheckoutPage() {
 
 	return (
 		<div className="p-8">
+			{JSON.stringify(cart)}
 			{/* Cart Header */}
 			<h1 className="text-4xl font-bold mb-8">Your cart</h1>
 
@@ -35,7 +36,7 @@ function CheckoutPage() {
 							{cart.length > 0 ? (
 								cart.map((item) => (
 									<div
-										key={item.id}
+										key={item.publicId}
 										className="flex items-center justify-between p-4 border-b last:border-b-0"
 									>
 										<div className="flex items-center">
@@ -54,7 +55,7 @@ function CheckoutPage() {
 												className="px-3 py-1 bg-gray-200 rounded-lg"
 												onClick={() =>
 													updateItemQuantity({
-														itemId: item.id,
+														itemId: item.publicId,
 														quantity: item.quantity - 1,
 													})
 												}
@@ -67,7 +68,7 @@ function CheckoutPage() {
 												className="px-3 py-1 bg-gray-200 rounded-lg"
 												onClick={() =>
 													updateItemQuantity({
-														itemId: item.id,
+														itemId: item.publicId,
 														quantity: item.quantity + 1,
 													})
 												}
@@ -76,7 +77,7 @@ function CheckoutPage() {
 											</Button>
 											<Button
 												className="text-red-500"
-												onClick={() => removeItem(item.id)}
+												onClick={() => removeItem(item.publicId)}
 											>
 												🗑
 											</Button>
