@@ -26,36 +26,40 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 	console.log(pathname, "layout pathname");
 	return (
 		<html lang="en">
-			<Head>
-				<title>Authentication - Defacto</title>
-				<meta name="description" content="Sign in or sign up to continue" />
-			</Head>
-			<body
-				className={cn(
-					"bg-[#FFFBFE] font-sans antialiased min-h-screen  flex",
-					fontSans.variable,
-					{ "flex-row-reverse": !imageOnRight },
-				)}
-			>
-				<ToastContainer position="top-center" />
+		<Head>
+			<title>Authentication - Defacto</title>
+			<meta name="description" content="Sign in or sign up to continue" />
+		</Head>
+		<body
+			className={cn(
+				"bg-[#FFFBFE] font-sans antialiased min-h-screen flex w-full", // Ensure full width
+				fontSans.variable,
+				{ "flex-row-reverse": !imageOnRight },
+			)}
+		>
+		<ToastContainer position="top-center" />
 
-				{/* Form Section */}
-				<div className="flex flex-col justify-center w-full max-w-xl p-8 bg-white shadow-lg">
-					{children} {/* This is where your form content goes */}
-				</div>
+		{/* Form Section */}
+		<div className="flex flex-col justify-center w-full lg:max-w-xl p-8 bg-white shadow-lg lg:w-[50%]">
+	<div className={` md:w-4/6 mx-auto lg:bg-white`}>
+		{children}
+	</div>
+		</div>
 
-				{/* Image Section */}
-				<div className="hidden lg:block flex-1">
-					<Image
-						src={`/food-bg.jpg`}
-						alt="Background"
-						className="h-full w-full object-cover"
-						width={500}
-						height={500}
-						priority={true}
-					/>
-				</div>
-			</body>
+		{/* Image Section */}
+		{imageOnRight && ( // Conditionally render the image section only when needed
+			<div className="hidden lg:block flex-1">
+				<Image
+					src={`/food-bg.jpg`}
+					alt="Background"
+					className="h-full w-full object-cover"
+					width={500}
+					height={500}
+					priority={true}
+				/>
+			</div>
+		)}
+		</body>
 		</html>
 	);
 }
