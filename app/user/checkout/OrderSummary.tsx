@@ -1,16 +1,22 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { useCartContext, useCartSummaryContext } from "@/app/store/cartAtom";
 import Link from "next/link";
+import { $api } from "@/http/endpoints";
+import { useAtomAuthContext } from "@/app/store/authAtom";
+import { useGoogleAddressAtomContext } from "@/app/store/addressAtom";
+import envData from "@/config/envData";
 type OrderSummaryProps = {
 	cartPage?: boolean;
 	checkoutPage?: boolean;
 };
 function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 	const { cart } = useCartContext();
-	const { deliveryFee, discount, discountAmount } = useCartSummaryContext();
+	const { deliveryFee, discount, discountAmount, firstAddress } =
+		useCartSummaryContext();
+	const { authUser } = useAtomAuthContext();
 
 	const [loading, setLoading] = useState(false);
 
@@ -31,10 +37,38 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 	}, []);
 
 	// Initiate Flutterwave Payment
-	const initiatePayment = () => {
+	const initiatePayment = async () => {
 		setLoading(true);
+		const body = {
+			restaurantOrder: cart.map((item) => ({
+				publicId: item.publicId,
+				quantity: item.quantity,
+				name: item.name,
+				price: item.price,
+			})),
+			charge: totalAmount,
+			deliveryFee,
+			discount,
+			dropOffDetails: {
+				address: firstAddress,
+				phone: authUser.phoneNumber,
+				name: authUser.firstName,
+				// phoneNumber: authUser.phoneNumber,
+				email: authUser.email,
+
+				phoneNumber: "08063152617",
+			},
+		};
+
+		try {
+			const response = await $api.auth.user.order.restaurant(body);
+
+			console.log(response);
+		} catch (e) {
+			console.log(e);
+		}
 		FlutterwaveCheckout({
-			public_key: "FLWPUBK_TEST-02b9b5fc6406bd4a41c3ff141cc45e93-X", // Replace with your public key
+			public_key: envData.flutter_wave.test.public_key, // Replace with your public key
 			tx_ref: `txref-${Date.now()}`, // Unique transaction reference
 			amount: totalAmount, // Total amount calculated from the cart
 			currency: "NGN", // Replace with your currency
@@ -51,7 +85,7 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 			customizations: {
 				title: "Your Store Name", // Replace with your store's title
 				description: "Payment for your cart items", // Custom description
-				logo: "https://your-logo-url.com/logo.png", // Your logo URL
+				logo: envData.logo,
 			},
 			callback: (data: any) => {
 				console.log("Payment callback:", data);
@@ -67,6 +101,7 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 				console.log("Payment process closed by user.");
 			},
 		});
+
 		setLoading(false);
 	};
 	return (
@@ -96,9 +131,10 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 				</div>
 				{checkoutPage && (
 					<Button
+						variant={`primary`}
 						onClick={initiatePayment}
 						loading={loading}
-						className="w-full bg-blue-500 text-white px-4 py-3 mt-4 rounded-lg"
+						className="w-full"
 					>
 						{loading ? "Processing..." : "Confirm order"}
 					</Button>

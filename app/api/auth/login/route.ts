@@ -1,4 +1,4 @@
-import env from "@/config/env";
+import envData from "@/config/envData";
 import {cookies} from 'next/headers'
 import {de} from "@faker-js/faker";
 
@@ -8,7 +8,7 @@ export async function POST(request: any) {
     try {
         const body = await request.json();
 
-        const url = `${env.base_url}/auth/email-login`;
+        const url = `${envData.base_url}/auth/email-login`;
         const options = {
             method: "POST",
             headers: {

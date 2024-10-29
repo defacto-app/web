@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getToken } from "@/utils/auth";
-import env from "@/config/env";
+import envData from "@/config/envData";
 
 const $axios_admin = axios.create({
-	baseURL: `${env.base_url}/admin`,
+	baseURL: `${envData.base_url}/admin`,
 });
 
 $axios_admin.interceptors.request.use(

@@ -12,14 +12,17 @@ export const savedAddressAtom = atom<string>("");
 export const handleOnSelectAtom = atom(
 	null,
 	(get, set, lastAddress: string) => {
-		const selectedAddresses = JSON.parse(
-			localStorage.getItem("selectedAddresses") || "[]",
-		);
-		const lastSavedAddress =
-			selectedAddresses.length > 0
-				? selectedAddresses[selectedAddresses.length - 1]
-				: "";
-		set(savedAddressAtom, lastAddress || lastSavedAddress);
+		// Check if window and localStorage are available
+		if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+			const selectedAddresses = JSON.parse(
+				localStorage.getItem("selectedAddresses") || "[]"
+			);
+			const lastSavedAddress =
+				selectedAddresses.length > 0
+					? selectedAddresses[selectedAddresses.length - 1]
+					: "";
+			set(savedAddressAtom, lastAddress || lastSavedAddress);
+		}
 	},
 );
 
@@ -51,9 +54,12 @@ export const useGoogleAddressAtomContext = () => {
 
 	// Open the modal and clear the saved address
 	const openModal = useCallback(() => {
-		setModalOpen(true);
-
+		// Ensure window and localStorage are available before clearing the saved address
+		if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+			setModalOpen(true);
+		}
 	}, [setModalOpen, setSavedAddress]);
+
 
 	return {
 		modalOpen,

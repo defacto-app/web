@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { CardContent, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { isDev } from "@/config/env";
+import { isDev } from "@/config/envData";
 import { $api } from "@/http/endpoints";
 import FormError from "@/components/ui/FormError";
 import PasswordInput from "@/components/ui/PasswordInput";
@@ -104,7 +104,6 @@ function Email() {
 			if (res.data.token) {
 				// Set the current step to 'login-success' after receiving the token
 				// setCurrentStep("login-success");
-				console.log("Login successful, setting step to 'login-success'");
 			} else {
 				throw new Error("Token not received");
 			}
@@ -149,8 +148,6 @@ function Email() {
 
 	const register_user = async () => {
 		setLoading(true);
-		console.log("Email Submitted");
-		// setCurrentStep("registration-success");
 
 		try {
 			const res = await $api.auth.user.email_register({

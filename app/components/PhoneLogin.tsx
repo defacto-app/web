@@ -14,7 +14,6 @@ import ResendOTPButton from "@/app/components/ResendOTPButton";
 const PhoneLogin = () => {
 	const { setCurrentStep, getMe, setIsLoggedIn } = useAtomAuthContext();
 
-	const [sendingOtp, setSendingOtp] = useState(false);
 	const [form, setForm] = useState<any>({
 		code: "+234",
 		phoneNumber: "08063145125",
@@ -140,7 +139,6 @@ const PhoneLogin = () => {
 
 	return (
 		<div>
-			{JSON.stringify(state.showOtp)}
 			{state.showOtp ? (
 				<div className={``}>
 					<div>

@@ -20,7 +20,6 @@ import { Input } from "../ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Label } from "../ui/label";
 import Calender from "./Calender";
-import PickupModal from "./PickupModal";
 import DropoffModal from "./DropoffModal";
 import DeliveryFee from "./DeliveryFee";
 
@@ -70,7 +69,6 @@ export default function SendPackage() {
       </div>
       <div>
         <h1 className="text-lg mb-2 text-start font-semibold">Pickup Address</h1>
-      {/*<PickupModal/>*/}
 
       </div><div>
         <h1 className="text-lg mt-5 mb-2 text-start font-semibold">Dropoff Address</h1>

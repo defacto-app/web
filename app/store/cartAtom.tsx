@@ -19,7 +19,7 @@ export const setSelectedAddressAtom = atom(
 	(get, set, selectedAddress: any) => {
 		set(selectedAddressAtom, selectedAddress);
 		sessionStorage.setItem("selectedAddress", JSON.stringify(selectedAddress));
-	}
+	},
 );
 
 // Utility function to get the initial cart items from session storage
@@ -43,9 +43,11 @@ export const cartTotalAtom = atom((get) => {
 // Add item atom to add new items to the cart
 export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
 	const currentCart = get(cartAtom);
-	const existingItem = currentCart.find((item) => item.publicId === newItem.publicId);
+	const existingItem = currentCart.find(
+		(item) => item.publicId === newItem.publicId,
+	);
 
-	let updatedCart:any;
+	let updatedCart: any;
 	if (existingItem) {
 		// Update the quantity if the item already exists
 		updatedCart = currentCart.map((item) =>
@@ -115,6 +117,11 @@ export const useCartContext = () => {
 			totalPrice: cartTotal,
 		};
 	}, [cart, cartTotal]);
+	const selectedAddresses = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("selectedAddresses") || "[]") : [];
+	const firstAddress = selectedAddresses.length > 0 ? selectedAddresses[0] : null;
+
+
+
 
 	return {
 		cart,
@@ -126,7 +133,7 @@ export const useCartContext = () => {
 		getCartSummary,
 		setSelectedAddress,
 		selectedAddress,
-
+		firstAddress,
 	};
 };
 
@@ -139,11 +146,18 @@ export const useCartSummaryContext = () => {
 	const discountAmount = subtotal * (discount / 100);
 	const totalPrice = subtotal - discountAmount + deliveryFee;
 
+	// Get and parse the selected addresses from localStorage
+	const selectedAddresses = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("selectedAddresses") || "[]") : [];
+	const firstAddress = selectedAddresses.length > 0 ? selectedAddresses[0] : null;
+
+
+
 	return {
 		subtotal,
 		discountAmount,
 		deliveryFee,
 		discount,
 		totalPrice,
+		firstAddress, // Include the first address in the returned values
 	};
-}
+};

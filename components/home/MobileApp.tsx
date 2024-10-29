@@ -7,7 +7,7 @@ function MobileApp() {
 			<div className="grid grid-cols-1 md:grid-cols-2 items-center text-primary-600 font-bold gap-6">
 				{/* Left Column: Text and Buttons */}
 				<div>
-					<h3 className="text-3xl md:text-5xl mb-6">Simple Way To Order Your Food</h3>
+					<h3 className="text-2xl md:text-5xl mb-6 text-center md:text-left">Simple Way To Order Your Food</h3>
 					<div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">
 						<Button size="lg" variant="secondary" className="bg-gray-900 text-white">
 							<div className="flex items-center">

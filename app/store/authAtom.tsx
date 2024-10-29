@@ -24,6 +24,7 @@ type authUserType = {
 	firstName: string;
 	email: string;
 	phoneNumber: string;
+	address: string;
 };
 
 // Atoms for global state management using Jotai
@@ -43,6 +44,7 @@ export const authUserAtom = atom<authUserType>({
 	firstName: "",
 	email: "",
 	phoneNumber: "",
+	address: "",
 });
 
 // Define a derived atom to handle `goBack` function

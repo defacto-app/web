@@ -2,7 +2,7 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import env, { isDev } from "@/config/env";
+import envData, { isDev } from "@/config/envData";
 import { $api } from "@/http/endpoints";
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
@@ -182,7 +182,7 @@ function GoogleAddressInput() {
 
 			<div className="w-screen h-screen mt-8">
 				{showMap ? (
-					<APIProvider apiKey={env.google_map_api}>
+					<APIProvider apiKey={envData.google_map_api}>
 						<Map
 							key={`${location.lat}-${location.lng}`} // Changing key forces re-render
 							center={location}

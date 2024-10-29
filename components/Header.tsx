@@ -4,7 +4,7 @@ import { Dialog } from "@headlessui/react";
 import { X, Menu, UserRoundCogIcon } from "lucide-react";
 import UserAuth from "./UserAuth";
 import { UserProvider } from "@/app/provider/auth.context";
-import env from "@/config/env";
+import envData from "@/config/envData";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import Image from "next/image";
@@ -82,7 +82,7 @@ export default function Header() {
 					))}
 				</div>
 				<div className="flex flex-1 items-center justify-end gap-x-6">
-					{env.isDev && (
+					{envData.isDev && (
 						<div className={`flex gap-x-2`}>
 							<UserCart />
 							<Link href="/admin">

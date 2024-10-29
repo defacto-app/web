@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { $api } from "@/http/endpoints";
@@ -12,17 +13,19 @@ import {
 	AlertDialogAction,
 	AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
-import { useCartContext } from "@/app/store/cartAtom"; // Import the cart context
+import { useCartContext } from "@/app/store/cartAtom";
+import {useGoogleAddressAtomContext} from "@/app/store/addressAtom"; // Import the cart context
 
 function UserAddresses() {
 	const [data, setData] = React.useState<any>(null);
 	const [modalOpen, setModalOpen] = React.useState(true);
-	
+	const {savedAddress} = useGoogleAddressAtomContext();
+
 	const [isLoading, setLoading] = React.useState<boolean>(true);
 	const [selectedAddress, setSelectedAddress] = React.useState<any>(null);
 
 	// Get the setSelectedAddress function from the cart context
-	const { setSelectedAddress: setCartAddress } = useCartContext();
+	const { setSelectedAddress: setCartAddress,firstAddress } = useCartContext();
 
 	useEffect(() => {
 		const getData = async () => {
@@ -48,7 +51,8 @@ function UserAddresses() {
 	return (
 		<div>
 			<div className="bg-white p-6 rounded-lg border">
-				<h2 className="text-lg font-semibold mb-2">Deliver to</h2>
+				{/*{firstAddress}*/}
+				<h2 className="text-lg font-semibold mb-2">Deliver to {savedAddress}</h2>
 				<div className="flex items-center justify-between bg-gray-100 p-4 rounded-lg">
 					<div className="flex items-center">
 						<span className="text-blue-500 mr-4">📍</span>
@@ -72,14 +76,15 @@ function UserAddresses() {
 					</div>
 
 					<AlertDialog>
-						<AlertDialogTrigger className={`border py-2 rounded-full px-4  border-blue-500`}>
-								Edit
+						<AlertDialogTrigger
+							className={`border py-2 rounded-full px-4  border-blue-500`}
+						>
+							Edit
 						</AlertDialogTrigger>
 						<AlertDialogContent className={` lg:h-[450px]`}>
 							<AlertDialogHeader>
 								<AlertDialogTitle>Manage Delivery Locations</AlertDialogTitle>
 
-								<Button variant={`outline`}>New Address</Button>
 								<AlertDialogDescription>
 									{data && data.length > 0 ? (
 										<div className="space-y-2 max-h-60 overflow-y-auto">
@@ -127,6 +132,13 @@ function UserAddresses() {
 						</AlertDialogContent>
 					</AlertDialog>
 				</div>
+				<div className={`flex justify-end`}>
+					{" "}
+					<Button variant={`ghost`} className={`text-blue-500`}>
+						New Address
+					</Button>
+				</div>
+				{/*<div className={`border`}>here</div>*/}
 			</div>
 		</div>
 	);

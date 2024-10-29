@@ -1,59 +1,77 @@
-import React from 'react';
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import FormError from "@/components/ui/FormError";
 
 export default function EditUserNumberModal() {
-  return (
-    <div>
-      <div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="link">Edit</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Edit</DialogTitle>
-              <DialogDescription>
-                Change your phone number here and click save when done
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="items-center gap-4">
-                <label htmlFor="phone-number" className="block text-sm font-medium leading-6 text-gray-900">
-                  Phone Number
-                </label>
-                <div className="relative mt-2 rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 flex items-center">
-                    <label htmlFor="country" className="sr-only">
-                      Country
-                    </label>
+	const [form, setForm] = useState<any>({
+		code: "+234",
+		phoneNumber: "08063145125",
+		otp: "",
+	});
 
-                      <option className='text-primary-600'>NG</option>
-                  </div>
-                  <input
-                    type="tel"
-                    name="phone-number"
-                    id="phone-number"
-                    className="block w-full rounded-md border-gray-300 py-1.5 pl-16 pr-3 text-gray-900 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 focus:ring focus:ring-opacity-50 sm:text-sm"
-                    placeholder="+234 (81) 987-6543"
-                  />
-                </div>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit" variant="primary">Save changes</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </div>
-    </div>
-  );
+	const [errors, setErrors] = useState<any>({
+		phoneNumber: "",
+		otp: "",
+	});
+
+	const [state, setState] = useState<any>({
+		loading: false,
+		error: "",
+		showOtp: false,
+		login_success: false,
+	});
+
+	function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+		const newValue = event.target.value;
+
+		setForm({
+			...form,
+			phoneNumber: newValue,
+		});
+	}
+
+	return (
+		<div>
+			<div>
+				<Dialog>
+					<DialogTrigger asChild>
+						<Button variant="link">Edit</Button>
+					</DialogTrigger>
+					<DialogContent className="sm:max-w-[425px]">
+						<DialogHeader>
+							<DialogTitle>Edit</DialogTitle>
+							<DialogDescription>Change your phone number</DialogDescription>
+						</DialogHeader>
+						<div className={`flex items-center gap-x-2`}>
+							<div className={`border py-2 px-3 rounded-full flex`}>
+								<span>🇳🇬</span>
+								<span>+234</span>
+							</div>
+							<Input
+								className="md:w-full"
+								value={form.phoneNumber}
+								onChange={handleChange}
+							/>
+						</div>
+						<FormError error={errors.phoneNumber} />
+						<DialogFooter>
+							<Button type="submit" variant="primary">
+								Confirm
+							</Button>
+						</DialogFooter>
+					</DialogContent>
+				</Dialog>
+			</div>
+		</div>
+	);
 }

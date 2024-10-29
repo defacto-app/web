@@ -1,4 +1,4 @@
-import env from "@/config/env";
+import envData from "@/config/envData";
 
 
 

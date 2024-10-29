@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import env from "@/config/env";
+import envData from "@/config/envData";
 import { NextRequest } from "next/server";
 
 export async function logout() {
@@ -10,7 +10,7 @@ export async function logout() {
 export async function authenticate(data: any) {
 	// ping the server to check if the token is valid
 
-	const result = await fetch(`${env.base_url}/admin/auth/ping`, {
+	const result = await fetch(`${envData.base_url}/admin/auth/ping`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
@@ -32,7 +32,7 @@ export async function authenticate(data: any) {
 export async function authenticateUser(data: any) {
 	// ping the server to check if the token is valid
 
-	const result = await fetch(`${env.base_url}/auth/ping`, {
+	const result = await fetch(`${envData.base_url}/auth/ping`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",

@@ -1,16 +1,11 @@
-"use client";
+"use client"
 import React, {useEffect, useState} from "react";
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { useCartContext, useCartSummaryContext } from "@/app/store/cartAtom";
 import Image from "next/image";
 function CartItemList() {
-	const { cart, removeItem, updateItemQuantity, cartTotal } = useCartContext();
-
-	const { totalPrice, deliveryFee, discountAmount, discount } =
-		useCartSummaryContext();
-
-
+	const { cart, removeItem, updateItemQuantity } = useCartContext();
 	const [isMounted, setIsMounted] = useState(false);
 
 	useEffect(() => {
@@ -29,7 +24,7 @@ function CartItemList() {
 					{cart.length > 0 ? (
 						cart.map((item) => (
 							<div
-								key={item.id}
+								key={item.publicId}
 								className="flex items-center justify-between p-4  border-b last:border-b-0"
 							>
 								<div className="flex items-center">
@@ -38,6 +33,7 @@ function CartItemList() {
 										height={64}
 										src={item.image}
 										alt={item.name}
+										priority={true}
 										className="w-16 h-16 object-cover rounded-lg"
 									/>
 									<div className="ml-4">
@@ -50,7 +46,7 @@ function CartItemList() {
 										className="px-3 py-1 bg-gray-200 rounded-lg"
 										onClick={() =>
 											updateItemQuantity({
-												itemId: item.id,
+												itemId: item.publicId,
 												quantity: item.quantity - 1,
 											})
 										}
@@ -63,7 +59,7 @@ function CartItemList() {
 										className="px-3 py-1 bg-gray-200 rounded-lg"
 										onClick={() =>
 											updateItemQuantity({
-												itemId: item.id,
+												itemId: item.publicId,
 												quantity: item.quantity + 1,
 											})
 										}
@@ -72,7 +68,7 @@ function CartItemList() {
 									</Button>
 									<Button
 										className="text-red-500"
-										onClick={() => removeItem(item.id)}
+										onClick={() => removeItem(item.publicId)}
 									>
 										🗑
 									</Button>

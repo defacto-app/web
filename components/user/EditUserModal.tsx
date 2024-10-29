@@ -7,6 +7,7 @@ import {
 	AlertDialogFooter,
 	AlertDialogTitle,
 	AlertDialogTrigger,
+	AlertDialogCancel
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,15 +20,15 @@ export default function EditUserModal() {
 				<AlertDialogTrigger asChild>
 					<Button variant="link">Edit</Button>
 				</AlertDialogTrigger>
-				<AlertDialogContent className="sm:max-w-[425px]">
+				<AlertDialogContent className={`h-[400px]`}>
 					<AlertDialogHeader>
 						<AlertDialogTitle>Edit</AlertDialogTitle>
 						<AlertDialogDescription>
-							Make changes to your profile here. Click save when you're done.
+							Update your account details
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 					<div className="grid gap-4 py-4">
-						<div className="grid grid-cols-4 items-center gap-4">
+						<div >
 							<Label htmlFor="name" className="text-right">
 								Name
 							</Label>
@@ -37,7 +38,7 @@ export default function EditUserModal() {
 								className="col-span-3"
 							/>
 						</div>
-						<div className="grid grid-cols-4 items-center gap-4">
+						<div >
 							<Label htmlFor="user-emai" className="text-right">
 								Email
 							</Label>
@@ -49,6 +50,7 @@ export default function EditUserModal() {
 						</div>
 					</div>
 					<AlertDialogFooter>
+						<AlertDialogCancel>Cancel</AlertDialogCancel>
 						<Button type="submit" variant="primary">
 							Save changes
 						</Button>

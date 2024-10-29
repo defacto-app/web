@@ -9,6 +9,12 @@ function OrderCart() {
 	// Get the cart items, removeItem, and updateItemQuantity functions from the context
 	const { cart, updateItemQuantity, removeItem } = useCartContext();
 
+	function handleCartNavigation() {
+
+		console.log("Navigating to cart");
+	}
+		// You can add your logic here
+
 	return (
 		<div className="bg-white rounded-lg shadow p-4 w-full mx-auto">
 			<h2 className="text-xl font-bold mb-4">Your order</h2>
@@ -71,17 +77,18 @@ function OrderCart() {
 			)}
 
 			{/* Order button */}
-			<Link href={`/user/cart`}>
+
 				<Button
 					variant={`primary`}
 					className=" text-white font-bold py-3 rounded-lg w-full mt-4"
+					onClick={handleCartNavigation}
 				>
 					Order {cart.length} for {""}
 					{formatPrice(
 						cart.reduce((total, item) => total + item.price * item.quantity, 0),
 					)}
 				</Button>
-			</Link>
+
 		</div>
 	);
 }

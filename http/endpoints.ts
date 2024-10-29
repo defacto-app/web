@@ -1,5 +1,5 @@
 import { $axios, fetchWithAuth } from "@/http/http.fn";
-import env from "@/config/env";
+import envData from "@/config/envData";
 import { $axios_admin } from "@/http/http-admin.fn";
 
 export const $api = {
@@ -23,10 +23,12 @@ export const $api = {
 				}
 			},
 
+
+
 			/*		all: async () => {
 				try {
 					const res = await fetch(
-						`${env.base_url}/restaurant/all?page=1&perPage=10`,
+						`${envData.base_url}/restaurant/all?page=1&perPage=10`,
 					);
 					if (!res.ok) {
 						throw new Error("Failed to fetch data");
@@ -150,9 +152,20 @@ export const $api = {
 						return error;
 					}
 				},
+			},
+
+			order:{
+				restaurant: async (body: any) => {
+					try {
+						return $axios.post(`/restaurants/order`, body);
+					} catch (error: any) {
+						return error;
+					}
+				},
+				}
 			}
-		},
 	},
+
 
 	payments:{
 		card: async (body: any) => {

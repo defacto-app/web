@@ -69,10 +69,10 @@ function Page({ params }: { params: { slug: string } }) {
 			<div className="relative">
 				{restaurant && (
 					<div>
-						<div className={`absolute top-40 text-white z-10 px-20 space-y-2`}>
+						<div className={`absolute top-40 text-white z-10 px-4 lg:px-20 space-y-2`}>
 							{" "}
 							{/* Text is white */}
-							<h1 className={`text-5xl font-bold`}>{restaurant.name}</h1>
+							<h1 className={`text-2xl lg:text-5xl font-bold`}>{restaurant.name}</h1>
 							<div className={`flex items-center gap-x-2`}>
 								<MapPin />
 
@@ -118,20 +118,23 @@ function Page({ params }: { params: { slug: string } }) {
 				</div>
 
 				{/* Search Bar */}
+			<div className={`px-2 py-2`}>
 				<Input
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
 					placeholder="Search menu..."
-					className="w-1/3"
+					className="w-full"
 				/>
+			</div>
 
 				{/* Menu Area */}
-				<div className="grid grid-cols-5 gap-x-4 items-start">
-					<div className={`col-span-4`}>
-						<MenuArea data={filteredMenu.length > 0 ? filteredMenu : menu} />
+				<div className="grid lg:grid-cols-5 gap-x-4 items-start">
+					<div className={`col-span-4 px-2`}>
+						<div className={``}><OrderCart/></div>
+						<MenuArea data={filteredMenu.length > 0 ? filteredMenu : menu}/>
 					</div>
 
-					<div><OrderCart/></div>
+					<div className={`hidden`}><OrderCart/></div>
 				</div>
 			</div>
 		</div>

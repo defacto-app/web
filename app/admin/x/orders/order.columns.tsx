@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { formatDateFromNow } from "@/lib/utils";
 import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
+import { formatPrice } from "@/utils";
 
 const deleteOrder = async (id: string) => {
 	try {
@@ -39,6 +40,22 @@ export const orderColumns: ColumnDef<any>[] = [
 		},
 	},
 	{
+		accessorKey: "orderId",
+		header: "Order ID",
+		cell: ({ row }) => {
+			const { orderId } = row.original;
+			return <span className={`underline`}>{orderId}</span>;
+		},
+	},
+	{
+		accessorKey: "customerName",
+		header: "Customer",
+		cell: ({ row }) => {
+			const { dropOffDetails } = row.original;
+			return <span>{dropOffDetails.name}</span>;
+		},
+	},
+	{
 		accessorKey: "createdAt",
 		header: "Created At",
 		cell: ({ row }) => {
@@ -49,12 +66,12 @@ export const orderColumns: ColumnDef<any>[] = [
 	},
 
 	{
-		accessorKey: "type",
-		header: "Type",
-	},
-	{
 		accessorKey: "charge",
 		header: "Charge",
+		cell: ({ row }) => {
+			const { charge } = row.original;
+			return <span>{formatPrice(charge)}</span>;
+		},
 	},
 	{
 		accessorKey: "status",

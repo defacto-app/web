@@ -1,8 +1,8 @@
-import env from "@/config/env";
+import envData from "@/config/envData";
 import React from "react";
 
 export default function IsDev({ ...props }) {
-  return <div>{env.isDev && <div>show only in dev</div>}</div>;
+  return <div>{envData.isDev && <div>show only in dev</div>}</div>;
 }
 
 

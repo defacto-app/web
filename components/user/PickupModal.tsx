@@ -25,6 +25,7 @@ function PickupModal({ handleOnSelect }: PickupModalProps) {
 			<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
 				<AlertDialogTrigger asChild>
 					<div>
+
 						{savedAddress ? (
 							<div>
 								<span className="text-blue-500 lg:hidden">Deliver Here:</span>
