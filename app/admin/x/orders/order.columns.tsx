@@ -52,7 +52,7 @@ export const orderColumns: ColumnDef<any>[] = [
 		header: "Customer",
 		cell: ({ row }) => {
 			const { dropOffDetails } = row.original;
-			return <span>{dropOffDetails.name}</span>;
+			return <span>{dropOffDetails?.name}</span>;
 		},
 	},
 	{

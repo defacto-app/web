@@ -21,9 +21,8 @@ function CheckoutPage() {
 
 	return (
 		<div className="p-8">
-			{JSON.stringify(cart)}
 			{/* Cart Header */}
-			<h1 className="text-4xl font-bold mb-8">Check Out</h1>
+			<h1 className="text-3xl font-bold mb-8">Check Out</h1>
 
 			<div className="flex flex-col lg:flex-row justify-between gap-8">
 				{/* Left Side (Items and Delivery Info) */}

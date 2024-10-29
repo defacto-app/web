@@ -64,7 +64,7 @@ export const userColumns: ColumnDef<any>[] = [
 		header: "Last Seen",
 		cell: ({ row }) => {
 			const { lastSeenAt } = row.original;
-			const formattedDate = formatDateFromNow(lastSeenAt);
+			const formattedDate = formatDateFromNow(lastSeenAt || "");
 			return <span>{formattedDate}</span>;
 		},
 	},

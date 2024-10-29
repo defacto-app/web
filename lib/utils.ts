@@ -8,9 +8,16 @@ export function cn(...inputs: ClassValue[]) {
 import { differenceInSeconds, format } from "date-fns";
 
 export function formatDateFromNow(date: Date | string | number): string {
-	const now = new Date();
+	// Convert date to a Date object
 	const targetDate = new Date(date);
 
+	// Check if targetDate is a valid date
+	if (Number.isNaN(targetDate.getTime())) {
+		console.error("Invalid date:", date);
+		return "Invalid date";
+	}
+
+	const now = new Date();
 	const diffInSeconds = differenceInSeconds(now, targetDate);
 
 	// biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>

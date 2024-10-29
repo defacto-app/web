@@ -33,7 +33,7 @@ function OrderCart({ buttonOnly = false }: propTypes) {
 
 	return (
 		<div className="bg-white rounded-lg shadow p-4 w-full mx-auto">
-			<h2 className="text-xl font-bold mb-4">Your order</h2>
+			<h2 className="text-lg font-medium mb-4">Your order</h2>
 
 			{!buttonOnly && (
 				<div>
