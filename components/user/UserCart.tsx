@@ -22,7 +22,7 @@ function UserCart() {
 
 	return (
 		<div className={`hidden lg:block`}>
-			<Link href={`/user/cart`}>Cart items {savedAddress} {JSON.stringify(cart.length)}</Link>
+			<Link href={`/user/cart`}>Cart items  {JSON.stringify(cart.length)}</Link>
 		</div>
 	);
 }

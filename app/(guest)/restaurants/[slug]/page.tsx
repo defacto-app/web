@@ -69,10 +69,14 @@ function Page({ params }: { params: { slug: string } }) {
 			<div className="relative">
 				{restaurant && (
 					<div>
-						<div className={`absolute top-40 text-white z-10 px-4 lg:px-20 space-y-2`}>
+						<div
+							className={`absolute top-28 text-white z-10 px-4 lg:px-20 space-y-2`}
+						>
 							{" "}
 							{/* Text is white */}
-							<h1 className={`text-2xl lg:text-5xl font-bold`}>{restaurant.name}</h1>
+							<h1 className={`text-2xl lg:text-5xl font-bold`}>
+								{restaurant.name}
+							</h1>
 							<div className={`flex items-center gap-x-2`}>
 								<MapPin />
 
@@ -94,7 +98,7 @@ function Page({ params }: { params: { slug: string } }) {
 							<Image
 								width={1000}
 								height={100}
-								className={`h-[400px] w-full object-cover filter brightness-50`} // Darken the image
+								className={`h-[300px] w-full object-cover filter brightness-50`} // Darken the image
 								src={restaurant.image}
 								alt={restaurant.name}
 							/>
@@ -105,36 +109,40 @@ function Page({ params }: { params: { slug: string } }) {
 
 			{/* Search Input and Menu */}
 			<div className={`lg:container mx-auto py-8`}>
-				<div className="menu-filters flex space-x-4 mb-4">
+				<div className="menu-filters flex space-x-4 mb-4 px-4">
 					{uniqueMenuTypes.map((type) => (
 						<Button
 							key={type}
 							variant={activeTab === type ? "primary" : "outline"}
 							onClick={() => setActiveTab(type)}
 						>
-							{type}
+						<span className={`capitalize`}>	{type}</span>
 						</Button>
 					))}
 				</div>
 
 				{/* Search Bar */}
-			<div className={`px-2 py-2`}>
-				<Input
-					value={search}
-					onChange={(e) => setSearch(e.target.value)}
-					placeholder="Search menu..."
-					className="w-full"
-				/>
-			</div>
+				<div className={`px-2 py-2`}>
+					<Input
+						value={search}
+						onChange={(e) => setSearch(e.target.value)}
+						placeholder="Search menu..."
+						className="w-full"
+					/>
+				</div>
 
 				{/* Menu Area */}
 				<div className="grid lg:grid-cols-5 gap-x-4 items-start">
 					<div className={`col-span-4 px-2`}>
-						<div className={``}><OrderCart/></div>
-						<MenuArea data={filteredMenu.length > 0 ? filteredMenu : menu}/>
+						<div className={`lg:hidden `}>
+							<OrderCart buttonOnly={true} />
+						</div>
+						<MenuArea data={filteredMenu.length > 0 ? filteredMenu : menu} />
 					</div>
 
-					<div className={`hidden`}><OrderCart/></div>
+					<div className={`hidden md:block`}>
+						<OrderCart />
+					</div>
 				</div>
 			</div>
 		</div>

@@ -129,7 +129,7 @@ export default function FoodHero2() {
                         <h2 className="text-lg text-gray-100 w-full lg:w-56 text-center lg:text-end font-semibold mb-4 lg:mb-8">
                             Download the Defacto app for faster ordering
                         </h2>
-                        <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
+                        <div className="flex items-center gap-x-4 ">
                             <Button
                                 size="lg"
                                 variant="secondary"

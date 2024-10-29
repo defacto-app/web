@@ -22,11 +22,8 @@ import Link from "next/link";
 export default function UserAuth() {
 	const {
 		isLoggedIn,
-		setIsLoggedIn,
 		currentStep,
-		goBack,
-		modalOpen,
-		setModalOpen,
+
 	} = useAtomAuthContext();
 
 	const [hideCloseButton, setHideCloseButton] = useState(false);
