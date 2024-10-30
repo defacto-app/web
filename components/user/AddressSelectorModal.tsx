@@ -89,4 +89,13 @@ function AddressSelectorModal({ handleOnSelect , title="Add a delivery address"}
 	);
 }
 
+/*
+type GoogleAddressInputProps = {
+	onAddressSelect?: (address: string) => void;
+};
+
+function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
+* */
+
+// onAddressSelect(suggestion.description);
 export default AddressSelectorModal;

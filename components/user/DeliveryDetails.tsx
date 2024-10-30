@@ -44,9 +44,12 @@ export default function DeliveryDetails() {
 							Pickup
 						</Label>
 					</div>
-					pick {JSON.stringify(pickupAddress)}
+
 					<div className="flex items-center space-x-2 mb-4">
-						<GoogleAddressInput />
+						<div>
+							pick {JSON.stringify(pickupAddress)}
+							<GoogleAddressInput onAddressSelect={handlePickupAddressSelect} />
+						</div>
 						{/*<AddressSelectorModal handleOnSelect={handlePickupAddressSelect} />*/}
 					</div>
 					<div className="flex items-center space-x-2 mb-4">
@@ -57,7 +60,7 @@ export default function DeliveryDetails() {
 					</div>
 					drop {JSON.stringify(dropOffAddress)}
 					<div className="flex items-center space-x-2 mb-4">
-						<AddressSelectorModal handleOnSelect={handleDropOffAddressSelect} />
+						<GoogleAddressInput onAddressSelect={handleDropOffAddressSelect} />
 					</div>
 				</RadioGroup>
 				<div className="mb-4">

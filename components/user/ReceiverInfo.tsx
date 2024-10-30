@@ -3,7 +3,6 @@ import React from "react";
 import { Input } from "../ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "../ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -44,18 +43,6 @@ export default function ReceiverInfo() {
 			description:
 				"Swift and eco-friendly delivery solution ideal for smaller parcels and urban areas, offering quick navigation through traffic and narrow streets.",
 		},
-		{
-			value: "boat",
-			label: "Boat",
-			description:
-				"Specialized delivery service for coastal and water-accessible locations.",
-		},
-		{
-			value: "plane",
-			label: "Plane",
-			description:
-				"Expedited delivery method for long-distance and remote areas, ensuring timely deliveries across regions.",
-		},
 	];
 
 	const form = useForm<z.infer<typeof FormSchema>>({
@@ -79,15 +66,7 @@ export default function ReceiverInfo() {
 					Receiver Information
 				</h1>
 			</div>
-			<div className="flex mt-4 items-center space-x-2 mb-6">
-				<Checkbox id="info" />
-				<label
-					htmlFor="info"
-					className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-				>
-					Use my account Information
-				</label>
-			</div>
+
 			<div className="mb-6">
 				<div className="mb-4 mt-4">
 					<Label htmlFor="name" className="block text-lg font-semibold mb-2">
@@ -105,13 +84,13 @@ export default function ReceiverInfo() {
 					<Label htmlFor="number" className="block text-lg font-semibold mb-2">
 						Phone Number
 					</Label>
-					<Input
-						id="number"
-						name="number"
-						type="number"
-						placeholder="090*******"
-						required
-					/>
+					<div className={`flex items-center gap-x-2`}>
+						<div className={`border py-2 px-3 rounded-full flex`}>
+							<span>🇳🇬</span>
+							<span>+234</span>
+						</div>
+						<Input className="md:w-full"/>
+					</div>
 				</div>
 			</div>
 			<div className="mb-5">

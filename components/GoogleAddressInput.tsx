@@ -9,7 +9,11 @@ import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import Image from "next/image";
 import { useGoogleAddressAtomContext } from "@/app/store/addressAtom"; // Use the Pickup Modal Context
 
-function GoogleAddressInput() {
+type GoogleAddressInputProps = {
+	onAddressSelect?: (address: string) => void;
+};
+
+function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 	const [suggestions, setSuggestions] = useState({ predictions: [] });
 	const [loading, setLoading] = useState(false);
 	const [searchAttempted, setSearchAttempted] = useState(false);
@@ -120,6 +124,9 @@ function GoogleAddressInput() {
 			);
 
 			handleCloseModal(); // Close the modal after selection
+			if (onAddressSelect) {
+				onAddressSelect(suggestion.description);
+			}
 		} else {
 			setError("The area is not supported");
 		}

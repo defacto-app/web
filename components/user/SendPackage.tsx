@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Clock } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +23,14 @@ import { Label } from "../ui/label";
 import Calender from "./Calender";
 import DropoffModal from "./DropoffModal";
 import DeliveryFee from "./DeliveryFee";
+import PhoneLogin from "@/app/components/PhoneLogin";
+import {
+	DateField,
+	DateInput,
+	DateSegment,
+	TimeField,
+} from "react-aria-components";
+import DateTimePicker from "@/components/user/DateTimePicker";
 
 const FormSchema = z.object({
 	bio: z
@@ -67,18 +76,9 @@ export default function SendPackage() {
 					Use my account Information
 				</label>
 			</div>
-			<div>
-				<h1 className="text-lg mb-2 text-start font-semibold">
-					Pickup Address
-				</h1>
-			</div>
-			<div>
-				<h1 className="text-lg mt-5 mb-2 text-start font-semibold">
-					Dropoff Address
-				</h1>
-				<DropoffModal />
-			</div>
-			<DeliveryFee />
+
+
+
 			<div>
 				<div className="mb-4">
 					<Label htmlFor="name" className="block text-lg font-semibold mb-2">
@@ -96,16 +96,40 @@ export default function SendPackage() {
 					<Label htmlFor="number" className="block text-lg font-semibold mb-2">
 						Phone Number
 					</Label>
-					<Input
-						id="number"
-						name="number"
-						type="number"
-						placeholder="090*******"
-						required
-					/>
+					<div className={`flex items-center gap-x-2`}>
+						<div className={`border py-2 px-3 rounded-full flex`}>
+							<span>🇳🇬</span>
+							<span>+234</span>
+						</div>
+						<Input className="md:w-full" />
+					</div>
 				</div>
 			</div>
-			<Calender />
+			<div className={`flex items-center`}>
+				<div>
+					<Calender />
+				</div>
+				<TimeField className="space-y-2">
+					<Label className="text-sm font-medium text-foreground">
+						Time input with end icon
+					</Label>
+					<div className="relative">
+						<DateInput className="relative inline-flex h-9 w-full items-center overflow-hidden whitespace-nowrap rounded-lg border border-input bg-background px-3 py-2 pe-9 text-sm shadow-sm shadow-black/[.04] ring-offset-background transition-shadow data-[focus-within]:border-ring data-[disabled]:opacity-50 data-[focus-within]:outline-none data-[focus-within]:ring-2 data-[focus-within]:ring-ring/30 data-[focus-within]:ring-offset-2">
+							{(segment) => (
+								<DateSegment
+									segment={segment}
+									className="inline rounded p-0.5 text-foreground caret-transparent outline outline-0 data-[disabled]:cursor-not-allowed data-[focused]:bg-accent data-[invalid]:data-[focused]:bg-destructive data-[type=literal]:px-0 data-[focused]:data-[placeholder]:text-foreground data-[focused]:text-foreground data-[invalid]:data-[focused]:data-[placeholder]:text-destructive-foreground data-[invalid]:data-[focused]:text-destructive-foreground data-[invalid]:data-[placeholder]:text-destructive data-[invalid]:text-destructive data-[placeholder]:text-muted-foreground/70 data-[type=literal]:text-muted-foreground/70 data-[disabled]:opacity-50"
+								/>
+							)}
+						</DateInput>
+						<div className="pointer-events-none absolute inset-y-0 end-0 z-10 flex items-center justify-center pe-3 text-muted-foreground/80">
+							<Clock size={16} strokeWidth={2} aria-hidden="true" />
+						</div>
+					</div>
+				</TimeField>
+			</div>
 		</div>
 	);
 }
+
+// Dependencies: npm install react-aria-components

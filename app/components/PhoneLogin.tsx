@@ -83,7 +83,7 @@ const PhoneLogin = () => {
 		}
 	}
 
-	// Function to login
+	// Function to log in
 	async function login(event: React.MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
 
