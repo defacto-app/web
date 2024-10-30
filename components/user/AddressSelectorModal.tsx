@@ -1,9 +1,9 @@
-// components/PickupModal.tsx
+// components/AddressSelectorModal.tsx
 import React from "react";
 import { Button } from "@/components/ui/button";
 import {
 	AlertDialog,
-	AlertDialogContent,
+	AlertDialogContent, AlertDialogDescription,
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
@@ -14,21 +14,22 @@ import { useGoogleAddressAtomContext } from "@/app/store/addressAtom";
 import { MapPin } from "lucide-react";
 type PickupModalProps = {
 	handleOnSelect: (address: string) => void;
+	title?: string;
 };
 
-function PickupModal({ handleOnSelect }: PickupModalProps) {
+function AddressSelectorModal({ handleOnSelect , title="Add a delivery address"}: PickupModalProps) {
 	const { modalOpen, savedAddress, openModal, handleCloseModal } =
 		useGoogleAddressAtomContext();
 
 	return (
-		<div className="relative">
+		<div className="relative w-full">
 			<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
 				<AlertDialogTrigger asChild>
 					<div>
 
 						{savedAddress ? (
-							<div>
-								<span className="text-blue-500 lg:hidden">Deliver Here:</span>
+							<div className={`flex flex-col gap-2`}>
+								<span className="text-blue-500 text-sm lg:hidden">Deliver Here:</span>
 								<Button
 									variant={`outline`}
 									onClick={openModal}
@@ -65,7 +66,8 @@ function PickupModal({ handleOnSelect }: PickupModalProps) {
 					</div>
 				</AlertDialogTrigger>
 
-				<AlertDialogContent className="h-full lg:h-[570px] max-w-2xl">
+				<AlertDialogContent className="h-full lg:h-[570px] max-w-xl mx-auto px-4">
+					<AlertDialogDescription/>
 					<button
 						type="button"
 						onClick={handleCloseModal}
@@ -74,7 +76,7 @@ function PickupModal({ handleOnSelect }: PickupModalProps) {
 						<X className="w-4 h-4" />
 					</button>
 					<AlertDialogTitle className="text-center">
-						<span>Add a delivery address</span>
+						<span>{title}</span>
 					</AlertDialogTitle>
 					<div className="absolute top-20 px-10">
 						<div className="flex items-center">
@@ -87,4 +89,4 @@ function PickupModal({ handleOnSelect }: PickupModalProps) {
 	);
 }
 
-export default PickupModal;
+export default AddressSelectorModal;

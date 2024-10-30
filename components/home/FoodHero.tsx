@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react";
 import React from "react";
-import PickupModal from "../user/PickupModal";
+import AddressSelectorModal from "../user/AddressSelectorModal";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { Typewriter } from "./Typewriter";
@@ -66,7 +66,7 @@ function FoodHero() {
                             <label htmlFor="email" className="sr-only">
                               Email address
                             </label>
-                            {/*<PickupModal />*/}
+                            {/*<AddressSelectorModal />*/}
                           </div>
                           <div className="mt-3 sm:ml-3 sm:mt-0">
                             <Button

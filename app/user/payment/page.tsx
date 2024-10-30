@@ -3,7 +3,7 @@
 import DeliveryFee from "@/components/user/DeliveryFee";
 import DropoffModal from "@/components/user/DropoffModal";
 import PaymentModal from "@/components/user/PaymentModal";
-import PickupModal from "@/components/user/PickupModal";
+import AddressSelectorModal from "@/components/user/AddressSelectorModal";
 import ReceiverModal from "@/components/user/ReceiverModal";
 import SenderModal from "@/components/user/SenderModal";
 import { BanknoteIcon, CheckCircleIcon, CreditCardIcon } from "lucide-react";
@@ -79,7 +79,7 @@ export default function Paymentpage() {
                           <p>{truncateText(senderAddress, 10)}</p>
                         </div>
                         <div className="col-span-1">
-                          {/*<PickupModal />*/}
+                          {/*<AddressSelectorModal />*/}
                         </div>
                       </div>
                     </div>

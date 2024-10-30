@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import {Button} from "../ui/button";
 import Image from "next/image";
 import RotateBetween from "./RotataBetween";
-import PickupModal from "../user/PickupModal";
+import AddressSelectorModal from "../user/AddressSelectorModal";
 import Loader from "../Loader";
 import {useAtomAuthContext} from "@/app/store/authAtom";
 import {useGoogleAddressAtomContext} from "@/app/store/addressAtom";
@@ -100,7 +100,8 @@ export default function FoodHero2() {
                         deliver, you enjoy.
                     </p>
                     <div>
-                        <PickupModal handleOnSelect={handleAddressSelect}/>
+                        {JSON.stringify(selectedAddress)}
+                        <AddressSelectorModal handleOnSelect={handleAddressSelect}/>
 
                     </div>
 {/*
@@ -108,7 +109,7 @@ export default function FoodHero2() {
                         {savedAddress ? (
                             <p>Selected Address: {savedAddress}</p>
                         ) : (
-                            <PickupModal handleOnSelect={handleAddressSelect}/>
+                            <AddressSelectorModal handleOnSelect={handleAddressSelect}/>
                         )}
                     </div>*/}
                 </div>

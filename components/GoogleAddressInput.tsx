@@ -180,7 +180,7 @@ function GoogleAddressInput() {
 
 			{error && <div className="mt-4 text-red-500">{error}</div>}
 
-			<div className="w-screen h-screen mt-8">
+			<div className="w-full max-w-xs lg:max-w-lg mx-auto mt-4">
 				{showMap ? (
 					<APIProvider apiKey={envData.google_map_api}>
 						<Map
@@ -193,7 +193,7 @@ function GoogleAddressInput() {
 							mapTypeControl={false}
 							fullscreenControl={false}
 							scrollwheel={false}
-							className="w-96 lg:w-2/5 h-1/2 lg:h-2/4"
+							className="w-full h-48 lg:h-64 object-cover"
 						>
 							<Marker position={location} />
 						</Map>
@@ -202,7 +202,7 @@ function GoogleAddressInput() {
 					<Image
 						width={600}
 						height={400}
-						className={`w-auto lg:w-2/5 h-1/2 lg:h-2/4`}
+						className="w-full h-full object-cover rounded-lg"
 						src={`/blank-map.png`}
 						alt="Default Map"
 					/>
