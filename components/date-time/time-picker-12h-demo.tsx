@@ -19,6 +19,10 @@ export function TimePicker12Demo({ date, setDate }: TimePickerDemoProps) {
     const secondRef = React.useRef<HTMLInputElement>(null);
     const periodRef = React.useRef<HTMLButtonElement>(null);
 
+    const handleSetPeriod = (value: string) => {
+        setPeriod(value as Period);
+    };
+
     return (
         <div className="flex items-end gap-2">
             <div className="grid gap-1 text-center">
@@ -68,7 +72,7 @@ export function TimePicker12Demo({ date, setDate }: TimePickerDemoProps) {
                 </Label>
                 <TimePeriodSelect
                     period={period}
-                    setPeriod={setPeriod}
+                    setPeriod={handleSetPeriod}
                     date={date}
                     setDate={setDate}
                     ref={periodRef}

@@ -6,6 +6,33 @@ import WelcomeUser from "@/components/user/WelcomeUser";
 import React from "react";
 
 export default function Page() {
+	const [payload, setPayload] = React.useState({
+		deliveryDetails: {
+			pickup: {
+				address: "Lifecamp Road",
+				date: "YYYY-MM-DD",
+				time: "HH:MM",
+			},
+			dropOff: {
+				address: "",
+				date: "YYYY-MM-DD",
+				time: "HH:MM",
+			},
+		},
+		senderInformation: {
+			useAccountInformation: true,
+			fullName: "Olusegun Obasanjo",
+			phoneNumber: "+234XXXXXXXXXX",
+		},
+		receiverInformation: {
+			fullName: "Receiver Name",
+			phoneNumber: "+234XXXXXXXXXX",
+			modeOfDelivery: "Car",
+			additionalInformation: "Knock 3 times on the gate!",
+		},
+		deliveryFee: 0.0,
+	});
+
 	return (
 		<div>
 			<div className="container mx-auto px-4">

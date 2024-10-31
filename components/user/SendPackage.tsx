@@ -31,6 +31,9 @@ import {
 	TimeField,
 } from "react-aria-components";
 import DateTimePicker from "@/components/user/DateTimePicker";
+import { TimePicker12Demo } from "@/components/date-time/time-picker-12h-demo";
+import {TimePickerDemo} from "@/components/date-time/time-picker-demo";
+import {TimePickerInput} from "@/components/date-time/time-picker-input";
 
 const FormSchema = z.object({
 	bio: z
@@ -77,8 +80,6 @@ export default function SendPackage() {
 				</label>
 			</div>
 
-
-
 			<div>
 				<div className="mb-4">
 					<Label htmlFor="name" className="block text-lg font-semibold mb-2">
@@ -91,7 +92,8 @@ export default function SendPackage() {
 						placeholder="e.g Olusegun Obasanjo"
 						required
 					/>
-				</div>
+				</div>ddd
+				<DateTimePicker  showTimeSelect={true} date={new Date()}  />
 				<div className="mb-4">
 					<Label htmlFor="number" className="block text-lg font-semibold mb-2">
 						Phone Number

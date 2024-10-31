@@ -15,7 +15,7 @@ import {
 interface TimePeriodSelectProps {
 	period: string;
 	setPeriod: (value: string) => void;
-	date: Date | null;
+	date: Date | undefined;
 	setDate: (date: Date) => void;
 	onLeftFocus?: () => void;
 	onRightFocus?: () => void;
