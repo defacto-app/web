@@ -8,7 +8,8 @@ import Welcome from "@/app/components/Welcome";
 import Email from "@/app/components/Email";
 import LoginSuccessful from "@/app/components/LoginSuccessful";
 import RegistrationSuccessful from "@/app/components/RegistrationSuccessful";
-import React from "react";
+import React, { useEffect } from "react";
+import Image from "next/image";
 
 export default function LoginPage() {
 	const { currentStep } = useAtomAuthContext();
@@ -17,6 +18,23 @@ export default function LoginPage() {
 		<div>
 			<div>
 				<div className="">
+					<div className={`flex justify-center`}>
+						<Link href="/">
+							<span className="sr-only">Your Company</span>
+							<Image
+								className="h-40 w-auto"
+								src="/logo.png"
+								priority={true}
+								alt=""
+								width={100}
+								height={100}
+								style={{
+									maxWidth: "100%",
+									height: "auto",
+								}}
+							/>
+						</Link>
+					</div>
 					<div>
 						<div>
 							{currentStep === "welcome" && <Welcome />}
