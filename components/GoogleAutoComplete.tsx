@@ -24,7 +24,7 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 	const [showMap, setShowMap] = useState(false); // State to control map display
 
 	// Access modal state and actions from useGoogleAddressAtomContext
-	const { modalOpen, setSavedAddress, openModal, handleCloseModal } =
+	const { modalOpen, setSavedAddress,savedAddress, openModal, handleCloseModal } =
 		useGoogleAddressAtomContext();
 
 	const [googleAddress, setGoogleAddress] = useState(""); // Local state for input value
@@ -128,7 +128,7 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 				onAddressSelect(suggestion.description);
 			}
 		} else {
-			setError("The area is not supported");
+			setError("Only Areas within Asaba are supported for now");
 		}
 	};
 
@@ -145,12 +145,13 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 	return (
 		<div className="flex-col">
 			<div className="relative">
+				{savedAddress}
 				<Label htmlFor="address">Delivery address</Label>
 				<div className="flex items-center gap-x-2">
 					<Input
 						type="text"
-						placeholder={isDev ? "Lifecamp Road" : "Enter your address"}
-						className="w-80 md:w-full"
+						placeholder={!isDev ? "Asaba Road" : "Auto-complete address"}
+						className="w-full"
 						autoComplete="off"
 						value={googleAddress} // Use the saved address from context
 						onChange={handleChange}
@@ -159,7 +160,7 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 				{predictionListVisible && (
 					<section>
 						{loading && <div>Loading...</div>}
-						<ul className="absolute z-10 list-none bg-white  w-80 md:w-full shadow-lg mt-1">
+						<ul className="absolute z-10 list-none bg-white  w-full shadow-lg mt-1">
 							{searchAttempted &&
 								(suggestions.predictions.length > 0 ? (
 									suggestions.predictions.map((suggestion: any) => (
@@ -185,36 +186,8 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 				)}
 			</div>
 
-			{error && <div className="mt-4 text-red-500">{error}</div>}
+			{error && <div className="mt-4 text-xs text-red-500">{error}</div>}
 
-			<div className="w-full max-w-xs lg:max-w-lg mx-auto mt-4">
-				{showMap ? (
-					<APIProvider apiKey={envData.google_map_api}>
-						<Map
-							key={`${location.lat}-${location.lng}`} // Changing key forces re-render
-							center={location}
-							zoom={15}
-							gestureHandling={"auto"}
-							zoomControl={false}
-							streetViewControl={false}
-							mapTypeControl={false}
-							fullscreenControl={false}
-							scrollwheel={false}
-							className="w-full h-48 lg:h-64 object-cover"
-						>
-							<Marker position={location} />
-						</Map>
-					</APIProvider>
-				) : (
-					<Image
-						width={600}
-						height={400}
-						className="w-full h-full object-cover rounded-lg"
-						src={`/blank-map.png`}
-						alt="Default Map"
-					/>
-				)}
-			</div>
 		</div>
 	);
 }

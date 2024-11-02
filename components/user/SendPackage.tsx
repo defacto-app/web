@@ -92,7 +92,7 @@ export default function SendPackage() {
 						placeholder="e.g Olusegun Obasanjo"
 						required
 					/>
-				</div>ddd
+				</div>
 				<DateTimePicker  showTimeSelect={true} date={new Date()}  />
 				<div className="mb-4">
 					<Label htmlFor="number" className="block text-lg font-semibold mb-2">

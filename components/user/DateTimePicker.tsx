@@ -62,7 +62,7 @@ export default function DateTimePicker({
 	return (
 		<div>
 			<Popover>
-				<PopoverTrigger className={`w-full lg:w-[200px]`}>
+				<PopoverTrigger className={`w-full`}>
 					<Input
 						value={
 							internalSelected instanceof Date

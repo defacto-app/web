@@ -41,7 +41,7 @@ const RestaurantArea = () => {
 						</Link>
 					</div>
 					<div className="flex justify-center">
-						<Link href={`/user/send-package`}>
+						<Link href={`/send-package`}>
 							<Image
 								src="/delivery-package.svg"
 								alt="delivery package"

@@ -1,4 +1,5 @@
-import DeliveryDetails from "@/components/user/DeliveryDetails";
+"use client"
+import PickUpInformation from "@/components/delivery/PickUpInformation";
 import DeliveryFee from "@/components/user/DeliveryFee";
 import ReceiverInfo from "@/components/user/ReceiverInfo";
 import SendPackage from "@/components/user/SendPackage";
@@ -46,7 +47,7 @@ export default function Page() {
 				</h1>
 				<div className=" lg:grid lg:grid-cols-3  items-start">
 					<div>
-						<DeliveryDetails />
+						<PickUpInformation />
 					</div>
 					<div>
 						<SendPackage />
