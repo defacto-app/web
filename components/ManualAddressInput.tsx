@@ -4,18 +4,30 @@ import { Input } from "@/components/ui/input";
 import { isDev } from "@/config/envData";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { addressAtom, setAddressAtom } from "@/app/store/sendPackageAtom";
+import { manualAddressAtom, setAddressAtom } from "@/app/store/sendPackageAtom";
 import { atom, useAtom, useSetAtom } from "jotai";
 
-const ManualAddressInput = () => {
-	const [address, setAddress] = useAtom(addressAtom);
+type ManualAddressInputProps = {
+	address: {
+		flat_number: string;
+		floor_number: string;
+		building_name: string;
+		street_address: string;
+		city: string;
+		state: string;
+		note: string;
+	};
+	updateAddress: (address: any) => void;
+};
 
-	const updateAddress = useSetAtom(setAddressAtom);
-
+const ManualAddressInput = ({
+	address,
+	updateAddress,
+}: ManualAddressInputProps) => {
 	const handleChange = (e: { target: { name: any; value: any } }) => {
 		const { name, value } = e.target;
 		// Update the address state with the changed field
-		updateAddress({ [name]: value });
+		updateAddress({ ...address, [name]: value });
 	};
 
 	return (

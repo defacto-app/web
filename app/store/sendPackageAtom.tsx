@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 
-export const addressAtom = atom({
+export const manualAddressAtom = atom({
 	flat_number: "",
 	floor_number: "",
 	building_name: "",
@@ -22,8 +22,8 @@ export const packagePayloadAtom = atom({
 
 // Setter atom to update the address state from anywhere
 export const setAddressAtom = atom(null, (get, set, updatedAddress) => {
-	if (typeof updatedAddress === 'object' && updatedAddress !== null) {
-		set(addressAtom, { ...get(addressAtom), ...updatedAddress });
+	if (typeof updatedAddress === "object" && updatedAddress !== null) {
+		set(manualAddressAtom, { ...get(manualAddressAtom), ...updatedAddress });
 	} else {
 		console.error("Updated address must be an object");
 	}

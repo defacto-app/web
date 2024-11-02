@@ -12,12 +12,22 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useAtomValue } from "jotai/index";
-import { addressAtom } from "@/app/store/sendPackageAtom";
+import { manualAddressAtom } from "@/app/store/sendPackageAtom";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
+import { useAtom } from "jotai";
 
+type manualAddress = {
+	flat_number: string;
+	floor_number: string;
+	building_name: string;
+	street_address: string;
+	city: string;
+	state: string;
+	postal_code: string;
+	note: string;
+};
 export default function PickUpInformation() {
-	const [date, setDate] = React.useState<Date>();
 	const [dropOffAddress, setDropOffAddress] = useState("");
 	const [pickupAddress, setPickupAddress] = useState("");
 	const handlePickupAddressSelect = (address: string) => {
@@ -33,7 +43,7 @@ export default function PickUpInformation() {
 	const handleDateSelect = (selectedDate: Date) => {
 		setPickupDate(selectedDate);
 	};
-	const pickupDetails = useAtomValue(addressAtom);
+	const pickupDetails = useAtomValue(manualAddressAtom);
 
 	const schema = z.object({
 		pickupAddress: z.string().email({
@@ -43,6 +53,14 @@ export default function PickUpInformation() {
 			message: "Password must be at least 5 characters long",
 		}),
 	});
+
+	const [address, setAddress] = useAtom(manualAddressAtom);
+
+	const updateAddress = (
+		updatedAddress: manualAddress | ((prev: manualAddress) => manualAddress),
+	) => {
+		setAddress(updatedAddress);
+	};
 
 	return (
 		<div className="container mx-auto p-2 ">
@@ -85,12 +103,15 @@ export default function PickUpInformation() {
 					/>
 				</div>
 
-				<GoogleAutoComplete />
+				<GoogleAutoComplete onAddressSelect={handlePickupAddressSelect} />
 				<Accordion type="single" collapsible className="w-full">
 					<AccordionItem value="item-2">
 						<AccordionTrigger>Location Description ?</AccordionTrigger>
 						<AccordionContent>
-							<ManualAddressInput />
+							<ManualAddressInput
+								address={address}
+								updateAddress={updateAddress}
+							/>
 						</AccordionContent>
 					</AccordionItem>
 				</Accordion>
