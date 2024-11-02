@@ -16,11 +16,25 @@ export const packagePayloadAtom = atom({
 	weight: "",
 	description: "",
 	price: "",
-	senderDetails: {},
+	senderDetails: {
+		fullName: "",
+		phoneNumber: "",
+		pickupTime: null,
+		deliveryAddress: "",
+		addressDetails: {
+			flat_number: "",
+			floor_number: "",
+			building_name: "",
+			street_address: "",
+			city: "Asaba",
+			state: "Delta",
+			postal_code: "",
+			note: "",
+		},
+	},
 	receiverDetails: {},
 });
 
-// Setter atom to update the address state from anywhere
 export const setAddressAtom = atom(null, (get, set, updatedAddress) => {
 	if (typeof updatedAddress === "object" && updatedAddress !== null) {
 		set(manualAddressAtom, { ...get(manualAddressAtom), ...updatedAddress });

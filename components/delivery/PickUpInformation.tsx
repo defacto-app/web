@@ -1,7 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Label } from "@/components/ui/label";
-
 import ManualAddressInput from "@/components/ManualAddressInput";
 import DateTimePicker from "@/components/user/DateTimePicker";
 import GoogleAutoComplete from "@/components/GoogleAutoComplete";
@@ -11,56 +10,52 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useAtomValue } from "jotai/index";
-import { manualAddressAtom } from "@/app/store/sendPackageAtom";
-import { z } from "zod";
-import { Input } from "@/components/ui/input";
 import { useAtom } from "jotai";
+import { packagePayloadAtom, manualAddressAtom } from "@/app/store/sendPackageAtom";
+import { Input } from "@/components/ui/input";
 
-type manualAddress = {
-	flat_number: string;
-	floor_number: string;
-	building_name: string;
-	street_address: string;
-	city: string;
-	state: string;
-	postal_code: string;
-	note: string;
-};
 export default function PickUpInformation() {
-	const [dropOffAddress, setDropOffAddress] = useState("");
-	const [pickupAddress, setPickupAddress] = useState("");
-	const handlePickupAddressSelect = (address: string) => {
-		console.log("pickup", address);
-		setPickupAddress(address);
-	};
-	const handleDropOffAddressSelect = (address: string) => {
-		setDropOffAddress(address);
+	const [packagePayload, setPackagePayload] = useAtom(packagePayloadAtom);
+	const [pickupDate, setPickupDate] = useState(new Date());
+
+	const handleInputChange = (e: { target: any; }) => {
+		const { name, value } = e.target;
+		setPackagePayload((prev) => ({
+			...prev,
+			senderDetails: {
+				...prev.senderDetails,
+				[name]: value,
+			},
+		}));
 	};
 
-	const [pickupDate, setPickupDate] = React.useState<Date>(new Date());
-
-	const handleDateSelect = (selectedDate: Date) => {
+	const handleDateSelect = (selectedDate:any) => {
 		setPickupDate(selectedDate);
+		setPackagePayload((prev) => ({
+			...prev,
+			senderDetails: {
+				...prev.senderDetails,
+				pickupTime: selectedDate,
+			},
+		}));
 	};
-	const pickupDetails = useAtomValue(manualAddressAtom);
 
-	const schema = z.object({
-		pickupAddress: z.string().email({
-			message: "",
-		}),
-		pickupDate: z.string().min(5, {
-			message: "Password must be at least 5 characters long",
-		}),
-	});
-
-	const [address, setAddress] = useAtom(manualAddressAtom);
-
-	const updateAddress = (
-		updatedAddress: manualAddress | ((prev: manualAddress) => manualAddress),
-	) => {
-		setAddress(updatedAddress);
+	const handleAddressUpdate = (updatedAddress:any) => {
+		setPackagePayload((prev) => ({
+			...prev,
+			senderDetails: {
+				...prev.senderDetails,
+				addressDetails: {
+					...prev.senderDetails.addressDetails,
+					...updatedAddress,
+				},
+			},
+		}));
 	};
+
+	useEffect(() => {
+		console.log(packagePayload);
+	}, [packagePayload]);
 
 	return (
 		<div className="container mx-auto p-2 ">
@@ -70,31 +65,39 @@ export default function PickUpInformation() {
 						Pickup Details
 					</h1>
 				</div>
-				{/*{JSON.stringify(pickupDetails)}*/}
 
 				<div className="mb-4 mt-4">
 					<Label>Full Name</Label>
 					<Input
-						id="name"
-						name="full-name"
-						type="name"
+						id="fullName"
+						name="fullName"
+						type="text"
 						placeholder="e.g Olusegun Obasanjo"
+						value={packagePayload.senderDetails.fullName}
+						onChange={handleInputChange}
 						required
 					/>
 				</div>
 
 				<div className="mb-4">
 					<Label>Phone Number</Label>
-					<div className={`flex items-center gap-x-2`}>
-						<div className={`border py-2 px-3 rounded-full flex`}>
+					<div className="flex items-center gap-x-2">
+						<div className="border py-2 px-3 rounded-full flex">
 							<span>🇳🇬</span>
 							<span>+234</span>
 						</div>
-						<Input className="md:w-full" />
+						<Input
+							name="phoneNumber"
+							type="tel"
+							placeholder="Enter phone number"
+							value={packagePayload.senderDetails.phoneNumber}
+							onChange={handleInputChange}
+							required
+						/>
 					</div>
 				</div>
 
-				<div>
+				<div className="mb-4">
 					<Label>Pickup Time</Label>
 					<DateTimePicker
 						showTimeSelect={true}
@@ -103,14 +106,22 @@ export default function PickUpInformation() {
 					/>
 				</div>
 
-				<GoogleAutoComplete onAddressSelect={handlePickupAddressSelect} />
+				<div className="mb-4">
+					<Label>Delivery address</Label>
+					<GoogleAutoComplete
+						onAddressSelect={(address) => handleInputChange({
+							target: { name: "deliveryAddress", value: address }
+						})}
+					/>
+				</div>
+
 				<Accordion type="single" collapsible className="w-full">
 					<AccordionItem value="item-2">
 						<AccordionTrigger>Location Description ?</AccordionTrigger>
 						<AccordionContent>
 							<ManualAddressInput
-								address={address}
-								updateAddress={updateAddress}
+								address={packagePayload.senderDetails.addressDetails}
+								updateAddress={handleAddressUpdate}
 							/>
 						</AccordionContent>
 					</AccordionItem>
