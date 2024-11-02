@@ -145,7 +145,6 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 	return (
 		<div className="flex-col">
 			<div className="relative">
-				{savedAddress}
 				<Label htmlFor="address">Delivery address</Label>
 				<div className="flex items-center gap-x-2">
 					<Input

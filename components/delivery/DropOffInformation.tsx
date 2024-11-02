@@ -20,9 +20,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "../ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Label } from "../ui/label";
-import Calender from "./Calender";
-import DropoffModal from "./DropoffModal";
-import DeliveryFee from "./DeliveryFee";
+import Calender from "../user/Calender";
+import DropoffModal from "../user/DropoffModal";
+import DeliveryFee from "../user/DeliveryFee";
 import PhoneLogin from "@/app/components/PhoneLogin";
 import {
 	DateField,
@@ -31,9 +31,6 @@ import {
 	TimeField,
 } from "react-aria-components";
 import DateTimePicker from "@/components/user/DateTimePicker";
-import { TimePicker12Demo } from "@/components/date-time/time-picker-12h-demo";
-import {TimePickerDemo} from "@/components/date-time/time-picker-demo";
-import {TimePickerInput} from "@/components/date-time/time-picker-input";
 
 const FormSchema = z.object({
 	bio: z
@@ -46,7 +43,7 @@ const FormSchema = z.object({
 		}),
 });
 
-export default function SendPackage() {
+export default function DropOffInformation() {
 	const form = useForm<z.infer<typeof FormSchema>>({
 		resolver: zodResolver(FormSchema),
 	});

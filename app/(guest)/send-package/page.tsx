@@ -2,7 +2,7 @@
 import PickUpInformation from "@/components/delivery/PickUpInformation";
 import DeliveryFee from "@/components/user/DeliveryFee";
 import ReceiverInfo from "@/components/user/ReceiverInfo";
-import SendPackage from "@/components/user/SendPackage";
+import DropOffInformation from "@/components/delivery/DropOffInformation";
 import WelcomeUser from "@/components/user/WelcomeUser";
 import React from "react";
 
@@ -50,7 +50,7 @@ export default function Page() {
 						<PickUpInformation />
 					</div>
 					<div>
-						<SendPackage />
+						<DropOffInformation />
 					</div>
 					<div>
 						<ReceiverInfo />
