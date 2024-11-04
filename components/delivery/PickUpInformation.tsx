@@ -1,7 +1,6 @@
 "use client";
 import React, {useEffect, useState} from "react";
 import { Label } from "@/components/ui/label";
-import ManualAddressInput from "@/components/ManualAddressInput";
 import DateTimePicker from "@/components/user/DateTimePicker";
 import GoogleAutoComplete from "@/components/GoogleAutoComplete";
 import {
@@ -13,6 +12,7 @@ import {
 import { useAtom } from "jotai";
 import { packagePayloadAtom, manualAddressAtom } from "@/app/store/sendPackageAtom";
 import { Input } from "@/components/ui/input";
+import {Textarea} from "@/components/ui/textarea";
 
 export default function PickUpInformation() {
 	const [packagePayload, setPackagePayload] = useAtom(packagePayloadAtom);
@@ -40,18 +40,7 @@ export default function PickUpInformation() {
 		}));
 	};
 
-	const handleAddressUpdate = (updatedAddress:any) => {
-		setPackagePayload((prev) => ({
-			...prev,
-			senderDetails: {
-				...prev.senderDetails,
-				addressDetails: {
-					...prev.senderDetails.addressDetails,
-					...updatedAddress,
-				},
-			},
-		}));
-	};
+
 
 	useEffect(() => {
 		console.log(packagePayload);
@@ -107,25 +96,24 @@ export default function PickUpInformation() {
 				</div>
 
 				<div className="mb-4">
-					<Label>Delivery address</Label>
+					<Label htmlFor="address">Pickup address</Label>
+
 					<GoogleAutoComplete
 						onAddressSelect={(address) => handleInputChange({
-							target: { name: "deliveryAddress", value: address }
+							target: {name: "deliveryAddress", value: address}
 						})}
 					/>
 				</div>
 
-				<Accordion type="single" collapsible className="w-full">
-					<AccordionItem value="item-2">
-						<AccordionTrigger>Location Description ?</AccordionTrigger>
-						<AccordionContent>
-							<ManualAddressInput
-								address={packagePayload.senderDetails.addressDetails}
-								updateAddress={handleAddressUpdate}
-							/>
-						</AccordionContent>
-					</AccordionItem>
-				</Accordion>
+				<div>
+					<Label>
+						Address Details
+					</Label>
+					<Textarea placeholder={`Building, number, floor number , landmark`}
+							  value={packagePayload.receiverDetails.addressNotes}/>
+				</div>
+
+
 			</div>
 		</div>
 	);

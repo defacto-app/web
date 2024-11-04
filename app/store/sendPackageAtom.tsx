@@ -21,18 +21,15 @@ export const packagePayloadAtom = atom({
 		phoneNumber: "",
 		pickupTime: null,
 		deliveryAddress: "",
-		addressDetails: {
-			flat_number: "",
-			floor_number: "",
-			building_name: "",
-			street_address: "",
-			city: "Asaba",
-			state: "Delta",
-			postal_code: "",
-			note: "",
-		},
+		deliveryNote: "",
+		addressNotes: "",
 	},
-	receiverDetails: {},
+	receiverDetails: {
+		fullName: "",
+		phoneNumber: "",
+		deliveryNote: "",
+		addressNotes: "",
+	},
 });
 
 export const setAddressAtom = atom(null, (get, set, updatedAddress) => {

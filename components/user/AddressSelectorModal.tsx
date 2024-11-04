@@ -40,7 +40,7 @@ function AddressSelectorModal({ handleOnSelect , title="Add a delivery address"}
 										<span className="truncate ml-1">{savedAddress}</span>
 									</div>
 
-									<ChevronDown size={`30`} className={`text-blue-500`} />
+									<ChevronDown size={`30`} className={`text-blue-500`}/>
 								</Button>
 
 							</div>
@@ -59,28 +59,31 @@ function AddressSelectorModal({ handleOnSelect , title="Add a delivery address"}
 									disabled
 									type="button"
 								>
-									<MapPin />
+									<MapPin/>
 								</Button>
 							</div>
 						)}
 					</div>
 				</AlertDialogTrigger>
 
-				<AlertDialogContent className="h-full lg:h-[570px] max-w-xl mx-auto px-4">
-					<AlertDialogDescription/>
+				<AlertDialogContent className="h-full lg:h-[570px] max-w-5xl mx-auto px-4">
+					<AlertDialogDescription>
+						<span>{title}</span>
+
+					</AlertDialogDescription>
 					<button
 						type="button"
 						onClick={handleCloseModal}
 						className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
 					>
-						<X className="w-4 h-4" />
+						<X className="w-4 h-4"/>
 					</button>
 					<AlertDialogTitle className="text-center">
-						<span>{title}</span>
+						{/*<span>{title}</span>*/}
 					</AlertDialogTitle>
 					<div className="absolute top-20 px-10">
 						<div className="flex items-center">
-							<GoogleAddressInput />
+							<GoogleAddressInput/>
 						</div>
 					</div>
 				</AlertDialogContent>
