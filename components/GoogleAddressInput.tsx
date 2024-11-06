@@ -204,102 +204,102 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 	};
 
 	return (
-		<div className="grid grid-cols-1 lg:grid-cols-3 gap-x-4">
-			<div>
-				<div>
-					<div className="relative">
-						<Label htmlFor="address">Delivery address</Label>
-						<div className="flex items-center gap-x-2">
-							<Input
-								type="text"
-								placeholder={isDev ? "Lifecamp Road" : "Enter your address"}
-								className="w-80 md:w-full"
-								autoComplete="off"
-								value={googleAddress} // Use the saved address from context
-								onChange={handleChange}
-							/>
+		<div className="grid grid-cols-1 lg:grid-cols-5 gap-x-4">
+				<div className="lg:col-span-2">
+					<div>
+						<div className="relative">
+							<Label htmlFor="address">Delivery address</Label>
+							<div className="flex items-center gap-x-2">
+								<Input
+									type="text"
+									placeholder={isDev ? "Lifecamp Road" : "Enter your address"}
+									className="w-80 md:w-full"
+									autoComplete="off"
+									value={googleAddress} // Use the saved address from context
+									onChange={handleChange}
+								/>
+							</div>
+							{predictionListVisible && (
+								<section>
+									{loading && <div>Loading...</div>}
+									<ul className="absolute z-10 list-none bg-white  w-80 md:w-full shadow-lg mt-1">
+										{searchAttempted &&
+											(suggestions.predictions.length > 0 ? (
+												suggestions.predictions.map((suggestion: any) => (
+													<li
+														key={suggestion.place_id}
+														// biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
+														tabIndex={0}
+														className="p-2 hover:bg-gray-100 cursor-pointer text-xs"
+														onClick={() => handleSuggestionClick(suggestion)}
+														onKeyDown={(e) => {
+															if (e.key === "Enter")
+																handleSuggestionClick(suggestion);
+														}}
+													>
+														{suggestion.description}
+													</li>
+												))
+											) : (
+												<li className="p-2">No suggestions found</li>
+											))}
+									</ul>
+								</section>
+							)}
 						</div>
-						{predictionListVisible && (
-							<section>
-								{loading && <div>Loading...</div>}
-								<ul className="absolute z-10 list-none bg-white  w-80 md:w-full shadow-lg mt-1">
-									{searchAttempted &&
-										(suggestions.predictions.length > 0 ? (
-											suggestions.predictions.map((suggestion: any) => (
-												<li
-													key={suggestion.place_id}
-													// biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
-													tabIndex={0}
-													className="p-2 hover:bg-gray-100 cursor-pointer text-xs"
-													onClick={() => handleSuggestionClick(suggestion)}
-													onKeyDown={(e) => {
-														if (e.key === "Enter")
-															handleSuggestionClick(suggestion);
-													}}
-												>
-													{suggestion.description}
-												</li>
-											))
-										) : (
-											<li className="p-2">No suggestions found</li>
-										))}
-								</ul>
-							</section>
+
+						{error && <div className="mt-4 text-red-500">{error}</div>}
+					</div>
+
+					<div>
+						<Label>Additional Address Details</Label>
+						<Textarea
+							value={additionalDetails}
+							onChange={handleAdditionalDetailsChange}
+							cols={3}
+						/>
+					</div>
+				</div>
+
+				<div className="lg:col-span-3 mt-4 lg:mt-0">
+					<div className="w-full max-w-xs lg:max-w-lg mx-auto">
+						{showMap ? (
+							<APIProvider apiKey={envData.google_map_api}>
+								<Map
+									key={`${location.lat}-${location.lng}`} // Changing key forces re-render
+									center={location}
+									zoom={15}
+									gestureHandling={"auto"}
+									zoomControl={false}
+									streetViewControl={false}
+									mapTypeControl={false}
+									fullscreenControl={false}
+									scrollwheel={false}
+									className="w-80  md:w-[500px] h-48 lg:h-64 object-cover"
+								>
+									<Marker position={location} />
+								</Map>
+							</APIProvider>
+						) : (
+							<Image
+								width={600}
+								height={400}
+								className=" h-full object-cover rounded-lg"
+								src={`/blank-map.png`}
+								alt="Default Map"
+							/>
 						)}
 					</div>
 
-					{error && <div className="mt-4 text-red-500">{error}</div>}
-				</div>
-
-				<div>
-					<Label>Additional Address Details</Label>
-					<Textarea
-						value={additionalDetails}
-						onChange={handleAdditionalDetailsChange}
-						cols={3}
-					/>
+					<Button
+						onClick={confirmSelection}
+						variant={`primary`}
+						className={`mt-4`}
+					>
+						Confirm Address
+					</Button>
 				</div>
 			</div>
-
-			<div className={`col-span-2`}>
-				<div className="w-full max-w-xs lg:max-w-lg mx-auto mt-4">
-					{showMap ? (
-						<APIProvider apiKey={envData.google_map_api}>
-							<Map
-								key={`${location.lat}-${location.lng}`} // Changing key forces re-render
-								center={location}
-								zoom={15}
-								gestureHandling={"auto"}
-								zoomControl={false}
-								streetViewControl={false}
-								mapTypeControl={false}
-								fullscreenControl={false}
-								scrollwheel={false}
-								className="w-[500px] h-48 lg:h-64 object-cover"
-							>
-								<Marker position={location} />
-							</Map>
-						</APIProvider>
-					) : (
-						<Image
-							width={600}
-							height={400}
-							className="w-full h-full object-cover rounded-lg"
-							src={`/blank-map.png`}
-							alt="Default Map"
-						/>
-					)}
-				</div>
-
-				<Button
-					onClick={confirmSelection}
-					variant={`primary`}
-					className={`mt-4`}
-				>
-					Confirm Address
-				</Button>
-			</div>
-		</div>
 	);
 }
 
