@@ -24,8 +24,13 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 	const [showMap, setShowMap] = useState(false); // State to control map display
 
 	// Access modal state and actions from useGoogleAddressAtomContext
-	const { modalOpen, setSavedAddress,savedAddress, openModal, handleCloseModal } =
-		useGoogleAddressAtomContext();
+	const {
+		modalOpen,
+		setSavedAddress,
+		savedAddress,
+		openModal,
+		handleCloseModal,
+	} = useGoogleAddressAtomContext();
 
 	const [googleAddress, setGoogleAddress] = useState(""); // Local state for input value
 
@@ -145,11 +150,10 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 	return (
 		<div className="flex-col">
 			<div className="relative">
-
 				<div className="flex items-center gap-x-2">
 					<Input
 						type="text"
-						placeholder={!isDev ? "Asaba Road" : "Auto-complete address"}
+						placeholder={!isDev ? "Asaba Road" : "Search for street , address"}
 						className="w-full"
 						autoComplete="off"
 						value={googleAddress} // Use the saved address from context
@@ -186,7 +190,6 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 			</div>
 
 			{error && <div className="mt-4 text-xs text-red-500">{error}</div>}
-
 		</div>
 	);
 }

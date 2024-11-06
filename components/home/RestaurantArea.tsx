@@ -36,18 +36,20 @@ const RestaurantArea = () => {
 								alt="food"
 								width={550}
 								height={150}
-								className="object-contain"
+								priority
+								className="object-contain w-full h-72"
 							/>
 						</Link>
 					</div>
 					<div className="flex justify-center">
-						<Link href={`/send-package`}>
+						<Link href={`/user/send-package`}>
 							<Image
 								src="/delivery-package.svg"
 								alt="delivery package"
 								width={550}
 								height={150}
-								className="object-contain"
+								className="object-contain w-full h-72"
+								priority
 							/>
 						</Link>
 					</div>

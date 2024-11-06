@@ -129,6 +129,8 @@ function Email() {
 
 			setCurrentStep("login-success");
 
+
+
 			setLoading(false);
 		} catch (error: any) {
 			console.error("Login failed:", error);

@@ -98,7 +98,7 @@ export const RestaurantFormComponent = ({
 				loading={loading}
 				onClick={submitHandler}
 			>
-				{action === "create" ? "New Restaurant" : "Update Restaurant"}
+				{action === "create" ? "Create" : "Update Restaurant"}
 			</Button>
 		</div>
 	);

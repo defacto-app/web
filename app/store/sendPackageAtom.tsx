@@ -17,8 +17,6 @@ export const packagePayloadAtom = atom({
 	description: "",
 	price: "",
 	senderDetails: {
-		fullName: "",
-		phoneNumber: "",
 		pickupTime: null,
 		deliveryAddress: "",
 		deliveryNote: "",

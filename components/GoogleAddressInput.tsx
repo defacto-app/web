@@ -7,10 +7,18 @@ import { $api } from "@/http/endpoints";
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import Image from "next/image";
-import { useGoogleAddressAtomContext } from "@/app/store/addressAtom"; // Use the Pickup Modal Context
+import { useGoogleAddressAtomContext } from "@/app/store/addressAtom";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea"; // Use the Pickup Modal Context
 
 type GoogleAddressInputProps = {
 	onAddressSelect?: (address: string) => void;
+};
+
+// Add this type definition at the top
+type Suggestion = {
+	place_id: string;
+	description: string;
 };
 
 function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
@@ -22,12 +30,9 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 	const [location, setLocation] = useState({ lat: 6.21, lng: 6.74 }); // Default to Asaba
 	const [error, setError] = useState(""); // Error message state
 	const [showMap, setShowMap] = useState(false); // State to control map display
-
-	// Access modal state and actions from useGoogleAddressAtomContext
-	const { modalOpen, setSavedAddress, openModal, handleCloseModal } =
-		useGoogleAddressAtomContext();
-
+	const [additionalDetails, setAdditionalDetails] = useState(""); // State for additional address details
 	const [googleAddress, setGoogleAddress] = useState(""); // Local state for input value
+	const { setSavedAddress, handleCloseModal } = useGoogleAddressAtomContext();
 
 	// Define the geographical boundaries for Asaba
 	const asabaBounds = {
@@ -36,6 +41,32 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 		east: 6.8,
 		west: 6.65,
 	};
+	// Access modal state and actions from useGoogleAddressAtomContext
+
+	// Modified useEffect for loading saved address
+	useEffect(() => {
+		const savedData = localStorage.getItem("selectedAddress");
+		if (savedData) {
+			try {
+				const parsedData = JSON.parse(savedData);
+				if (parsedData.address) {
+					setGoogleAddress(parsedData.address);
+					setAdditionalDetails(parsedData.additionalDetails || "");
+					setHasSelectedAddress(true);
+
+					if (parsedData.location) {
+						setLocation(parsedData.location);
+						setShowMap(true);
+					}
+
+					// Update the context as well
+					setSavedAddress(parsedData.address);
+				}
+			} catch (e) {
+				console.error("Error parsing saved address:", e);
+			}
+		}
+	}, [setSavedAddress]);
 
 	// Custom hook for debouncing
 	function useDebounce<T>(value: T, delay: number): T {
@@ -88,48 +119,50 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 		}
 	};
 
-	const handleSuggestionClick = async (suggestion: any) => {
-		setSavedAddress(suggestion.description); // Update the saved address in context
+	const handleSuggestionClick = async (suggestion: Suggestion) => {
+		setGoogleAddress(suggestion.description);
+		setSavedAddress(suggestion.description);
 		setPredictionListVisible(false);
 		setHasSelectedAddress(true);
 
-		// Fetching the location details using place_id
 		const locationDetails = await $api.guest.location.details(
 			suggestion.place_id,
 		);
 		const { lat, lng } = locationDetails.result.geometry.location;
 		setLocation({ lat, lng });
-
 		setShowMap(true);
 
-		// Check if the location is within Asaba bounds
 		if (
 			lat >= asabaBounds.south &&
 			lat <= asabaBounds.north &&
 			lng >= asabaBounds.west &&
 			lng <= asabaBounds.east
 		) {
-			setError(""); // Clear any previous error
+			setError("");
 
-			// Save the selected address to sessionStorage
+			 // Store full data in localStorage
+			const addressData = {
+				address: suggestion.description,
+				additionalDetails: additionalDetails,
+				location: { lat, lng }
+			};
+			localStorage.setItem("selectedAddress", JSON.stringify(addressData));
 
-			const existingAddresses = JSON.parse(
-				localStorage.getItem("selectedAddresses") || "[]",
-			);
+			// Only store address string in atom
+			setSavedAddress(suggestion.description);
 
-			existingAddresses.push(suggestion.description);
-			localStorage.setItem(
-				"selectedAddresses",
-				JSON.stringify(existingAddresses),
-			);
-
-			handleCloseModal(); // Close the modal after selection
 			if (onAddressSelect) {
 				onAddressSelect(suggestion.description);
 			}
 		} else {
 			setError("The area is not supported");
 		}
+	};
+
+	const handleAdditionalDetailsChange = (e: {
+		target: { value: React.SetStateAction<string> };
+	}) => {
+		setAdditionalDetails(e.target.value); // Update the state for additional address details
 	};
 
 	const handleChange = (e: {
@@ -142,78 +175,129 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 		}
 	};
 
+	const confirmSelection = () => {
+		if (!googleAddress) {
+			setError("Please enter your address");
+			return;
+		}
+
+		if (!hasSelectedAddress) {
+			setError("Please select an address from the suggestions");
+			return;
+		}
+
+		 // Store full data in localStorage
+		const addressData = {
+			address: googleAddress,
+			additionalDetails,
+			location
+		};
+		localStorage.setItem("selectedAddress", JSON.stringify(addressData));
+
+		// Only store address string in atom
+		setSavedAddress(googleAddress);
+
+		handleCloseModal();
+		if (onAddressSelect) {
+			onAddressSelect(googleAddress);
+		}
+	};
+
 	return (
-		<div className="flex-col">
-			<div className="relative">
-				<Label htmlFor="address">Delivery address</Label>
-				<div className="flex items-center gap-x-2">
-					<Input
-						type="text"
-						placeholder={isDev ? "Lifecamp Road" : "Enter your address"}
-						className="w-80 md:w-full"
-						autoComplete="off"
-						value={googleAddress} // Use the saved address from context
-						onChange={handleChange}
+		<div className="grid grid-cols-1 lg:grid-cols-3 gap-x-4">
+			<div>
+				<div>
+					<div className="relative">
+						<Label htmlFor="address">Delivery address</Label>
+						<div className="flex items-center gap-x-2">
+							<Input
+								type="text"
+								placeholder={isDev ? "Lifecamp Road" : "Enter your address"}
+								className="w-80 md:w-full"
+								autoComplete="off"
+								value={googleAddress} // Use the saved address from context
+								onChange={handleChange}
+							/>
+						</div>
+						{predictionListVisible && (
+							<section>
+								{loading && <div>Loading...</div>}
+								<ul className="absolute z-10 list-none bg-white  w-80 md:w-full shadow-lg mt-1">
+									{searchAttempted &&
+										(suggestions.predictions.length > 0 ? (
+											suggestions.predictions.map((suggestion: any) => (
+												<li
+													key={suggestion.place_id}
+													// biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
+													tabIndex={0}
+													className="p-2 hover:bg-gray-100 cursor-pointer text-xs"
+													onClick={() => handleSuggestionClick(suggestion)}
+													onKeyDown={(e) => {
+														if (e.key === "Enter")
+															handleSuggestionClick(suggestion);
+													}}
+												>
+													{suggestion.description}
+												</li>
+											))
+										) : (
+											<li className="p-2">No suggestions found</li>
+										))}
+								</ul>
+							</section>
+						)}
+					</div>
+
+					{error && <div className="mt-4 text-red-500">{error}</div>}
+				</div>
+
+				<div>
+					<Label>Additional Address Details</Label>
+					<Textarea
+						value={additionalDetails}
+						onChange={handleAdditionalDetailsChange}
+						cols={3}
 					/>
 				</div>
-				{predictionListVisible && (
-					<section>
-						{loading && <div>Loading...</div>}
-						<ul className="absolute z-10 list-none bg-white  w-80 md:w-full shadow-lg mt-1">
-							{searchAttempted &&
-								(suggestions.predictions.length > 0 ? (
-									suggestions.predictions.map((suggestion: any) => (
-										<li
-											key={suggestion.place_id}
-											// biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
-											tabIndex={0}
-											className="p-2 hover:bg-gray-100 cursor-pointer"
-											onClick={() => handleSuggestionClick(suggestion)}
-											onKeyDown={(e) => {
-												if (e.key === "Enter")
-													handleSuggestionClick(suggestion);
-											}}
-										>
-											{suggestion.description}
-										</li>
-									))
-								) : (
-									<li className="p-2">No suggestions found</li>
-								))}
-						</ul>
-					</section>
-				)}
 			</div>
 
-			{error && <div className="mt-4 text-red-500">{error}</div>}
+			<div className={`col-span-2`}>
+				<div className="w-full max-w-xs lg:max-w-lg mx-auto mt-4">
+					{showMap ? (
+						<APIProvider apiKey={envData.google_map_api}>
+							<Map
+								key={`${location.lat}-${location.lng}`} // Changing key forces re-render
+								center={location}
+								zoom={15}
+								gestureHandling={"auto"}
+								zoomControl={false}
+								streetViewControl={false}
+								mapTypeControl={false}
+								fullscreenControl={false}
+								scrollwheel={false}
+								className="w-[500px] h-48 lg:h-64 object-cover"
+							>
+								<Marker position={location} />
+							</Map>
+						</APIProvider>
+					) : (
+						<Image
+							width={600}
+							height={400}
+							className="w-full h-full object-cover rounded-lg"
+							src={`/blank-map.png`}
+							alt="Default Map"
+						/>
+					)}
+				</div>
 
-			<div className="w-full max-w-xs lg:max-w-lg mx-auto mt-4">
-				{showMap ? (
-					<APIProvider apiKey={envData.google_map_api}>
-						<Map
-							key={`${location.lat}-${location.lng}`} // Changing key forces re-render
-							center={location}
-							zoom={15}
-							gestureHandling={"auto"}
-							zoomControl={false}
-							streetViewControl={false}
-							mapTypeControl={false}
-							fullscreenControl={false}
-							scrollwheel={false}
-							className="w-full h-48 lg:h-64 object-cover"
-						>
-							<Marker position={location} />
-						</Map>
-					</APIProvider>
-				) : (
-					<Image
-						width={600}
-						height={400}
-						className="w-full h-full object-cover rounded-lg"
-						src={`/blank-map.png`}
-						alt="Default Map"
-					/>
-				)}
+				<Button
+					onClick={confirmSelection}
+					variant={`primary`}
+					className={`mt-4`}
+				>
+					Confirm Address
+				</Button>
 			</div>
 		</div>
 	);

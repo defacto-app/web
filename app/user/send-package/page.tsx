@@ -1,38 +1,56 @@
-"use client"
-import PickUpInformation from "@/components/delivery/PickUpInformation";
+"use client";
 import DeliveryFee from "@/components/user/DeliveryFee";
 import ReceiverInfo from "@/components/user/ReceiverInfo";
 import DropOffInformation from "@/components/delivery/DropOffInformation";
 import WelcomeUser from "@/components/user/WelcomeUser";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import DateTimePicker from "@/components/user/DateTimePicker";
+import GoogleAutoComplete from "@/components/GoogleAutoComplete";
+import { useAtom } from "jotai/index";
+import { packagePayloadAtom } from "@/app/store/sendPackageAtom";
 
 export default function Page() {
-	const [payload, setPayload] = React.useState({
-		deliveryDetails: {
-			pickup: {
-				address: "Lifecamp Road",
-				date: "YYYY-MM-DD",
-				time: "HH:MM",
+	const [packagePayload, setPackagePayload] = useAtom(packagePayloadAtom);
+	const [pickupDate, setPickupDate] = useState(new Date());
+
+	const handleInputChange = (e: { target: any }) => {
+		const { name, value } = e.target;
+		setPackagePayload((prev) => ({
+			...prev,
+			senderDetails: {
+				...prev.senderDetails,
+				[name]: value,
 			},
-			dropOff: {
-				address: "",
-				date: "YYYY-MM-DD",
-				time: "HH:MM",
+		}));
+	};
+
+	const setDropOffAddress = (e: { target: any }) => {
+		const { name, value } = e.target;
+		setPackagePayload((prev) => ({
+			...prev,
+			receiverDetails: {
+				...prev.receiverDetails,
+				[name]: value,
 			},
-		},
-		senderInformation: {
-			useAccountInformation: true,
-			fullName: "Olusegun Obasanjo",
-			phoneNumber: "+234XXXXXXXXXX",
-		},
-		receiverInformation: {
-			fullName: "Receiver Name",
-			phoneNumber: "+234XXXXXXXXXX",
-			modeOfDelivery: "Car",
-			additionalInformation: "Knock 3 times on the gate!",
-		},
-		deliveryFee: 0.0,
-	});
+		}));
+	};
+
+	const handleDateSelect = (selectedDate: any) => {
+		setPickupDate(selectedDate);
+		setPackagePayload((prev) => ({
+			...prev,
+			senderDetails: {
+				...prev.senderDetails,
+				pickupTime: selectedDate,
+			},
+		}));
+	};
+
+	useEffect(() => {
+		console.log(packagePayload);
+	}, [packagePayload]);
 
 	return (
 		<div>
@@ -47,19 +65,64 @@ export default function Page() {
 				</h1>
 				<div className=" lg:grid lg:grid-cols-3  items-start">
 					<div>
-						<PickUpInformation />
+						<div className="container mx-auto p-2 ">
+							<div className="container mx-auto px-4  space-y-4">
+								<div>
+									<Label className={`font-bold text-lg`}>
+										What do you need to transport ?
+									</Label>
+									<Textarea
+										placeholder={`briefly describe the item`}
+										rows={7}
+										value={packagePayload.description}
+									/>
+								</div>
+
+								<div>
+									<Label>Pickup Time</Label>
+									<DateTimePicker
+										showTimeSelect={true}
+										selected={pickupDate}
+										onSelect={handleDateSelect}
+									/>
+								</div>
+
+								<div>
+									<Label htmlFor="address">Pickup address</Label>
+
+									<GoogleAutoComplete
+										onAddressSelect={(address) =>
+											handleInputChange({
+												target: { name: "deliveryAddress", value: address },
+											})
+										}
+									/>
+								</div>
+
+								<div className="mb-4">
+									<Label htmlFor="address">Drop Off address</Label>
+
+									<GoogleAutoComplete
+										onAddressSelect={(address) =>
+											setDropOffAddress({
+												target: { name: "deliveryAddress", value: address },
+											})
+										}
+									/>
+								</div>
+
+								<div>
+									<Label>Additional Address Details</Label>
+									<Textarea
+										placeholder={`Enter building name, house number, floor, and any nearby landmarks`}
+										value={packagePayload.receiverDetails.addressNotes}
+									/>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div>
 						<DropOffInformation />
-					</div>
-					<div>
-						<ReceiverInfo />
-					</div>
-				</div>
-				<div className="grid grid-cols-5">
-					<div className="col-span-2"></div>
-					<div className="col-span-3">
-						<DeliveryFee />
 					</div>
 				</div>
 			</div>

@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
 
         // If user is not authenticated, redirect to the home page
         if (!isAuthenticatedUser) {
-            return NextResponse.redirect(new URL('/', request.url));
+            return NextResponse.redirect(new URL('/auth/login', request.url));
         }
     }
 

@@ -63,20 +63,33 @@ export default function FoodHero2() {
                 }}/>
         </div>
     ));
-    const [selectedAddress, setSelectedAddress] = useState("");
-    const handleAddressSelect = (address: string) => {
-        setSelectedAddress(address);
+    const [selectedAddress, setSelectedAddress] = useState<{
+        address: string;
+        additionalDetails: string;
+        location: { lat: number; lng: number };
+    } | null>(null);
 
+    const handleAddressSelect = (address: string) => {
+        setSelectedAddress({
+            address,
+            additionalDetails: "",
+            location: { lat: 0, lng: 0 }
+        });
     };
 
-    // get address from local storage
-
     useEffect(() => {
-        const savedAddresses = JSON.parse(localStorage.getItem('selectedAddresses') || '[]');
-        const lastAddress = savedAddresses.length > 0 ? savedAddresses[savedAddresses.length - 1] : "";
-        setSelectedAddress(lastAddress);
-        setSavedAddress(lastAddress); // Update the context with the last address
+        const savedData = localStorage.getItem('selectedAddress');
+        if (savedData) {
+            try {
+                const parsedAddress = JSON.parse(savedData);
+                setSelectedAddress(parsedAddress.address);
+                setSavedAddress(parsedAddress.address);
+            } catch (e) {
+                console.error('Error parsing saved address:', e);
+            }
+        }
     }, [setSavedAddress]);
+
     return (
         <div className="">
             <div className="flex flex-col lg:flex-row items-center justify-between">
@@ -100,18 +113,8 @@ export default function FoodHero2() {
                         deliver, you enjoy.
                     </p>
                     <div>
-                        {JSON.stringify(selectedAddress)}
-                        <AddressSelectorModal handleOnSelect={handleAddressSelect}/>
-
+                    <AddressSelectorModal handleOnSelect={handleAddressSelect} />
                     </div>
-{/*
-                    <div>
-                        {savedAddress ? (
-                            <p>Selected Address: {savedAddress}</p>
-                        ) : (
-                            <AddressSelectorModal handleOnSelect={handleAddressSelect}/>
-                        )}
-                    </div>*/}
                 </div>
 
                 <div className="relative bg-primary-900 lg:rounded-tl-full lg:w-1/2 w-full">
