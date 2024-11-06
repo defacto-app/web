@@ -18,15 +18,21 @@ export const packagePayloadAtom = atom({
 	price: "",
 	senderDetails: {
 		pickupTime: null,
-		deliveryAddress: "",
-		deliveryNote: "",
-		addressNotes: "",
+		address: {
+			address: "",
+			additionalDetails: "",
+			location: { lat: 0, lng: 0 },
+		},
 	},
 	receiverDetails: {
 		fullName: "",
 		phoneNumber: "",
 		deliveryNote: "",
-		addressNotes: "",
+		address: {
+			address: "",
+			additionalDetails: "",
+			location: { lat: 0, lng: 0 },
+		},
 	},
 });
 

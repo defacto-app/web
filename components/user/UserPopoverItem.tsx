@@ -23,7 +23,7 @@ export default function UserPopoverItem() {
 		const data = await fetch(`/api/auth/logout`);
 
 		router.push("/");
-		logOut();
+		await logOut();
 
 		setModalOpen(false);
 	}

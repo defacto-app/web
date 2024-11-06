@@ -1,8 +1,5 @@
 "use client";
-import DeliveryFee from "@/components/user/DeliveryFee";
-import ReceiverInfo from "@/components/user/ReceiverInfo";
 import DropOffInformation from "@/components/delivery/DropOffInformation";
-import WelcomeUser from "@/components/user/WelcomeUser";
 import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,10 +7,27 @@ import DateTimePicker from "@/components/user/DateTimePicker";
 import GoogleAutoComplete from "@/components/GoogleAutoComplete";
 import { useAtom } from "jotai/index";
 import { packagePayloadAtom } from "@/app/store/sendPackageAtom";
+import GoogleAddressInput from "@/components/GoogleAddressInput";
+import {
+	AlertDialog,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+	AlertDialogAction,
+	AlertDialogFooter,
+	AlertDialogCancel,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 export default function Page() {
 	const [packagePayload, setPackagePayload] = useAtom(packagePayloadAtom);
 	const [pickupDate, setPickupDate] = useState(new Date());
+
+	const [modalOpen, setModalOpen] = useState(false);
 
 	const handleInputChange = (e: { target: any }) => {
 		const { name, value } = e.target;
@@ -26,16 +40,7 @@ export default function Page() {
 		}));
 	};
 
-	const setDropOffAddress = (e: { target: any }) => {
-		const { name, value } = e.target;
-		setPackagePayload((prev) => ({
-			...prev,
-			receiverDetails: {
-				...prev.receiverDetails,
-				[name]: value,
-			},
-		}));
-	};
+
 
 	const handleDateSelect = (selectedDate: any) => {
 		setPickupDate(selectedDate);
@@ -48,6 +53,43 @@ export default function Page() {
 		}));
 	};
 
+	const setPickupAddress = (address: {
+		address: string;
+		additionalDetails: string;
+		location: { lat: number; lng: number };
+	}) => {
+		setPackagePayload((prev) => ({
+			...prev,
+			senderDetails: {
+				...prev.senderDetails,
+				address: {
+					address: address.address,
+					additionalDetails: address.additionalDetails,
+					location: address.location,
+				},
+			},
+		}));
+	};
+
+
+	const setDropOffAddress = (address: {
+		address: string;
+		additionalDetails: string;
+		location: { lat: number; lng: number };
+	}) => {
+		setPackagePayload((prev) => ({
+			...prev,
+			receiverDetails: {
+				...prev.receiverDetails,
+				address: {
+					address: address.address,
+					additionalDetails: address.additionalDetails,
+					location: address.location,
+				},
+			},
+		}));
+	}
+
 	useEffect(() => {
 		console.log(packagePayload);
 	}, [packagePayload]);
@@ -55,11 +97,6 @@ export default function Page() {
 	return (
 		<div>
 			<div className="container mx-auto px-4">
-				{/* <div className='w-full bg-primary-600'>
-      <WelcomeUser/>
-
-      </div> */}
-
 				<h1 className="text-start px-1 py-4 text-primary-600 text-3xl font-bold mt-5">
 					Send Package
 				</h1>
@@ -90,33 +127,65 @@ export default function Page() {
 								<div>
 									<Label htmlFor="address">Pickup address</Label>
 
-									<GoogleAutoComplete
-										onAddressSelect={(address) =>
-											handleInputChange({
-												target: { name: "deliveryAddress", value: address },
-											})
-										}
-									/>
+									<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
+										<AlertDialogTrigger asChild>
+											<div>
+												<Input
+													onClick={() => setModalOpen(true)}
+													value={packagePayload.senderDetails.address.address}
+												/>
+
+											</div>
+										</AlertDialogTrigger>
+										<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
+											<button
+												type="button"
+												onClick={() => setModalOpen(false)}
+												className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
+											>
+												<X className="w-4 h-4" />
+											</button>
+											<div className={`mt-8`}>
+												<GoogleAddressInput
+															onConfirm={() => setModalOpen(false)}
+													onAddressSelect={setPickupAddress}
+													shouldSaveToLocalStorage={false} // Set to false for pickup/drop-off where you don't want to save
+												/>
+											</div>
+										</AlertDialogContent>
+									</AlertDialog>
 								</div>
 
 								<div className="mb-4">
 									<Label htmlFor="address">Drop Off address</Label>
 
-									<GoogleAutoComplete
-										onAddressSelect={(address) =>
-											setDropOffAddress({
-												target: { name: "deliveryAddress", value: address },
-											})
-										}
-									/>
-								</div>
+									<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
+										<AlertDialogTrigger asChild>
+											<div>
+												<Input
+													onClick={() => setModalOpen(true)}
+													value={packagePayload.receiverDetails.address.address}
+												/>
 
-								<div>
-									<Label>Additional Address Details</Label>
-									<Textarea
-										placeholder={`Enter building name, house number, floor, and any nearby landmarks`}
-										value={packagePayload.receiverDetails.addressNotes}
-									/>
+											</div>
+										</AlertDialogTrigger>
+										<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
+											<button
+												type="button"
+												onClick={() => setModalOpen(false)}
+												className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
+											>
+												<X className="w-4 h-4" />
+											</button>
+											<div className={`mt-8`}>
+												<GoogleAddressInput
+															onConfirm={() => setModalOpen(false)}
+													onAddressSelect={setDropOffAddress}
+													shouldSaveToLocalStorage={false} // Set to false for pickup/drop-off where you don't want to save
+												/>
+											</div>
+										</AlertDialogContent>
+									</AlertDialog>
 								</div>
 							</div>
 						</div>

@@ -56,11 +56,14 @@ export const goBackAtom = atom(null, (get, set) => {
 	}
 });
 
-// Define a derived atom to handle `logOut` function
-export const logOutAtom = atom(null, (get, set) => {
+export const logOutAtom = atom(null, async (get, set) => {
 	clearToken("user");
 	set(isLoggedInAtom, false);
+	set(authUserAtom, { firstName: "", email: "", phoneNumber: "", address: "" }); // Reset user data
 	localStorage.setItem("isLoggedIn", JSON.stringify(false));
+	set(currentStepAtom, authSteps[0]); // Optionally reset the step to "welcome"
+	set(modalOpenAtom, false); // Close any open modals
+	const data = await fetch(`/api/auth/logout`);
 });
 
 // Create the hook to use the atoms in components
@@ -89,17 +92,22 @@ export const useAtomAuthContext = () => {
 			setAuthUser(data.user);
 		} catch (error) {
 			setIsLoggedIn(false);
-
+			logOut();
 			clearToken("user");
+			const loggedIn = isUserLoggedIn();
+			console.log("ping failed", loggedIn);
 
 			// Handle error (e.g., log the user out or display a message)
 		}
-	}, [setAuthUser, setIsLoggedIn]);
+	}, [setAuthUser, logOut, setIsLoggedIn]);
 
 	useEffect(() => {
 		const loggedIn = isUserLoggedIn();
+		if (!loggedIn && isLoggedIn) {
+			logOut(); // Immediately log out if there's an inconsistency
+		}
 		setIsLoggedIn(loggedIn);
-	}, [setIsLoggedIn]);
+	}, [setIsLoggedIn, logOut, isLoggedIn]);
 
 	return {
 		form,

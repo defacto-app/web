@@ -11,9 +11,7 @@ import { useGoogleAddressAtomContext } from "@/app/store/addressAtom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea"; // Use the Pickup Modal Context
 
-type GoogleAddressInputProps = {
-	onAddressSelect?: (address: string) => void;
-};
+
 
 // Add this type definition at the top
 type Suggestion = {
@@ -21,7 +19,17 @@ type Suggestion = {
 	description: string;
 };
 
-function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
+type GoogleAddressInputProps = {
+	onAddressSelect?: (address: {
+		address: string;
+		additionalDetails: string;
+		location: { lat: number; lng: number };
+	}) => void;
+	shouldSaveToLocalStorage?: boolean; // New prop to control localStorage saving
+	onConfirm?: () => void; // New prop to notify parent on confirm
+};
+
+function GoogleAddressInput({ onAddressSelect,shouldSaveToLocalStorage,onConfirm }: GoogleAddressInputProps) {
 	const [suggestions, setSuggestions] = useState({ predictions: [] });
 	const [loading, setLoading] = useState(false);
 	const [searchAttempted, setSearchAttempted] = useState(false);
@@ -45,6 +53,7 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 
 	// Modified useEffect for loading saved address
 	useEffect(() => {
+		if (shouldSaveToLocalStorage) {
 		const savedData = localStorage.getItem("selectedAddress");
 		if (savedData) {
 			try {
@@ -65,6 +74,7 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 			} catch (e) {
 				console.error("Error parsing saved address:", e);
 			}
+		}
 		}
 	}, [setSavedAddress]);
 
@@ -146,13 +156,20 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 				additionalDetails: additionalDetails,
 				location: { lat, lng }
 			};
-			localStorage.setItem("selectedAddress", JSON.stringify(addressData));
 
+			// Conditionally save to localStorage
+			if (shouldSaveToLocalStorage) {
+				localStorage.setItem("selectedAddress", JSON.stringify(addressData));
+			}
 			// Only store address string in atom
 			setSavedAddress(suggestion.description);
 
 			if (onAddressSelect) {
-				onAddressSelect(suggestion.description);
+				onAddressSelect({
+					address: suggestion.description,
+					additionalDetails,
+					location: { lat, lng },
+				});
 			}
 		} else {
 			setError("The area is not supported");
@@ -192,15 +209,23 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 			additionalDetails,
 			location
 		};
-		localStorage.setItem("selectedAddress", JSON.stringify(addressData));
+
+		// Save to localStorage only if shouldSaveToLocalStorage is true
+		if (shouldSaveToLocalStorage) {
+			localStorage.setItem("selectedAddress", JSON.stringify(addressData));
+		}
+
 
 		// Only store address string in atom
 		setSavedAddress(googleAddress);
 
 		handleCloseModal();
 		if (onAddressSelect) {
-			onAddressSelect(googleAddress);
+			onAddressSelect(addressData);
 		}
+		if (onConfirm) {
+			onConfirm(); // Notify parent component
+	}
 	};
 
 	return (
