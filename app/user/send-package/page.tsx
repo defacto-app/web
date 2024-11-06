@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import DateTimePicker from "@/components/user/DateTimePicker";
 import GoogleAutoComplete from "@/components/GoogleAutoComplete";
 import { useAtom } from "jotai/index";
-import { packagePayloadAtom } from "@/app/store/sendPackageAtom";
+import {distanceAtom, packagePayloadAtom} from "@/app/store/sendPackageAtom";
 import GoogleAddressInput from "@/components/GoogleAddressInput";
 import {
 	AlertDialog,
@@ -90,9 +90,7 @@ export default function Page() {
 		}));
 	}
 
-	useEffect(() => {
-		console.log(packagePayload);
-	}, [packagePayload]);
+
 
 	return (
 		<div>
@@ -125,14 +123,16 @@ export default function Page() {
 								</div>
 
 								<div>
+									{JSON.stringify(distanceAtom)}
 									<Label htmlFor="address">Pickup address</Label>
+
 
 									<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
 										<AlertDialogTrigger asChild>
 											<div>
 												<Input
 													onClick={() => setModalOpen(true)}
-													value={packagePayload.senderDetails.address.address}
+													value={packagePayload.receiverDetails.address.address}
 												/>
 
 											</div>
@@ -164,7 +164,7 @@ export default function Page() {
 											<div>
 												<Input
 													onClick={() => setModalOpen(true)}
-													value={packagePayload.receiverDetails.address.address}
+													value={packagePayload.senderDetails.address.address}
 												/>
 
 											</div>
@@ -198,3 +198,33 @@ export default function Page() {
 		</div>
 	);
 }
+
+
+type ReusableAlertDialogProps = {
+	open: boolean;
+	onClose: () => void;
+	children: React.ReactNode;
+	trigger: React.ReactNode;
+};
+
+const ReusableAlertDialog: React.FC<ReusableAlertDialogProps> = ({ open, onClose, children, trigger }) => {
+	return (
+			<AlertDialog defaultOpen={open} open={open}>
+					<AlertDialogTrigger asChild>
+							{trigger}
+					</AlertDialogTrigger>
+					<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
+							<button
+									type="button"
+									onClick={onClose}
+									className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
+							>
+									<X className="w-4 h-4" />
+							</button>
+							<div className={`mt-8`}>
+									{children}
+							</div>
+					</AlertDialogContent>
+			</AlertDialog>
+	);
+};
