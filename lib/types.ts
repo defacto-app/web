@@ -78,3 +78,13 @@ export interface MenuItemType {
   slug: string;
   updatedAt: string;
 }
+
+export interface addressSelectionType {
+
+  location: {
+    lat: number;
+    lng: number;
+  },
+    address: string;
+    additionalDetails: string;
+}

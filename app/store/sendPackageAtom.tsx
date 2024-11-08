@@ -1,15 +1,5 @@
 import { atom } from "jotai";
 
-export const manualAddressAtom = atom({
-	flat_number: "",
-	floor_number: "",
-	building_name: "",
-	street_address: "",
-	city: "Asaba",
-	state: "Delta",
-	postal_code: "",
-	note: "",
-});
 
 export const packagePayloadAtom = atom({
 	packageType: "",
@@ -36,10 +26,26 @@ export const packagePayloadAtom = atom({
 	},
 });
 
-export const setAddressAtom = atom(null, (get, set, updatedAddress) => {
-	if (typeof updatedAddress === "object" && updatedAddress !== null) {
-		set(manualAddressAtom, { ...get(manualAddressAtom), ...updatedAddress });
-	} else {
-		console.error("Updated address must be an object");
-	}
+// New atom to calculate distance using Haversine formula
+export const distanceAtom = atom((get) => {
+	const { senderDetails, receiverDetails } = get(packagePayloadAtom);
+	const { lat: lat1, lng: lon1 } = senderDetails.address.location;
+	const { lat: lat2, lng: lon2 } = receiverDetails.address.location;
+
+	// Haversine formula
+	const toRadians = (degrees:any) => degrees * (Math.PI / 180);
+	const R = 6371; // Radius of Earth in kilometers
+
+	const dLat = toRadians(lat2 - lat1);
+	const dLon = toRadians(lon2 - lon1);
+	const a =
+		Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+		Math.cos(toRadians(lat1)) *
+		Math.cos(toRadians(lat2)) *
+		Math.sin(dLon / 2) *
+		Math.sin(dLon / 2);
+	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	const distance = R * c;
+
+	return distance; // Distance in kilometers
 });

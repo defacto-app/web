@@ -6,27 +6,19 @@ import { Textarea } from "@/components/ui/textarea";
 import DateTimePicker from "@/components/user/DateTimePicker";
 import GoogleAutoComplete from "@/components/GoogleAutoComplete";
 import { useAtom } from "jotai/index";
-import {distanceAtom, packagePayloadAtom} from "@/app/store/sendPackageAtom";
+import { distanceAtom, packagePayloadAtom } from "@/app/store/sendPackageAtom";
 import GoogleAddressInput from "@/components/GoogleAddressInput";
 import {
 	AlertDialog,
 	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogHeader,
-	AlertDialogTitle,
 	AlertDialogTrigger,
-	AlertDialogAction,
-	AlertDialogFooter,
-	AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { X } from "lucide-react";
 
 export default function Page() {
 	const [packagePayload, setPackagePayload] = useAtom(packagePayloadAtom);
 	const [pickupDate, setPickupDate] = useState(new Date());
-
 	const [modalOpen, setModalOpen] = useState(false);
 
 	const handleInputChange = (e: { target: any }) => {
@@ -39,8 +31,6 @@ export default function Page() {
 			},
 		}));
 	};
-
-
 
 	const handleDateSelect = (selectedDate: any) => {
 		setPickupDate(selectedDate);
@@ -71,7 +61,6 @@ export default function Page() {
 		}));
 	};
 
-
 	const setDropOffAddress = (address: {
 		address: string;
 		additionalDetails: string;
@@ -88,9 +77,17 @@ export default function Page() {
 				},
 			},
 		}));
-	}
+	};
 
-
+	const handleAddressSelect = (address: any, type: "pickup" | "dropoff") => {
+		if (type === "pickup") {
+			setPickupAddress(address);
+		} else {
+			setDropOffAddress(address);
+		}
+		// Optionally save to localStorage
+		localStorage.setItem(`${type}Address`, JSON.stringify(address));
+	};
 
 	return (
 		<div>
@@ -126,15 +123,13 @@ export default function Page() {
 									{JSON.stringify(distanceAtom)}
 									<Label htmlFor="address">Pickup address</Label>
 
-
 									<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
 										<AlertDialogTrigger asChild>
 											<div>
 												<Input
 													onClick={() => setModalOpen(true)}
-													value={packagePayload.receiverDetails.address.address}
+													value={packagePayload.senderDetails.address.address}
 												/>
-
 											</div>
 										</AlertDialogTrigger>
 										<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
@@ -147,9 +142,10 @@ export default function Page() {
 											</button>
 											<div className={`mt-8`}>
 												<GoogleAddressInput
-															onConfirm={() => setModalOpen(false)}
-													onAddressSelect={setPickupAddress}
-													shouldSaveToLocalStorage={false} // Set to false for pickup/drop-off where you don't want to save
+													onConfirm={() => setModalOpen(false)}
+													onAddressSelect={(address) =>
+														handleAddressSelect(address, "pickup")
+													}
 												/>
 											</div>
 										</AlertDialogContent>
@@ -164,9 +160,8 @@ export default function Page() {
 											<div>
 												<Input
 													onClick={() => setModalOpen(true)}
-													value={packagePayload.senderDetails.address.address}
+													value={packagePayload.receiverDetails.address.address}
 												/>
-
 											</div>
 										</AlertDialogTrigger>
 										<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
@@ -179,9 +174,10 @@ export default function Page() {
 											</button>
 											<div className={`mt-8`}>
 												<GoogleAddressInput
-															onConfirm={() => setModalOpen(false)}
-													onAddressSelect={setDropOffAddress}
-													shouldSaveToLocalStorage={false} // Set to false for pickup/drop-off where you don't want to save
+													onConfirm={() => setModalOpen(false)}
+													onAddressSelect={(address) =>
+														handleAddressSelect(address, "dropoff")
+													}
 												/>
 											</div>
 										</AlertDialogContent>
@@ -198,33 +194,3 @@ export default function Page() {
 		</div>
 	);
 }
-
-
-type ReusableAlertDialogProps = {
-	open: boolean;
-	onClose: () => void;
-	children: React.ReactNode;
-	trigger: React.ReactNode;
-};
-
-const ReusableAlertDialog: React.FC<ReusableAlertDialogProps> = ({ open, onClose, children, trigger }) => {
-	return (
-			<AlertDialog defaultOpen={open} open={open}>
-					<AlertDialogTrigger asChild>
-							{trigger}
-					</AlertDialogTrigger>
-					<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
-							<button
-									type="button"
-									onClick={onClose}
-									className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
-							>
-									<X className="w-4 h-4" />
-							</button>
-							<div className={`mt-8`}>
-									{children}
-							</div>
-					</AlertDialogContent>
-			</AlertDialog>
-	);
-};

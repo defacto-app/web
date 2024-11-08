@@ -1,25 +1,40 @@
-import * as React from "react"
-
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+	extends React.InputHTMLAttributes<HTMLInputElement>,
+		VariantProps<typeof inputVariants> {}
+
+const inputVariants = cva(
+	"flex h-10 w-full px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none dark:placeholder:text-slate-400 disabled:cursor-not-allowed disabled:opacity-50",
+	{
+		variants: {
+			variant: {
+				default:
+					"rounded-md border border-slate-300 bg-white ring-offset-white dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950",
+				line:
+					"border-0 border-b border-slate-300 bg-transparent focus-visible:border-b-primary-600 focus-visible:ring-0 dark:border-slate-800 dark:focus-visible:border-b-slate-300",
+			},
+		},
+		defaultVariants: {
+			variant: "default",
+		},
+	},
+);
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
-    return (
-      <input
-        type={type}
-        className={cn(
-          "flex h-10 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300",
-          className
-        )}
-        ref={ref}
-        {...props}
-      />
-    )
-  }
-)
-Input.displayName = "Input"
+	({ className, variant, ...props }, ref) => {
+		return (
+			<input
+				className={cn(inputVariants({ variant }), className)}
+				ref={ref}
+				{...props}
+			/>
+		);
+	},
+);
 
-export { Input }
+Input.displayName = "Input";
+
+export { Input, inputVariants };
