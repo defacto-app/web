@@ -15,78 +15,56 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
+import type { addressSelectionType } from "@/lib/types";
 
 export default function Page() {
-	const [packagePayload, setPackagePayload] = useAtom(packagePayloadAtom);
-	const [pickupDate, setPickupDate] = useState(new Date());
 	const [modalOpen, setModalOpen] = useState(false);
 
-	const handleInputChange = (e: { target: any }) => {
-		const { name, value } = e.target;
-		setPackagePayload((prev) => ({
-			...prev,
+	const [payload, setPayload] = useState({
+		description: "",
+		pickupDate: new Date(),
+		senderDetails: {
+			address: {
+				address: "",
+				additionalDetails: "",
+				location: { lat: 0, lng: 0 },
+			},
+		},
+	});
+
+	const handleDateSelect = (date: Date) => {
+		setPayload({
+			...payload,
+			pickupDate: date,
+		});
+	};
+
+	const [dropOffAddress, setDropOffAddress] = useState<addressSelectionType>({
+		location: { lat: 6.21, lng: 6.74 },
+		address: "",
+		additionalDetails: "",
+	});
+
+	const getSavedPickupAddress = () => {
+		const savedData = localStorage.getItem("pickupAddress");
+		return savedData ? JSON.parse(savedData) : null;
+	};
+
+	const setPickupAddress = (addressData: addressSelectionType) => {
+		localStorage.setItem("pickupAddress", JSON.stringify(addressData));
+
+		setPayload({
+			...payload,
 			senderDetails: {
-				...prev.senderDetails,
-				[name]: value,
+				...payload.senderDetails,
+				address: addressData,
 			},
-		}));
+		});
 	};
 
-	const handleDateSelect = (selectedDate: any) => {
-		setPickupDate(selectedDate);
-		setPackagePayload((prev) => ({
-			...prev,
-			senderDetails: {
-				...prev.senderDetails,
-				pickupTime: selectedDate,
-			},
-		}));
-	};
-
-	const setPickupAddress = (address: {
-		address: string;
-		additionalDetails: string;
-		location: { lat: number; lng: number };
-	}) => {
-		setPackagePayload((prev) => ({
-			...prev,
-			senderDetails: {
-				...prev.senderDetails,
-				address: {
-					address: address.address,
-					additionalDetails: address.additionalDetails,
-					location: address.location,
-				},
-			},
-		}));
-	};
-
-	const setDropOffAddress = (address: {
-		address: string;
-		additionalDetails: string;
-		location: { lat: number; lng: number };
-	}) => {
-		setPackagePayload((prev) => ({
-			...prev,
-			receiverDetails: {
-				...prev.receiverDetails,
-				address: {
-					address: address.address,
-					additionalDetails: address.additionalDetails,
-					location: address.location,
-				},
-			},
-		}));
-	};
-
-	const handleAddressSelect = (address: any, type: "pickup" | "dropoff") => {
-		if (type === "pickup") {
-			setPickupAddress(address);
-		} else {
-			setDropOffAddress(address);
-		}
-		// Optionally save to localStorage
-		localStorage.setItem(`${type}Address`, JSON.stringify(address));
+	const handlePickupAddressConfirm = (addressData: addressSelectionType) => {
+		setPickupAddress(addressData);
+		setModalOpen(false);
 	};
 
 	return (
@@ -106,7 +84,7 @@ export default function Page() {
 									<Textarea
 										placeholder={`briefly describe the item`}
 										rows={7}
-										value={packagePayload.description}
+										value={payload.description}
 									/>
 								</div>
 
@@ -114,7 +92,7 @@ export default function Page() {
 									<Label>Pickup Time</Label>
 									<DateTimePicker
 										showTimeSelect={true}
-										selected={pickupDate}
+										selected={payload.pickupDate}
 										onSelect={handleDateSelect}
 									/>
 								</div>
@@ -128,11 +106,11 @@ export default function Page() {
 											<div>
 												<Input
 													onClick={() => setModalOpen(true)}
-													value={packagePayload.senderDetails.address.address}
+													value={payload.senderDetails.address.address}
 												/>
 											</div>
 										</AlertDialogTrigger>
-										<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
+										<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4 bg-red-100">
 											<button
 												type="button"
 												onClick={() => setModalOpen(false)}
@@ -140,12 +118,15 @@ export default function Page() {
 											>
 												<X className="w-4 h-4" />
 											</button>
-											<div className={`mt-8`}>
+											<div className={`mt-8 bg-red-100`}>
 												<GoogleAddressInput
-													onConfirm={() => setModalOpen(false)}
-													onAddressSelect={(address) =>
-														handleAddressSelect(address, "pickup")
+													initialAddress={payload.senderDetails.address.address}
+													initialLocation={
+														payload.senderDetails.address.location
 													}
+													onConfirm={handlePickupAddressConfirm}
+													getSavedAddress={getSavedPickupAddress}
+													setSavedAddress={setPickupAddress}
 												/>
 											</div>
 										</AlertDialogContent>
@@ -155,7 +136,7 @@ export default function Page() {
 								<div className="mb-4">
 									<Label htmlFor="address">Drop Off address</Label>
 
-									<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
+									{/*	<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
 										<AlertDialogTrigger asChild>
 											<div>
 												<Input
@@ -179,9 +160,18 @@ export default function Page() {
 														handleAddressSelect(address, "dropoff")
 													}
 												/>
+
+												<GoogleAddressInput
+													initialAddress={savedAddress?.address || ""}
+													initialLocation={savedAddress?.location || location}
+													onConfirm={handleAddressConfirm}
+													onAddressSelect={handleOnSelect}
+													getSavedAddress={getSavedAddress}
+													setSavedAddress={setSavedAddress}
+												/>
 											</div>
 										</AlertDialogContent>
-									</AlertDialog>
+									</AlertDialog>*/}
 								</div>
 							</div>
 						</div>

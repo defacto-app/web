@@ -21,7 +21,7 @@ type PickupModalProps = {
 function AddressSelectorModal({
 	title = "Add a delivery address",
 }: PickupModalProps) {
-	const [savedAddress, setSavedAddressState] = useState<addressSelectionType>({
+	const [deliveryAddress, setDeliveryAddress] = useState<addressSelectionType>({
 		location: { lat: 6.21, lng: 6.74 },
 		address: "",
 		additionalDetails: "",
@@ -34,7 +34,7 @@ function AddressSelectorModal({
 
 	const setSavedAddress = (addressData: addressSelectionType) => {
 		localStorage.setItem("selectedAddress", JSON.stringify(addressData));
-		setSavedAddressState(addressData);
+		setDeliveryAddress(addressData);
 	};
 
 	// Handle confirmation action when address is confirmed
@@ -50,7 +50,7 @@ function AddressSelectorModal({
 	useEffect(() => {
 		const savedData = getSavedAddress();
 		if (savedData) {
-			setSavedAddressState(savedData);
+			setDeliveryAddress(savedData);
 		}
 	}, []);
 
@@ -60,7 +60,7 @@ function AddressSelectorModal({
 			<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
 				<AlertDialogTrigger asChild>
 					<div>
-						{savedAddress ? (
+						{deliveryAddress ? (
 							<div className={`flex flex-col gap-2`}>
 								<span className="text-blue-500 text-sm lg:hidden">
 									Deliver Here:
@@ -77,7 +77,7 @@ function AddressSelectorModal({
 											Deliver Here:
 										</span>
 										<span className="truncate ml-1">
-											{savedAddress.address || "What's your address ?"}
+											{deliveryAddress.address || "What's your address ?"}
 										</span>
 									</div>
 
@@ -92,7 +92,7 @@ function AddressSelectorModal({
 									}}
 									type="text"
 									placeholder={
-										savedAddress ? savedAddress : "What's your address ?"
+										deliveryAddress ? deliveryAddress : "What's your address ?"
 									}
 								/>
 								<Button
@@ -127,8 +127,8 @@ function AddressSelectorModal({
 					<div className="absolute top-20 px-10">
 						<div className="flex items-center">
 							<GoogleAddressInput
-								initialAddress={savedAddress?.address || ""}
-								initialLocation={savedAddress?.location || location}
+								initialAddress={deliveryAddress?.address || ""}
+								initialLocation={deliveryAddress?.location || location}
 								onConfirm={handleAddressConfirm}
 								getSavedAddress={getSavedAddress}
 								setSavedAddress={setSavedAddress}
