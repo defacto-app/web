@@ -26,7 +26,6 @@ function AddressSelectorModal({
 		address: "",
 		additionalDetails: "",
 	});
-	const [location, setLocation] = useState({ lat: 6.21, lng: 6.74 });
 
 	const getSavedAddress = () => {
 		const savedData = localStorage.getItem("selectedAddress");
@@ -39,18 +38,14 @@ function AddressSelectorModal({
 	};
 
 	// Handle confirmation action when address is confirmed
-	const handleAddressConfirm = () => {
-		console.log("Address confirmed");
+	const handleAddressConfirm = (addressData: addressSelectionType) => {
 		// close the modal
+		setSavedAddress(addressData);
 		setModalOpen(false);
 		// Add any additional logic for when the address is confirmed
 	};
 
-	// Handle selection of the address to update location and state
-	const handleOnSelect = (addressData: addressSelectionType) => {
-		setLocation(addressData.location);
-		setSavedAddress(addressData);
-	};
+
 
 	useEffect(() => {
 		const savedData = getSavedAddress();
@@ -135,7 +130,6 @@ function AddressSelectorModal({
 								initialAddress={savedAddress?.address || ""}
 								initialLocation={savedAddress?.location || location}
 								onConfirm={handleAddressConfirm}
-								onAddressSelect={handleOnSelect}
 								getSavedAddress={getSavedAddress}
 								setSavedAddress={setSavedAddress}
 							/>

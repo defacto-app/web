@@ -20,13 +20,11 @@ type Suggestion = {
 type GoogleAddressInputProps = {
 	initialAddress?: string;
 	initialLocation?: { lat: number; lng: number };
-	onConfirm: () => void;
-	onAddressSelect?: (addressData: addressSelectionType) => void;
+	onConfirm: (addressData: addressSelectionType) => void;
 	getSavedAddress: () => addressSelectionType;
 	setSavedAddress: (data: addressSelectionType) => void;
 };
 function GoogleAddressInput({
-	onAddressSelect,
 	onConfirm,
 	getSavedAddress,
 	setSavedAddress,
@@ -166,6 +164,8 @@ function GoogleAddressInput({
 			return;
 		}
 
+
+
 		// Store full data in localStorage
 		const addressData = {
 			address: googleAddress,
@@ -175,7 +175,7 @@ function GoogleAddressInput({
 
 		setSavedAddress(addressData);
 
-		onConfirm();
+		onConfirm(addressData);
 	};
 
 	return (
@@ -187,8 +187,7 @@ function GoogleAddressInput({
 						<div className="flex items-center gap-x-2">
 							<Input
 								type="text"
-								variant={`line`}
-								placeholder={ "Search for street address"}
+								placeholder={"Search for street address"}
 								className="w-80 md:w-full"
 								autoComplete="off"
 								value={googleAddress} // Use the saved address from context
@@ -273,6 +272,7 @@ function GoogleAddressInput({
 					onClick={confirmSelection}
 					variant={`primary`}
 					className={`mt-4`}
+					disabled={error !== "" || !googleAddress || !hasSelectedAddress}
 				>
 					Confirm Address
 				</Button>
