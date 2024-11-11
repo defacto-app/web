@@ -46,13 +46,13 @@ export default function Page() {
 	};
 
 	const getSavedPickupAddress = () => {
-		const savedData = localStorage.getItem("pickupAddress");
+		const savedData = sessionStorage.getItem("pickupAddress");
 
 		return savedData ? JSON.parse(savedData) : null;
 	};
 
 	const setPickupAddress = (addressData: addressSelectionType) => {
-		localStorage.setItem("pickupAddress", JSON.stringify(addressData));
+		sessionStorage.setItem("pickupAddress", JSON.stringify(addressData));
 
 		setPayload({
 			...payload,
@@ -70,12 +70,12 @@ export default function Page() {
 
 	// Drop-off address functions
 	const getSavedDropOffAddress = () => {
-		const savedData = localStorage.getItem("dropOffAddress");
+		const savedData = sessionStorage.getItem("dropOffAddress");
 		return savedData ? JSON.parse(savedData) : null;
 	};
 
 	const setDropOffAddress = (addressData: addressSelectionType) => {
-		localStorage.setItem("dropOffAddress", JSON.stringify(addressData));
+		sessionStorage.setItem("dropOffAddress", JSON.stringify(addressData));
 		setPayload({
 			...payload,
 			receiverDetails: {
@@ -92,26 +92,25 @@ export default function Page() {
 
 	useEffect(() => {
 		const savedPickupAddress = getSavedPickupAddress();
-		console.log("savedPickupAddress", savedPickupAddress);
 		if (savedPickupAddress) {
-			setPayload({
-				...payload,
+			setPayload((prevPayload) => ({
+				...prevPayload,
 				senderDetails: {
-					...payload.senderDetails,
+					...prevPayload.senderDetails,
 					address: savedPickupAddress,
 				},
-			});
+			}));
 		}
 
 		const savedDropOffAddress = getSavedDropOffAddress();
 		if (savedDropOffAddress) {
-			setPayload({
-				...payload,
+			setPayload((prevPayload) => ({
+				...prevPayload,
 				receiverDetails: {
-					...payload.receiverDetails,
+					...prevPayload.receiverDetails,
 					address: savedDropOffAddress,
 				},
-			});
+			}));
 		}
 	}, []);
 
@@ -146,7 +145,6 @@ export default function Page() {
 								</div>
 
 								<div>
-									{JSON.stringify(distanceAtom)}
 									<Label htmlFor="address">Pickup address</Label>
 
 									<AlertDialog defaultOpen={pickModalOpen} open={pickModalOpen}>
@@ -182,12 +180,7 @@ export default function Page() {
 								</div>
 
 								<div className="mb-4">
-
-
 									<div>
-										{JSON.stringify(payload.senderDetails.address)}
-										{JSON.stringify(payload.receiverDetails.address)}
-
 										<Label htmlFor="dropOffAddress">Drop-Off address</Label>
 										<AlertDialog
 											defaultOpen={dropOffModalOpen}
