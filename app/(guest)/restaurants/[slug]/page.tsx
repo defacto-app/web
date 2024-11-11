@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { $api } from "@/http/endpoints";
-import { formatPrice } from "@/utils";
+
 import MenuArea from "@/app/(guest)/restaurants/components/MenuArea";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";

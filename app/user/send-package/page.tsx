@@ -14,25 +14,35 @@ import {
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
 import type { addressSelectionType } from "@/lib/types";
-import { calculateDistance } from "@/utils";
+import { calculateDistance, formatPrice } from "@/utils";
 import DeliveryMap from "@/components/delivery/DeliveryMap";
 import Image from "next/image";
+import PackageImageUploader from "@/components/delivery/PackageImage";
+import { Button } from "@/components/ui/button";
+import { $api } from "@/http/endpoints";
+import envData, {isDev} from "@/config/envData";
 
 export default function Page() {
+	const [loading, setLoading] = useState(false);
+
 	const [pickModalOpen, setPickModalOpen] = useState(false);
 	const [dropOffModalOpen, setDropOffModalOpen] = useState(false);
 	const [distance, setDistance] = useState<number>();
+	const deliveryFee = distance ? distance * 300 : 0;
+
 	const [payload, setPayload] = useState({
-		description: "",
+		description: isDev ? "This is a test package" : "",
+		package_image: "",
+		charge: deliveryFee,
 		pickupDate: new Date(),
-		senderDetails: {
+		pickupDetails: {
 			address: {
 				address: "",
 				additionalDetails: "",
 				location: { lat: 0, lng: 0 },
 			},
 		},
-		receiverDetails: {
+		dropOffDetails: {
 			address: {
 				address: "",
 				additionalDetails: "",
@@ -40,6 +50,14 @@ export default function Page() {
 			},
 		},
 	});
+
+
+	const handleImageSelect = (base64Image: string) => {
+		setPayload((prevPayload) => ({
+			...prevPayload,
+			package_image: base64Image,
+		}));
+	};
 
 	const handleDateSelect = (date: Date) => {
 		setPayload({
@@ -59,8 +77,8 @@ export default function Page() {
 
 		setPayload({
 			...payload,
-			senderDetails: {
-				...payload.senderDetails,
+			pickupDetails: {
+				...payload.pickupDetails,
 				address: addressData,
 			},
 		});
@@ -81,8 +99,8 @@ export default function Page() {
 		sessionStorage.setItem("dropOffAddress", JSON.stringify(addressData));
 		setPayload({
 			...payload,
-			receiverDetails: {
-				...payload.receiverDetails,
+			dropOffDetails: {
+				...payload.dropOffDetails,
 				address: addressData,
 			},
 		});
@@ -98,8 +116,8 @@ export default function Page() {
 		if (savedPickupAddress) {
 			setPayload((prevPayload) => ({
 				...prevPayload,
-				senderDetails: {
-					...prevPayload.senderDetails,
+				pickupDetails: {
+					...prevPayload.pickupDetails,
 					address: savedPickupAddress,
 				},
 			}));
@@ -109,8 +127,8 @@ export default function Page() {
 		if (savedDropOffAddress) {
 			setPayload((prevPayload) => ({
 				...prevPayload,
-				receiverDetails: {
-					...prevPayload.receiverDetails,
+				dropOffDetails: {
+					...prevPayload.dropOffDetails,
 					address: savedDropOffAddress,
 				},
 			}));
@@ -119,9 +137,9 @@ export default function Page() {
 
 	useEffect(() => {
 		const { lat: pickLat, lng: pickLng } =
-			payload.senderDetails.address.location;
+			payload.pickupDetails.address.location;
 		const { lat: dropLat, lng: dropLng } =
-			payload.receiverDetails.address.location;
+			payload.dropOffDetails.address.location;
 
 		if (pickLat && pickLng && dropLat && dropLng) {
 			const calculatedDistance = calculateDistance(
@@ -133,59 +151,159 @@ export default function Page() {
 			setDistance(calculatedDistance);
 		}
 	}, [
-		payload.senderDetails.address.location,
-		payload.receiverDetails.address.location,
+		payload.pickupDetails.address.location,
+		payload.dropOffDetails.address.location,
 	]);
+
+	useEffect(() => {
+		if (distance) {
+			const deliveryFee = distance * 300;
+			setPayload((prevPayload) => ({
+				...prevPayload,
+				charge: deliveryFee,
+			}));
+		}
+	}, [distance]);
+
+	const confirmOrder = async () => {
+		try {
+
+			console.log(payload);
+			const response = await $api.auth.user.order.package(payload);
+
+			console.log(response);
+		} catch (e) {
+			console.log("error", e);
+		}
+	};
+
+
+
+	useEffect(() => {
+		const script = document.createElement("script");
+		script.src = "https://checkout.flutterwave.com/v3.js";
+		script.async = true;
+		document.body.appendChild(script);
+		return () => {
+			document.body.removeChild(script);
+		};
+	}, []);
+
+	const initiatePayment = async () => {
+		setLoading(true);
+
+		try {
+			const response = await $api.auth.user.order.restaurant(payload);
+
+			console.log(response);
+		} catch (e) {
+			console.log(e);
+		}
+		FlutterwaveCheckout({
+			public_key: envData.flutter_wave.test.public_key, // Replace with your public key
+			tx_ref: `txref-${Date.now()}`, // Unique transaction reference
+			amount: deliveryFee, // Total amount calculated from the cart
+			currency: "NGN", // Replace with your currency
+			payment_options: "card, banktransfer, ussd", // Payment methods
+			meta: {
+				source: "NextJS-checkout",
+				consumer_mac: "92a3-912ba-1192a",
+			},
+			customer: {
+				email: "customer@example.com", // Replace with actual customer email
+				phone_number: "08012345678", // Replace with actual customer phone number
+				name: "Customer Name", // Replace with actual customer name
+			},
+			customizations: {
+				title: "Defacto", // Replace with your store's title
+				description: "Payment for your delivery package", // Custom description
+				logo: envData.logo,
+			},
+			callback: (data: any) => {
+				console.log("Payment callback:", data);
+				if (data.status === "successful") {
+					// Handle successful payment here
+					console.log("Payment was successful!", data);
+					// Optionally: You can verify the transaction on the backend here
+				} else {
+					console.log("Payment failed or was canceled.");
+				}
+			},
+			onclose: () => {
+				console.log("Payment process closed by user.");
+			},
+		});
+
+		setLoading(false);
+	};
 
 	return (
 		<div>
-			<div className="container mx-auto px-10">
-				<div>
-					<h2>Distance</h2>
-					<p>
-						{distance ? `${distance.toFixed(2)} km` : "Distance not available"}
-					</p>
-				</div>
+			<div className="container mx-auto  ">
 				<h1 className="text-start px-1 py-4 text-primary-600 text-3xl font-bold mt-5">
 					Send Package
 				</h1>
-				<div className=" lg:grid lg:grid-cols-5  gap-x-10 items-start">
-					<div className={`col-span-3`}>
-						<div className="container mx-auto p-2 ">
+				<div className=" lg:grid lg:grid-cols-3 gap-x-10 items-start">
+					<div className={`col-span-2 pb-40`}>
+						<div>
 							<div className="container mx-auto px-4  space-y-4">
 								<div>
 									<Label className={`font-bold text-lg`}>
 										What do you need to transport ?
 									</Label>
 									<Textarea
+										onChange={(e) =>
+											setPayload({
+												...payload,
+												description: e.target.value,
+											})
+										}
 										placeholder={`briefly describe the item`}
 										rows={7}
 										value={payload.description}
 									/>
 								</div>
 
-								<DeliveryMap
-									pickupLocation={payload.senderDetails.address.location}
-									dropOffLocation={payload.receiverDetails.address.location}
+								{/* Package Image Uploader */}
+								<div className={`flex justify-start`}>
+									<PackageImageUploader onImageSelect={handleImageSelect} />
+								</div>
 
+								<DeliveryMap
+									pickupLocation={payload.pickupDetails.address.location}
+									dropOffLocation={payload.dropOffDetails.address.location}
 								/>
 
 								<div>
-									<Label className={`ml-5`} htmlFor="address">Pickup address</Label>
+									<Label className={`ml-5`} htmlFor="address">
+										Pickup address
+									</Label>
 
 									<AlertDialog defaultOpen={pickModalOpen} open={pickModalOpen}>
 										<AlertDialogTrigger asChild>
-											<div className={`flex items-center`}>
-												<Image alt={`start point`} width={20} height={20} src={"http://maps.google.com/mapfiles/ms/icons/green-dot.png"} />
+											{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+											<div
+												onClick={() => setPickModalOpen(true)}
+												className={`flex items-center cursor-pointer`}
+											>
+												<Image
+													alt={`start point`}
+													width={20}
+													height={20}
+													src={
+														"http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+													}
+												/>
 
 												<Input
+													variant={`line`}
 													className={`text-left`}
 													onClick={() => setPickModalOpen(true)}
-													value={payload.senderDetails.address.address}
+													value={payload.pickupDetails.address.address}
 												/>
 											</div>
 										</AlertDialogTrigger>
-										<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4 bg-red-100">
+										<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
 											<button
 												type="button"
 												onClick={() => setPickModalOpen(false)}
@@ -193,11 +311,11 @@ export default function Page() {
 											>
 												<X className="w-4 h-4" />
 											</button>
-											<div className={`mt-8 bg-red-100`}>
+											<div className={`mt-8 `}>
 												<GoogleAddressInput
-													initialAddress={payload.senderDetails.address.address}
+													initialAddress={payload.pickupDetails.address.address}
 													initialLocation={
-														payload.senderDetails.address.location
+														payload.pickupDetails.address.location
 													}
 													onConfirm={handlePickupAddressConfirm}
 													getSavedAddress={getSavedPickupAddress}
@@ -210,21 +328,29 @@ export default function Page() {
 
 								<div className="mb-4">
 									<div>
-										<Label htmlFor="dropOffAddress"  className={`ml-5`}>Drop-Off address</Label>
+										<Label htmlFor="dropOffAddress" className={`ml-5`}>
+											Drop-Off address
+										</Label>
 										<AlertDialog
 											defaultOpen={dropOffModalOpen}
 											open={dropOffModalOpen}
 										>
 											<AlertDialogTrigger asChild>
 												<div className={`flex items-center`}>
-
-													<Image alt={`start point`} width={20} height={20}
-														   src={"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}/>
+													<Image
+														alt={`start point`}
+														width={20}
+														height={20}
+														src={
+															"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
+														}
+													/>
 
 													<Input
+														variant={`line`}
 														onClick={() => setDropOffModalOpen(true)}
 														className={`text-left`}
-														value={payload.receiverDetails.address.address}
+														value={payload.dropOffDetails.address.address}
 													/>
 												</div>
 											</AlertDialogTrigger>
@@ -239,10 +365,10 @@ export default function Page() {
 												<div className="mt-8">
 													<GoogleAddressInput
 														initialAddress={
-															payload.receiverDetails.address.address
+															payload.dropOffDetails.address.address
 														}
 														initialLocation={
-															payload.receiverDetails.address.location
+															payload.dropOffDetails.address.location
 														}
 														onConfirm={handleDropOffAddressConfirm}
 														getSavedAddress={getSavedDropOffAddress}
@@ -265,12 +391,38 @@ export default function Page() {
 							</div>
 						</div>
 					</div>
-					<div className={`bg-white shadow-sm rounded-md `}>
-						<h3>Summary</h3>
-
-						Delivery {distance ? `${distance.toFixed(2)} km` : ""}
-						<h3>Total</h3>
-					</div>
+					<section className="sticky top-20 right-5 w-[500px] z-10">
+						<div className="shadow-md rounded-md border p-6 max-w-sm mx-auto bg-white">
+							<h2 className="text-2xl font-bold pb-2">Summary</h2>
+							<hr className="my-4" />
+							<div className="flex justify-between items-center mb-4">
+								<p className="text-lg font-medium">
+									Delivery {distance ? `(${distance.toFixed(2)} km)` : ""}
+								</p>
+								<p className="text-lg font-medium">
+									{" "}
+									{formatPrice(deliveryFee)}
+								</p>
+							</div>
+							<hr className="my-4" />
+							<div className="flex justify-between items-center mb-4">
+								<p className="text-xl font-semibold">TOTAL</p>
+								<p className="text-xl font-semibold">
+									{" "}
+									{formatPrice(deliveryFee)}
+								</p>
+							</div>
+							<div>
+								<Button
+									onClick={confirmOrder}
+									variant={`primary`}
+									className="w-full"
+								>
+									{loading ? "Processing..." : "Confirm order"}
+								</Button>
+							</div>
+						</div>
+					</section>
 				</div>
 			</div>
 		</div>

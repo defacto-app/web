@@ -26,7 +26,7 @@ const fetchOrders = async (
 	});
 	return response.data.data; // Assuming response.data contains the restaurant list
 };
-function AllUserPage() {
+function AllRestaurantOrderPage() {
 	const [searchTerm, setSearchTerm] = useState(""); // Track the search term
 	const [page, setPage] = useState(1); // Track current page
 	const [perPage, setPerPage] = useState(10); // Track items per page
@@ -142,4 +142,4 @@ function AllUserPage() {
 	);
 }
 
-export default AllUserPage;
+export default AllRestaurantOrderPage;

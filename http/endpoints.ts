@@ -23,8 +23,6 @@ export const $api = {
 				}
 			},
 
-
-
 			/*		all: async () => {
 				try {
 					const res = await fetch(
@@ -128,7 +126,7 @@ export const $api = {
 				}
 			},
 
-			address:{
+			address: {
 				all: async () => {
 					try {
 						return $axios.get(`/address`);
@@ -154,7 +152,7 @@ export const $api = {
 				},
 			},
 
-			order:{
+			order: {
 				restaurant: async (body: any) => {
 					try {
 						return $axios.post(`/restaurants/order`, body);
@@ -162,12 +160,18 @@ export const $api = {
 						return error;
 					}
 				},
-				}
-			}
+				package: async (body: any) => {
+					try {
+						return $axios.post(`/packages`, body);
+					} catch (error: any) {
+						return error;
+					}
+				},
+			},
+		},
 	},
 
-
-	payments:{
+	payments: {
 		card: async (body: any) => {
 			try {
 				return $axios.post(`/payments/card-payment`, body);
