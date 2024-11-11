@@ -267,8 +267,7 @@ export default function Page() {
 					</div>
 					<div className={`bg-white shadow-sm rounded-md `}>
 						<h3>Summary</h3>
-						{JSON.stringify(payload.senderDetails.address.location)}
-						{JSON.stringify(payload.receiverDetails.address.location)}
+
 						Delivery {distance ? `${distance.toFixed(2)} km` : ""}
 						<h3>Total</h3>
 					</div>

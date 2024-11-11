@@ -18,8 +18,10 @@ type DeliveryMapProps = {
 };
 
 const DeliveryMap = ({ pickupLocation, dropOffLocation }: DeliveryMapProps) => {
-	// Check if both locations are provided
-	const hasLocations = pickupLocation && dropOffLocation;
+	// Check if both locations are provided and are not { lat: 0, lng: 0 }
+	const hasLocations = pickupLocation && dropOffLocation &&
+		!(pickupLocation.lat === 0 && pickupLocation.lng === 0 &&
+			dropOffLocation.lat === 0 && dropOffLocation.lng === 0);
 
 	// Calculate the center point between the two locations if available
 	const center = hasLocations
@@ -29,12 +31,11 @@ const DeliveryMap = ({ pickupLocation, dropOffLocation }: DeliveryMapProps) => {
 		}
 		: { lat: 0, lng: 0 }; // Default center (won't be used if map isn't displayed)
 
-	// @ts-ignore
-	// @ts-ignore
 	return (
 		<div className="w-full mx-auto ">
 
-			{JSON.stringify({pickupLocation, dropOffLocation})}
+
+			{/*{JSON.stringify({pickupLocation, dropOffLocation})}*/}
 			{hasLocations ? (
 				<APIProvider apiKey={envData.google_map_api}>
 					<Map
@@ -52,13 +53,13 @@ const DeliveryMap = ({ pickupLocation, dropOffLocation }: DeliveryMapProps) => {
 						{/* Display the pickup location marker */}
 						<Marker
 							position={pickupLocation}
-							icon="http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+							icon="https://maps.google.com/mapfiles/ms/icons/green-dot.png"
 						/>
 
 						{/* Display the drop-off location marker */}
 						<Marker
 							position={dropOffLocation}
-							icon="http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
+							icon="https://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
 						/>
 					</Map>
 				</APIProvider>
