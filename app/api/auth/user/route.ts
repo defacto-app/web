@@ -15,6 +15,10 @@ export async function POST(request: Request) {
             maxAge: 60 * 60 * 24 * 7, // 7 days
         });
 
+        // log the cookie value
+
+        console.log(response.cookies.get('user-token'));
+
         return response;
     } catch (error: any) {
         console.error('Error setting cookie:', error);

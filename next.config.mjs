@@ -10,7 +10,7 @@ const nextConfig = {
 				hostname: "res.cloudinary.com",
 			},
 			{
-				hostname: "example.com",
+				hostname: "maps.google.com",
 			},
 		],
 	},

@@ -26,6 +26,10 @@ export async function middleware(request: NextRequest) {
     // Handle User Authentication
     if (request.nextUrl.pathname.startsWith('/user')) {
 
+        console.log('user-token- middleware', userToken?.value);
+
+
+
 
         // If user is not authenticated, redirect to the home page
         if (!isAuthenticatedUser) {

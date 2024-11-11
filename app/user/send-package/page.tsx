@@ -1,5 +1,4 @@
 "use client";
-import DropOffInformation from "@/components/delivery/DropOffInformation";
 import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,6 +16,7 @@ import { X } from "lucide-react";
 import type { addressSelectionType } from "@/lib/types";
 import { calculateDistance } from "@/utils";
 import DeliveryMap from "@/components/delivery/DeliveryMap";
+import Image from "next/image";
 
 export default function Page() {
 	const [pickModalOpen, setPickModalOpen] = useState(false);
@@ -164,16 +164,20 @@ export default function Page() {
 									/>
 								</div>
 
+								<DeliveryMap
+									pickupLocation={payload.senderDetails.address.location}
+									dropOffLocation={payload.receiverDetails.address.location}
 
-								<DeliveryMap/>
-
+								/>
 
 								<div>
-									<Label htmlFor="address">Pickup address</Label>
+									<Label className={`ml-5`} htmlFor="address">Pickup address</Label>
 
 									<AlertDialog defaultOpen={pickModalOpen} open={pickModalOpen}>
 										<AlertDialogTrigger asChild>
-											<div>
+											<div className={`flex items-center`}>
+												<Image alt={`start point`} width={20} height={20} src={"http://maps.google.com/mapfiles/ms/icons/green-dot.png"} />
+
 												<Input
 													className={`text-left`}
 													onClick={() => setPickModalOpen(true)}
@@ -181,14 +185,13 @@ export default function Page() {
 												/>
 											</div>
 										</AlertDialogTrigger>
-										<AlertDialogContent
-											className="h-full lg:h-[570px] max-w-4xl mx-auto px-4 bg-red-100">
+										<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4 bg-red-100">
 											<button
 												type="button"
 												onClick={() => setPickModalOpen(false)}
 												className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
 											>
-												<X className="w-4 h-4"/>
+												<X className="w-4 h-4" />
 											</button>
 											<div className={`mt-8 bg-red-100`}>
 												<GoogleAddressInput
@@ -207,17 +210,23 @@ export default function Page() {
 
 								<div className="mb-4">
 									<div>
-										<Label htmlFor="dropOffAddress">Drop-Off address</Label>
+										<Label htmlFor="dropOffAddress"  className={`ml-5`}>Drop-Off address</Label>
 										<AlertDialog
 											defaultOpen={dropOffModalOpen}
 											open={dropOffModalOpen}
 										>
 											<AlertDialogTrigger asChild>
-												<Input
-													onClick={() => setDropOffModalOpen(true)}
-													className={`text-left`}
-													value={payload.receiverDetails.address.address}
-												/>
+												<div className={`flex items-center`}>
+
+													<Image alt={`start point`} width={20} height={20}
+														   src={"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}/>
+
+													<Input
+														onClick={() => setDropOffModalOpen(true)}
+														className={`text-left`}
+														value={payload.receiverDetails.address.address}
+													/>
+												</div>
 											</AlertDialogTrigger>
 											<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
 												<button
@@ -225,7 +234,7 @@ export default function Page() {
 													onClick={() => setDropOffModalOpen(false)}
 													className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
 												>
-													<X className="w-4 h-4"/>
+													<X className="w-4 h-4" />
 												</button>
 												<div className="mt-8">
 													<GoogleAddressInput

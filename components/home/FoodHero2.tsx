@@ -113,7 +113,7 @@ export default function FoodHero2() {
                         deliver, you enjoy.
                     </p>
                     <div>
-                    <AddressSelectorModal handleOnSelect={handleAddressSelect} />
+                    <AddressSelectorModal  />
                     </div>
                 </div>
 

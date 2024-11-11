@@ -20,7 +20,6 @@ import {
 	UserProvider,
 } from "@/app/provider/packages.context";
 import { MoveLeft } from "lucide-react";
-import DropOffInformation from "../delivery/DropOffInformation";
 
 interface UserSheetProps {
 	children: ReactNode;
@@ -97,7 +96,7 @@ const UserSheetContent: React.FC<UserSheetProps> = ({ children }) => {
 					{/* Include components for other steps if needed */}
 					{currentStep === "send" && (
 						<>
-							<DropOffInformation />
+
 						</>
 					)}
 					<SheetFooter>

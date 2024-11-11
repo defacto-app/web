@@ -6,6 +6,8 @@ export const dynamic = "force-dynamic"; // defaults to auto
 
 export async function POST(request: any) {
     try {
+
+
         const body = await request.json();
 
         const url = `${envData.base_url}/auth/email-login`;
@@ -40,6 +42,11 @@ export async function POST(request: any) {
 
         // The cookie string seems unused, remove if not needed, or ensure it's being utilized correctly
         // const cookie = `token=${token}; path=/; HttpOnly; Secure; SameSite=None`;
+
+
+       // print cookie user-token
+
+        console.log(cookies().get('user-token'));
 
         return new Response(JSON.stringify({ data }), {
             status: 200,

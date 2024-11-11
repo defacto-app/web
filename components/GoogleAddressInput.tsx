@@ -243,6 +243,7 @@ function GoogleAddressInput({
 					{showMap ? (
 						<APIProvider apiKey={envData.google_map_api}>
 							<Map
+
 								key={`${location.lat}-${location.lng}`} // Changing key forces re-render
 								center={location}
 								zoom={15}
