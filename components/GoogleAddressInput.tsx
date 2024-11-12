@@ -228,7 +228,7 @@ function GoogleAddressInput({
 					)}
 				</div>
 
-				<div>
+				<div className={`pt-2`}>
 					<Label>Additional Address Details</Label>
 					<Textarea
 						value={additionalDetails}

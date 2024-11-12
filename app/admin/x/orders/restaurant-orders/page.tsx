@@ -23,6 +23,7 @@ const fetchOrders = async (
 		page,
 		perPage,
 		searchTerm,
+		type: "food"
 	});
 	return response.data.data; // Assuming response.data contains the restaurant list
 };

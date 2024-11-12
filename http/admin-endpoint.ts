@@ -170,10 +170,15 @@ export const $admin_api = {
 	},
 
 	orders:{
-		all: async ({ page = 1, perPage = 20, searchTerm = "" }) => {
+		all: async ({ page = 1, perPage = 20, searchTerm = "", type = "" }) => {
 			try {
 				return $axios_admin.get(`/orders`, {
-					params: { page, perPage, search: searchTerm },
+					params: {
+						page,
+						perPage,
+						search: searchTerm,
+						type, // Add the type parameter to filter by order type
+					},
 				});
 			} catch (error: any) {
 				return error;

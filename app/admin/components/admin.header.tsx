@@ -37,7 +37,7 @@ const navigation = [
     },
     {
         title: "Orders",
-        href: "/admin/x/orders"
+        href: "/admin/x/orders/restaurant-orders"
     },
     {
         title: "Demo",

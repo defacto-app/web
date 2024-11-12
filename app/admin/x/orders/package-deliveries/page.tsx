@@ -1,7 +1,7 @@
 "use client";
 import type React from "react";
 import { useEffect, useState } from "react";
-import { orderColumns } from "./order.columns";
+import { packageColumns } from "./package.columns";
 import { DataTable } from "./data-table";
 import { $admin_api } from "@/http/admin-endpoint";
 import { useDebounce } from "react-haiku";
@@ -23,6 +23,7 @@ const fetchOrders = async (
         page,
         perPage,
         searchTerm,
+        type: "package"
     });
     return response.data.data; // Assuming response.data contains the restaurant list
 };
@@ -113,7 +114,7 @@ function AllPackageDeliveryPage() {
                 {/* Render the DataTableLoading with loading state */}
                 <div className={`bg-white shadow-sm rounded`}>
                     {isLoading ? (
-                        <DataTableSkeleton columns={orderColumns} />
+                        <DataTableSkeleton columns={packageColumns} />
                     ) : (
                         <>
                             <TablePagination
@@ -123,7 +124,7 @@ function AllPackageDeliveryPage() {
                             />
                             <DataTable
 
-                                columns={orderColumns}
+                                columns={packageColumns}
                                 data={data.data}
                                 pageCount={data.meta.totalPages}
                                 pageIndex={page}

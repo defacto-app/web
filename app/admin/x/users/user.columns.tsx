@@ -73,7 +73,6 @@ export const userColumns: ColumnDef<any>[] = [
 		id: "actions",
 		cell: ({ row }) => {
 			const { userId } = row.original;
-			console.log(userId);
             return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>

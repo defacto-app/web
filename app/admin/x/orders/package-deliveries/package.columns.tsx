@@ -25,7 +25,7 @@ const deleteOrder = async (id: string) => {
 		toast.error("Error deleting user");
 	}
 };
-export const orderColumns: ColumnDef<any>[] = [
+export const packageColumns: ColumnDef<any>[] = [
 	{
 		accessorKey: "S/N",
 		header: ({ column }) => <div>S/N</div>,
@@ -104,8 +104,8 @@ export const orderColumns: ColumnDef<any>[] = [
 	{
 		id: "actions",
 		cell: ({ row }) => {
-			const { userId } = row.original;
-			console.log(userId);
+			const { publicId } = row.original;
+
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
@@ -117,12 +117,12 @@ export const orderColumns: ColumnDef<any>[] = [
 					<DropdownMenuContent align="end">
 						<DropdownMenuLabel>Actions</DropdownMenuLabel>
 						<DropdownMenuItem
-							onClick={() => navigator.clipboard.writeText(userId)}
+							onClick={() => navigator.clipboard.writeText(publicId)}
 						>
 							Copy payment ID
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem onClick={() => deleteOrder(userId)}>
+						<DropdownMenuItem onClick={() => deleteOrder(publicId)}>
 							Delete User
 						</DropdownMenuItem>
 						<DropdownMenuItem>View payment details</DropdownMenuItem>

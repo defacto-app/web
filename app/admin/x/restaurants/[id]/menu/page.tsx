@@ -9,8 +9,12 @@ import { useQuery } from "react-query";
 import { TablePagination } from "@/components/table/table-pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 
-function fetchMenu(id: string) {
-	return $admin_api.restaurants.getMenu(id); // Assuming this returns a promise with the getMenu data
+async function fetchMenu(id: string) {
+	// return $admin_api.restaurants.getMenu(id);
+
+	const response = await $admin_api.restaurants.getMenu(id)
+
+	return response.data.data;
 }
 
 function Page({ params }: { params: { id: string } }) {
@@ -44,19 +48,19 @@ function Page({ params }: { params: { id: string } }) {
 				<DataTableSkeleton columns={menuColumns} />
 			) : (
 				<div>
-					<TablePagination
+				<TablePagination
 						page={page}
 						totalPages={data?.meta.totalPages || 1}
 						onPageChange={handlePageChange}
 					/>
-					<DataTable
+				<DataTable
 						pageCount={data.meta.totalPages}
 						pageIndex={page}
 						perPage={perPage}
 						columns={menuColumns}
-						data={data.data.data.data}
+						data={data.data}
 					/>
-					<TablePagination
+				<TablePagination
 						page={page}
 						totalPages={data?.meta.totalPages || 1}
 						onPageChange={handlePageChange}

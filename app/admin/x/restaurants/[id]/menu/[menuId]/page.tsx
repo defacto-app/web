@@ -1,7 +1,6 @@
 "use client";
 
-import type React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
 import { MenuForm } from "@/app/admin/x/restaurants/components/menuForm";
@@ -15,7 +14,7 @@ function Page({ params }: { params: { menuId: string } }) {
 	const [updating, setUpdating] = useState<boolean>(false);
 
 	// Fetch getMenu data
-	const getData = async () => {
+	const getData = useCallback(async () => {
 		try {
 			const res = await $admin_api.menu.one(params.menuId);
 			setMenuData(res.data.data); // Assuming res.data holds the getMenu data
@@ -26,11 +25,11 @@ function Page({ params }: { params: { menuId: string } }) {
 			);
 			setLoading(false);
 		}
-	};
+	}, [params.menuId]); // Memoize getData with useCallback and add params.menuId as a dependency
 
 	useEffect(() => {
 		getData();
-	}, [getData, params.menuId]); // Re-fetch if menuId changes
+	}, [getData]); // Remove getData from the dependency array
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -52,6 +51,7 @@ function Page({ params }: { params: { menuId: string } }) {
 			toast.error("An error occurred while updating");
 		}
 	};
+
 	// Render loading state
 	if (loading) return <div>Loading...</div>;
 
@@ -62,7 +62,7 @@ function Page({ params }: { params: { menuId: string } }) {
 		file: File | null,
 		id: string,
 		setPreviewUrl: (url: string | null) => void,
-		setOpen: (open: boolean) => void
+		setOpen: (open: boolean) => void,
 	) => {
 		if (!file) return;
 
@@ -89,25 +89,23 @@ function Page({ params }: { params: { menuId: string } }) {
 			<h1 className={`py-4 text-lg`}>Update Menu</h1>
 
 			<div className={`flex justify-start`}>
-			<div className={`flex items-center`}>
-				<Image
-					priority={true}
-					width={500}
-					height={500}
-					src={menuData?.image}
-					alt={menuData?.name}
-					className="rounded-sm h-64  object-cover"
-				/>
+				<div className={`flex items-center`}>
+					<Image
+						priority={true}
+						width={500}
+						height={500}
+						src={menuData?.image}
+						alt={menuData?.name}
+						className="rounded-sm h-64  object-cover"
+					/>
 
-				<ImageUploader
-buttonText={"Update  Image"}
-					handleUpload={uploadRestaurantImage}
-
-					id={menuData.publicId}
-					onUploadComplete={getData}
-				/>
-			</div>
-
+					<ImageUploader
+						buttonText={"Update Image"}
+						handleUpload={uploadRestaurantImage}
+						id={menuData.publicId}
+						onUploadComplete={getData}
+					/>
+				</div>
 			</div>
 			<MenuForm
 				data={menuData}
@@ -116,7 +114,6 @@ buttonText={"Update  Image"}
 				loading={updating}
 				action="update"
 			/>
-
 		</div>
 	);
 }
