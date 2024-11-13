@@ -86,3 +86,32 @@ export interface addressSelectionType {
 	address: string;
 	additionalDetails: string;
 }
+
+
+
+interface Address {
+	address: string;
+	additionalDetails: string;
+	location: {
+		lat: number;
+		lng: number;
+	};
+}
+
+interface DropOffDetails {
+	address: Address;
+	name: string;
+	phone?: string;
+	email?: string;
+}
+
+export interface DeliveryPayloadType {
+	description: string;
+	package_image: string;
+	charge: number;
+	pickupDate: Date;
+	pickupDetails: {
+		address: Address;
+	};
+	dropOffDetails: DropOffDetails;
+}

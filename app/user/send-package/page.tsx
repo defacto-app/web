@@ -9,18 +9,23 @@ import {
 	AlertDialog,
 	AlertDialogContent,
 	AlertDialogTrigger,
-	AlertDialogDescription, AlertDialogTitle
+	AlertDialogDescription,
+	AlertDialogTitle,
+	AlertDialogHeader,
+	AlertDialogFooter,
+	AlertDialogCancel,
+	AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
-import type { addressSelectionType } from "@/lib/types";
+import type { addressSelectionType, DeliveryPayloadType } from "@/lib/types";
 import { calculateDistance, formatPrice } from "@/utils";
 import DeliveryMap from "@/components/delivery/DeliveryMap";
 import Image from "next/image";
 import PackageImageUploader from "@/components/delivery/PackageImage";
 import { Button } from "@/components/ui/button";
 import { $api } from "@/http/endpoints";
-import envData, {isDev} from "@/config/envData";
+import envData, { isDev } from "@/config/envData";
 
 export default function Page() {
 	const [loading, setLoading] = useState(false);
@@ -32,7 +37,7 @@ export default function Page() {
 	const [distance, setDistance] = useState<number>();
 	const deliveryFee = distance ? distance * RATE_PER_KM : 0;
 
-	const [payload, setPayload] = useState({
+	const [payload, setPayload] = useState<DeliveryPayloadType>({
 		description: isDev ? "This is a test package" : "",
 		package_image: "",
 		charge: deliveryFee,
@@ -50,9 +55,11 @@ export default function Page() {
 				additionalDetails: "",
 				location: { lat: 0, lng: 0 },
 			},
+			name: "",
+			phone: "",
+			email: "",
 		},
 	});
-
 
 	const handleImageSelect = (base64Image: string) => {
 		setPayload((prevPayload) => ({
@@ -169,7 +176,6 @@ export default function Page() {
 
 	const confirmOrder = async () => {
 		try {
-
 			console.log(payload);
 			const response = await $api.auth.user.order.package(payload);
 
@@ -178,8 +184,6 @@ export default function Page() {
 			console.log("error", e);
 		}
 	};
-
-
 
 	useEffect(() => {
 		const script = document.createElement("script");
@@ -325,7 +329,7 @@ export default function Page() {
 													setSavedAddress={setPickupAddress}
 												/>
 											</div>
-											<AlertDialogDescription/>
+											<AlertDialogDescription />
 										</AlertDialogContent>
 									</AlertDialog>
 								</div>
@@ -359,7 +363,9 @@ export default function Page() {
 												</div>
 											</AlertDialogTrigger>
 											<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
-												<AlertDialogTitle>Choose Drop-Off Address</AlertDialogTitle>
+												<AlertDialogTitle>
+													Choose Drop-Off Address
+												</AlertDialogTitle>
 												<button
 													type="button"
 													onClick={() => setDropOffModalOpen(false)}
@@ -381,7 +387,7 @@ export default function Page() {
 													/>
 												</div>
 
-												<AlertDialogDescription/>
+												<AlertDialogDescription />
 											</AlertDialogContent>
 										</AlertDialog>
 									</div>
@@ -396,6 +402,11 @@ export default function Page() {
 									/>
 								</div>
 							</div>
+
+							{/*receiver details*/}
+							<ReceiverDetails payload={payload} setPayload={setPayload} />
+
+							{/*receiver details*/}
 						</div>
 					</div>
 					<section className="sticky top-20 right-5 w-[350px] z-0 hidden lg:block">
@@ -435,3 +446,84 @@ export default function Page() {
 		</div>
 	);
 }
+
+// Mini component for Receiver Details
+const ReceiverDetails = ({
+	payload,
+	setPayload,
+}: {
+	payload: DeliveryPayloadType;
+	setPayload: React.Dispatch<React.SetStateAction<DeliveryPayloadType>>;
+}) => {
+	return (
+		<div>
+			<AlertDialog>
+				<AlertDialogTrigger asChild>
+					<Button variant="outline">Show Dialog</Button>
+				</AlertDialogTrigger>
+				<AlertDialogContent className={`py-10 h-96`}>
+					<AlertDialogHeader>
+						<AlertDialogTitle>Receiver Information?</AlertDialogTitle>
+						<AlertDialogDescription />
+					</AlertDialogHeader>
+					<div className={`space-y-2`}>
+						<div>
+							<Label className="mt-4">Receiver Name</Label>
+							<Input
+								placeholder="Enter receiver name"
+								value={payload.dropOffDetails.name}
+								onChange={(e) =>
+									setPayload({
+										...payload,
+										dropOffDetails: {
+											...payload.dropOffDetails,
+											name: e.target.value,
+										},
+									})
+								}
+							/>
+						</div>
+						<div>
+							<Label className="mt-4">Receiver Phone</Label>
+							<Input
+								placeholder="Enter receiver phone"
+								value={payload.dropOffDetails.phone}
+								onChange={(e) =>
+									setPayload({
+										...payload,
+										dropOffDetails: {
+											...payload.dropOffDetails,
+											phone: e.target.value,
+										},
+									})
+								}
+							/>
+						</div>
+						<div>
+							<Label className="mt-4">Receiver Email</Label>
+							<Input
+								placeholder="Enter receiver email"
+								value={payload.dropOffDetails.email}
+								onChange={(e) =>
+									setPayload({
+										...payload,
+										dropOffDetails: {
+											...payload.dropOffDetails,
+											email: e.target.value,
+										},
+									})
+								}
+							/>
+						</div>
+					</div>
+					<AlertDialogFooter>
+						<AlertDialogCancel>Cancel</AlertDialogCancel>
+						<AlertDialogAction>Continue</AlertDialogAction>
+					</AlertDialogFooter>
+					{/*
+					 */}
+				</AlertDialogContent>
+			</AlertDialog>
+		</div>
+	);
+};
