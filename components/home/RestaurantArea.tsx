@@ -26,30 +26,30 @@ const RestaurantArea = () => {
 	}, []);
 
 	return (
-		<div className="container mx-auto px-4 py-8">
-			<div className="">
-				<div className="flex justify-between gap-x10">
-					<div className="flex justify-center">
-						<Link href={`/restaurants`}>
+		<div className="container  mx-auto px-4 py-8">
+			<div>
+				<div className="grid grid-cols-1 gap-8 md:gap-4 lg:grid-cols-2">
+					<div className="aspect-w-16 aspect-h-9">
+						<Link href="/restaurants">
 							<Image
 								src="/food.svg"
 								alt="food"
 								width={550}
 								height={150}
 								priority
-								className="object-contain w-full h-72"
+								className="object-contain w-full"
 							/>
 						</Link>
 					</div>
-					<div className="flex justify-center">
-						<Link href={`/user/send-package`}>
+					<div className="aspect-w-16 aspect-h-9">
+						<Link href="/user/send-package">
 							<Image
 								src="/delivery-package.svg"
 								alt="delivery package"
 								width={550}
 								height={150}
-								className="object-contain w-full h-72"
 								priority
+								className="object-contain w-full"
 							/>
 						</Link>
 					</div>
@@ -60,7 +60,7 @@ const RestaurantArea = () => {
 				</h2>
 			</div>
 
-			<RestaurantGrid data={data} />
+			<RestaurantGrid data={data}/>
 			<div className="text-center mt-8">
 				<Link href="/restaurants">
 					<Button className="bg-blue-500 text-white px-4 py-2 rounded-full">
@@ -69,6 +69,7 @@ const RestaurantArea = () => {
 				</Link>
 			</div>
 		</div>
+
 	);
 };
 

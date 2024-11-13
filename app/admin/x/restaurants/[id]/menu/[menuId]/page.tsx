@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import type React from "react";
+import { useEffect, useState, useCallback } from "react";
 import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
 import { MenuForm } from "@/app/admin/x/restaurants/components/menuForm";

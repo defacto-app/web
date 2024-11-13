@@ -1,164 +1,193 @@
-import { ChevronRight } from "lucide-react";
-import React from "react";
-import AddressSelectorModal from "../user/AddressSelectorModal";
+"use client";
+import { BikeIcon } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { Typewriter } from "./Typewriter";
 import RotateBetween from "./RotataBetween";
+import AddressSelectorModal from "../user/AddressSelectorModal";
 
-function FoodHero() {
-  const texts = [
-    "cravings are delivered",
-    "We Deliver",
-    "Order with speed",
-    "Order with ease",
-  ];
-  const words = [
-    "cravings are delivered",
-    "We Deliver",
-    "Order with speed",
-    "Order with ease",
-  ];
-  return (
-    <div>
-      <main>
-        <div className="bg-[#03081F] pt-10 sm:pt-16 lg:overflow-hidden lg:pb-14 lg:pt-8">
-          <div className="  sm:px-6 lg:px-8">
-            <div className="lg:grid lg:grid-cols-2 gap-6">
-              <div className="max-w-md col-span-1 sm:max-w-2xl sm:text-center lg:flex lg:items-center lg:px-0 lg:text-left">
-                <div>
-                  <div className="sm:flex sm:justify-center lg:justify-start mb-5 sm:mb-0">
-                    <p
-                      className="flex items-center rounded-full p-1 pr-2 text-white hover:text-gray-200 sm:text-base lg:text-sm xl:text-base"
-                    >
-                      <span className="text-primary-50 px-3 py-0.5 text-sm font-semibold leading-5">
-                        Order from Restaurant
-                      </span>
-                      <span className="ml-4 text-sm text-gray-100">
-                        or Send a Package!
-                      </span>
-                      <ChevronRight
-                        className="ml-2 h-5 w-5 text-gray-200"
-                        aria-hidden="true"
-                      />
+import { useGoogleAddressAtomContext } from "@/app/store/addressAtom";
+
+export default function FoodHero() {
+	const { savedAddress, setSavedAddress } = useGoogleAddressAtomContext();
+
+	const words = ["Cravings", "Joy", "Orders with speed", "Orders with ease"];
+
+	const logos = [
+		{
+			src: "https://tailwindui.com/img/logos/tuple-logo-gray-400.svg",
+			alt: "Tuple",
+		},
+		{
+			src: "https://tailwindui.com/img/logos/mirage-logo-gray-400.svg",
+			alt: "Mirage",
+		},
+		{
+			src: "https://tailwindui.com/img/logos/statickit-logo-gray-400.svg",
+			alt: "StaticKit",
+		},
+		{
+			src: "https://tailwindui.com/img/logos/transistor-logo-gray-400.svg",
+			alt: "Transistor",
+		},
+		{
+			src: "https://tailwindui.com/img/logos/workcation-logo-gray-400.svg",
+			alt: "Workcation",
+		},
+	];
+
+	const logoElements = logos.map((logo, index) => (
+		<div
+			className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1"
+			// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+			key={index}
+		>
+			<Image
+				className="h-12"
+				src={logo.src}
+				alt={logo.alt}
+				width={100}
+				height={100}
+				style={{
+					width: "100%",
+					maxWidth: "100%",
+					height: "auto",
+				}}
+			/>
+		</div>
+	));
+	const [selectedAddress, setSelectedAddress] = useState<{
+		address: string;
+		additionalDetails: string;
+		location: { lat: number; lng: number };
+	} | null>(null);
+
+	const handleAddressSelect = (address: string) => {
+		setSelectedAddress({
+			address,
+			additionalDetails: "",
+			location: { lat: 0, lng: 0 },
+		});
+	};
+
+	useEffect(() => {
+		const savedData = localStorage.getItem("selectedAddress");
+		if (savedData) {
+			try {
+				const parsedAddress = JSON.parse(savedData);
+				setSelectedAddress(parsedAddress.address);
+				setSavedAddress(parsedAddress.address);
+			} catch (e) {
+				console.error("Error parsing saved address:", e);
+			}
+		}
+	}, [setSavedAddress]);
+
+	return (
+		<div className="">
+			<div className="flex flex-col lg:flex-row items-center justify-between">
+				<div className="max-w-2xl mb-10 lg:mb-0 px-10">
+					<p className="inline-flex space-x-6 mb-8">
+						<span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
+							<span>Riders Available</span>
+
+							<BikeIcon className="text-primary-600" />
+						</span>
+					</p>
+					<div className="text-2xl md:text-4xl lg:text-5xl font-bold text-blue-900 mb-4">
+						<h1> Delivering</h1>
+						<RotateBetween
+							words={words}
+							className="text-balance  from-primary-500 from-30% to-primary-300/60 bg-clip-text px-1 py-2 font-bold leading-none tracking-tighter  "
+						/>
+					</div>
+					<p className="text-base lg:text-lg text-gray-700 mb-8">
+						Bringing happiness to your doorstep, one delivery at a time. We
+						deliver, you enjoy.
+					</p>
+					<div>
+						<AddressSelectorModal />
+					</div>
+				</div>
+
+				<div className="relative bg-primary-900 lg:rounded-tl-full lg:w-1/2 w-full">
+					<Image
+						src="/hero/hero.png"
+						alt="Foreground"
+						className="w-full h-auto"
+						width={500}
+						height={500}
+						priority
+						style={{
+							maxWidth: "100%",
+							height: "auto",
+						}}
+					/>
+					<div className="absolute inset-0 flex flex-col items-center justify-center lg:items-end p-4 lg:p-8">
+						<h2 className="text-lg text-gray-100 w-full lg:w-56 text-center lg:text-end font-semibold mb-4 lg:mb-8">
+							Download the Defacto app for faster ordering
+						</h2>
+						<div className="flex items-center gap-x-4 ">
+							<Button
+								size="lg"
+								variant="secondary"
+								className="bg-gray-900 text-white"
+							>
+								<div className="flex items-center">
+									<Image
+										className="mr-2 h-6 w-6"
+										src="/hero/apple3.png"
+										alt="Apple Store"
+										height={50}
+										width={154}
+										style={{
+											maxWidth: "100%",
+											height: "auto",
+										}}
+									/>
+									<div>
+										<h1 className="text-xs font-light">Download on</h1>
+										<div className="font-semibold">Apple Store</div>
+									</div>
+								</div>
+							</Button>
+							<Button
+								size="lg"
+								variant="secondary"
+								className="bg-gray-900 text-white"
+							>
+								<div className="flex items-center">
+									<Image
+										className="mr-2 h-6 w-6"
+										src="/hero/android2.png"
+										alt="Play Store"
+										height={50}
+										width={154}
+										style={{
+											maxWidth: "100%",
+											height: "auto",
+										}}
+									/>
+									<div>
+										<h1 className="text-xs font-light">Download on</h1>
+										<div className="font-semibold">Play Store</div>
+									</div>
+								</div>
+							</Button>
+						</div>
+					</div>
+				</div>
+			</div>
+			{/*   <div className="container">
+                <div className="  py-16 ">
+                    <p className="text-start text-base font-semibold text-gray-500">
+                        Trusted by over 30+ businesses
                     </p>
-                  </div>
-
-                  <div className="py-2">
-                    <div className="flex h-20 items-center justify-start space-x-1 px-2 text-4xl font-normal text-primary-600 dark:text-gray-300">
-                      <p>Contribute us to</p>
-                      <RotateBetween
-                        words={words}
-                        className="text-balance  from-primary-500 from-30% to-primary-300/60 bg-clip-text px-1 py-2 font-bold leading-none tracking-tighter dark:from-white dark:to-white/40"
-                      />
+                    <div className="mt-6 grid grid-cols-2 gap-8 md:grid-cols-6 lg:grid-cols-5">
+                        {logoElements}
                     </div>
-                    {/* <Typewriter texts={texts} delay={1} baseText="At Defacto, " /> */}
-                    <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                      Enter your address to see what we deliver
-                    </p>
-                    <div className="mt-10 sm:mt-12">
-                      <form
-                        action="#"
-                        className="sm:mx-auto sm:max-w-xl lg:mx-0"
-                      >
-                        <div className="sm:flex">
-                          <div className="min-w-0 flex-1">
-                            <label htmlFor="email" className="sr-only">
-                              Email address
-                            </label>
-                            {/*<AddressSelectorModal />*/}
-                          </div>
-                          <div className="mt-3 sm:ml-3 sm:mt-0">
-                            <Button
-                              variant="primary"
-                              type="submit"
-                              className="block w-full rounded-md px-4 py-3 font-medium text-white shadow focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2 focus:ring-offset-gray-900"
-                            >
-                              Make your order!
-                            </Button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
                 </div>
-              </div>
-
-              <div className="col-span-1 grid grid-cols-3 justify-items-center bg-primary-600 lg:rounded-tl-full lg:mt-0 mt-12 lg:py-0 py-8">
-                <div className="relative col-span-1  mt-12 lg:m-0">
-                  <Image
-                    src="/hero/bg2.png"
-                    alt="Foreground"
-                    className="w-full lg:absolute lg:inset-y-0 lg:h-full lg:w-auto lg:max-w-none"
-                    width={1000}
-                    height={1000}
-                    priority
-                    style={{
-                      maxWidth: "100%",
-                      height: "auto"
-                    }} />
-                </div>
-               <div className="flex">
-               <div className="px-4 col-span-1 lg:ml-20 ml-4">
-                  <h1 className="lg:px-3 mt-20 font-bold py-3 inline-block text-xl text-gray-900 text-center">
-                    Download the Defacto App for faster ordering
-                  </h1>
-                </div>
-                <div className="lg:mb-20 col-span-1 mb-10 flex flex-col lg:flex-row justify-center gap-x-6 lg:justify-start">
-                  <Button
-                    size="lg"
-                    variant="secondary"
-                    className="mb-4 lg:mb-0 bg-gray-900 text-white"
-                  >
-                    <div className="flex items-center">
-                      <Image
-                        className="mr-2 h-6 w-6"
-                        src="/hero/apple3.png"
-                        alt="Apple Store"
-                        height={50}
-                        width={154}
-                        style={{
-                          maxWidth: "100%",
-                          height: "auto"
-                        }} />
-                      <div>
-                        <h1 className="text-xs font-light">Download on</h1>
-                        <div className="font-semibold">Apple Store</div>
-                      </div>
-                    </div>
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="secondary"
-                    className="mb-4 lg:mb-0 bg-gray-900 text-white"
-                  >
-                    <div className="flex items-center">
-                      <Image
-                        className="mr-2 h-6 w-6"
-                        src="/hero/android2.png"
-                        alt="Play Store"
-                        height={50}
-                        width={154}
-                        style={{
-                          maxWidth: "100%",
-                          height: "auto"
-                        }} />
-                      <div>
-                        <h1 className="text-xs font-light">Download on</h1>
-                        <div className="font-semibold">Play Store</div>
-                      </div>
-                    </div>
-                  </Button>
-                </div>
-               </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </main>
-    </div>
-  );
+            </div>*/}
+		</div>
+	);
 }
-
-export default FoodHero;

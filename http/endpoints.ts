@@ -153,16 +153,23 @@ export const $api = {
 			},
 
 			order: {
+				history: async () => {
+					try {
+						return $axios.get(`/orders`);
+					} catch (error: any) {
+						return error;
+					}
+				},
 				restaurant: async (body: any) => {
 					try {
-						return $axios.post(`/restaurants/order`, body);
+						return $axios.post(`/orders/restaurant`, body);
 					} catch (error: any) {
 						return error;
 					}
 				},
 				package: async (body: any) => {
 					try {
-						return $axios.post(`/packages`, body);
+						return $axios.post(`/orders/package-delivery`, body);
 					} catch (error: any) {
 						return error;
 					}

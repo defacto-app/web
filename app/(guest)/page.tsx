@@ -1,6 +1,6 @@
 import React from "react";
 
-import FoodHero2 from "@/components/home/FoodHero2";
+import FoodHero from "@/components/home/FoodHero";
 import MarqueeSlide from "@/components/MarqueeSlide";
 import RestaurantArea from "@/components/home/RestaurantArea";
 import NewsletterSection from "@/components/home/NewsletterSection";
@@ -9,9 +9,8 @@ import MobileApp from "@/components/home/MobileApp";
 export default function HomePage() {
 	return (
 		<div className="bg-[#FFFBFE] ">
-			{/* <HeroSection/> */}
-			{/* <FoodHero/> */}
-			<FoodHero2 />
+
+			<FoodHero />
 			<RestaurantArea />
 
 			<MobileApp />

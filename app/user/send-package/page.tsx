@@ -25,10 +25,12 @@ import envData, {isDev} from "@/config/envData";
 export default function Page() {
 	const [loading, setLoading] = useState(false);
 
+	const RATE_PER_KM = 300; // Price per kilometer
+
 	const [pickModalOpen, setPickModalOpen] = useState(false);
 	const [dropOffModalOpen, setDropOffModalOpen] = useState(false);
 	const [distance, setDistance] = useState<number>();
-	const deliveryFee = distance ? distance * 300 : 0;
+	const deliveryFee = distance ? distance * RATE_PER_KM : 0;
 
 	const [payload, setPayload] = useState({
 		description: isDev ? "This is a test package" : "",
@@ -157,7 +159,7 @@ export default function Page() {
 
 	useEffect(() => {
 		if (distance) {
-			const deliveryFee = distance * 300;
+			const deliveryFee = distance * RATE_PER_KM;
 			setPayload((prevPayload) => ({
 				...prevPayload,
 				charge: deliveryFee,
@@ -391,7 +393,7 @@ export default function Page() {
 							</div>
 						</div>
 					</div>
-					<section className="sticky top-20 right-5 w-[500px] z-10">
+					<section className="sticky top-20 right-5 w-[350px] z-0 hidden lg:block">
 						<div className="shadow-md rounded-md border p-6 max-w-sm mx-auto bg-white">
 							<h2 className="text-2xl font-bold pb-2">Summary</h2>
 							<hr className="my-4" />

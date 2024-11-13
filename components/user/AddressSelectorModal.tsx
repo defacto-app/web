@@ -70,7 +70,7 @@ function AddressSelectorModal({
 									onClick={() => {
 										setModalOpen(true);
 									}}
-									className={`pr-4 py-1 gap-x-4 w-80 lg:w-full`} // Removed `px-4`
+									className={`pr-4 py-1 gap-x-4 w-72	  md:w-full`} // Removed `px-4`
 								>
 									<div className="w-full truncate flex items-center">
 										<span className="text-blue-500 hidden lg:block">
@@ -90,6 +90,7 @@ function AddressSelectorModal({
 									onClick={() => {
 										setModalOpen(true);
 									}}
+
 									type="text"
 									placeholder={
 										deliveryAddress ? deliveryAddress : "What's your address ?"
