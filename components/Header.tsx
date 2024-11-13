@@ -12,37 +12,14 @@ import { motion } from "framer-motion";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import UserCart from "@/components/user/UserCart";
 
-interface NavigationItem {
-	name: string;
-	href: string;
-}
 
-const navigation = [
-	{ name: "About", href: "/about" },
-	{ name: "FAQs", href: "/faq" },
-	{ name: "Contact", href: "/contact" },
-];
 
 export default function Header() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const [isSticky, setIsSticky] = useState(false);
 	const { getMe } = useAtomAuthContext();
-	useEffect(() => {
-		const handleScroll = () => {
-			if (window.scrollY > 100) {
-				setIsSticky(true);
-			} else {
-				setIsSticky(false);
-			}
-		};
-		// window.addEventListener("scroll", handleScroll);
 
-		return () => {
-			// window.removeEventListener("scroll", handleScroll);
-		};
-	}, []);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		getMe();
 	}, [getMe]);
@@ -64,23 +41,10 @@ export default function Header() {
 						alt=""
 						width={100}
 						height={100}
-						style={{
-							maxWidth: "100%",
-							height: "auto",
-						}}
+
 					/>
 				</Link>
-				<div className="hidden lg:flex lg:gap-x-12 bg-gray-50 px-8 py-2 rounded-full">
-					{navigation.map((item) => (
-						<a
-							key={item.name}
-							href={item.href}
-							className="text-sm leading-6 text-gray-900 font-semibold"
-						>
-							{item.name}
-						</a>
-					))}
-				</div>
+
 				<div className="flex flex-1 items-center justify-end gap-x-6">
 					{envData.isDev && (
 						<div className={`flex gap-x-2`}>
@@ -147,17 +111,6 @@ export default function Header() {
 					</div>
 					<div className="mt-6 flow-root">
 						<div className="-my-6 divide-y divide-gray-500/10">
-							<div className="space-y-10 py-10">
-								{navigation.map((item) => (
-									<a
-										key={item.name}
-										href={item.href}
-										className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-									>
-										{item.name}
-									</a>
-								))}
-							</div>
 							<div>
 								<Button variant="primary"> Get Started</Button>
 							</div>

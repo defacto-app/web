@@ -1,21 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
-import { X, Menu, UserRoundCogIcon, CircleUser, Bell } from "lucide-react";
+import { X, Menu } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import UserPopover from "./UserPopover";
-import HistoryPopover from "./HistoryPopover";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import UserCart from "@/components/user/UserCart";
 
 
-const navigation = [
-	{ name: "About", href: "/user/about" },
-	{ name: "FAQs", href: "/user/faq" },
-	{ name: "Contact", href: "/user/contact" },
-];
+
 
 export default function UserHeader() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -64,27 +59,13 @@ export default function UserHeader() {
 							alt=""
 							width={100}
 							height={100}
-							style={{
-								maxWidth: "100%",
-								height: "auto",
-							}}
+
 						/>
 					</Link>
 				</motion.div>
-				<div className="hidden lg:flex lg:gap-x-12 bg-gray-50 px-8 py-2 rounded-full">
-					{navigation.map((item) => (
-						<a
-							key={item.name}
-							href={item.href}
-							className="text-sm leading-6 text-gray-900"
-						>
-							{item.name}
-						</a>
-					))}
-				</div>
+
 				<div className="flex flex-1 items-center justify-end gap-x-6">
 					<UserPopover />
-					<HistoryPopover />
 					<UserCart/>
 
 				</div>
@@ -136,21 +117,7 @@ export default function UserHeader() {
 							<X className="h-6 w-6 text-primary-600" aria-hidden="true" />
 						</motion.button>
 					</div>
-					<div className="mt-6 flow-root">
-						<div className="-my-6 divide-y divide-gray-500/10">
-							<div className="space-y-10 py-10">
-								{navigation.map((item) => (
-									<a
-										key={item.name}
-										href={item.href}
-										className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-									>
-										{item.name}
-									</a>
-								))}
-							</div>
-						</div>
-					</div>
+
 				</Dialog.Panel>
 			</Dialog>
 		</header>

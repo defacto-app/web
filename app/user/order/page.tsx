@@ -1,5 +1,4 @@
 import React from "react";
-import OrdersHistory from "@/components/user/OrdersHistory";
 import WelcomeUser from "@/components/user/WelcomeUser";
 import Image from "next/image";
 import UserSheet from "@/components/user/UserSheet";
@@ -72,7 +71,6 @@ export default function OrderSection() {
 					</div>
 				</div>
 			</div>
-			<OrdersHistory/>
 		</div>
 	);
 }
