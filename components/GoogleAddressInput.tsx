@@ -21,7 +21,7 @@ type GoogleAddressInputProps = {
 	initialAddress?: string;
 	initialLocation?: { lat: number; lng: number };
 	onConfirm: (addressData: addressSelectionType) => void;
-	getSavedAddress: () => addressSelectionType;
+	getSavedAddress: () => addressSelectionType | null;
 	setSavedAddress: (data: addressSelectionType) => void;
 };
 function GoogleAddressInput({

@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DateTimePicker from "@/components/user/DateTimePicker";
@@ -280,59 +281,14 @@ export default function Page() {
 									dropOffLocation={payload.dropOffDetails.address.location}
 								/>
 
-								<div>
-									<Label className={`ml-5`} htmlFor="address">
-										Pickup address
-									</Label>
-
-									<AlertDialog defaultOpen={pickModalOpen} open={pickModalOpen}>
-										<AlertDialogTrigger asChild>
-											{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-											<div
-												onClick={() => setPickModalOpen(true)}
-												className={`flex items-center cursor-pointer`}
-											>
-												<Image
-													alt={`start point`}
-													width={20}
-													height={20}
-													src={
-														"https://maps.google.com/mapfiles/ms/icons/green-dot.png"
-													}
-												/>
-
-												<Input
-													variant={`line`}
-													className={`text-left`}
-													onClick={() => setPickModalOpen(true)}
-													value={payload.pickupDetails.address.address}
-												/>
-											</div>
-										</AlertDialogTrigger>
-										<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
-											<AlertDialogTitle>Choose Pickup Address</AlertDialogTitle>
-											<button
-												type="button"
-												onClick={() => setPickModalOpen(false)}
-												className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
-											>
-												<X className="w-4 h-4" />
-											</button>
-											<div className={`mt-8 `}>
-												<GoogleAddressInput
-													initialAddress={payload.pickupDetails.address.address}
-													initialLocation={
-														payload.pickupDetails.address.location
-													}
-													onConfirm={handlePickupAddressConfirm}
-													getSavedAddress={getSavedPickupAddress}
-													setSavedAddress={setPickupAddress}
-												/>
-											</div>
-											<AlertDialogDescription />
-										</AlertDialogContent>
-									</AlertDialog>
-								</div>
+								<PickupAddress
+									payload={payload}
+									setPickModalOpen={setPickModalOpen}
+									pickModalOpen={pickModalOpen}
+									handlePickupAddressConfirm={handlePickupAddressConfirm}
+									getSavedPickupAddress={getSavedPickupAddress}
+									setPickupAddress={setPickupAddress}
+								/>
 
 								<div className="mb-4">
 									<div>
@@ -446,6 +402,78 @@ export default function Page() {
 		</div>
 	);
 }
+
+
+// Mini component for Pickup Address
+const PickupAddress = ({
+						   payload,
+						   setPickModalOpen,
+						   pickModalOpen,
+						   handlePickupAddressConfirm,
+						   getSavedPickupAddress,
+						   setPickupAddress,
+					   }: {
+	payload: DeliveryPayloadType;
+	setPickModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	pickModalOpen: boolean;
+	handlePickupAddressConfirm: (addressData: addressSelectionType) => void;
+	getSavedPickupAddress: () => addressSelectionType | null;
+	setPickupAddress: (addressData: addressSelectionType) => void;
+}) => {
+	return (
+		<div>
+			<Label className={`ml-5`} htmlFor="address">
+				Pickup address
+			</Label>
+
+			<AlertDialog defaultOpen={pickModalOpen} open={pickModalOpen}>
+				<AlertDialogTrigger asChild>
+					<div
+						onClick={() => setPickModalOpen(true)}
+						onKeyUp={(e) => e.key === 'Enter' && setPickModalOpen(true)}
+						className={`flex items-center cursor-pointer`}
+						// biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
+						tabIndex={0}
+					>
+						<Image
+							alt={`start point`}
+							width={20}
+							height={20}
+							src={"https://maps.google.com/mapfiles/ms/icons/green-dot.png"}
+						/>
+
+						<Input
+							variant={`line`}
+							className={`text-left`}
+							onClick={() => setPickModalOpen(true)}
+							value={payload.pickupDetails.address.address}
+						/>
+					</div>
+				</AlertDialogTrigger>
+				<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
+					<AlertDialogTitle>Choose Pickup Address</AlertDialogTitle>
+					<button
+						type="button"
+						onClick={() => setPickModalOpen(false)}
+						className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
+					>
+						<X className="w-4 h-4" />
+					</button>
+					<div className={`mt-8 `}>
+						<GoogleAddressInput
+							initialAddress={payload.pickupDetails.address.address}
+							initialLocation={payload.pickupDetails.address.location}
+							onConfirm={handlePickupAddressConfirm}
+							getSavedAddress={getSavedPickupAddress}
+							setSavedAddress={setPickupAddress}
+						/>
+					</div>
+					<AlertDialogDescription />
+				</AlertDialogContent>
+			</AlertDialog>
+		</div>
+	);
+};
 
 // Mini component for Receiver Details
 const ReceiverDetails = ({
