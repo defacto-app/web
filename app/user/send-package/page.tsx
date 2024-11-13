@@ -4,12 +4,12 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DateTimePicker from "@/components/user/DateTimePicker";
 
-import { distanceAtom, packagePayloadAtom } from "@/app/store/sendPackageAtom";
 import GoogleAddressInput from "@/components/GoogleAddressInput";
 import {
 	AlertDialog,
 	AlertDialogContent,
 	AlertDialogTrigger,
+	AlertDialogDescription, AlertDialogTitle
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
@@ -293,7 +293,7 @@ export default function Page() {
 													width={20}
 													height={20}
 													src={
-														"http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+														"https://maps.google.com/mapfiles/ms/icons/green-dot.png"
 													}
 												/>
 
@@ -306,6 +306,7 @@ export default function Page() {
 											</div>
 										</AlertDialogTrigger>
 										<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
+											<AlertDialogTitle>Choose Pickup Address</AlertDialogTitle>
 											<button
 												type="button"
 												onClick={() => setPickModalOpen(false)}
@@ -324,6 +325,7 @@ export default function Page() {
 													setSavedAddress={setPickupAddress}
 												/>
 											</div>
+											<AlertDialogDescription/>
 										</AlertDialogContent>
 									</AlertDialog>
 								</div>
@@ -344,7 +346,7 @@ export default function Page() {
 														width={20}
 														height={20}
 														src={
-															"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
+															"https://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
 														}
 													/>
 
@@ -357,6 +359,7 @@ export default function Page() {
 												</div>
 											</AlertDialogTrigger>
 											<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
+												<AlertDialogTitle>Choose Drop-Off Address</AlertDialogTitle>
 												<button
 													type="button"
 													onClick={() => setDropOffModalOpen(false)}
@@ -377,6 +380,8 @@ export default function Page() {
 														setSavedAddress={setDropOffAddress}
 													/>
 												</div>
+
+												<AlertDialogDescription/>
 											</AlertDialogContent>
 										</AlertDialog>
 									</div>
