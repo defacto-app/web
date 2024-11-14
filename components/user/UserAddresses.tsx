@@ -12,7 +12,7 @@ import {
 	AlertDialogTrigger,
 	AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
-import { useCartContext } from "@/app/store/cartAtom";
+import { useCartContext } from "@/app/store/cart/cartAtom";
 import {useGoogleAddressAtomContext} from "@/app/store/addressAtom"; // Import the cart context
 
 function UserAddresses() {

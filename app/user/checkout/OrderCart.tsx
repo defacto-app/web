@@ -1,5 +1,5 @@
 import React from "react";
-import { useCartContext } from "@/app/store/cartAtom"; // Adjust the path as per your project structure
+import { useCartContext } from "@/app/store/cart/cartAtom"; // Adjust the path as per your project structure
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus,  Trash2 } from "lucide-react";

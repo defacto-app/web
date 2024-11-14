@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useCartContext } from "@/app/store/cartAtom";
+import { useCartContext } from "@/app/store/cart/cartAtom";
 
 import OrderSummary from "@/app/user/checkout/OrderSummary";
 import UserAddresses from "@/components/user/UserAddresses";

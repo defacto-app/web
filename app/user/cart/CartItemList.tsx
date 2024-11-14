@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from "react";
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
-import { useCartContext, useCartSummaryContext } from "@/app/store/cartAtom";
+import { useCartContext, useCartSummaryContext } from "@/app/store/cart/cartAtom";
 import Image from "next/image";
 function CartItemList() {
 	const { cart, removeItem, updateItemQuantity } = useCartContext();

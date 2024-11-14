@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useCartContext } from "@/app/store/cartAtom";
+import { useCartContext } from "@/app/store/cart/cartAtom";
 import Link from "next/link";
 
 function UserCart() {

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
-import { useCartContext, useCartSummaryContext } from "@/app/store/cartAtom";
+import { useCartContext, useCartSummaryContext } from "@/app/store/cart/cartAtom";
 import Link from "next/link";
 import { $api } from "@/http/endpoints";
 import { useAtomAuthContext } from "@/app/store/authAtom";

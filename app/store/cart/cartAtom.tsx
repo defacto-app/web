@@ -117,11 +117,12 @@ export const useCartContext = () => {
 			totalPrice: cartTotal,
 		};
 	}, [cart, cartTotal]);
-	const selectedAddresses = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("selectedAddresses") || "[]") : [];
-	const firstAddress = selectedAddresses.length > 0 ? selectedAddresses[0] : null;
-
-
-
+	const selectedAddresses =
+		typeof window !== "undefined"
+			? JSON.parse(localStorage.getItem("selectedAddresses") || "[]")
+			: [];
+	const firstAddress =
+		selectedAddresses.length > 0 ? selectedAddresses[0] : null;
 
 	return {
 		cart,
@@ -147,10 +148,12 @@ export const useCartSummaryContext = () => {
 	const totalPrice = subtotal - discountAmount + deliveryFee;
 
 	// Get and parse the selected addresses from localStorage
-	const selectedAddresses = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("selectedAddresses") || "[]") : [];
-	const firstAddress = selectedAddresses.length > 0 ? selectedAddresses[0] : null;
-
-
+	const selectedAddresses =
+		typeof window !== "undefined"
+			? JSON.parse(localStorage.getItem("selectedAddresses") || "[]")
+			: [];
+	const firstAddress =
+		selectedAddresses.length > 0 ? selectedAddresses[0] : null;
 
 	return {
 		subtotal,

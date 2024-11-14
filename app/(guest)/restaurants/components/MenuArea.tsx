@@ -3,7 +3,7 @@ import { formatPrice } from "@/utils";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useSetAtom } from "jotai";
-import {addItemAtom} from "@/app/store/cartAtom";
+import {addItemAtom} from "@/app/store/cart/cartAtom";
 import {Plus} from "lucide-react";
 
 function MenuArea({ data }: any) {
