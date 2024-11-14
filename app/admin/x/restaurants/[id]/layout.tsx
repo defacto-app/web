@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useAtomRestaurantContext } from "@/app/admin/x/restaurants/[id]/resturant.atom";

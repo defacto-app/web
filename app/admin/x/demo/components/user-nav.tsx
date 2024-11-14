@@ -16,7 +16,7 @@ import { useAtomAuthContext } from "@/app/store/admin/adminAuthAtom";
 import { UserCog } from "lucide-react";
 
 export function UserNav() {
-	const { getMe, authUser } = useAtomAuthContext();
+	const { authUser } = useAtomAuthContext();
 
 	const router = useRouter();
 

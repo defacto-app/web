@@ -1,6 +1,5 @@
 import { $axios, fetchWithAuth } from "@/http/http.fn";
-import envData from "@/config/envData";
-import { $axios_admin } from "@/http/http-admin.fn";
+
 
 export const $api = {
 	guest: {

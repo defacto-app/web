@@ -3,7 +3,6 @@ import { Inter as FontSans } from "next/font/google";
 import "./../globals.css";
 import { cn } from "@/lib/utils";
 
-import { AdminFooter } from "@/app/admin/components/admin.header";
 import Head from "next/head";
 import { ToastContainer,  } from "react-toastify";
 import type React from "react";

@@ -1,9 +1,8 @@
 "use client"
 import React, {useCallback, useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
 import { Badge } from '@/components/ui/badge';
 import {$admin_api} from "@/http/admin-endpoint";
-import { Package, Clock, MapPin, User, Phone, Mail, ShoppingCart, Printer, Send, History, X, Check, AlertCircle } from 'lucide-react';
+import { Package, MapPin, User, Phone, Mail, ShoppingCart, Printer, Send,  X, Check, AlertCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -20,7 +19,6 @@ function Page({ params }: { params: { id: string } }) {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [isUpdating, setIsUpdating] = useState(false);
-	const router = useRouter();
 
 	// Fetch getMenu data
 	const getData = useCallback(async () => {

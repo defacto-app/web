@@ -9,7 +9,6 @@ import {
 	CardContent,
 	CardDescription,
 	CardHeader,
-	CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,14 +21,7 @@ import { setToken } from "@/utils/auth";
 export default function AdminLogin() {
 	const router = useRouter();
 
-	const schema = z.object({
-		email: z.string().email({
-			message: "Invalid email address eg example@gmail.com",
-		}),
-		password: z.string().min(5, {
-			message: "Password must be at least 5 characters long",
-		}),
-	});
+
 
 	const [formData, setFormData] = useState({
 		email: "kats.com.ng@gmail.com",
@@ -37,7 +29,6 @@ export default function AdminLogin() {
 	});
 	const [isPending, setIsPending] = useState(false);
 
-	const [userExists, setUserExists] = useState(false);
 
 	function setOtp(otp: string) {
 		setFormData({ ...formData, otp: otp });

@@ -1,11 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

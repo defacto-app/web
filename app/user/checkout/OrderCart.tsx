@@ -2,8 +2,7 @@ import React from "react";
 import { useCartContext } from "@/app/store/cartAtom"; // Adjust the path as per your project structure
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus, Trash, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { Minus, Plus,  Trash2 } from "lucide-react";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import { useRouter } from "next/navigation";
 
@@ -16,7 +15,7 @@ function OrderCart({ buttonOnly = false }: propTypes) {
 	// Get the cart items, removeItem, and updateItemQuantity functions from the context
 	const { cart, updateItemQuantity, removeItem } = useCartContext();
 
-	const { logOut, authUser, setModalOpen, isLoggedIn } = useAtomAuthContext();
+	const {  isLoggedIn } = useAtomAuthContext();
 
 	function handleCartNavigation() {
 		if (!isLoggedIn) {

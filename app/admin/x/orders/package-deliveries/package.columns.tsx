@@ -29,7 +29,7 @@ const deleteOrder = async (id: string) => {
 export const packageColumns: ColumnDef<any>[] = [
 	{
 		accessorKey: "S/N",
-		header: ({ column }) => <div>S/N</div>,
+		header: ({  }) => <div>S/N</div>,
 		cell: ({ row }) => {
 			return (
 				<div className="flex space-x-2">

@@ -3,12 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { useCartContext } from "@/app/store/cartAtom";
 import Link from "next/link";
-import {useGoogleAddressAtomContext} from "@/app/store/addressAtom";
 
 function UserCart() {
-	const { cartTotal, cart } = useCartContext();
+	const { cart } = useCartContext();
 	const [isClient, setIsClient] = useState(false);
-	const {savedAddress}= useGoogleAddressAtomContext();
 
 	// Ensures this component only accesses the cart after mounting in the browser
 	useEffect(() => {

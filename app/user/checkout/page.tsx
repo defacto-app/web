@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useCartContext, useCartSummaryContext } from "@/app/store/cartAtom";
-import { formatPrice } from "@/utils";
-import { Button } from "@/components/ui/button";
+import React from "react";
+import { useCartContext } from "@/app/store/cartAtom";
+
 import OrderSummary from "@/app/user/checkout/OrderSummary";
 import UserAddresses from "@/components/user/UserAddresses";
 import CartItemList from "@/app/user/cart/CartItemList";
@@ -15,7 +14,6 @@ import {
 import {Textarea} from "@/components/ui/textarea";
 
 function CheckoutPage() {
-	const { cart, removeItem, updateItemQuantity } = useCartContext();
 
 	// Initiate Flutterwave Payment
 
@@ -40,7 +38,7 @@ function CheckoutPage() {
 									Your Cart
 								</AccordionTrigger>
 								<AccordionContent className={`mt-4`}>
-			pac						<CartItemList />
+						<CartItemList />
 								</AccordionContent>
 							</AccordionItem>
 						</Accordion>

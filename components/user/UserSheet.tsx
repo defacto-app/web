@@ -4,9 +4,7 @@ import type React from "react";
 import type { ReactNode } from "react";
 import {
 	Sheet,
-	SheetClose,
 	SheetContent,
-	SheetDescription,
 	SheetFooter,
 	SheetHeader,
 	SheetTitle,
@@ -33,7 +31,7 @@ const UserSheetContent: React.FC<UserSheetProps> = ({ children }) => {
 		return null; // Handle the case where context is undefined
 	}
 
-	const { user, setUser, setCurrentStep, currentStep, goBack } = packageContext;
+	const {  setCurrentStep, currentStep, goBack } = packageContext;
 	function hideBackButton() {
 		const shouldShow = ["welcome"];
 		return !shouldShow.includes(currentStep);

@@ -10,7 +10,6 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-	AlertDialogAction,
 	AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
 import { useCartContext } from "@/app/store/cartAtom";

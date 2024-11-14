@@ -11,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { TablePagination } from "@/components/table/table-pagination";
 import { useRouter, useSearchParams } from "next/navigation";
-import {useRefetchContext} from "@/app/store/tableAtom";
 
 // Updated function to fetch restaurants with a search query parameter
 const fetchOrders = async (

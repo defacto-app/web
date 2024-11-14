@@ -3,9 +3,8 @@
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AdminFooter, AdminHeader } from "@/app/admin/components/admin.header";
-import { ToastContainer } from "react-toastify";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import OrderMenu from "@/app/admin/components/OrderMenu";
 

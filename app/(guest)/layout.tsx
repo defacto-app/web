@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import PropTypes from "prop-types";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const fontSans = FontSans({
 	subsets: ["latin"],

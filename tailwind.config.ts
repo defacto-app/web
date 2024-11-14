@@ -1,6 +1,6 @@
 const { fontFamily } = require("tailwindcss/defaultTheme");
 import colors from "tailwindcss/colors";
-const { blackA, mauve, violet } = require("@radix-ui/colors");
+
 import type { Config } from "tailwindcss";
 
 const config = {

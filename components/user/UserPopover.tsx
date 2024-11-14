@@ -1,13 +1,13 @@
 import React from "react";
 import * as Popover from "@radix-ui/react-popover";
-import { MixerHorizontalIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import UserPopoverItem from "./UserPopoverItem";
 import { ChevronDown, UserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 
 export default function UserPopover() {
-	const { setModalOpen, setCurrentStep, authUser } = useAtomAuthContext();
+	const {  authUser } = useAtomAuthContext();
 
 	return (
 		<div>

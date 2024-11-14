@@ -24,12 +24,6 @@ export default function EditUserNumberModal() {
 		otp: "",
 	});
 
-	const [state, setState] = useState<any>({
-		loading: false,
-		error: "",
-		showOtp: false,
-		login_success: false,
-	});
 
 	function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const newValue = event.target.value;

@@ -1,5 +1,6 @@
 "use client";
-import { ChevronRightIcon, LocateFixedIcon, Map, Navigation } from "lucide-react";
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
+import {  Map, Navigation } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,13 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Checkbox } from "../ui/checkbox";
 import PastAddresses from "./PastAddresses";
-import { TextField, InputAdornment, Box } from "@mui/material";
 
-const demoAddresses = [
-  "No 2 Asaba Street, Lagos",
-  "15 Aba Road, Port Harcourt",
-  "20 Enugu Crescent, Abuja",
-];
 
 export default function PickupModal() {
   const [selectedAddress, setSelectedAddress] = useState("");

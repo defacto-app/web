@@ -6,9 +6,8 @@ import RestaurantGrid from "@/components/restaurant/RestaurantGrid";
 import { $api } from "@/http/endpoints";
 import { Input } from "@/components/ui/input";
 import SideBarRestaurant from "@/components/restaurant/SideBarRestaurant";
-import { QueryClient, useQuery } from "react-query";
+import {  useQuery } from "react-query";
 
-import { $admin_api } from "@/http/admin-endpoint";
 import { useDebounce } from "react-haiku";
 import RestaurantGridLoading from "@/components/restaurant/RestaurantGridLoading";
 const fetchRestaurants = async (

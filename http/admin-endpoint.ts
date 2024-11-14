@@ -1,6 +1,4 @@
 import { $axios_admin } from "@/http/http-admin.fn";
-import { $axios } from "@/http/http.fn";
-
 export const $admin_api = {
 	auth: {
 		sendEmailOtp: async (body: any) => {

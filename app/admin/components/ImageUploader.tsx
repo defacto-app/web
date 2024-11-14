@@ -16,7 +16,6 @@ import Image from "next/image";
 function ImageUploader({
 	buttonText,
 	id,
-	onUploadComplete,
 	handleUpload, // Accept handleUpload function as a prop
 }: {
 	buttonText: string;

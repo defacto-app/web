@@ -1,11 +1,9 @@
 "use client"
 import Image from "next/image"
-import {z} from "zod"
 
 import {columns} from "./components/columns"
 import {DataTable} from "../../components/table/data-table"
-import {UserNav} from "./components/user-nav"
-import {taskSchema} from "./data/schema"
+
 
 
 // Simulate a database read for orders.

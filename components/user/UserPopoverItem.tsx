@@ -1,26 +1,19 @@
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import EditUserModal from "./EditUserModal";
 import EditUserNumberModal from "./EditUserNumberModal";
-import EditUserPasswordModal from "./EditUserPasswordModal";
 import { Button } from "@/components/ui/button";
-import { clearToken } from "@/utils/auth";
-import { useAuthContext } from "@/app/provider/auth.context";
-import { $api } from "@/http/endpoints";
+
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import { useRouter } from "next/navigation";
 import { truncateText } from "@/utils";
-interface User {
-	firstName?: string;
-	email?: string;
-	phone?: string;
-}
+
 
 export default function UserPopoverItem() {
 	const { logOut, authUser, setModalOpen } = useAtomAuthContext();
 	const router = useRouter();
 	async function logout() {
-		const data = await fetch(`/api/auth/logout`);
+		await fetch(`/api/auth/logout`);
 
 		router.push("/");
 		await logOut();
