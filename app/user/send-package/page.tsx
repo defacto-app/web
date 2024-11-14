@@ -18,7 +18,7 @@ import {
 	AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
-import { X } from "lucide-react";
+import {Pencil, X} from "lucide-react";
 import type { addressSelectionType, DeliveryPayloadType } from "@/lib/types";
 import { calculateDistance, formatPrice } from "@/utils";
 import DeliveryMap from "@/components/delivery/DeliveryMap";
@@ -196,6 +196,8 @@ export default function Page() {
 		};
 	}, []);
 
+
+
 	const initiatePayment = async () => {
 		setLoading(true);
 
@@ -247,15 +249,16 @@ export default function Page() {
 	return (
 		<div>
 			<div className="container mx-auto  ">
-				<h1 className="text-start px-1 py-4 text-primary-600 text-3xl font-bold mt-5">
-					Send Package
-				</h1>
+
 				<div className=" lg:grid lg:grid-cols-3 gap-x-10 items-start">
-					<div className={`col-span-2 pb-40`}>
+					<div className={`col-span-2 pb-40 px-20`}>
+						<h1 className="text-start px-1 py-4 text-primary-600 text-3xl font-bold mt-5">
+							Send Package
+						</h1>
 						<div>
 							<div className="container mx-auto px-4  space-y-4">
 								<div>
-									<Label className={`font-bold text-lg`}>
+									<Label className={` text-2xl font-bold pb-8`}>
 										What do you need to transport ?
 									</Label>
 									<Textarea
@@ -273,13 +276,14 @@ export default function Page() {
 
 								{/* Package Image Uploader */}
 								<div className={`flex justify-start`}>
-									<PackageImageUploader onImageSelect={handleImageSelect} />
+									<PackageImageUploader onImageSelect={handleImageSelect}/>
 								</div>
 
 								<DeliveryMap
 									pickupLocation={payload.pickupDetails.address.location}
 									dropOffLocation={payload.dropOffDetails.address.location}
 								/>
+
 
 								<PickupAddress
 									payload={payload}
@@ -327,7 +331,7 @@ export default function Page() {
 													onClick={() => setDropOffModalOpen(false)}
 													className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
 												>
-													<X className="w-4 h-4" />
+													<X className="w-4 h-4"/>
 												</button>
 												<div className="mt-8">
 													<GoogleAddressInput
@@ -343,7 +347,7 @@ export default function Page() {
 													/>
 												</div>
 
-												<AlertDialogDescription />
+												<AlertDialogDescription/>
 											</AlertDialogContent>
 										</AlertDialog>
 									</div>
@@ -360,7 +364,7 @@ export default function Page() {
 							</div>
 
 							{/*receiver details*/}
-							<ReceiverDetails payload={payload} setPayload={setPayload} />
+							<ReceiverDetails payload={payload} setPayload={setPayload}/>
 
 							{/*receiver details*/}
 						</div>
@@ -403,16 +407,15 @@ export default function Page() {
 	);
 }
 
-
 // Mini component for Pickup Address
 const PickupAddress = ({
-						   payload,
-						   setPickModalOpen,
-						   pickModalOpen,
-						   handlePickupAddressConfirm,
-						   getSavedPickupAddress,
-						   setPickupAddress,
-					   }: {
+	payload,
+	setPickModalOpen,
+	pickModalOpen,
+	handlePickupAddressConfirm,
+	getSavedPickupAddress,
+	setPickupAddress,
+}: {
 	payload: DeliveryPayloadType;
 	setPickModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	pickModalOpen: boolean;
@@ -430,7 +433,7 @@ const PickupAddress = ({
 				<AlertDialogTrigger asChild>
 					<div
 						onClick={() => setPickModalOpen(true)}
-						onKeyUp={(e) => e.key === 'Enter' && setPickModalOpen(true)}
+						onKeyUp={(e) => e.key === "Enter" && setPickModalOpen(true)}
 						className={`flex items-center cursor-pointer`}
 						// biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
 						tabIndex={0}
@@ -452,6 +455,7 @@ const PickupAddress = ({
 				</AlertDialogTrigger>
 				<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
 					<AlertDialogTitle>Choose Pickup Address</AlertDialogTitle>
+
 					<button
 						type="button"
 						onClick={() => setPickModalOpen(false)}
@@ -459,7 +463,7 @@ const PickupAddress = ({
 					>
 						<X className="w-4 h-4" />
 					</button>
-					<div className={`mt-8 `}>
+					<div>
 						<GoogleAddressInput
 							initialAddress={payload.pickupDetails.address.address}
 							initialLocation={payload.pickupDetails.address.location}
@@ -476,30 +480,50 @@ const PickupAddress = ({
 };
 
 // Mini component for Receiver Details
+
 const ReceiverDetails = ({
-	payload,
-	setPayload,
-}: {
+							 payload,
+							 setPayload,
+						 }: {
 	payload: DeliveryPayloadType;
 	setPayload: React.Dispatch<React.SetStateAction<DeliveryPayloadType>>;
 }) => {
+	const { name, phone, email } = payload.dropOffDetails;
+
 	return (
 		<div>
 			<AlertDialog>
 				<AlertDialogTrigger asChild>
-					<Button variant="outline">Show Dialog</Button>
-				</AlertDialogTrigger>
-				<AlertDialogContent className={`py-10 h-96`}>
-					<AlertDialogHeader>
-						<AlertDialogTitle>Receiver Information?</AlertDialogTitle>
-						<AlertDialogDescription />
-					</AlertDialogHeader>
-					<div className={`space-y-2`}>
+					<div className={`bg-white mt-4 p-4 flex justify-between border rounded-lg`}>
 						<div>
-							<Label className="mt-4">Receiver Name</Label>
+							{name || phone || email ? (
+								<div className="space-y-1">
+									<p className={`underline text-gray-700`}>Receiver details</p>
+									<div><strong>Name:</strong> {name}</div>
+									<div><strong>Phone:</strong> {phone}</div>
+									<div><strong>Email:</strong> {email}</div>
+								</div>
+							) : (
+								<div>Receiver details</div>
+							)}
+						</div>
+						<div>
+							<Pencil className="text-blue-500" />
+						</div>
+					</div>
+				</AlertDialogTrigger>
+
+				<AlertDialogContent className="py-10 h-96">
+					<AlertDialogDescription/>
+					<AlertDialogHeader>
+						<AlertDialogTitle>Receiver Information</AlertDialogTitle>
+					</AlertDialogHeader>
+					<div className="space-y-2">
+						<div>
+							<Label className="mt-4">Name</Label>
 							<Input
 								placeholder="Enter receiver name"
-								value={payload.dropOffDetails.name}
+								value={name}
 								onChange={(e) =>
 									setPayload({
 										...payload,
@@ -512,10 +536,10 @@ const ReceiverDetails = ({
 							/>
 						</div>
 						<div>
-							<Label className="mt-4">Receiver Phone</Label>
+							<Label className="mt-4">Phone</Label>
 							<Input
 								placeholder="Enter receiver phone"
-								value={payload.dropOffDetails.phone}
+								value={phone}
 								onChange={(e) =>
 									setPayload({
 										...payload,
@@ -528,10 +552,10 @@ const ReceiverDetails = ({
 							/>
 						</div>
 						<div>
-							<Label className="mt-4">Receiver Email</Label>
+							<Label className="mt-4">Email</Label>
 							<Input
 								placeholder="Enter receiver email"
-								value={payload.dropOffDetails.email}
+								value={email}
 								onChange={(e) =>
 									setPayload({
 										...payload,
@@ -546,12 +570,11 @@ const ReceiverDetails = ({
 					</div>
 					<AlertDialogFooter>
 						<AlertDialogCancel>Cancel</AlertDialogCancel>
-						<AlertDialogAction>Continue</AlertDialogAction>
+						<AlertDialogAction  >Continue</AlertDialogAction>
 					</AlertDialogFooter>
-					{/*
-					 */}
 				</AlertDialogContent>
 			</AlertDialog>
 		</div>
 	);
 };
+

@@ -1,4 +1,5 @@
 import React from "react";
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import Image from "next/image";
 import envData from "@/config/envData";
@@ -30,6 +31,7 @@ const DeliveryMap = ({ pickupLocation, dropOffLocation }: DeliveryMapProps) => {
 			lng: (pickupLocation.lng + dropOffLocation.lng) / 2,
 		}
 		: { lat: 0, lng: 0 }; // Default center (won't be used if map isn't displayed)
+
 
 	return (
 		<div className="w-full mx-auto ">

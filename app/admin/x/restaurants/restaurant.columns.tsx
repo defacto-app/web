@@ -26,12 +26,12 @@ export const restaurantColumns: ColumnDef<any>[] = [
 		accessorKey: "name",
 		header: "Name",
 		cell: ({ row }) => {
-			const { name,image } = row.original;
+			const { name,image,publicId } = row.original;
 			return (
 				<Link
 					prefetch={true}
 					className={`font-medium underline flex items-center gap-x-2`}
-					href={`/admin/x/restaurants/${row.original.publicId}`}
+					href={`/admin/x/restaurants/${publicId}`}
 				>
 					<Image
 						priority={true}

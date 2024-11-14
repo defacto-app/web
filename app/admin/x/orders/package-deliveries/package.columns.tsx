@@ -15,6 +15,7 @@ import { formatDateFromNow } from "@/lib/utils";
 import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
 import { formatPrice } from "@/utils";
+import Link from "next/link";
 
 const deleteOrder = async (id: string) => {
 	try {
@@ -43,8 +44,18 @@ export const packageColumns: ColumnDef<any>[] = [
 		accessorKey: "orderId",
 		header: "Order ID",
 		cell: ({ row }) => {
-			const { orderId } = row.original;
-			return <span className={`underline`}>{orderId}</span>;
+			const { orderId,publicId } = row.original;
+			// return <span className={`underline`}>{orderId}</span>;
+
+
+			return (
+				<Link
+					href={`/admin/x/orders/package-deliveries/${publicId}`}
+					className="underline text-blue-500"
+				>
+					{orderId}
+				</Link>
+			);
 		},
 	},
 	{
