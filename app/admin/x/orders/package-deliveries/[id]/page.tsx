@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { MapPin, User, Phone, Package, Clock } from "lucide-react";
 import { $admin_api } from "@/http/admin-endpoint";
+import {formatPrice} from "@/utils";
 
 function Page({ params }: { params: { id: string } }) {
 	const router = useRouter();
@@ -47,11 +48,7 @@ function Page({ params }: { params: { id: string } }) {
 	// Helper functions for formatting
 	const formatDate = (date: string | number | Date) =>
 		new Date(date).toLocaleString();
-	const formatPrice = (price: string | number | bigint) =>
-		new Intl.NumberFormat("en-US", {
-			style: "currency",
-			currency: "NGN",
-		}).format(price);
+
 
 	return (
 		<div className="min-h-screen bg-gray-50 p-6 pb-40">
