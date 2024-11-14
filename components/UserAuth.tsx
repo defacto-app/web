@@ -1,30 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {
-	AlertDialog,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 
-import SignInModal from "@/app/components/SignInModal";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, MoveLeft, X } from "lucide-react";
 
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useAuthContext } from "@/app/provider/auth.context";
 import UserPopover from "@/components/user/UserPopover";
-import { $api } from "@/http/endpoints";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import Link from "next/link";
 
 export default function UserAuth() {
-	const {
-		isLoggedIn,
-		currentStep,
-
-	} = useAtomAuthContext();
+	const { isLoggedIn, currentStep } = useAtomAuthContext();
 
 	const [hideCloseButton, setHideCloseButton] = useState(false);
 
@@ -52,7 +35,6 @@ export default function UserAuth() {
 					</div>
 				) : (
 					<div className={`flex items-center gap-x-4`}>
-
 						<div>
 							<Link href={`/auth/login`}>
 								<Button variant={`primary`}>Get Started</Button>

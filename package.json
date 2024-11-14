@@ -13,6 +13,7 @@
     "deploy": "npm run pages:build && wrangler pages deploy",
     "start": "next start",
     "lint": "next lint",
+    "es-linter": "npx eslint . --ext .js,.jsx,.ts,.tsx",
     "env:dev": "npx jsonbank-env dev .env force",
     "prettier": "prettier --write ."
   },

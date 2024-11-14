@@ -84,14 +84,15 @@ export default function FoodHero() {
 	}, [setSavedAddress]);
 
 	return (
-		<div className="">
+		<div className={`container mx-auto`}>
 			<div className="flex flex-col lg:flex-row items-center justify-between">
-				<div className="max-w-2xl mb-10 lg:mb-0 px-10">
+				<div className="max-w-2xl mb-10 lg:mb-0 ">
 					<p className="inline-flex space-x-6 mb-8">
-						<span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
+						<span
+							className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
 							<span>Riders Available</span>
 
-							<BikeIcon className="text-primary-600" />
+							<BikeIcon className="text-primary-600"/>
 						</span>
 					</p>
 					<div className="text-2xl md:text-4xl lg:text-5xl font-bold text-blue-900 mb-4">
@@ -106,7 +107,7 @@ export default function FoodHero() {
 						deliver, you enjoy.
 					</p>
 					<div>
-						<AddressSelectorModal />
+						<AddressSelectorModal/>
 					</div>
 				</div>
 
@@ -178,16 +179,7 @@ export default function FoodHero() {
 					</div>
 				</div>
 			</div>
-			{/*   <div className="container">
-                <div className="  py-16 ">
-                    <p className="text-start text-base font-semibold text-gray-500">
-                        Trusted by over 30+ businesses
-                    </p>
-                    <div className="mt-6 grid grid-cols-2 gap-8 md:grid-cols-6 lg:grid-cols-5">
-                        {logoElements}
-                    </div>
-                </div>
-            </div>*/}
 		</div>
+
 	);
 }

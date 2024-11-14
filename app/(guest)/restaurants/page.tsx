@@ -6,7 +6,7 @@ import RestaurantGrid from "@/components/restaurant/RestaurantGrid";
 import { $api } from "@/http/endpoints";
 import { Input } from "@/components/ui/input";
 import SideBarRestaurant from "@/components/restaurant/SideBarRestaurant";
-import {  useQuery } from "react-query";
+import { useQuery } from "react-query";
 
 import { useDebounce } from "react-haiku";
 import RestaurantGridLoading from "@/components/restaurant/RestaurantGridLoading";
@@ -43,8 +43,6 @@ export default function Page() {
 			// keepPreviousData: true, // Keep the previous data while fetching new data
 		},
 	);
-
-	// Handle search input change
 
 	// Handle search input change
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

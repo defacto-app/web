@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
-import { X, Menu } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -69,16 +68,7 @@ export default function UserHeader() {
 					<UserCart/>
 
 				</div>
-				<div className="flex lg:hidden">
-					<button
-						type="button"
-						className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-						onClick={() => setMobileMenuOpen(true)}
-					>
-						<span className="sr-only">Open main menu</span>
-						<Menu className="h-6 w-6 text-primary-600" aria-hidden="true" />
-					</button>
-				</div>
+
 			</nav>
 			<Dialog
 				as="div"
@@ -105,17 +95,7 @@ export default function UserHeader() {
 							/>
 						</Link>
 
-						<motion.button
-							type="button"
-							className="-m-2.5 rounded-md p-2.5 text-gray-700"
-							onClick={() => setMobileMenuOpen(false)}
-							initial={{ scale: 0 }}
-							animate={{ scale: 1 }}
-							transition={{ duration: 0.5 }}
-						>
-							<span className="sr-only">Close menu</span>
-							<X className="h-6 w-6 text-primary-600" aria-hidden="true" />
-						</motion.button>
+
 					</div>
 
 				</Dialog.Panel>
