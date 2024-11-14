@@ -1,14 +1,13 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { MapPin, User, Phone, Package, Clock } from "lucide-react";
 import { $admin_api } from "@/http/admin-endpoint";
 import {formatPrice} from "@/utils";
+import Image from "next/image";
 
 function Page({ params }: { params: { id: string } }) {
-	const router = useRouter();
 	const [orderData, setOrderData] = useState<any>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -77,7 +76,10 @@ function Page({ params }: { params: { id: string } }) {
 						</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<img
+						<Image
+							priority={true}
+							width={500}
+							height={500}
 							src={orderData.package_image}
 							alt="Package"
 							className="rounded-lg w-full h-64 object-cover"

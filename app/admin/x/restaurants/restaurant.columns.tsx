@@ -2,8 +2,6 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
 import { formatDateFromNow } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";

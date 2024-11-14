@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { RestaurantFormComponent } from "@/app/admin/x/restaurants/components/RestaurantForm";
 
 const RestaurantPage = () => {
-	const { restaurant, getRestaurant, loading } = useAtomRestaurantContext();
+	const { restaurant, getRestaurant } = useAtomRestaurantContext();
 	const [updating, setUpdating] = useState<boolean>(false);
 
 	const refreshData = async () => {

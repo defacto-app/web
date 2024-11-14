@@ -10,11 +10,6 @@ export interface MenuItem {
 	isBestSeller: boolean;
 }
 
-export interface RestaurantProduct {
-	id: string;
-	name: string;
-	price: string;
-}
 
 export interface Restaurant {
 	id: string;

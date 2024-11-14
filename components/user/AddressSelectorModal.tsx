@@ -11,7 +11,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { ChevronDown, X } from "lucide-react";
 import GoogleAddressInput from "@/components/GoogleAddressInput";
-import { useGoogleAddressAtomContext } from "@/app/store/addressAtom";
 import { MapPin } from "lucide-react";
 import type { addressSelectionType } from "@/lib/types";
 type PickupModalProps = {
