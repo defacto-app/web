@@ -170,6 +170,14 @@ export const $admin_api = {
 	},
 
 	orders:{
+
+		one: async (orderId: string) => {
+			try {
+				return $axios_admin.get(`/orders/${orderId}`);
+			} catch (error: any) {
+				return error;
+			}
+		},
 		all: async ({ page = 1, perPage = 20, searchTerm = "", type = "" }) => {
 			try {
 				return $axios_admin.get(`/orders`, {
