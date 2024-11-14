@@ -1,6 +1,8 @@
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { useCallback } from "react";
+import { usePathname } from "next/navigation";
+
 
 // Define the type for a cart item
 type CartItemType = {
@@ -11,7 +13,34 @@ type CartItemType = {
 	image: string;
 };
 
+// Atom to store all carts by restaurant slug
+export const cartsByRestaurantAtom = atom<{ [slug: string]: CartItemType[] }>({});
+// Atom to hold the currently selected restaurant slug
+export const selectedRestaurantSlugAtom = atom<string | null>(null);
 export const selectedAddressAtom = atom<any>(null);
+
+
+//
+// Atom to add an item to the current restaurant's cart
+export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
+	const slug = get(selectedRestaurantSlugAtom);
+	if (!slug) return;
+
+	const carts = get(cartsByRestaurantAtom);
+	const currentCart = carts[slug] || [];
+
+	const existingItem = currentCart.find((item) => item.publicId === newItem.publicId);
+	const updatedCart = existingItem
+		? currentCart.map((item) =>
+			item.publicId === newItem.publicId
+				? { ...item, quantity: item.quantity + newItem.quantity }
+				: item,
+		)
+		: [...currentCart, newItem];
+
+	set(cartsByRestaurantAtom, { ...carts, [slug]: updatedCart });
+	sessionStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
+});
 
 // Function to set the selected address in the cart
 export const setSelectedAddressAtom = atom(
@@ -41,75 +70,83 @@ export const cartTotalAtom = atom((get) => {
 });
 
 // Add item atom to add new items to the cart
-export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
-	const currentCart = get(cartAtom);
-	const existingItem = currentCart.find(
-		(item) => item.publicId === newItem.publicId,
-	);
 
-	let updatedCart: any;
-	if (existingItem) {
-		// Update the quantity if the item already exists
-		updatedCart = currentCart.map((item) =>
-			item.publicId === newItem.publicId
-				? { ...item, quantity: item.quantity + newItem.quantity }
-				: item,
-		);
-	} else {
-		// Add the new item to the cart
-		updatedCart = [...currentCart, newItem];
-	}
-
-	set(cartAtom, updatedCart);
-	sessionStorage.setItem("cart", JSON.stringify(updatedCart));
-});
-
-// Atom to remove an item from the cart
+// Atom to remove an item from the current restaurant's cart
 export const removeItemAtom = atom(null, (get, set, itemId: string) => {
-	const currentCart = get(cartAtom);
-	const updatedCart = currentCart.filter((item) => item.publicId !== itemId);
-	set(cartAtom, updatedCart);
-	sessionStorage.setItem("cart", JSON.stringify(updatedCart));
-});
+	const slug = get(selectedRestaurantSlugAtom);
+	if (!slug) return;
 
+	const carts = get(cartsByRestaurantAtom);
+	const currentCart = carts[slug] || [];
+	const updatedCart = currentCart.filter((item) => item.publicId !== itemId);
+
+	set(cartsByRestaurantAtom, { ...carts, [slug]: updatedCart });
+	sessionStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
+});
 // Atom to update item quantity in the cart
+
+// Atom to update item quantity in the current restaurant's cart
 export const updateItemQuantityAtom = atom(
 	null,
 	(get, set, { itemId, quantity }: { itemId: string; quantity: number }) => {
-		const currentCart = get(cartAtom);
+		const slug = get(selectedRestaurantSlugAtom);
+		if (!slug) return;
+
+		const carts = get(cartsByRestaurantAtom);
+		const currentCart = carts[slug] || [];
 		const updatedCart = currentCart.map((item) =>
 			item.publicId === itemId ? { ...item, quantity } : item,
 		);
-		set(cartAtom, updatedCart);
-		sessionStorage.setItem("cart", JSON.stringify(updatedCart));
+
+		set(cartsByRestaurantAtom, { ...carts, [slug]: updatedCart });
+		sessionStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
 	},
 );
 
-// Atom to clear the cart
-export const clearCartAtom = atom(null, (get, set) => {
-	set(cartAtom, []);
-	sessionStorage.removeItem("cart");
-});
+export const useRestaurantSlug = () => {
+	const pathname = usePathname();
+	const setSlug = useSetAtom(selectedRestaurantSlugAtom);
+	const setCartsByRestaurant = useSetAtom(cartsByRestaurantAtom);
 
+	useEffect(() => {
+		console.log("Current pathname:", pathname);
+
+		// Extract the slug part from the path
+		const slug = pathname.split("/")[2]; // assuming the path is like "/restaurants/[slug]"
+		console.log("Extracted slug:", slug);
+
+		if (slug) {
+			setSlug(slug);
+			const storedCart = sessionStorage.getItem(`cart_${slug}`);
+			const initialCart = storedCart ? JSON.parse(storedCart) : [];
+			setCartsByRestaurant((prevCarts) => ({ ...prevCarts, [slug]: initialCart }));
+		}
+	}, [pathname, setSlug, setCartsByRestaurant]);
+};
+
+// Atom to clear the cart for the current restaurant
+export const clearCartAtom = atom(null, (get, set) => {
+	const slug = get(selectedRestaurantSlugAtom);
+	if (!slug) return;
+
+	set(cartsByRestaurantAtom, (carts) => ({ ...carts, [slug]: [] }));
+	sessionStorage.removeItem(`cart_${slug}`);
+});
 // Create the hook to use the cart atoms in components
 export const useCartContext = () => {
-	const cart = useAtomValue(cartAtom); // Read the cart
-	const cartTotal = useAtomValue(cartTotalAtom); // Read the cart total
-	const selectedAddress = useAtomValue(selectedAddressAtom); // Read the selected address
+	useRestaurantSlug();
+	const selectedSlug = useAtomValue(selectedRestaurantSlugAtom);
+	const carts = useAtomValue(cartsByRestaurantAtom);
+	const cart = selectedSlug ? carts[selectedSlug] || [] : [];
 
-	const deliveryFee = 1000; // Example delivery fee
-	const discount = 25; // Example discount
+	const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
-	const addItem = useSetAtom(addItemAtom); // Add an item
-	const removeItem = useSetAtom(removeItemAtom); // Remove an item
-	const updateItemQuantity = useSetAtom(updateItemQuantityAtom); // Update item quantity
-	const clearCart = useSetAtom(clearCartAtom); // Clear the cart
-	const setSelectedAddress = useSetAtom(setSelectedAddressAtom); // Set selected address
+	const addItem = useSetAtom(addItemAtom);
+	const removeItem = useSetAtom(removeItemAtom);
+	const updateItemQuantity = useSetAtom(updateItemQuantityAtom);
+	const clearCart = useSetAtom(clearCartAtom);
 
-	// Persist the cart in session storage whenever it changes
-	useEffect(() => {
-		sessionStorage.setItem("cart", JSON.stringify(cart));
-	}, [cart]);
+
 
 	const getCartSummary = useCallback(() => {
 		return {
@@ -117,12 +154,6 @@ export const useCartContext = () => {
 			totalPrice: cartTotal,
 		};
 	}, [cart, cartTotal]);
-	const selectedAddresses =
-		typeof window !== "undefined"
-			? JSON.parse(localStorage.getItem("selectedAddresses") || "[]")
-			: [];
-	const firstAddress =
-		selectedAddresses.length > 0 ? selectedAddresses[0] : null;
 
 	return {
 		cart,
@@ -132,12 +163,8 @@ export const useCartContext = () => {
 		updateItemQuantity,
 		clearCart,
 		getCartSummary,
-		setSelectedAddress,
-		selectedAddress,
-		firstAddress,
 	};
 };
-
 export const useCartSummaryContext = () => {
 	const cartTotal = useAtomValue(cartTotalAtom);
 	const deliveryFee = 1000; // Example delivery fee

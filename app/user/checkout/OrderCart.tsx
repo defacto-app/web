@@ -13,7 +13,7 @@ type propTypes = {
 function OrderCart({ buttonOnly = false }: propTypes) {
 	const router = useRouter();
 	// Get the cart items, removeItem, and updateItemQuantity functions from the context
-	const { cart, updateItemQuantity, removeItem } = useCartContext();
+	const { cart, updateItemQuantity, removeItem  } = useCartContext();
 
 	const {  isLoggedIn } = useAtomAuthContext();
 
