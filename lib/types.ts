@@ -1,5 +1,3 @@
-// types.ts
-
 export interface MenuItem {
 	id: string;
 	name: string;
@@ -9,7 +7,6 @@ export interface MenuItem {
 	imageUrl: string;
 	isBestSeller: boolean;
 }
-
 
 export interface Restaurant {
 	id: string;
@@ -81,8 +78,6 @@ export interface addressSelectionType {
 	address: string;
 	additionalDetails: string;
 }
-
-
 
 interface Address {
 	address: string;
