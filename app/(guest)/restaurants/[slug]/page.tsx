@@ -96,7 +96,7 @@ function Page({ params }: { params: { slug: string } }) {
 							</div>
 						</div>
 						<div className="relative">
-					{/*		<Image
+							{/*		<Image
 								width={1000}
 								height={100}
 								className={`h-[300px] w-full object-cover filter brightness-50`} // Darken the image
@@ -109,7 +109,7 @@ function Page({ params }: { params: { slug: string } }) {
 								className={`h-[300px] w-full object-cover filter brightness-50 transition-opacity duration-300 opacity-0`}
 								src={restaurant.image}
 								alt={restaurant.name}
-								onLoadingComplete={(img) => img.classList.remove('opacity-0')}
+								onLoadingComplete={(img) => img.classList.remove("opacity-0")}
 							/>
 						</div>
 					</div>

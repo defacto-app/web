@@ -17,11 +17,11 @@ import { useGoogleAddressAtomContext } from "@/app/store/addressAtom"; // Import
 
 function UserAddresses() {
 	const [data, setData] = React.useState<any>(null);
-	const [modalOpen, setModalOpen] = React.useState(true);
+	const [, setModalOpen] = React.useState(true);
 	const { savedAddress } = useGoogleAddressAtomContext();
 
-	const [isLoading, setLoading] = React.useState<boolean>(true);
-	const [selectedAddress, setSelectedAddress] = React.useState<any>(null);
+	const [, setLoading] = React.useState<boolean>(true);
+	const [, setSelectedAddress] = React.useState<any>(null);
 
 	// Get the setSelectedAddress function from the cart context
 	const { setSelectedAddress: setCartAddress } = useCartContext();
