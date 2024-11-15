@@ -1,31 +1,61 @@
 "use client"
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
-import { useCartContext, useCartSummaryContext } from "@/app/store/cart/cartAtom";
+import { selectedRestaurantSlugAtom, cartsByRestaurantAtom, useCartContext } from "@/app/store/cart/cartAtom";
 import Image from "next/image";
+import { useSetAtom, useAtomValue } from "jotai";
+
 function CartItemList() {
+	const setSlug = useSetAtom(selectedRestaurantSlugAtom);
+	const setCartsByRestaurant = useSetAtom(cartsByRestaurantAtom);
+	const slug = useAtomValue(selectedRestaurantSlugAtom);
 	const { cart, removeItem, updateItemQuantity } = useCartContext();
-	const [isMounted, setIsMounted] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		setIsMounted(true);
-	}, []);
+		// Retrieve stored slug from session storage
+		const storedSlug = sessionStorage.getItem("currentRestaurantSlug");
+		console.log("Stored Slug from Session:", storedSlug);
+		console.log("Current Slug in Atom:", slug);
 
-	// Don't render content until the component has mounted on the client
-	if (!isMounted) {
-		return null;
+		// If no slug is set in atom, set it from session storage
+		if (storedSlug && slug !== storedSlug) {
+			setSlug(storedSlug);
+		}
+
+		// Check if cart data for the stored slug is already in cartsByRestaurantAtom
+		if (storedSlug) {
+			const storedCart = sessionStorage.getItem(`cart_${storedSlug}`);
+			if (storedCart) {
+				setCartsByRestaurant((prevCarts) => ({
+					...prevCarts,
+					[storedSlug]: JSON.parse(storedCart),
+				}));
+			}
+		}
+
+		// Stop loading once slug and cart data are set
+		setIsLoading(false);
+	}, [setSlug, setCartsByRestaurant, slug]);
+
+	// Don't render content until the slug and cart data are fully initialized
+	if (isLoading) {
+		return <p>Loading...</p>;
 	}
+
+	// Debugging information to confirm cart data
+	console.log("Cart Data:", cart);
 
 	return (
 		<div>
-			<div className={`bg-white p-4 border rounded-lg`}>
-				<div className="space-y-6  ">
+			<div className="bg-white p-4 border rounded-lg">
+				<div className="space-y-6">
 					{cart.length > 0 ? (
 						cart.map((item) => (
 							<div
 								key={item.publicId}
-								className="flex items-center justify-between p-4  border-b last:border-b-0"
+								className="flex items-center justify-between p-4 border-b last:border-b-0"
 							>
 								<div className="flex items-center">
 									<Image

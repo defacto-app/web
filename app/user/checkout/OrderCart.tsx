@@ -1,10 +1,11 @@
 import React from "react";
-import { useCartContext } from "@/app/store/cart/cartAtom"; // Adjust the path as per your project structure
+import {selectedRestaurantSlugAtom, useCartContext} from "@/app/store/cart/cartAtom"; // Adjust the path as per your project structure
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus,  Trash2 } from "lucide-react";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import { useRouter } from "next/navigation";
+import {useAtomValue} from "jotai";
 
 type propTypes = {
 	buttonOnly?: boolean;
@@ -17,22 +18,29 @@ function OrderCart({ buttonOnly = false }: propTypes) {
 
 	const {  isLoggedIn } = useAtomAuthContext();
 
+	const slug = useAtomValue(selectedRestaurantSlugAtom); // Get the current restaurant slug
+
+
 	function handleCartNavigation() {
 		if (!isLoggedIn) {
 			// Redirect to login page
 
 			router.push("/auth/login");
 		} else {
+
+			if (slug) {
+				sessionStorage.setItem("currentRestaurantSlug", slug);
+			}
 			router.push("/user/cart");
 			// Redirect to cart page
 		}
-		console.log("Navigating to cart", isLoggedIn);
+		console.log("slug cart", slug);
 	}
 	// You can add your logic here
 
 	return (
 		<div className="bg-white rounded-lg shadow p-4 w-full mx-auto">
-			<h2 className="text-lg font-medium mb-4">Your order</h2>
+			<h2 className="text-lg font-medium mb-4">Your order </h2>
 
 			{!buttonOnly && (
 				<div>

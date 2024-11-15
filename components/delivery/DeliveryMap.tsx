@@ -5,10 +5,6 @@ import Image from "next/image";
 import envData from "@/config/envData";
 import mapStyleJson from "../../utils/mapStyle.json";
 
-const mapContainerStyle = {
-	width: "100%",
-	height: "400px",
-};
 
 // Custom map style (grayscale/minimalistic)
 const mapStyle = [...mapStyleJson];

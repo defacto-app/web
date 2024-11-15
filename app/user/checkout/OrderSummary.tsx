@@ -6,7 +6,7 @@ import { useCartContext, useCartSummaryContext } from "@/app/store/cart/cartAtom
 import Link from "next/link";
 import { $api } from "@/http/endpoints";
 import { useAtomAuthContext } from "@/app/store/authAtom";
-import { useGoogleAddressAtomContext } from "@/app/store/addressAtom";
+
 import envData from "@/config/envData";
 type OrderSummaryProps = {
 	cartPage?: boolean;

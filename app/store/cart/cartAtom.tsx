@@ -2,7 +2,7 @@
 
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { usePathname } from "next/navigation";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 
 // Define the type for a cart item
 type CartItemType = {
@@ -106,39 +106,48 @@ export const useRestaurantSlug = () => {
 };
 
 // Create the hook to use the cart atoms in components
+
+// Create the hook to use the cart atoms in components
 export const useCartContext = () => {
-	useRestaurantSlug(); // Use the slug initialization hook
+    useRestaurantSlug(); // Use the slug initialization hook
 
-	const selectedSlug = useAtomValue(selectedRestaurantSlugAtom);
-	const carts = useAtomValue(cartsByRestaurantAtom);
-	const cart = selectedSlug ? carts[selectedSlug] || [] : [];
+    const selectedSlug = useAtomValue(selectedRestaurantSlugAtom);
+    const carts = useAtomValue(cartsByRestaurantAtom);
+    const cart = useMemo(() => (selectedSlug ? carts[selectedSlug] || [] : []), [selectedSlug, carts]);
 
-	const cartTotal = cart.reduce(
-		(total, item) => total + item.price * item.quantity,
-		0,
-	);
+    // Debugging statements to verify cart loading
+    useEffect(() => {
+        console.log("Selected Slug in useCartContext:", selectedSlug);
+        console.log("All Carts:", carts);
+        console.log("Cart for Selected Slug:", cart);
+    }, [selectedSlug, carts, cart]);
 
-	const addItem = useSetAtom(addItemAtom);
-	const removeItem = useSetAtom(removeItemAtom);
-	const updateItemQuantity = useSetAtom(updateItemQuantityAtom);
-	const clearCart = useSetAtom(clearCartAtom);
+    const cartTotal = cart.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0,
+    );
 
-	const getCartSummary = useCallback(() => {
-		return {
-			itemCount: cart.reduce((count, item) => count + item.quantity, 0),
-			totalPrice: cartTotal,
-		};
-	}, [cart, cartTotal]);
+    const addItem = useSetAtom(addItemAtom);
+    const removeItem = useSetAtom(removeItemAtom);
+    const updateItemQuantity = useSetAtom(updateItemQuantityAtom);
+    const clearCart = useSetAtom(clearCartAtom);
 
-	return {
-		cart,
-		cartTotal,
-		addItem,
-		removeItem,
-		updateItemQuantity,
-		clearCart,
-		getCartSummary,
-	};
+    const getCartSummary = useCallback(() => {
+        return {
+            itemCount: cart.reduce((count, item) => count + item.quantity, 0),
+            totalPrice: cartTotal,
+        };
+    }, [cart, cartTotal]);
+
+    return {
+        cart,
+        cartTotal,
+        addItem,
+        removeItem,
+        updateItemQuantity,
+        clearCart,
+        getCartSummary,
+    };
 };
 
 // Cart summary context for additional calculations like discounts and delivery fee
