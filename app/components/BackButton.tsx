@@ -5,13 +5,16 @@ import { Button } from "@/components/ui/button";
 
 // Add this component at the top of your JSX
 const BackButton = () => {
-	const router = useRouter();
+  const router = useRouter();
 
-	return (
-		<Button variant="ghost" onClick={() => router.back()}>
-			<ArrowLeft size={40} />
-		</Button>
-	);
+  return (
+    <Button
+      variant="ghost"
+      onClick={() => router.back()}
+    >
+      <ArrowLeft size={30} /> {/* Adjust icon size */}
+    </Button>
+  );
 };
 
 export default BackButton;

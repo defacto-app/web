@@ -1,16 +1,10 @@
 "use client";
 import React from "react";
-import { useCartContext } from "@/app/store/cart/cartAtom";
 
 import OrderSummary from "@/app/user/checkout/OrderSummary";
 import UserAddresses from "@/components/user/UserAddresses";
 import CartItemList from "@/app/user/cart/CartItemList";
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from "@/components/ui/accordion";
+
 import { Textarea } from "@/components/ui/textarea";
 import BackButton from "@/app/components/BackButton";
 

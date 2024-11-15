@@ -18,7 +18,7 @@ import {
 	AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
-import {Pencil, X} from "lucide-react";
+import { Pencil, X } from "lucide-react";
 import type { addressSelectionType, DeliveryPayloadType } from "@/lib/types";
 import { calculateDistance, formatPrice } from "@/utils";
 import DeliveryMap from "@/components/delivery/DeliveryMap";
@@ -27,6 +27,7 @@ import PackageImageUploader from "@/components/delivery/PackageImage";
 import { Button } from "@/components/ui/button";
 import { $api } from "@/http/endpoints";
 import envData, { isDev } from "@/config/envData";
+import BackButton from "@/app/components/BackButton";
 
 export default function Page() {
 	const [loading, setLoading] = useState(false);
@@ -196,8 +197,6 @@ export default function Page() {
 		};
 	}, []);
 
-
-
 	const initiatePayment = async () => {
 		setLoading(true);
 
@@ -248,20 +247,21 @@ export default function Page() {
 
 	return (
 		<div>
-			<div className="container mx-auto  ">
-
-				<div className=" lg:grid lg:grid-cols-3 gap-x-10 items-start">
-					<div className={`col-span-2 pb-40 px-20`}>
-						<h1 className="text-start px-1 py-4 text-primary-600 text-3xl font-bold mt-5">
-							Send Package
-						</h1>
+			<div className="md:container mx-auto">
+				<div className="lg:grid lg:grid-cols-3 gap-x-10 items-start">
+					<div className={`col-span-2 pb-40 lg:px-20`}>
+						<div className={`flex items-center pb-4`}>
+							<BackButton />
+							<div className="lg:text-3xl text-xl font-bold tracking-tight"> Send Package</div>
+						</div>
 						<div>
 							<div className="container mx-auto px-4  space-y-4">
 								<div>
-									<Label className={` text-2xl font-bold pb-8`}>
+									<Label className={`text-lg lg:text-2xl font-bold`}>
 										What do you need to transport ?
 									</Label>
 									<Textarea
+									className="mt-4"
 										onChange={(e) =>
 											setPayload({
 												...payload,
@@ -276,14 +276,13 @@ export default function Page() {
 
 								{/* Package Image Uploader */}
 								<div className={`flex justify-start`}>
-									<PackageImageUploader onImageSelect={handleImageSelect}/>
+									<PackageImageUploader onImageSelect={handleImageSelect} />
 								</div>
 
 								<DeliveryMap
 									pickupLocation={payload.pickupDetails.address.location}
 									dropOffLocation={payload.dropOffDetails.address.location}
 								/>
-
 
 								<PickupAddress
 									payload={payload}
@@ -331,7 +330,7 @@ export default function Page() {
 													onClick={() => setDropOffModalOpen(false)}
 													className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
 												>
-													<X className="w-4 h-4"/>
+													<X className="w-4 h-4" />
 												</button>
 												<div className="mt-8">
 													<GoogleAddressInput
@@ -347,7 +346,7 @@ export default function Page() {
 													/>
 												</div>
 
-												<AlertDialogDescription/>
+												<AlertDialogDescription />
 											</AlertDialogContent>
 										</AlertDialog>
 									</div>
@@ -364,7 +363,7 @@ export default function Page() {
 							</div>
 
 							{/*receiver details*/}
-							<ReceiverDetails payload={payload} setPayload={setPayload}/>
+							<ReceiverDetails payload={payload} setPayload={setPayload} />
 
 							{/*receiver details*/}
 						</div>
@@ -482,9 +481,9 @@ const PickupAddress = ({
 // Mini component for Receiver Details
 
 const ReceiverDetails = ({
-							 payload,
-							 setPayload,
-						 }: {
+	payload,
+	setPayload,
+}: {
 	payload: DeliveryPayloadType;
 	setPayload: React.Dispatch<React.SetStateAction<DeliveryPayloadType>>;
 }) => {
@@ -494,14 +493,22 @@ const ReceiverDetails = ({
 		<div>
 			<AlertDialog>
 				<AlertDialogTrigger asChild>
-					<div className={`bg-white mt-4 p-4 flex justify-between border rounded-lg`}>
+					<div
+						className={`bg-white mt-4 p-4 flex justify-between border rounded-lg`}
+					>
 						<div>
 							{name || phone || email ? (
 								<div className="space-y-1">
 									<p className={`underline text-gray-700`}>Receiver details</p>
-									<div><strong>Name:</strong> {name}</div>
-									<div><strong>Phone:</strong> {phone}</div>
-									<div><strong>Email:</strong> {email}</div>
+									<div>
+										<strong>Name:</strong> {name}
+									</div>
+									<div>
+										<strong>Phone:</strong> {phone}
+									</div>
+									<div>
+										<strong>Email:</strong> {email}
+									</div>
 								</div>
 							) : (
 								<div>Receiver details</div>
@@ -514,7 +521,7 @@ const ReceiverDetails = ({
 				</AlertDialogTrigger>
 
 				<AlertDialogContent className="py-10 h-96">
-					<AlertDialogDescription/>
+					<AlertDialogDescription />
 					<AlertDialogHeader>
 						<AlertDialogTitle>Receiver Information</AlertDialogTitle>
 					</AlertDialogHeader>
@@ -570,11 +577,10 @@ const ReceiverDetails = ({
 					</div>
 					<AlertDialogFooter>
 						<AlertDialogCancel>Cancel</AlertDialogCancel>
-						<AlertDialogAction  >Continue</AlertDialogAction>
+						<AlertDialogAction>Continue</AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogContent>
 			</AlertDialog>
 		</div>
 	);
 };
-

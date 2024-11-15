@@ -12,7 +12,7 @@ function CartPage() {
 	return (
 		<div className="p-8">
 			{/* Cart Header */}
-		
+
 
 			<div className={`flex items-center pb-4`}>
 				<BackButton/>
