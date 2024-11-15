@@ -6,13 +6,17 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import { useRouter } from "next/navigation";
 import { useAtomValue } from "jotai";
-import {selectedRestaurantSlugAtom, useCartContext} from "@/app/store/cart/cartAtom";
+import {
+	selectedRestaurantSlugAtom,
+	useCartContext,
+} from "@/app/store/cart/cartAtom";
 
 type propTypes = {
 	buttonOnly?: boolean;
+	restaurant_name?: string;
 };
 
-function OrderCart({ buttonOnly = false }: propTypes) {
+function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 	const router = useRouter();
 	// Get the cart items, removeItem, and updateItemQuantity functions from the context
 	const { cart, updateItemQuantity, removeItem } = useCartContext();
@@ -29,6 +33,9 @@ function OrderCart({ buttonOnly = false }: propTypes) {
 		} else {
 			if (slug) {
 				sessionStorage.setItem("currentRestaurantSlug", slug);
+				if (typeof restaurant_name === "string") {
+					sessionStorage.setItem("currentRestaurantName", restaurant_name);
+				} // Replace with actual restaurant name
 			}
 			router.push("/user/cart");
 			// Redirect to cart page
@@ -37,7 +44,7 @@ function OrderCart({ buttonOnly = false }: propTypes) {
 	// You can add your logic here
 
 	return (
-		<div className="bg-white rounded-lg shadow p-4 w-full mx-auto">
+		<div className="bg-white rounded-lg shadow p-4 w-full mx-auto ">
 			<h2 className="text-lg font-medium mb-4">Your order </h2>
 
 			{!buttonOnly && (
@@ -108,7 +115,10 @@ function OrderCart({ buttonOnly = false }: propTypes) {
 							),
 						)
 					) : (
-						<p>Your cart is empty.</p>
+						<p className={`text-center text-sm py-10`}>
+							Your products list is empty. <br /> Start adding products to see
+							them displayed here!
+						</p>
 					)}
 				</div>
 			)}
@@ -117,8 +127,9 @@ function OrderCart({ buttonOnly = false }: propTypes) {
 
 			<Button
 				variant={`primary`}
-				className=" text-white font-bold py-3 rounded-lg w-full mt-4"
+				className=" text-white font-bold py-3  w-full mt-4"
 				onClick={handleCartNavigation}
+				disabled={cart.length === 0}
 			>
 				Order {cart.length} for {""}
 				{formatPrice(

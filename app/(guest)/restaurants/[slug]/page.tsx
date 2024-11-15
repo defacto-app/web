@@ -141,16 +141,16 @@ function Page({ params }: { params: { slug: string } }) {
 				</div>
 
 				{/* Menu Area */}
-				<div className="grid lg:grid-cols-5 gap-x-4 items-start">
-					<div className={`col-span-4 px-2`}>
+				<div className="grid lg:grid-cols-3 gap-x-4 items-start">
+					<div className={`col-span-2 px-2`}>
 						<div className={`lg:hidden `}>
-							<OrderCart buttonOnly={true} />
+							<OrderCart buttonOnly={true} restaurant_name={restaurant.name}  />
 						</div>
 						<MenuArea data={filteredMenu.length > 0 ? filteredMenu : menu} />
 					</div>
 
-					<div className={`hidden md:block`}>
-						<OrderCart />
+					<div className={`hidden md:block sticky top-20 right-5`}>
+						<OrderCart restaurant_name={restaurant.name} />
 					</div>
 				</div>
 			</div>
