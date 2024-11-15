@@ -142,7 +142,7 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 
 				{cartPage && (
 					<>
-						<div className="flex items-center space-x-2">
+				{/*		<div className="flex items-center space-x-2">
 							<input
 								type="text"
 								placeholder="Add promo code"
@@ -151,9 +151,9 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 							<Button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
 								Apply
 							</Button>
-						</div>
+						</div>*/}
 						<Link href={`/user/checkout`}>
-							<Button className="w-full bg-blue-500 text-white px-4 py-3 mt-4 rounded-lg">
+							<Button variant={`primary`} className="w-full  px-4 py-3 mt-4 ">
 								Go to Checkout →
 							</Button>
 						</Link>

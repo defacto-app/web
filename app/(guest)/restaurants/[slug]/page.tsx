@@ -133,6 +133,7 @@ function Page({ params }: { params: { slug: string } }) {
 				{/* Search Bar */}
 				<div className={`px-2 py-2`}>
 					<Input
+						variant={`rounded`}
 						value={search}
 						onChange={(e) => setSearch(e.target.value)}
 						placeholder="Search menu..."
@@ -149,7 +150,7 @@ function Page({ params }: { params: { slug: string } }) {
 						<MenuArea data={filteredMenu.length > 0 ? filteredMenu : menu} />
 					</div>
 
-					<div className={`hidden md:block sticky top-20 right-5`}>
+					<div className={`hidden lg:block sticky top-20 right-5`}>
 						<OrderCart restaurant_name={restaurant.name} />
 					</div>
 				</div>
