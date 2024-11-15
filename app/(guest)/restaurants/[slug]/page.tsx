@@ -9,7 +9,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { MapPin, Clock1 } from "lucide-react";
 import OrderCart from "@/app/user/checkout/OrderCart";
-import RestaurantPageSkeleton from "@/app/(guest)/restaurants/[slug]/LoadingRestaurants"; // Assuming you have a button component
+import OneRestaurantsLoading from "@/app/(guest)/restaurants/components/OneRestaurantsLoading";
 
 function Page({ params }: { params: { slug: string } }) {
 	// State for restaurant and menu data
@@ -57,7 +57,7 @@ function Page({ params }: { params: { slug: string } }) {
 
 	// Conditional rendering
 	if (loading) {
-		return <RestaurantPageSkeleton />;
+		return <OneRestaurantsLoading />;
 	}
 
 	if (error) {
@@ -96,12 +96,20 @@ function Page({ params }: { params: { slug: string } }) {
 							</div>
 						</div>
 						<div className="relative">
-							<Image
+					{/*		<Image
 								width={1000}
 								height={100}
 								className={`h-[300px] w-full object-cover filter brightness-50`} // Darken the image
 								src={restaurant.image}
 								alt={restaurant.name}
+							/>*/}
+							<Image
+								width={1000}
+								height={100}
+								className={`h-[300px] w-full object-cover filter brightness-50 transition-opacity duration-300 opacity-0`}
+								src={restaurant.image}
+								alt={restaurant.name}
+								onLoadingComplete={(img) => img.classList.remove('opacity-0')}
 							/>
 						</div>
 					</div>

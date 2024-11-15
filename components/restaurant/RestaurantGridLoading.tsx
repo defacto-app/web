@@ -4,7 +4,7 @@ function RestaurantGridLoading() {
 		<div className={`grid grid-cols-3 gap-4`}>
 			{Array.from({ length: 4 }).map((_, i) => (
 				// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-<div key={i} className=" grid grid-cols-3">
+				<div key={i} className=" grid grid-cols-3">
 					<div
 						role="status"
 						className="space-y-8 animate-pulse  rtl:space-x-reverse flex-col gap-y-3 "

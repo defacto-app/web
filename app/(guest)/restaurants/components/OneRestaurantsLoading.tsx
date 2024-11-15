@@ -1,6 +1,6 @@
 import React from "react";
 
-const RestaurantPageSkeleton = () => {
+const OneRestaurantsLoading = () => {
 	return (
 		<div className="animate-pulse">
 			{/* Hero Section Skeleton */}
@@ -68,4 +68,4 @@ const RestaurantPageSkeleton = () => {
 	);
 };
 
-export default RestaurantPageSkeleton;
+export default OneRestaurantsLoading;

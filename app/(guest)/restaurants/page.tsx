@@ -9,7 +9,7 @@ import SideBarRestaurant from "@/components/restaurant/SideBarRestaurant";
 import { useQuery } from "react-query";
 
 import { useDebounce } from "react-haiku";
-import RestaurantGridLoading from "@/components/restaurant/RestaurantGridLoading";
+import AllRestaurantLoading from "@/app/(guest)/restaurants/components/AllRestaurantLoading";
 const fetchRestaurants = async (
 	page: number,
 	perPage: number,
@@ -57,6 +57,10 @@ export default function Page() {
 	// Prevent rendering during SSR to avoid mismatch
 	if (!isMounted) return null;
 
+	if (isLoading) {
+		return <AllRestaurantLoading />;
+	}
+
 	if (error) return <div>Error loading data...</div>;
 
 	return (
@@ -82,11 +86,7 @@ export default function Page() {
 							<p className={`py-4`}>These eateries are located in Asaba;</p>
 						</div>
 						<div className={`px-6  pb-40`}>
-							{isLoading ? (
-								<RestaurantGridLoading />
-							) : (
-								<RestaurantGrid data={data?.data?.data} />
-							)}
+							<RestaurantGrid data={data?.data?.data} />
 						</div>
 					</div>
 				</div>
