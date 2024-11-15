@@ -65,7 +65,7 @@ export default function Page() {
 
 	return (
 		<div>
-			<div className="pt-4 pb-20">
+			<div className="">
 				<div className="flex  px-2">
 					{/* SideBarRestaurant - Hidden on mobile, shown on medium screens and up */}
 					<div className="hidden md:block sticky top-0 h-screen w-[400px]">
@@ -74,18 +74,18 @@ export default function Page() {
 
 					{/* RestaurantGrid takes full width on mobile, 3/4 width on medium screens and up */}
 					<div className="w-full">
-						<div className={`sticky top-0 z-10 bg-white w-full p-4 `}>
+						<div className={`sticky top-0 z-10 bg-white w-full px-4 py-2 border-b shadow  py-4`}>
 							{/* Search Input */}
 							<Input
+								variant={`rounded`}
 								type="search"
 								value={searchTerm} // Bind input value to state
 								onChange={handleSearchChange} // Update state on input change
-								placeholder="Search Restaurant..."
+								placeholder="Search Restaurant and eateries in Asaba ..."
 								className="py-4 mt-4 h-10 sm:w-[300px] md:w-[600px] "
 							/>
-							<p className={`py-4`}>These eateries are located in Asaba;</p>
 						</div>
-						<div className={`px-6  pb-40`}>
+						<div className={`px-6 pt-4  pb-40`}>
 							<RestaurantGrid data={data?.data?.data} />
 						</div>
 					</div>

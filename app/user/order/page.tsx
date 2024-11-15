@@ -6,7 +6,7 @@ import UserSheet from "@/components/user/UserSheet";
 export default function OrderSection() {
 	return (
 		<div>
-			<div className="container mx-auto px-4 bg-[#FFFBFE]">
+			<div className="container mx-auto px-4 bg-white">
 				<WelcomeUser />
 
 				<div className="grid lg:grid-cols-8 gap-4">

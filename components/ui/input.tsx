@@ -15,6 +15,8 @@ const inputVariants = cva(
 					"rounded-md border border-slate-300 bg-white ring-offset-white dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950",
 				line:
 					"border-0 border-b border-slate-300 bg-transparent focus-visible:border-b-primary-600 focus-visible:ring-0 dark:border-slate-800 dark:focus-visible:border-b-slate-300",
+				rounded:
+					"rounded-full border border-slate-300 bg-white ring-offset-white dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950",
 			},
 		},
 		defaultVariants: {

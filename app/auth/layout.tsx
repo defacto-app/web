@@ -32,7 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 		</Head>
 		<body
 			className={cn(
-				"bg-[#FFFBFE] font-sans antialiased min-h-screen flex w-full", // Ensure full width
+				"bg-white font-sans antialiased min-h-screen flex w-full", // Ensure full width
 				fontSans.variable,
 				{ "flex-row-reverse": !imageOnRight },
 			)}

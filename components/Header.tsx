@@ -19,7 +19,7 @@ export default function Header() {
 
 	return (
 		<header
-			className={`bg-[#FFFBFE] ${isSticky ? "fixed top-0 left-0 right-0 z-50" : ""}`}
+			className={`bg-white ${isSticky ? "fixed top-0 left-0 right-0 z-50" : ""}`}
 		>
 			<nav
 				className="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8"

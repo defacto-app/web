@@ -7,7 +7,7 @@ import MobileApp from "@/components/home/MobileApp";
 
 export default function HomePage() {
 	return (
-		<div className="bg-[#FFFBFE] ">
+		<div className="bg-white ">
 
 			<FoodHero />
 			<RestaurantArea />
