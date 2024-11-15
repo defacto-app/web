@@ -5,6 +5,12 @@ import { $admin_api } from "@/http/admin-endpoint";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/utils";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import {
 	Users,
@@ -18,58 +24,58 @@ import {
 } from "lucide-react";
 
 interface Role {
-  _id: string;
-  count: number;
+	_id: string;
+	count: number;
 }
 
 interface OrderType {
-  _id: string;
-  count: number;
+	_id: string;
+	count: number;
 }
 
 interface OrderStatus {
-  _id: string;
-  count: number;
+	_id: string;
+	count: number;
 }
 
 interface DashboardData {
-  users: {
-    total: number;
-    newLastWeek: number;
-    activeLastMonth: number;
-    verified: number;
-    unverified: number;
-    roles: Role[];
-    banned: number;
-  };
-  restaurants: {
-    total: number;
-    withMenus: number;
-    popularCategory: string;
-    highestMenuCount: {
-      _id: string;
-      name: string;
-      menuItemsCount: number;
-    };
-    averageMenuCount: number;
-  };
-  orders: {
-    total: number;
-    byType: OrderType[];
-    avgValue: number;
-    byStatus: OrderStatus[];
-    instantOrders: number;
-    pendingOlderThan48Hours: number;
-    totalRevenue: number;
-  };
-  menu: {
-    total: number;
-    available: number;
-    unavailable: number;
-    avgPrice: number;
-    popularCategory: string;
-  };
-  timestamp: string;
+	users: {
+		total: number;
+		newLastWeek: number;
+		activeLastMonth: number;
+		verified: number;
+		unverified: number;
+		roles: Role[];
+		banned: number;
+	};
+	restaurants: {
+		total: number;
+		withMenus: number;
+		popularCategory: string;
+		highestMenuCount: {
+			_id: string;
+			name: string;
+			menuItemsCount: number;
+		};
+		averageMenuCount: number;
+	};
+	orders: {
+		total: number;
+		byType: OrderType[];
+		avgValue: number;
+		byStatus: OrderStatus[];
+		instantOrders: number;
+		pendingOlderThan48Hours: number;
+		totalRevenue: number;
+	};
+	menu: {
+		total: number;
+		available: number;
+		unavailable: number;
+		avgPrice: number;
+		popularCategory: string;
+	};
+	timestamp: string;
 }
 
 export default function AdminIndex() {
@@ -105,6 +111,7 @@ export default function AdminIndex() {
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 					{[...Array(4)].map((_, i) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 						<Card key={i} className="p-4">
 							<div className="space-y-3">
 								<Skeleton className="h-4 w-20" />
@@ -116,10 +123,12 @@ export default function AdminIndex() {
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 					{[...Array(2)].map((_, i) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 						<Card key={i} className="p-4">
 							<Skeleton className="h-6 w-32 mb-4" />
 							<div className="space-y-3">
 								{[...Array(3)].map((_, j) => (
+									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									<Skeleton key={j} className="h-4 w-full" />
 								))}
 							</div>
@@ -193,15 +202,43 @@ export default function AdminIndex() {
 					<div className="flex items-center justify-between">
 						<div>
 							<p className="text-sm text-muted-foreground">Menu Items</p>
-							<h2 className="text-2xl font-bold">{data.menu.total}</h2>
+							<TooltipProvider>
+								<Tooltip>
+									<TooltipTrigger>
+										<h2 className="text-2xl font-bold">{data.menu.total}</h2>
+									</TooltipTrigger>
+									<TooltipContent>
+										<p>Total number of menu items across all restaurants</p>
+									</TooltipContent>
+								</Tooltip>
+							</TooltipProvider>
 							<div className="flex items-center mt-2 text-sm">
-								<span className="text-green-500 flex items-center">
-									<ArrowUp className="h-4 w-4" /> {data.menu.available}
-								</span>
+								<TooltipProvider>
+									<Tooltip>
+										<TooltipTrigger>
+											<span className="text-green-500 flex items-center">
+												<ArrowUp className="h-4 w-4" /> {data.menu.available}
+											</span>
+										</TooltipTrigger>
+										<TooltipContent>
+											<p>Currently available menu items</p>
+										</TooltipContent>
+									</Tooltip>
+								</TooltipProvider>
 								<span className="mx-2">•</span>
-								<span className="text-red-500 flex items-center">
-									<ArrowDown className="h-4 w-4" /> {data.menu.unavailable}
-								</span>
+								<TooltipProvider>
+									<Tooltip>
+										<TooltipTrigger>
+											<span className="text-red-500 flex items-center">
+												<ArrowDown className="h-4 w-4" />{" "}
+												{data.menu.unavailable}
+											</span>
+										</TooltipTrigger>
+										<TooltipContent>
+											<p>Currently unavailable menu items</p>
+										</TooltipContent>
+									</Tooltip>
+								</TooltipProvider>
 							</div>
 						</div>
 						<Menu className="h-8 w-8 text-muted-foreground" />
