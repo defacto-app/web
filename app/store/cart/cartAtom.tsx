@@ -18,12 +18,19 @@ export const cartsByRestaurantAtom = atom<{ [slug: string]: CartItemType[] }>(
 	{},
 );
 
+
 // Atom to hold the currently selected restaurant slug
 export const selectedRestaurantSlugAtom = atom<string | null>(null);
 
 // Atom to store the selected address in the cart
 export const selectedAddressAtom = atom<any>(null);
-
+export const setSelectedAddressAtom = atom(
+	null,
+	(get, set, selectedAddress: any) => {
+		set(selectedAddressAtom, selectedAddress);
+		sessionStorage.setItem("selectedAddress", JSON.stringify(selectedAddress));
+	},
+);
 // Atom to add an item to the current restaurant's cart
 export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
 	const slug = get(selectedRestaurantSlugAtom);
@@ -134,6 +141,7 @@ export const useCartContext = () => {
 	const removeItem = useSetAtom(removeItemAtom);
 	const updateItemQuantity = useSetAtom(updateItemQuantityAtom);
 	const clearCart = useSetAtom(clearCartAtom);
+	const setSelectedAddress = useSetAtom(setSelectedAddressAtom); // Ensure this is accessible
 
 	const getCartSummary = useCallback(() => {
 		return {
@@ -150,6 +158,8 @@ export const useCartContext = () => {
 		updateItemQuantity,
 		clearCart,
 		getCartSummary,
+		setSelectedAddress
+
 	};
 };
 

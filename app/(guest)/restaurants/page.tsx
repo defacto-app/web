@@ -74,7 +74,9 @@ export default function Page() {
 
 					{/* RestaurantGrid takes full width on mobile, 3/4 width on medium screens and up */}
 					<div className="w-full">
-						<div className={`sticky top-0 z-10 bg-white w-full px-4 py-2 border-b shadow  py-4`}>
+						<div
+							className={`sticky top-0 z-10 bg-white w-full p-4  border-b shadow`}
+						>
 							{/* Search Input */}
 							<Input
 								variant={`rounded`}

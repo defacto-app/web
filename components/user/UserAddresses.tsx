@@ -13,18 +13,18 @@ import {
 	AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
 import { useCartContext } from "@/app/store/cart/cartAtom";
-import {useGoogleAddressAtomContext} from "@/app/store/addressAtom"; // Import the cart context
+import { useGoogleAddressAtomContext } from "@/app/store/addressAtom"; // Import the cart context
 
 function UserAddresses() {
 	const [data, setData] = React.useState<any>(null);
 	const [modalOpen, setModalOpen] = React.useState(true);
-	const {savedAddress} = useGoogleAddressAtomContext();
+	const { savedAddress } = useGoogleAddressAtomContext();
 
 	const [isLoading, setLoading] = React.useState<boolean>(true);
 	const [selectedAddress, setSelectedAddress] = React.useState<any>(null);
 
 	// Get the setSelectedAddress function from the cart context
-	const { setSelectedAddress: setCartAddress,firstAddress } = useCartContext();
+	const { setSelectedAddress: setCartAddress } = useCartContext();
 
 	useEffect(() => {
 		const getData = async () => {
@@ -51,7 +51,9 @@ function UserAddresses() {
 		<div>
 			<div className="bg-white p-6 rounded-lg border">
 				{/*{firstAddress}*/}
-				<h2 className="text-lg font-semibold mb-2">Deliver to {savedAddress}</h2>
+				<h2 className="text-lg font-semibold mb-2">
+					Deliver to {savedAddress}
+				</h2>
 				<div className="flex items-center justify-between bg-gray-100 p-4 rounded-lg">
 					<div className="flex items-center">
 						<span className="text-blue-500 mr-4">📍</span>
