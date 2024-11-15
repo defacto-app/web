@@ -14,7 +14,9 @@ type CartItemType = {
 };
 
 // Atom to store all carts by restaurant slug
-export const cartsByRestaurantAtom = atom<{ [slug: string]: CartItemType[] }>({});
+export const cartsByRestaurantAtom = atom<{ [slug: string]: CartItemType[] }>(
+	{},
+);
 
 // Atom to hold the currently selected restaurant slug
 export const selectedRestaurantSlugAtom = atom<string | null>(null);
@@ -30,13 +32,15 @@ export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
 	const carts = get(cartsByRestaurantAtom);
 	const currentCart = carts[slug] || [];
 
-	const existingItem = currentCart.find((item) => item.publicId === newItem.publicId);
+	const existingItem = currentCart.find(
+		(item) => item.publicId === newItem.publicId,
+	);
 	const updatedCart = existingItem
 		? currentCart.map((item) =>
-			item.publicId === newItem.publicId
-				? { ...item, quantity: item.quantity + newItem.quantity }
-				: item,
-		)
+				item.publicId === newItem.publicId
+					? { ...item, quantity: item.quantity + newItem.quantity }
+					: item,
+			)
 		: [...currentCart, newItem];
 
 	set(cartsByRestaurantAtom, { ...carts, [slug]: updatedCart });
@@ -109,43 +113,44 @@ export const useRestaurantSlug = () => {
 
 // Create the hook to use the cart atoms in components
 export const useCartContext = () => {
-    useRestaurantSlug(); // Use the slug initialization hook
+	useRestaurantSlug(); // Use the slug initialization hook
 
-    const selectedSlug = useAtomValue(selectedRestaurantSlugAtom);
-    const carts = useAtomValue(cartsByRestaurantAtom);
-    const cart = useMemo(() => (selectedSlug ? carts[selectedSlug] || [] : []), [selectedSlug, carts]);
+	const selectedSlug = useAtomValue(selectedRestaurantSlugAtom);
+	const carts = useAtomValue(cartsByRestaurantAtom);
+	const cart = useMemo(
+		() => (selectedSlug ? carts[selectedSlug] || [] : []),
+		[selectedSlug, carts],
+	);
 
-    // Debugging statements to verify cart loading
-    useEffect(() => {
+	// Debugging statements to verify cart loading
+	useEffect(() => {}, [selectedSlug, carts, cart]);
 
-    }, [selectedSlug, carts, cart]);
+	const cartTotal = cart.reduce(
+		(total, item) => total + item.price * item.quantity,
+		0,
+	);
 
-    const cartTotal = cart.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0,
-    );
+	const addItem = useSetAtom(addItemAtom);
+	const removeItem = useSetAtom(removeItemAtom);
+	const updateItemQuantity = useSetAtom(updateItemQuantityAtom);
+	const clearCart = useSetAtom(clearCartAtom);
 
-    const addItem = useSetAtom(addItemAtom);
-    const removeItem = useSetAtom(removeItemAtom);
-    const updateItemQuantity = useSetAtom(updateItemQuantityAtom);
-    const clearCart = useSetAtom(clearCartAtom);
+	const getCartSummary = useCallback(() => {
+		return {
+			itemCount: cart.reduce((count, item) => count + item.quantity, 0),
+			totalPrice: cartTotal,
+		};
+	}, [cart, cartTotal]);
 
-    const getCartSummary = useCallback(() => {
-        return {
-            itemCount: cart.reduce((count, item) => count + item.quantity, 0),
-            totalPrice: cartTotal,
-        };
-    }, [cart, cartTotal]);
-
-    return {
-        cart,
-        cartTotal,
-        addItem,
-        removeItem,
-        updateItemQuantity,
-        clearCart,
-        getCartSummary,
-    };
+	return {
+		cart,
+		cartTotal,
+		addItem,
+		removeItem,
+		updateItemQuantity,
+		clearCart,
+		getCartSummary,
+	};
 };
 
 // Cart summary context for additional calculations like discounts and delivery fee

@@ -116,7 +116,7 @@ function Page({ params }: { params: { slug: string } }) {
 							variant={activeTab === type ? "primary" : "outline"}
 							onClick={() => setActiveTab(type)}
 						>
-						<span className={`capitalize`}>	{type}</span>
+							<span className={`capitalize`}> {type}</span>
 						</Button>
 					))}
 				</div>
