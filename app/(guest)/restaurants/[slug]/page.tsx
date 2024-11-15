@@ -141,8 +141,8 @@ function Page({ params }: { params: { slug: string } }) {
 				</div>
 
 				{/* Menu Area */}
-				<div className="grid lg:grid-cols-3 gap-x-4 items-start">
-					<div className={`col-span-2 px-2`}>
+				<div className="flex items-start">
+					<div className={`px-2`}>
 						<div className={`lg:hidden `}>
 							<OrderCart buttonOnly={true} restaurant_name={restaurant.name}  />
 						</div>

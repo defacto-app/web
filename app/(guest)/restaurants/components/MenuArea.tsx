@@ -26,7 +26,7 @@ function MenuArea({ data }: any) {
 			<div>
 				<div>
 					{data.length > 0 ? (
-							<ul className="mt-6 grid grid-cols-1  gap-4 sm:grid-cols-2">
+							<ul className="mt-6 grid grid-cols-1  gap-4 sm:grid-cols-2 md:grid-cols-3">
 							{data.map((item: any) => (
 								<li key={item._id}>
 									<div className={`bg-white border rounded-sm`}>

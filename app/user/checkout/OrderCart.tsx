@@ -44,7 +44,7 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 	// You can add your logic here
 
 	return (
-		<div className="bg-white rounded-lg shadow p-4 w-full mx-auto ">
+		<div className="bg-white rounded-lg shadow p-4 w-[350px] mx-auto">
 			<h2 className="text-lg font-medium mb-4">Your order </h2>
 
 			{!buttonOnly && (
@@ -60,23 +60,21 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 							}) => (
 								<div key={item.publicId} className=" mb-4">
 									<div className="flex-1">
-										<div className="flex items-center mb-1">
+										<div className="flex gap-x-4 justify-between items-center mb-1">
 											<span className="font-semibold">{item.quantity}x</span>
-											<span className="ml-2 text-lg font-medium">
-												{item.name}
-											</span>
-										</div>
-
-										<div className="text-lg font-bold text-green-700">
-											{formatPrice(item.price)}
+											<span className="ml-2 text-md ">{item.name}</span>
+											<div className="text-md font-medium ">
+												{formatPrice(item.price)}
+											</div>
 										</div>
 									</div>
 
-									<div className="flex justify-between pt-4 items-center ">
-										<div className={`flex items-center gap-x-6`}>
+									<div className="flex justify-between pb-2 items-center ">
+										<div className={`flex items-center justify-between  gap-x-4`}>
 											{/* Decrease quantity button */}
 											<Button
-												className="bg-gray-200 rounded-full p-2 text-green-600 "
+												variant={`ghost`}
+												className=" text-green-600 "
 												onClick={() =>
 													updateItemQuantity({
 														itemId: item.publicId,
@@ -85,13 +83,12 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 												}
 												disabled={item.quantity === 1} // Disable if the quantity is 1
 											>
-												<Minus />
+												<Minus className={`bg-gray-300  rounded-full`} />
 											</Button>
-											{/* Quantity Display */}
-											<span>{item.quantity}</span>
-											{/* Increase quantity button */}
+											<span className={`text-gray-700 text-xs`}>Takeaway pack</span>
 											<Button
-												className="bg-gray-200 rounded-full p-2 text-green-600"
+												variant={`ghost`}
+												className=" text-green-600 "
 												onClick={() =>
 													updateItemQuantity({
 														itemId: item.publicId,
@@ -99,7 +96,7 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 													})
 												}
 											>
-												<Plus />
+												<Plus className={`bg-gray-300  rounded-full`} />
 											</Button>
 										</div>
 										{/* Remove item button */}
@@ -127,7 +124,7 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 
 			<Button
 				variant={`primary`}
-				className=" text-white font-bold py-3  w-full mt-4"
+				className=" text-white font-bold  w-full mt-4"
 				onClick={handleCartNavigation}
 				disabled={cart.length === 0}
 			>
