@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
-import { selectedRestaurantSlugAtom, cartsByRestaurantAtom, useCartContext } from "@/app/store/cart/cartAtom";
 import Image from "next/image";
 import { useSetAtom, useAtomValue } from "jotai";
+import {selectedRestaurantSlugAtom, cartsByRestaurantAtom, useCartContext} from "@/app/store/cart/cartAtom";
 
 function CartItemList() {
 	const setSlug = useSetAtom(selectedRestaurantSlugAtom);
@@ -16,8 +16,7 @@ function CartItemList() {
 	useEffect(() => {
 		// Retrieve stored slug from session storage
 		const storedSlug = sessionStorage.getItem("currentRestaurantSlug");
-		console.log("Stored Slug from Session:", storedSlug);
-		console.log("Current Slug in Atom:", slug);
+
 
 		// If no slug is set in atom, set it from session storage
 		if (storedSlug && slug !== storedSlug) {

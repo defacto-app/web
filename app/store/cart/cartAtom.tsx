@@ -117,9 +117,7 @@ export const useCartContext = () => {
 
     // Debugging statements to verify cart loading
     useEffect(() => {
-        console.log("Selected Slug in useCartContext:", selectedSlug);
-        console.log("All Carts:", carts);
-        console.log("Cart for Selected Slug:", cart);
+
     }, [selectedSlug, carts, cart]);
 
     const cartTotal = cart.reduce(
