@@ -8,7 +8,8 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { MapPin, Clock1 } from "lucide-react";
-import OrderCart from "@/app/user/checkout/OrderCart"; // Assuming you have a button component
+import OrderCart from "@/app/user/checkout/OrderCart";
+import RestaurantPageSkeleton from "@/app/(guest)/restaurants/[slug]/LoadingRestaurants"; // Assuming you have a button component
 
 function Page({ params }: { params: { slug: string } }) {
 	// State for restaurant and menu data
@@ -56,7 +57,7 @@ function Page({ params }: { params: { slug: string } }) {
 
 	// Conditional rendering
 	if (loading) {
-		return <div>Loading...</div>;
+		return <RestaurantPageSkeleton />;
 	}
 
 	if (error) {
