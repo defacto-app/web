@@ -1,4 +1,13 @@
 import { $axios_admin } from "@/http/http-admin.fn";
+
+interface MenuQueryParams {
+  page?: number;
+  perPage?: number;
+  search?: string;
+  category?: string;
+  isAvailable?: boolean;
+}
+
 export const $admin_api = {
 	auth: {
 		sendEmailOtp: async (body: any) => {
@@ -80,9 +89,23 @@ export const $admin_api = {
 			}
 		},
 
-		getMenu: async (id: string) => {
+
+		getMenu: async (id: string, params?: MenuQueryParams) => {
 			try {
-				return $axios_admin.get(`/restaurants/menu/${id}`);
+			  const response = await $axios_admin.get(
+					`/restaurants/menu/${id}`,
+					{
+						params: {
+							page: params?.page || 1,
+							perPage: params?.perPage || 10,
+							search: params?.search,
+							category: params?.category,
+							isAvailable: params?.isAvailable
+						}
+					}
+				);
+
+				return response;
 			} catch (error: any) {
 				return error;
 			}

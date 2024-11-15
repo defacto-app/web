@@ -6,7 +6,6 @@ import { AdminFooter, AdminHeader } from "@/app/admin/components/admin.header";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import OrderMenu from "@/app/admin/components/OrderMenu";
 
 const fontSans = FontSans({
 	subsets: ["latin"],
@@ -26,7 +25,6 @@ export default function AdminRootLayout({
 				<div className={cn("font-sans antialiased", fontSans.variable)}>
 					<AdminHeader />
 
-					<OrderMenu />
 					<div>{children}</div>
 
 					<AdminFooter />
