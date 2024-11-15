@@ -37,7 +37,7 @@ function Page({ params }: { params: { slug: string } }) {
 
 	useEffect(() => {
 		getData();
-	}, [getData]);
+	}, []);
 
 	// Extract unique menu types
 	const uniqueMenuTypes = [

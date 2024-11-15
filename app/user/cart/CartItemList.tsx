@@ -1,10 +1,14 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useSetAtom, useAtomValue } from "jotai";
-import {selectedRestaurantSlugAtom, cartsByRestaurantAtom, useCartContext} from "@/app/store/cart/cartAtom";
+import {
+	selectedRestaurantSlugAtom,
+	cartsByRestaurantAtom,
+	useCartContext,
+} from "@/app/store/cart/cartAtom";
 
 function CartItemList() {
 	const setSlug = useSetAtom(selectedRestaurantSlugAtom);
@@ -16,7 +20,6 @@ function CartItemList() {
 	useEffect(() => {
 		// Retrieve stored slug from session storage
 		const storedSlug = sessionStorage.getItem("currentRestaurantSlug");
-
 
 		// If no slug is set in atom, set it from session storage
 		if (storedSlug && slug !== storedSlug) {
@@ -44,7 +47,6 @@ function CartItemList() {
 	}
 
 	// Debugging information to confirm cart data
-	console.log("Cart Data:", cart);
 
 	return (
 		<div>
