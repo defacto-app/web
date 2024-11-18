@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import type { RestaurantFormType } from "@/lib/types";
 import { Label } from "@/components/ui/label";
 import CategorySelect from "@/app/admin/x/restaurants/components/CategorySelect";
+import { OpeningHoursComponent } from "./OpeningHoursComponent";
 
 interface RestaurantFormProps {
 	restaurant: RestaurantFormType | null;
@@ -10,6 +11,7 @@ interface RestaurantFormProps {
 	submitHandler: () => void;
 	loading: boolean;
 	action: "create" | "update";
+	setRestaurantData: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export const RestaurantFormComponent = ({
@@ -18,7 +20,14 @@ export const RestaurantFormComponent = ({
 	submitHandler,
 	loading,
 	action,
+	setRestaurantData,
 }: RestaurantFormProps) => {
+	const handleOpeningHoursChange = (newHours: any) => {
+		setRestaurantData((prev: any) => ({
+			...prev,
+			openingHours: newHours,
+		}));
+	};
 	return (
 		<div className={`bg-white rounded-md  p-4 border mt-4`}>
 			{restaurant && (
@@ -47,8 +56,7 @@ export const RestaurantFormComponent = ({
 					<div>
 						<Label htmlFor="category">Category</Label>
 
-						<CategorySelect/>
-
+						<CategorySelect />
 					</div>
 					<div>
 						<Label htmlFor="address">Address</Label>
@@ -80,18 +88,13 @@ export const RestaurantFormComponent = ({
 							placeholder="Email"
 						/>
 					</div>
-					<div>
-						<Label htmlFor="openingHours">Opening Hours</Label>
-						<Input
-							id="openingHours"
-							name="openingHours"
-							value={restaurant.openingHours}
-							onChange={handleInputChange}
-							placeholder="Opening Hours"
-						/>
-					</div>
 				</div>
 			)}
+			<OpeningHoursComponent
+				value={restaurant?.openingHours}
+				onChange={handleOpeningHoursChange}
+			/>
+
 			<Button
 				variant={`primary`}
 				className={`w-40 mt-8`}

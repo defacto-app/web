@@ -9,7 +9,16 @@ export default function RestaurantLayout({
 		<div className="container mx-auto py-10 ">
 			{/* Main Content Section */}
 
+			<div>Restaurant | All Menu items</div>
+
 			<main className="pb-10">{children}</main>
 		</div>
 	);
 }
+//
+//
+//
+//
+//
+//
+//

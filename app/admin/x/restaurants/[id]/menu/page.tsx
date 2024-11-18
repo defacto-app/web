@@ -93,44 +93,50 @@ function Page({ params }: { params: { id: string } }) {
 						</div>
 					</div>
 
-					{/*   <div className="flex gap-2">
-            <Select
-              value={category}
-              onValueChange={(value) => {
-                setCategory(value);
-                setPage(1);
-                updateQueryParams({ category: value, page: "1" });
-              }}
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="">All Categories</SelectItem>
-                <SelectItem value="food">Food</SelectItem>
-                <SelectItem value="drinks">Drinks</SelectItem>
-                <SelectItem value="desserts">Desserts</SelectItem>
-              </SelectContent>
-            </Select>
+					<div className="flex gap-2">
+						<Select
+							value={category}
+							onValueChange={(value) => {
+								setCategory(value);
+								setPage(1);
+								updateQueryParams({
+									category: value === "all" ? "" : value,
+									page: "1",
+								});
+							}}
+						>
+							<SelectTrigger className="w-[180px]">
+								<SelectValue placeholder="Filter by category" />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="all">All Categories</SelectItem>
+								<SelectItem value="food">Food</SelectItem>
+								<SelectItem value="drinks">Drinks</SelectItem>
+								<SelectItem value="desserts">Desserts</SelectItem>
+							</SelectContent>
+						</Select>
 
-            <Select
-              value={availability}
-              onValueChange={(value) => {
-                setAvailability(value);
-                setPage(1);
-                updateQueryParams({ availability: value, page: "1" });
-              }}
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by availability" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="">All Items</SelectItem>
-                <SelectItem value="available">Available</SelectItem>
-                <SelectItem value="unavailable">Unavailable</SelectItem>
-              </SelectContent>
-            </Select>
-          </div> */}
+						<Select
+							value={availability}
+							onValueChange={(value) => {
+								setAvailability(value);
+								setPage(1);
+								updateQueryParams({
+									availability: value === "all" ? "" : value,
+									page: "1",
+								});
+							}}
+						>
+							<SelectTrigger className="w-[180px]">
+								<SelectValue placeholder="Filter by availability" />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="all">All Items</SelectItem>
+								<SelectItem value="available">Available</SelectItem>
+								<SelectItem value="unavailable">Unavailable</SelectItem>
+							</SelectContent>
+						</Select>
+					</div>
 				</div>
 			</Card>
 

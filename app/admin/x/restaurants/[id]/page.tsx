@@ -109,6 +109,7 @@ const RestaurantPage = () => {
 				submitHandler={updateRestaurant}
 				loading={updating}
 				action="update"
+				setRestaurantData={setRestaurantData}
 			/>
 		</div>
 	);
