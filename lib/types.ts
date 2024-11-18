@@ -105,3 +105,20 @@ export interface DeliveryPayloadType {
 	};
 	dropOffDetails: DropOffDetails;
 }
+
+
+export type DayHours = {
+	open: string;
+	close: string;
+	isClosed: boolean;
+};
+
+export type OpeningHours = {
+	monday: DayHours;
+	tuesday: DayHours;
+	wednesday: DayHours;
+	thursday: DayHours;
+	friday: DayHours;
+	saturday: DayHours;
+	sunday: DayHours;
+};

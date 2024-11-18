@@ -25,7 +25,10 @@ export const RestaurantFormComponent = ({
 	const handleOpeningHoursChange = (newHours: any) => {
 		setRestaurantData((prev: any) => ({
 			...prev,
-			openingHours: newHours,
+			openingHours: {
+				...prev.openingHours,
+				...newHours
+			}
 		}));
 	};
 	return (
