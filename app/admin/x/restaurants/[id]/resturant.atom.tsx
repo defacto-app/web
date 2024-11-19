@@ -20,7 +20,7 @@ type restaurantType = {
 };
 
 // Atoms for restaurant state management using Jotai
-export const restaurantAtom = atom<restaurantType>({
+export const restaurantAtom = atom<any>({
 	name: "",
 	description: "",
 	location: "",

@@ -6,12 +6,12 @@ import CategorySelect from "@/app/admin/x/restaurants/components/CategorySelect"
 import { OpeningHoursComponent } from "./OpeningHoursComponent";
 
 interface RestaurantFormProps {
-	restaurant: RestaurantFormType | null;
+	restaurant: RestaurantFormType;
 	handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	submitHandler: () => void;
 	loading: boolean;
 	action: "create" | "update";
-	setRestaurantData: React.Dispatch<React.SetStateAction<any>>;
+	setRestaurantData: React.Dispatch<React.SetStateAction<RestaurantFormType>>;
 }
 
 export const RestaurantFormComponent = ({

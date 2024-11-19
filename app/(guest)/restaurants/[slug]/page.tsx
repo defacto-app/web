@@ -91,7 +91,7 @@ function Page({ params }: { params: { slug: string } }) {
 							<div>
 								<p>
 									<span className={`text-blue-500 text-xl`}>Open</span>:{" "}
-									{restaurant.openingHours}
+									{/* {restaurant.openingHours} */}
 								</p>
 							</div>
 						</div>
@@ -145,7 +145,7 @@ function Page({ params }: { params: { slug: string } }) {
 				<div className="flex items-start">
 					<div className={`px-2`}>
 						<div className={`lg:hidden `}>
-							<OrderCart buttonOnly={true} restaurant_name={restaurant.name}  />
+							<OrderCart buttonOnly={true} restaurant_name={restaurant.name} />
 						</div>
 						<MenuArea data={filteredMenu.length > 0 ? filteredMenu : menu} />
 					</div>

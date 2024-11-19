@@ -12,7 +12,7 @@ function Page() {
 	const router = useRouter();
 
 	// Initialize the state with empty fields
-	const [restaurant, setRestaurant] = useState<RestaurantFormType>({
+	const [restaurant, setRestaurant] = useState<any>({
 		deliveryTime: "",
 		image: "",
 		menuItems: [],
@@ -29,7 +29,7 @@ function Page() {
 	// Handle input changes
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		setRestaurant((prevRestaurant) => ({
+		setRestaurant((prevRestaurant:any) => ({
 			...prevRestaurant,
 			[name]: value ?? "", // Fallback to empty string if value is undefined
 		}));
@@ -76,6 +76,7 @@ function Page() {
 				handleInputChange={handleInputChange}
 				submitHandler={createRestaurant}
 				loading={creating}
+				setRestaurantData={setRestaurant}
 			/>
 		</div>
 	);

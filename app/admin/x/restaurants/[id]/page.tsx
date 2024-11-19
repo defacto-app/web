@@ -9,7 +9,7 @@ import ImageUploader from "@/app/admin/components/ImageUploader";
 import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
 import { RestaurantFormComponent } from "@/app/admin/x/restaurants/components/RestaurantForm";
-import type { OpeningHours } from "@/lib/types";
+import { parseOpeningHours, toFormType, type OpeningHours } from "@/lib/types";
 import { cleanOpeningHours } from "@/lib/utils";
 
 interface Restaurant {
@@ -24,69 +24,59 @@ interface Restaurant {
 	description: string | undefined;
 }
 
+export interface RestaurantFormType extends Restaurant {
+	// Add any additional form-specific fields here
+}
+
 const RestaurantPage = () => {
 	const { restaurant, getRestaurant } = useAtomRestaurantContext();
 	const [updating, setUpdating] = useState<boolean>(false);
 
 	const refreshData = async () => {
-    await getRestaurant(restaurant.publicId);
-    // Update local state with refreshed data
-    setRestaurantData({
-      name: restaurant.name,
-      image: restaurant.image,
-      address: restaurant.address,
-      phone: restaurant.phone,
-      email: restaurant.email,
-      openingHours: restaurant.openingHours || {
-        monday: { open: "10:00", close: "19:00", isClosed: false },
-        tuesday: { open: "10:00", close: "19:00", isClosed: false },
-        wednesday: { open: "10:00", close: "19:00", isClosed: false },
-        thursday: { open: "10:00", close: "19:00", isClosed: false },
-        friday: { open: "10:00", close: "19:00", isClosed: false },
-        saturday: { open: "10:00", close: "19:00", isClosed: false },
-        sunday: { open: "10:00", close: "19:00", isClosed: false },
-      },
-      deliveryTime: restaurant.deliveryTime,
-      category: restaurant.category,
-      description: restaurant.description,
-    });
-  };
+		await getRestaurant(restaurant.publicId);
+		// Update local state with refreshed data
+		setRestaurantData({
+			name: restaurant.name,
+			image: restaurant.image,
+			address: restaurant.address,
+			phone: restaurant.phone,
+			email: restaurant.email,
+			openingHours:
+				typeof restaurant.openingHours === "string"
+					? JSON.parse(restaurant.openingHours)
+					: restaurant.openingHours || {
+							monday: { open: "10:00", close: "19:00", isClosed: false },
+							tuesday: { open: "10:00", close: "19:00", isClosed: false },
+							wednesday: { open: "10:00", close: "19:00", isClosed: false },
+							thursday: { open: "10:00", close: "19:00", isClosed: false },
+							friday: { open: "10:00", close: "19:00", isClosed: false },
+							saturday: { open: "10:00", close: "19:00", isClosed: false },
+							sunday: { open: "10:00", close: "19:00", isClosed: false },
+						},
+			deliveryTime: restaurant.deliveryTime,
+			category: restaurant.category,
+			description: restaurant.description,
+		});
+	};
 
-  // Add useEffect to update local state when restaurant data changes
-  useEffect(() => {
-    setRestaurantData({
-      name: restaurant.name,
-      image: restaurant.image,
-      address: restaurant.address,
-      phone: restaurant.phone,
-      email: restaurant.email,
-      openingHours: restaurant.openingHours,
-      deliveryTime: restaurant.deliveryTime,
-      category: restaurant.category,
-      description: restaurant.description,
-    });
-  }, [restaurant]);
+	// Add useEffect to update local state when restaurant data changes
+	useEffect(() => {
+		setRestaurantData({
+			name: restaurant.name,
+			image: restaurant.image,
+			address: restaurant.address,
+			phone: restaurant.phone,
+			email: restaurant.email,
+			openingHours: parseOpeningHours(restaurant.openingHours),
+			deliveryTime: restaurant.deliveryTime,
+			category: restaurant.category,
+			description: restaurant.description,
+		});
+	}, [restaurant]);
 
-	const [restaurantData, setRestaurantData] = useState<Restaurant>({
-		name: restaurant.name,
-		image: restaurant.image,
-		address: restaurant.address,
-		phone: restaurant.phone,
-		email: restaurant.email,
-		openingHours: {
-			monday: { open: "10:00", close: "19:00", isClosed: false },
-			tuesday: { open: "10:00", close: "19:00", isClosed: false },
-			wednesday: { open: "10:00", close: "19:00", isClosed: false },
-			thursday: { open: "10:00", close: "19:00", isClosed: false },
-			friday: { open: "10:00", close: "19:00", isClosed: false },
-			saturday: { open: "10:00", close: "19:00", isClosed: false },
-			sunday: { open: "10:00", close: "19:00", isClosed: false },
-		},
-		deliveryTime: restaurant.deliveryTime,
-		category: restaurant.category,
-		description: restaurant.description,
-	});
-
+	const [restaurantData, setRestaurantData] = useState<any>(() =>
+		toFormType(restaurant)
+	);
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setRestaurantData((prevRestaurant: any) => ({
@@ -161,7 +151,7 @@ const RestaurantPage = () => {
 			</div>
 
 			<RestaurantFormComponent
-				restaurant={restaurantData}
+			restaurant={toFormType(restaurantData)}
 				handleInputChange={handleInputChange}
 				submitHandler={updateRestaurant}
 				loading={updating}
