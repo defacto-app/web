@@ -45,10 +45,10 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 
 	return (
 		<div className="bg-white rounded-lg shadow p-4 w-[350px] mx-auto">
-			<h2 className="text-lg font-medium mb-4">Your order </h2>
+			<h2 className="text-lg font-medium mb-4">Your order</h2>
 
 			{!buttonOnly && (
-				<div>
+				<div className="max-h-[400px] overflow-y-auto pr-2">
 					{/* Check if the cart has items */}
 					{cart.length > 0 ? (
 						cart.map(
@@ -83,7 +83,7 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 												}
 												disabled={item.quantity === 1} // Disable if the quantity is 1
 											>
-												<Minus className={`bg-gray-300  rounded-full`} />
+												<Minus className={`bg-gray-300  rounded-full`}/>
 											</Button>
 											<span className={`text-gray-700 text-xs`}>Takeaway pack</span>
 											<Button
@@ -96,7 +96,7 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 													})
 												}
 											>
-												<Plus className={`bg-gray-300  rounded-full`} />
+												<Plus className={`bg-gray-300  rounded-full`}/>
 											</Button>
 										</div>
 										{/* Remove item button */}
@@ -105,7 +105,7 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 											className="text-red-500"
 											onClick={() => removeItem(item.publicId)}
 										>
-											<Trash2 />
+											<Trash2/>
 										</Button>
 									</div>
 								</div>
@@ -113,7 +113,7 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 						)
 					) : (
 						<p className={`text-center text-sm py-10`}>
-							Your products list is empty. <br /> Start adding products to see
+							Your products list is empty. <br/> Start adding products to see
 							them displayed here!
 						</p>
 					)}
