@@ -160,7 +160,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 							placeholder={`Search in ${restaurant.name}`}
 						/>
 						<div className="mt-4">
-							<MenuArea data={filteredMenu} />
+							<MenuArea data={filteredMenu} categories={categories} />
 						</div>
 					</div>
 

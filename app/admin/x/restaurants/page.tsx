@@ -86,7 +86,7 @@ function Page() {
 							value={searchTerm} // Bind input value to state
 							onChange={handleSearchChange} // Update state on input change
 							placeholder="Search Restaurant..."
-							className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+							className="pl-8 sm:w-[300px] md:w-[500px] "
 						/>
 					</div>
 					<Link href={"/admin/x/restaurants/create"} prefetch={true}>

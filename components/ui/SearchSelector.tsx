@@ -9,29 +9,30 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { useDebounce } from "react-haiku";
 
-// Reusable SearchSelector component
 export function SearchSelector({
 								   data = [],
 								   onSelect,
 								   placeholder = "Search...",
-								   debounceDelay = 300, // Default debounce delay
+								   debounceDelay = 300,
+								   value: preselectedValue, // New prop for preselected value
 							   }: {
 	data: { value: string; label: string }[];
 	onSelect: (value: string) => void;
 	placeholder?: string;
 	debounceDelay?: number;
+	value?: string; // New prop for preselected value
 }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
-	const [selectedValue, setSelectedValue] = useState<string>(""); // New state to hold selected value
-	const debouncedSearchTerm = useDebounce(searchTerm, debounceDelay); // Debounce the search term
+	const [selectedValue, setSelectedValue] = useState<string>("");
+	const debouncedSearchTerm = useDebounce(searchTerm, debounceDelay);
 
 	const toggleDropdown = () => setIsOpen(!isOpen);
 
 	const handleSelect = (selectedValue: string) => {
-		setSelectedValue(selectedValue); // Set the selected value
-		onSelect(selectedValue); // Pass the selected value to the parent component
+		setSelectedValue(selectedValue);
+		onSelect(selectedValue);
 		setIsOpen(false);
 		setSearchTerm("");
 		setHighlightedIndex(0);
@@ -56,6 +57,13 @@ export function SearchSelector({
 			}
 		}
 	};
+
+	// Set the initial selected value when the preselectedValue prop changes
+	useEffect(() => {
+		if (preselectedValue) {
+			setSelectedValue(preselectedValue);
+		}
+	}, [preselectedValue]);
 
 	useEffect(() => {
 		setHighlightedIndex(0);
@@ -91,10 +99,7 @@ export function SearchSelector({
 					/>
 
 					{/* Filtered list */}
-					<ul
-						onKeyDown={handleKeyDown}
-						className="outline-none"
-					>
+					<ul onKeyDown={handleKeyDown} className="outline-none">
 						<ScrollArea className="h-64">
 							{filteredData.length > 0 ? (
 								filteredData.map((item, index) => (

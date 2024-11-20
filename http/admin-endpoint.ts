@@ -111,12 +111,30 @@ export const $admin_api = {
 			}
 		},
 
+		allMenus: async ({ page = 1, perPage = 20, searchTerm = "" }) => {
+			try {
+				return $axios_admin.get(`/menu`, {
+					params: { page, perPage, search: searchTerm },
+				});
+			} catch (error: any) {
+				return error;
+			}
+		},
+
 
 		categories: async ({ page = 1, perPage = 20, searchTerm = "" }) => {
 			try {
 				return $axios_admin.get(`/restaurants/categories`, {
 					params: { page, perPage, search: searchTerm },
 				});
+			} catch (error: any) {
+				return error;
+			}
+		},
+
+		deleteCategory: async (id: string) => {
+			try {
+				return $axios_admin.delete(`/restaurants/categories/${id}`);
 			} catch (error: any) {
 				return error;
 			}

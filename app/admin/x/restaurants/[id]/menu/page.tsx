@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
 import debounce from "lodash/debounce";
-import { Search, Filter } from "lucide-react";
+import { Search} from "lucide-react";
 
 async function fetchMenu(id: string, params: any) {
 	const response = await $admin_api.restaurants.getMenu(id, params);

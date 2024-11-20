@@ -27,8 +27,8 @@ export const RestaurantFormComponent = ({
 			...prev,
 			openingHours: {
 				...prev.openingHours,
-				...newHours
-			}
+				...newHours,
+			},
 		}));
 	};
 	return (
@@ -59,7 +59,10 @@ export const RestaurantFormComponent = ({
 					<div>
 						<Label htmlFor="category">Category</Label>
 
-						<CategorySelect />
+						<CategorySelect
+							setRestaurantData={setRestaurantData}
+							selectedCategory={restaurant.category} // Pass the initial category
+						/>
 					</div>
 					<div>
 						<Label htmlFor="address">Address</Label>

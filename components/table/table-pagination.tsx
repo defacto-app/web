@@ -21,20 +21,41 @@ export function TablePagination({
 }: TablePaginationProps) {
 	const handlePrevious = () => {
 		if (page > 1) onPageChange(page - 1);
-		console.log("handlePrevious", page - 1);
 	};
 
 	const handleNext = () => {
-		if (page < totalPages) {
-			onPageChange(page + 1);
-			console.log("handleNext", page + 1, totalPages);
-		}
+		if (page < totalPages) onPageChange(page + 1);
 	};
 
 	const handlePageClick = (newPage: number) => {
 		onPageChange(newPage);
-		console.log("handlePageClick", newPage);
 	};
+
+	// Generate pages with ellipsis logic
+	const getPageNumbers = () => {
+		const pages: (number | string)[] = [];
+		const maxPagesToShow = 5;
+
+		if (totalPages <= maxPagesToShow) {
+			// If total pages are less than or equal to max, show all
+			for (let i = 1; i <= totalPages; i++) pages.push(i);
+		} else {
+			// Always show the first and last pages
+			pages.push(1);
+			if (page > 3) pages.push("...");
+
+			// Add range around the current page
+			const startPage = Math.max(2, page - 1);
+			const endPage = Math.min(totalPages - 1, page + 1);
+			for (let i = startPage; i <= endPage; i++) pages.push(i);
+
+			if (page < totalPages - 2) pages.push("...");
+			pages.push(totalPages);
+		}
+		return pages;
+	};
+
+	const pages = getPageNumbers();
 
 	return (
 		<Pagination className={`py-2`}>
@@ -45,23 +66,26 @@ export function TablePagination({
 				</PaginationItem>
 
 				{/* Page Numbers */}
-				{Array.from({ length: totalPages }).map((_, index) => (
-					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-					<PaginationItem key={index}>
-						<PaginationLink
-							isActive={page === index + 1}
-							onClick={() => handlePageClick(index + 1)}
+				{pages.map((p, index) =>
+					p === "..." ? (
+						<PaginationItem
+							key={`ellipsis-${
+								// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+								index
+							}`}
 						>
-							{index + 1}
-						</PaginationLink>
-					</PaginationItem>
-				))}
-
-				{/* Ellipsis for large page ranges (optional) */}
-				{totalPages > 5 && (
-					<PaginationItem>
-						<PaginationEllipsis />
-					</PaginationItem>
+							<PaginationEllipsis />
+						</PaginationItem>
+					) : (
+						<PaginationItem key={`page-${p}`}>
+							<PaginationLink
+								isActive={page === p}
+								onClick={() => handlePageClick(p as number)}
+							>
+								{p}
+							</PaginationLink>
+						</PaginationItem>
+					),
 				)}
 
 				{/* Next Button */}
