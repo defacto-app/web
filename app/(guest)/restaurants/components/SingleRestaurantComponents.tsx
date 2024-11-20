@@ -4,6 +4,7 @@ import {AlertCircle, Clock1, MapPin, Search, ThumbsUp} from "lucide-react";
 import {Input} from "@/components/ui/input";
 import {Skeleton} from "@/components/ui/skeleton";
 import {Alert, AlertDescription} from "@/components/ui/alert";
+import {cn} from "@/utils/cn";
 
 export const BreadcrumbNav = ({ restaurantName }: { restaurantName: string }) => (
     <nav className="px-4 py-2 bg-white border-b overflow-x-auto">
@@ -146,4 +147,90 @@ export const MenuCard = ({ item }: { item: any }) => (
             )}
         </div>
     </div>
+);
+
+
+
+
+interface MenuSectionsProps {
+    sections: string[];
+    activeSection: string;
+    setActiveSection: (section: string) => void;
+}
+export const MenuSections = ({
+                          sections,
+                          activeSection,
+                          setActiveSection,
+                      }: MenuSectionsProps) => (
+    <div className="bg-white rounded-lg shadow-sm">
+        <div className="p-4">
+            <h2 className="text-lg font-semibold">Sections</h2>
+        </div>
+        <div className="flex lg:flex-col gap-1 p-2 overflow-x-auto lg:overflow-x-visible">
+            {sections.map((section) => (
+                // biome-ignore lint/a11y/useButtonType: <explanation>
+<button
+                    key={section}
+                    onClick={() => setActiveSection(section)}
+                    className={cn(
+                        "px-4 py-2 rounded-md text-sm whitespace-nowrap w-full text-left",
+                        activeSection === section
+                            ? "bg-blue-50 text-blue-600"
+                            : "hover:bg-gray-50"
+                    )}
+                >
+                    {section}
+                </button>
+            ))}
+        </div>
+    </div>
+);
+
+
+interface OpeningHoursProps {
+    openingHours: {
+        [key: string]: {
+            open: string;
+            close: string;
+            isClosed: boolean;
+        };
+    };
+}
+
+export const OpeningHours = ({ openingHours }: OpeningHoursProps) => (
+    <div className="mt-4 bg-white rounded-lg shadow-sm">
+        <div className="p-4">
+            <h2 className="text-lg font-semibold">Opening Hours</h2>
+        </div>
+        <div className="p-4 space-y-2">
+            {Object.entries(openingHours).map(([day, hours]) => (
+                <div key={day} className="flex justify-between text-sm">
+                    <span className="capitalize">{day}</span>
+                    <span className={cn(hours.isClosed && "text-red-500")}>
+            {hours.isClosed ? "Closed" : `${hours.open} - ${hours.close}`}
+          </span>
+                </div>
+            ))}
+        </div>
+    </div>
+);
+
+
+interface RestaurantStatusProps {
+    isOpen: boolean;
+}
+
+export const RestaurantStatus = ({ isOpen }: RestaurantStatusProps) => (
+    <Alert
+        className={cn(
+            "border",
+            isOpen ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"
+        )}
+    >
+        <AlertDescription
+            className={cn(isOpen ? "text-green-700" : "text-red-700")}
+        >
+            {isOpen ? "Open Now" : "Currently Closed"}
+        </AlertDescription>
+    </Alert>
 );

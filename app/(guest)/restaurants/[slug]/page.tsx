@@ -1,24 +1,19 @@
 "use client"
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 import { $api } from "@/http/endpoints";
 import OrderCart from "@/app/user/checkout/OrderCart";
 import MenuArea from "@/app/(guest)/restaurants/components/MenuArea";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import debounce from "lodash/debounce";
 import {
 	BreadcrumbNav,
 	ErrorState,
-	LoadingState,
-	RestaurantHero,
+	LoadingState, MenuSections,
+	RestaurantHero, RestaurantStatus,
 	SearchBar,
+	OpeningHours,
 } from "@/app/(guest)/restaurants/components/SingleRestaurantComponents";
 
-interface OpeningHours {
-	open: string;
-	close: string;
-	isClosed: boolean;
-}
+
 
 interface Restaurant {
 	name: string;
@@ -26,7 +21,11 @@ interface Restaurant {
 	deliveryTime: string;
 	address: string;
 	openingHours: {
-		[key: string]: OpeningHours;
+		[key: string]: {
+			open: string;
+			close: string;
+			isClosed: boolean;
+		};
 	};
 	rating: number;
 	publicId: string;
@@ -41,6 +40,8 @@ interface MenuItem {
 	image: string;
 	available: boolean;
 }
+
+
 
 function RestaurantPage({ params }: { params: { slug: string } }) {
 	const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
@@ -154,68 +155,21 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 					address={restaurant.address}
 				/>
 				<div className="absolute top-4 right-4">
-					<Alert
-						className={cn(
-							"border",
-							isOpen
-								? "bg-green-50 border-green-200"
-								: "bg-red-50 border-red-200",
-						)}
-					>
-						<AlertDescription
-							className={cn(isOpen ? "text-green-700" : "text-red-700")}
-						>
-							{isOpen ? "Open Now" : "Currently Closed"}
-						</AlertDescription>
-					</Alert>
+					<RestaurantStatus isOpen={isOpen} />
 				</div>
 			</div>
 
 			<div className="container mx-auto px-4 lg:px-6 py-6">
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 					<div className="lg:col-span-2">
-						{/* Menu Sections */}
-						<div className="bg-white rounded-lg shadow-sm">
-							<div className="p-4">
-								<h2 className="text-lg font-semibold">Sections</h2>
-							</div>
-							<div className="flex lg:flex-col gap-1 p-2 overflow-x-auto lg:overflow-x-visible">
-								{sections.map((section) => (
-									// biome-ignore lint/a11y/useButtonType: <explanation>
-									<button
-										key={section}
-										onClick={() => setActiveSection(section)}
-										className={cn(
-											"px-4 py-2 rounded-md text-sm whitespace-nowrap w-full text-left",
-											activeSection === section
-												? "bg-blue-50 text-blue-600"
-												: "hover:bg-gray-50",
-										)}
-									>
-										{section}
-									</button>
-								))}
-							</div>
-						</div>
+						<MenuSections
+							sections={sections}
+							activeSection={activeSection}
+							setActiveSection={setActiveSection}
+						/>
 
-						{/* Opening Hours */}
-						<div className="mt-4 bg-white rounded-lg shadow-sm">
-							<div className="p-4">
-								<h2 className="text-lg font-semibold">Opening Hours</h2>
-							</div>
-							<div className="p-4 space-y-2">
-								{Object.entries(restaurant.openingHours).map(([day, hours]) => (
-									<div key={day} className="flex justify-between text-sm">
-										<span className="capitalize">{day}</span>
-										<span className={cn(hours.isClosed && "text-red-500")}>
-											{hours.isClosed
-												? "Closed"
-												: `${hours.open} - ${hours.close}`}
-										</span>
-									</div>
-								))}
-							</div>
-						</div>
+						{/* Use OpeningHours component */}
+						<OpeningHours openingHours={restaurant.openingHours} />
 					</div>
 
 					<div className="lg:col-span-7">
@@ -245,3 +199,12 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 }
 
 export default RestaurantPage;
+
+
+// components
+//
+//
+//
+//
+//
+
