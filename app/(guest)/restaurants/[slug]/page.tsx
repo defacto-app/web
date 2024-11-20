@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import { $api } from "@/http/endpoints";
 import OrderCart from "@/app/user/checkout/OrderCart";
@@ -7,52 +7,31 @@ import debounce from "lodash/debounce";
 import {
 	BreadcrumbNav,
 	ErrorState,
-	LoadingState, MenuSections,
-	RestaurantHero, RestaurantStatus,
+	LoadingState,
+	MenuSections,
+	RestaurantHero,
+	RestaurantStatus,
 	SearchBar,
-	OpeningHours,
+	OpeningHourComponent,
 } from "@/app/(guest)/restaurants/components/SingleRestaurantComponents";
-
-
-
-interface Restaurant {
-	name: string;
-	image: string;
-	deliveryTime: string;
-	address: string;
-	openingHours: {
-		[key: string]: {
-			open: string;
-			close: string;
-			isClosed: boolean;
-		};
-	};
-	rating: number;
-	publicId: string;
-}
-
-interface MenuItem {
-	_id: string;
-	name: string;
-	price: number;
-	category: string;
-	menuType: string;
-	image: string;
-	available: boolean;
-}
-
-
+import type {
+	Category,
+	MenuItemDisplay,
+	Restaurant,
+	OpeningHoursType,
+} from "@/lib/types";
 
 function RestaurantPage({ params }: { params: { slug: string } }) {
 	const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
-	const [menu, setMenu] = useState<MenuItem[]>([]);
+	const [menu, setMenu] = useState<MenuItemDisplay[]>([]);
+	const [categories, setCategories] = useState<Category[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [search, setSearch] = useState("");
-	const [activeSection, setActiveSection] = useState("All");
+	const [activeCategory, setActiveCategory] = useState("All");
 	const [isOpen, setIsOpen] = useState(false);
 
-	const checkIfOpen = (hours: Restaurant["openingHours"]) => {
+	const checkIfOpen = (hours: OpeningHoursType) => {
 		const now = new Date();
 		const days = [
 			"sunday",
@@ -81,7 +60,6 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		);
 	};
 
-	// Update opening status every minute
 	useEffect(() => {
 		if (!restaurant?.openingHours) return;
 
@@ -110,6 +88,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 				const res = await $api.guest.restaurant.one(params.slug);
 				setRestaurant(res.data.restaurant);
 				setMenu(res.data.menu);
+				setCategories(res.data.categories);
 				setIsOpen(checkIfOpen(res.data.restaurant.openingHours));
 			} catch (e) {
 				setError("Failed to load restaurant data");
@@ -124,7 +103,6 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		if (search) {
 			debouncedSearch(search);
 		} else {
-			// Reset to original menu when search is cleared
 			$api.guest.restaurant.one(params.slug).then((res) => {
 				setMenu(res.data.menu);
 			});
@@ -135,14 +113,19 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 	if (error) return <ErrorState error={error} />;
 	if (!restaurant) return null;
 
-	const sections = [
-		"All",
-		...Array.from(new Set(menu.map((item) => item.menuType))),
+	const allCategories = [
+		{ _id: "All", name: "All Categories", slug: "all" },
+		...categories,
 	];
-	const filteredMenu =
-		activeSection === "All"
-			? menu
-			: menu.filter((item) => item.menuType === activeSection);
+
+	const filteredMenu = menu.filter((item) => {
+		const matchesSearch = item.name
+			.toLowerCase()
+			.includes(search.toLowerCase());
+		return activeCategory === "All"
+			? matchesSearch
+			: matchesSearch && item.categoryId._id === activeCategory;
+	});
 
 	return (
 		<div className="min-h-screen bg-gray-50">
@@ -163,13 +146,11 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 					<div className="lg:col-span-2">
 						<MenuSections
-							sections={sections}
-							activeSection={activeSection}
-							setActiveSection={setActiveSection}
+							categories={allCategories}
+							activeCategory={activeCategory}
+							setActiveCategory={setActiveCategory}
 						/>
-
-						{/* Use OpeningHours component */}
-						<OpeningHours openingHours={restaurant.openingHours} />
+						<OpeningHourComponent openingHours={restaurant.openingHours} />
 					</div>
 
 					<div className="lg:col-span-7">
@@ -199,12 +180,3 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 }
 
 export default RestaurantPage;
-
-
-// components
-//
-//
-//
-//
-//
-

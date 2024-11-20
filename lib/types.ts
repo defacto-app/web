@@ -134,6 +134,14 @@ export type OpeningHours = {
 	sunday: DayHours;
 };
 
+export type OpeningHoursType = {
+	[day in 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday']?: {
+		open: string;
+		close: string;
+		isClosed: boolean;
+	};
+};
+
 export const defaultOpeningHours: OpeningHours = {
   monday: { open: "10:00", close: "19:00", isClosed: false },
   tuesday: { open: "10:00", close: "19:00", isClosed: false },
@@ -197,3 +205,52 @@ export interface RestaurantFormType {
   category: string;
   description: string;
 }
+
+
+// Base Menu Item interface with common properties
+export interface BaseMenuItem {
+	name: string;
+	image: string;
+	price: string;
+	available: boolean;
+}
+
+// For displaying menu items in the restaurant page
+export interface MenuItemDisplay extends BaseMenuItem {
+	_id: string;
+	publicId: string;
+	categoryId: {
+		_id: string;
+		name: string;
+		slug: string;
+	};
+	parent: string;
+	slug: string;
+}
+
+// For admin forms when creating/editing menu items
+export interface MenuItemForm extends BaseMenuItem {
+	description?: string;
+	categoryId: string;  // Just the ID when submitting forms
+}
+
+// For the full menu item data from API
+export interface MenuItemFull extends MenuItemDisplay {
+	description?: string;
+	createdAt: string;
+	updatedAt: string;
+	stars?: number;
+	isBestSeller?: boolean;
+}
+
+// Category types
+export interface Category {
+	_id: string;
+	name: string;
+	slug: string;
+	description?: string;
+	active: boolean;
+	categoryType: "restaurant" | "menu";
+}
+
+// Rest of your existing types remain the same...
