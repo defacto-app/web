@@ -18,8 +18,12 @@ import type {
 	Category,
 	MenuItemDisplay,
 	Restaurant,
-	OpeningHoursType,
+
 } from "@/lib/types";
+import {Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,} from "@/components/ui/accordion";
 
 function RestaurantPage({ params }: { params: { slug: string } }) {
 	const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
@@ -127,20 +131,11 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 	];
 
 
-	const normalizedCategories: Category[] = allCategories.filter(
-		(category): category is Category => 'active' in category && 'categoryType' in category
-	);
 
 
 	const filteredMenu = menu.filter((item) => {
-		const matchesSearch = item.name
-			.toLowerCase()
-			.includes(search.toLowerCase());
-		return activeCategory === "All"
-			? matchesSearch
-			: matchesSearch && item.categoryId._id === activeCategory;
+		return item.name.toLowerCase().includes(search.toLowerCase());
 	});
-
 	return (
 		<div className="min-h-screen bg-gray-50">
 			<BreadcrumbNav restaurantName={restaurant.name} />
@@ -159,34 +154,38 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 			<div className="container mx-auto px-4 lg:px-6 py-6">
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 					<div className="lg:col-span-2">
-						<MenuSections
-							categories={normalizedCategories}
-							activeCategory={activeCategory}
-							setActiveCategory={setActiveCategory}
-						/>
-						<OpeningHourComponent openingHours={restaurant.openingHours} />
-					</div>
+						<div className="sticky top-4 space-y-4">
+							<MenuSections
+								categories={allCategories}
+								activeCategory={activeCategory}
+								setActiveCategory={setActiveCategory}
+							/>
+							<OpeningHourComponent openingHours={restaurant.openingHours}/>
 
-					<div className="lg:col-span-7">
-						<SearchBar
-							value={search}
-							onChange={(e) => setSearch(e.target.value)}
-							placeholder={`Search in ${restaurant.name}`}
-						/>
-						<div className="mt-4">
-							<MenuArea data={filteredMenu} categories={categories} />
+
 						</div>
-					</div>
+						</div>
 
-					<div className="hidden lg:block lg:col-span-3">
-						<div className="sticky top-4">
-							<OrderCart restaurant_name={restaurant.name} />
+						<div className="lg:col-span-7">
+							<SearchBar
+								value={search}
+								onChange={(e) => setSearch(e.target.value)}
+								placeholder={`Search in ${restaurant.name}`}
+							/>
+							<div className="mt-4">
+								<MenuArea data={filteredMenu} categories={categories}/>
+							</div>
+						</div>
+
+						<div className="hidden lg:block lg:col-span-3">
+							<div className="sticky top-4">
+								<OrderCart restaurant_name={restaurant.name}/>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div className="lg:hidden fixed bottom-4 right-4 z-50">
+				<div className="lg:hidden fixed bottom-4 right-4 z-50">
 				<OrderCart buttonOnly restaurant_name={restaurant.name} />
 			</div>
 		</div>

@@ -11,6 +11,12 @@ import type {
 	OpeningHours,
 	OpeningHours as OpeningHoursType,
 } from "@/lib/types";
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export const BreadcrumbNav = ({
 	restaurantName,
@@ -157,13 +163,13 @@ export const MenuCard = ({ item }: { item: MenuItemDisplay }) => (
 );
 
 interface MenuSectionsProps {
-	categories: Category[];
+	categories: any[];
 	activeCategory: string;
 	setActiveCategory: (categoryId: string) => void;
 }
 
 interface MenuSectionsProps {
-	categories: Category[];
+	categories: any[];
 	activeCategory: string;
 	setActiveCategory: (categoryId: string) => void;
 }
@@ -173,32 +179,51 @@ export const MenuSections = ({
 								 activeCategory,
 								 setActiveCategory,
 							 }: MenuSectionsProps) => {
+	const handleCategoryClick = (categoryId: string) => {
+		setActiveCategory(categoryId);
+
+		if (categoryId === "All") {
+			window.scrollTo({ top: 0, behavior: "smooth" });
+			return;
+		}
+
+		const element = document.getElementById(`category-${categoryId}`);
+		if (element) {
+			element.scrollIntoView({ behavior: "smooth" });
+		}
+	};
+
 	return (
 		<div className="bg-white rounded-lg shadow-sm">
-			<div className="p-4">
+			{/* Title - Hidden on mobile */}
+			<div className="p-4 hidden lg:block">
 				<h2 className="text-lg font-semibold">Categories</h2>
 			</div>
-			<div className="flex lg:flex-col gap-1 p-2 overflow-x-auto lg:overflow-x-visible">
-				{categories.map((category) => {
-					const id =
-						'active' in category ? category._id : (category as { _id: string })._id;
-					const name =
-						'name' in category ? category.name : (category as { name: string }).name;
 
-					return (
-						// biome-ignore lint/a11y/useButtonType: <explanation>
-						<button
-							key={id}
-							onClick={() => setActiveCategory(id)}
-							className={cn(
-								"px-4 py-2 rounded-md text-sm whitespace-nowrap w-full text-left",
-								activeCategory === id ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"
-							)}
-						>
-							{name}
-						</button>
-					);
-				})}
+			{/* Categories - Sticky on mobile */}
+			<div className={cn(
+				"flex gap-1 p-2 overflow-x-auto",
+				// Mobile styles
+				"lg:flex-col lg:overflow-x-visible",
+				// Sticky on mobile
+				"sticky top-0 bg-white z-20 lg:relative lg:top-auto"
+			)}>
+				{categories.map((category) => (
+					<button
+						key={category._id}
+						type="button"
+						onClick={() => handleCategoryClick(category._id)}
+						className={cn(
+							"px-4 py-2 rounded-md text-sm whitespace-nowrap",
+							"flex-shrink-0 lg:w-full lg:text-left", // Prevent shrinking on mobile
+							activeCategory === category._id
+								? "bg-blue-50 text-blue-600"
+								: "hover:bg-gray-50"
+						)}
+					>
+						{category.name}
+					</button>
+				))}
 			</div>
 		</div>
 	);
@@ -208,20 +233,45 @@ interface OpeningHoursProps {
 	openingHours: OpeningHours;
 }
 
-export const OpeningHourComponent = ({ openingHours }: OpeningHoursProps) => (
-	<div className="mt-4 bg-white rounded-lg shadow-sm">
-		<div className="p-4">
-			<h2 className="text-lg font-semibold">Opening Hours</h2>
-		</div>
-		<div className="p-4 space-y-2">
-			{Object.entries(openingHours).map(([day, hours]) => (
-				<div key={day} className="flex justify-between text-sm">
-					<span className="capitalize">{day}</span>
-					<span className={cn(hours.isClosed && "text-red-500")}>
+export const OpeningHourComponent = ({openingHours}: OpeningHoursProps) => (
+	<div className="mt-4 bg-white rounded-lg shadow-sm ">
+
+		<div className={`hidden lg:block`}>
+			<div className="p-4">
+				<h2 className="text-lg font-semibold">Opening Hours</h2>
+			</div>
+			<div className="p-4 space-y-2">
+				{Object.entries(openingHours).map(([day, hours]) => (
+					<div key={day} className="flex justify-between text-sm">
+						<span className="capitalize">{day}</span>
+						<span className={cn(hours.isClosed && "text-red-500")}>
 						{hours.isClosed ? "Closed" : `${hours.open} - ${hours.close}`}
 					</span>
-				</div>
-			))}
+					</div>
+				))}
+			</div>
+		</div>
+
+		<div className={`lg:hidden`}>
+			<Accordion type="single" collapsible className="w-full">
+				<AccordionItem value="item-1">
+					<AccordionTrigger><span className={`px-4`}>Opening Hours </span></AccordionTrigger>
+					<AccordionContent>
+						<div className="p-4 space-y-2">
+							{Object.entries(openingHours).map(([day, hours]) => (
+								<div key={day} className="flex justify-between text-sm">
+									<span className="capitalize">{day}</span>
+									<span className={cn(hours.isClosed && "text-red-500")}>
+										{hours.isClosed
+											? "Closed"
+											: `${hours.open} - ${hours.close}`}
+									</span>
+								</div>
+							))}
+						</div>
+					</AccordionContent>
+				</AccordionItem>
+			</Accordion>
 		</div>
 	</div>
 );

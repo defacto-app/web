@@ -110,6 +110,7 @@ function AllUserPage() {
 					<div className="relative">
 						<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 						<Input
+							variant={`rounded`}
 							type="search"
 							value={searchTerm} // Bind input value to state
 							onChange={handleSearchChange} // Update state on input change
