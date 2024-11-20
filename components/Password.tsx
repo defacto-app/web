@@ -11,15 +11,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, Key } from "lucide-react";
 import { useAuthContext } from "@/app/provider/auth.context";
 import FormError from "@/components/ui/FormError";
 import PasswordInput from "@/components/ui/PasswordInput";
 
 function Password() {
-  const {form,setForm, currentStep,setCurrentStep } = useAuthContext();
+  const {form,setForm, setCurrentStep } = useAuthContext();
 
   const schema = z.object({
     password: z.string().min(8, {

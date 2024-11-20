@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 import { differenceInSeconds, format } from "date-fns";
-import type { DayHours, OpeningHours } from "./types";
+import type {  OpeningHours } from "./types";
 
 export function formatDateFromNow(date: Date | string | number): string {
 	// Convert date to a Date object
@@ -44,14 +44,6 @@ export function formatDateFromNow(date: Date | string | number): string {
 	return formattedDate;
 }
 
-const formatTimeToHHMM = (time: string): string => {
-	const date = new Date(`1970-01-01T${time}`);
-	const isValidTime = !Number.isNaN(date.getTime());
-	if (!isValidTime) {
-			throw new Error(`Invalid time format: ${time}`);
-	}
-	return date.toISOString().substring(11, 16); // Extract HH:mm from ISO string
-};
 
 
 

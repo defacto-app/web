@@ -1,5 +1,5 @@
 import axios from "axios";
-import {clearToken, getToken} from "@/utils/auth";
+import { getToken} from "@/utils/auth";
 import envData from "@/config/envData";
 
 

@@ -162,34 +162,47 @@ interface MenuSectionsProps {
 	setActiveCategory: (categoryId: string) => void;
 }
 
+interface MenuSectionsProps {
+	categories: Category[];
+	activeCategory: string;
+	setActiveCategory: (categoryId: string) => void;
+}
+
 export const MenuSections = ({
-	categories,
-	activeCategory,
-	setActiveCategory,
-}: MenuSectionsProps) => (
-	<div className="bg-white rounded-lg shadow-sm">
-		<div className="p-4">
-			<h2 className="text-lg font-semibold">Categories</h2>
+								 categories,
+								 activeCategory,
+								 setActiveCategory,
+							 }: MenuSectionsProps) => {
+	return (
+		<div className="bg-white rounded-lg shadow-sm">
+			<div className="p-4">
+				<h2 className="text-lg font-semibold">Categories</h2>
+			</div>
+			<div className="flex lg:flex-col gap-1 p-2 overflow-x-auto lg:overflow-x-visible">
+				{categories.map((category) => {
+					const id =
+						'active' in category ? category._id : (category as { _id: string })._id;
+					const name =
+						'name' in category ? category.name : (category as { name: string }).name;
+
+					return (
+						// biome-ignore lint/a11y/useButtonType: <explanation>
+						<button
+							key={id}
+							onClick={() => setActiveCategory(id)}
+							className={cn(
+								"px-4 py-2 rounded-md text-sm whitespace-nowrap w-full text-left",
+								activeCategory === id ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"
+							)}
+						>
+							{name}
+						</button>
+					);
+				})}
+			</div>
 		</div>
-		<div className="flex lg:flex-col gap-1 p-2 overflow-x-auto lg:overflow-x-visible">
-			{categories.map((category) => (
-				// biome-ignore lint/a11y/useButtonType: <explanation>
-				<button
-					key={category._id}
-					onClick={() => setActiveCategory(category._id)}
-					className={cn(
-						"px-4 py-2 rounded-md text-sm whitespace-nowrap w-full text-left",
-						activeCategory === category._id
-							? "bg-blue-50 text-blue-600"
-							: "hover:bg-gray-50",
-					)}
-				>
-					{category.name}
-				</button>
-			))}
-		</div>
-	</div>
-);
+	);
+};
 
 interface OpeningHoursProps {
 	openingHours: OpeningHours;

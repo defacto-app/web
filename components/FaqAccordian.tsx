@@ -1,7 +1,6 @@
 "use client";
 import * as React from "react";
 
-import { MinusIcon, PlusIcon } from "lucide-react";
 import {
 	Accordion,
 	AccordionContent,
@@ -10,7 +9,6 @@ import {
 } from "@/components/ui/accordion";
 
 export default function FaqAccordion() {
-	const [expanded, setExpanded] = React.useState<number | false>(false);
 
 
 	const faqs = [

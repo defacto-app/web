@@ -16,10 +16,6 @@ export default function UserAuth() {
 		setHideCloseButton(!shouldShow.includes(currentStep));
 	}, [currentStep]);
 
-	function hideBackButton() {
-		const shouldShow = ["welcome", "confirm-email"];
-		return !shouldShow.includes(currentStep);
-	}
 
 	useEffect(() => {
 		localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));

@@ -3,7 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import "./../globals.css";
 import { cn } from "@/lib/utils";
 import Head from "next/head";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 import type React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "@/components/Footer";

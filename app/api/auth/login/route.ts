@@ -1,6 +1,5 @@
 import envData from "@/config/envData";
 import {cookies} from 'next/headers'
-import {de} from "@faker-js/faker";
 
 export const dynamic = "force-dynamic"; // defaults to auto
 

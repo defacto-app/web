@@ -25,10 +25,8 @@ function GoogleAddressInput({ onAddressSelect }: GoogleAddressInputProps) {
 
 	// Access modal state and actions from useGoogleAddressAtomContext
 	const {
-		modalOpen,
 		setSavedAddress,
-		savedAddress,
-		openModal,
+
 		handleCloseModal,
 	} = useGoogleAddressAtomContext();
 

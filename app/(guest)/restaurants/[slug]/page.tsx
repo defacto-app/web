@@ -31,6 +31,14 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 	const [activeCategory, setActiveCategory] = useState("All");
 	const [isOpen, setIsOpen] = useState(false);
 
+	type OpeningHoursType = {
+		[day: string]: {
+			open: string;
+			close: string;
+			isClosed: boolean;
+		};
+	};
+
 	const checkIfOpen = (hours: OpeningHoursType) => {
 		const now = new Date();
 		const days = [
@@ -45,19 +53,19 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		const day = days[now.getDay()];
 		const currentTime = now.getHours() * 60 + now.getMinutes();
 
-		if (!hours || !hours[day]) return false;
+		// Check if the hours object and the day-specific opening hours are defined
+		if (!hours || !hours[day]) {
+			return false;
+		}
 
-		const [openHour, openMin] = hours[day].open.split(":").map(Number);
-		const [closeHour, closeMin] = hours[day].close.split(":").map(Number);
+		const { open, close, isClosed } = hours[day];
+		const [openHour, openMin] = open.split(":").map(Number);
+		const [closeHour, closeMin] = close.split(":").map(Number);
 
 		const openTime = openHour * 60 + openMin;
 		const closeTime = closeHour * 60 + closeMin;
 
-		return (
-			currentTime >= openTime &&
-			currentTime <= closeTime &&
-			!hours[day].isClosed
-		);
+		return currentTime >= openTime && currentTime <= closeTime && !isClosed;
 	};
 
 	useEffect(() => {
@@ -118,6 +126,12 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		...categories,
 	];
 
+
+	const normalizedCategories: Category[] = allCategories.filter(
+		(category): category is Category => 'active' in category && 'categoryType' in category
+	);
+
+
 	const filteredMenu = menu.filter((item) => {
 		const matchesSearch = item.name
 			.toLowerCase()
@@ -146,7 +160,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 					<div className="lg:col-span-2">
 						<MenuSections
-							categories={allCategories}
+							categories={normalizedCategories}
 							activeCategory={activeCategory}
 							setActiveCategory={setActiveCategory}
 						/>

@@ -1,14 +1,11 @@
 "use client";
-import PhoneLogin from "@/app/components/PhoneLogin";
-import { Button } from "@/components/ui/button";
-import { EnvelopeClosedIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import Welcome from "@/app/components/Welcome";
 import Email from "@/app/components/Email";
 import LoginSuccessful from "@/app/components/LoginSuccessful";
 import RegistrationSuccessful from "@/app/components/RegistrationSuccessful";
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 
 export default function LoginPage() {

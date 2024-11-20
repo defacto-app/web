@@ -13,62 +13,14 @@ export default function FoodHero() {
 
 	const words = ["Cravings", "Joy", "Orders with speed", "Orders with ease"];
 
-	const logos = [
-		{
-			src: "https://tailwindui.com/img/logos/tuple-logo-gray-400.svg",
-			alt: "Tuple",
-		},
-		{
-			src: "https://tailwindui.com/img/logos/mirage-logo-gray-400.svg",
-			alt: "Mirage",
-		},
-		{
-			src: "https://tailwindui.com/img/logos/statickit-logo-gray-400.svg",
-			alt: "StaticKit",
-		},
-		{
-			src: "https://tailwindui.com/img/logos/transistor-logo-gray-400.svg",
-			alt: "Transistor",
-		},
-		{
-			src: "https://tailwindui.com/img/logos/workcation-logo-gray-400.svg",
-			alt: "Workcation",
-		},
-	];
 
-	const logoElements = logos.map((logo, index) => (
-		<div
-			className="col-span-1 flex justify-center md:col-span-2 lg:col-span-1"
-			// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-			key={index}
-		>
-			<Image
-				className="h-12"
-				src={logo.src}
-				alt={logo.alt}
-				width={100}
-				height={100}
-				style={{
-					width: "100%",
-					maxWidth: "100%",
-					height: "auto",
-				}}
-			/>
-		</div>
-	));
 	const [selectedAddress, setSelectedAddress] = useState<{
 		address: string;
 		additionalDetails: string;
 		location: { lat: number; lng: number };
 	} | null>(null);
 
-	const handleAddressSelect = (address: string) => {
-		setSelectedAddress({
-			address,
-			additionalDetails: "",
-			location: { lat: 0, lng: 0 },
-		});
-	};
+
 
 	useEffect(() => {
 		const savedData = localStorage.getItem("selectedAddress");

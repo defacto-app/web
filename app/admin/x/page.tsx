@@ -28,55 +28,8 @@ interface Role {
 	count: number;
 }
 
-interface OrderType {
-	_id: string;
-	count: number;
-}
 
-interface OrderStatus {
-	_id: string;
-	count: number;
-}
 
-interface DashboardData {
-	users: {
-		total: number;
-		newLastWeek: number;
-		activeLastMonth: number;
-		verified: number;
-		unverified: number;
-		roles: Role[];
-		banned: number;
-	};
-	restaurants: {
-		total: number;
-		withMenus: number;
-		popularCategory: string;
-		highestMenuCount: {
-			_id: string;
-			name: string;
-			menuItemsCount: number;
-		};
-		averageMenuCount: number;
-	};
-	orders: {
-		total: number;
-		byType: OrderType[];
-		avgValue: number;
-		byStatus: OrderStatus[];
-		instantOrders: number;
-		pendingOlderThan48Hours: number;
-		totalRevenue: number;
-	};
-	menu: {
-		total: number;
-		available: number;
-		unavailable: number;
-		avgPrice: number;
-		popularCategory: string;
-	};
-	timestamp: string;
-}
 
 export default function AdminIndex() {
 	const [data, setData] = React.useState<any>();

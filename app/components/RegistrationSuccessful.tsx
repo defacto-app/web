@@ -1,11 +1,6 @@
-import { useAtomAuthContext } from "@/app/store/authAtom";
-import Loader from "@/components/Loader";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 function RegistrationSuccessful() {
-	const { setModalOpen, setCurrentStep, setIsLoggedIn } = useAtomAuthContext();
-	const router = useRouter();
 	const [email, setEmail] = useState<string | null>(null); // Store email in state
 
 	// Get new email from session storage

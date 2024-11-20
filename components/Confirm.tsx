@@ -12,7 +12,7 @@ import "react-phone-input-2/lib/style.css";
 
 export default function ConfirmEmail() {
 
-  const { form,setForm, currentStep, setCurrentStep } = useAuthContext();
+  const { form } = useAuthContext();
 
 
   return (

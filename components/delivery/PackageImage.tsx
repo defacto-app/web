@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import Image from "next/image";
 
 type PackageImageUploaderProps = {
@@ -44,7 +45,8 @@ function PackageImageUploader({ onImageSelect }: PackageImageUploaderProps) {
 							alt="Preview"
 							className="w-full h-20 object-cover rounded-lg"
 						/>
-						<button
+						{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+<button
 							onClick={handleRemoveImage}
 							className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
 						>

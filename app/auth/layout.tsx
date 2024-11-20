@@ -5,7 +5,7 @@ import "./../globals.css";
 import { Inter as FontSans } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import Head from "next/head";
-import { usePathname, useRouter } from "next/navigation"; // Use usePathname from next/navigation
+import { usePathname } from "next/navigation"; // Use usePathname from next/navigation
 
 import "react-toastify/dist/ReactToastify.css";
 import { cn } from "@/lib/utils";

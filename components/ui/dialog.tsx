@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { CircleX, X } from "lucide-react";
+import { CircleX } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 

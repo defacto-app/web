@@ -2,7 +2,7 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import envData, { isDev } from "@/config/envData";
+import envData from "@/config/envData";
 import { $api } from "@/http/endpoints";
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";

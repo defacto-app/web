@@ -10,7 +10,7 @@ import Image from "next/image";
 export const menuColumns: ColumnDef<any>[] = [
 	{
 		accessorKey: "S/N",
-		header: ({ column }) => <div>S/N</div>,
+		header: () => <div>S/N</div>,
 		cell: ({ row }) => {
 			return (
 				<div className="flex space-x-2">

@@ -10,10 +10,8 @@ import { Search } from "lucide-react";
 import { useQuery } from "react-query";
 import {
 	allMenuColumns,
-	menuColumns,
 } from "@/app/admin/x/restaurants/[id]/menu/menu.columns";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
-import { restaurantColumns } from "@/app/admin/x/restaurants/restaurant.columns";
 
 const fetchMenus = async ({ queryKey }: any) => {
 	const [_key, page, perPage, searchTerm] = queryKey; // Extract query parameters
