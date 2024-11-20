@@ -8,6 +8,9 @@ import Image from "next/image";
 import {Trash} from "lucide-react";
 import {toast} from "react-toastify";
 import {$admin_api} from "@/http/admin-endpoint";
+import { Button } from "@/components/ui/button";
+import { ArrowUpDown } from "lucide-react";
+import {DataTableColumnHeader} from "@/app/admin/x/demo/components/data-table-column-header";
 
 export const restaurantColumns: ColumnDef<any>[] = [
 	{
@@ -111,41 +114,38 @@ export const categoryColumns: ColumnDef<any>[] = [
 	},
 	{
 		accessorKey: "name",
-		header: "Name",
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Name" />
+		),
+		enableSorting: true,
 	},
 	{
 		accessorKey: "menuCount",
-		header: "Menu Count",
-		cell: ({ row }) => {
-			const { menuCount } = row.original;
-			return <p>{menuCount}</p>;
-		},
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Menu Count" />
+		),
+		enableSorting: true,
 	},
 	{
 		accessorKey: "restaurantCount",
-		header: "Restaurant Count",
-		cell: ({ row }) => {
-			const { restaurantCount } = row.original;
-			return <p>{restaurantCount}</p>;
-		},
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Restaurant Count" />
+		),
+		enableSorting: true,
 	},
 	{
 		accessorKey: "createdAt",
-		header: "Created At",
-		cell: ({ row }) => {
-			const { createdAt } = row.original;
-			const formattedDate = formatDateFromNow(createdAt);
-			return <span>{formattedDate}</span>;
-		},
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Created At" />
+		),
+		enableSorting: true,
 	},
 	{
 		accessorKey: "updatedAt",
-		header: "Updated At",
-		cell: ({ row }) => {
-			const { updatedAt } = row.original;
-			const formattedDate = formatDateFromNow(updatedAt);
-			return <span>{formattedDate}</span>;
-		},
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Updated At" />
+		),
+		enableSorting: true,
 	},
 	{
 		accessorKey: "actions",

@@ -5,6 +5,7 @@ import {
 	flexRender,
 	getCoreRowModel,
 	getPaginationRowModel,
+	type SortingState,
 	useReactTable,
 } from "@tanstack/react-table";
 
@@ -16,7 +17,12 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import React from "react";
+import React, {useCallback} from "react";
+
+interface TableSorting {
+	field: string;
+	direction: "asc" | "desc";
+}
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -24,6 +30,7 @@ interface DataTableProps<TData, TValue> {
 	pageCount: number;
 	pageIndex: number;
 	perPage: number;
+	onSortingChange?: (sorting: TableSorting) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -32,30 +39,44 @@ export function DataTable<TData, TValue>({
 	pageCount,
 	pageIndex,
 	perPage,
+	onSortingChange,
 }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = React.useState({});
 	const [columnVisibility, setColumnVisibility] = React.useState({});
 	const [columnFilters, setColumnFilters] = React.useState([]);
-	const [sorting, setSorting] = React.useState([]);
+	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [pagination, setPagination] = React.useState({
-		pageIndex: pageIndex - 1, // Adjust for 0-based index
+		pageIndex: pageIndex - 1,
 		pageSize: perPage,
 	});
 
-	// Update pagination state when props change
 	React.useEffect(() => {
 		setPagination({
-			pageIndex: pageIndex - 1, // Adjust for 0-based index
+			pageIndex: pageIndex - 1,
 			pageSize: perPage,
 		});
 	}, [pageIndex, perPage]);
+
+	const handleSortingChange = useCallback((newSorting: SortingState) => {
+		setSorting(newSorting);
+		if (newSorting.length > 0) {
+			onSortingChange?.({
+				field: newSorting[0].id,
+				direction: newSorting[0].desc ? "desc" : "asc",
+			});
+		} else {
+			onSortingChange?.({ field: "", direction: "asc" });
+		}
+	}, [onSortingChange]);
 	const table = useReactTable({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
-		manualPagination: true, // Important for server-side pagination
-		pageCount: pageCount, // Total number of pages
+		manualPagination: true,
+		pageCount: pageCount,
+		manualSorting: true, // Enable manual sorting
+
 		state: {
 			sorting,
 			columnVisibility,
@@ -64,7 +85,6 @@ export function DataTable<TData, TValue>({
 			pagination,
 		},
 	});
-
 	return (
 		<div className="rounded-md border">
 			<Table>

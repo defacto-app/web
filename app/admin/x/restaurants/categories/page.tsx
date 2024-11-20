@@ -12,20 +12,23 @@ import { useQuery } from "react-query";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { categoryColumns } from "@/app/admin/x/restaurants/restaurant.columns";
 
-const fetchMenus = async ({ queryKey }: any) => {
-	const [_key, page, perPage, searchTerm] = queryKey; // Extract query parameters
+const getData = async ({ queryKey }: any) => {
+	const [_key, page, perPage, searchTerm, sorting] = queryKey;
+
 	const response = await $admin_api.restaurants.categories({
 		page,
 		perPage,
 		searchTerm,
 	});
-	return response.data.data; // Assuming response.data.data contains the menu data
-};
 
+	return response.data.data;
+};
 function AllCategoriesPage() {
 	const [page, setPage] = useState(1);
 	const [perPage, setPerPage] = useState(10);
 	const [searchTerm, setSearchTerm] = useState(""); // Search term
+	const [sorting, setSorting] = useState<{ id: string; desc: boolean } | null>(null);
+
 
 	// Debounced search
 	const debouncedSearch = useCallback(
@@ -38,18 +41,29 @@ function AllCategoriesPage() {
 
 	// Use react-query to fetch menus
 	const { data, error, isLoading } = useQuery(
-		["menus", page, perPage, searchTerm],
-		fetchMenus,
+		["menus", page, perPage, searchTerm, sorting], // Include sorting in query key
+		getData,
 		{
-			keepPreviousData: true, // Keep old data while fetching new data
-			staleTime: 5000, // Prevent refetching for 5 seconds
-		},
+			keepPreviousData: true,
+			staleTime: 5000,
+		}
 	);
 
 	// Handle page change
 	const handlePageChange = (newPage: any) => {
 		setPage(newPage);
 	};
+
+	const handleSortingChange = useCallback((newSorting: any) => {
+		if (newSorting.length > 0) {
+			setSorting({
+				id: newSorting[0].id,
+				desc: newSorting[0].desc
+			});
+		} else {
+			setSorting(null);
+		}
+	}, []);
 
 	if (error) return <div>Failed to fetch menus</div>;
 
@@ -71,7 +85,7 @@ function AllCategoriesPage() {
 					<DataTableSkeleton columns={categoryColumns} />
 				) : (
 					<>
-						<TablePagination
+					<TablePagination
 							page={page}
 							totalPages={data.meta.totalPages}
 							onPageChange={handlePageChange}
@@ -82,6 +96,7 @@ function AllCategoriesPage() {
 							perPage={perPage}
 							columns={categoryColumns}
 							data={data.data || []}
+							onSortingChange={handleSortingChange}
 						/>
 
 						<TablePagination
