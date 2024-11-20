@@ -14,14 +14,13 @@ export const $api = {
 				}
 			},
 
-			one: async (slug: string) => {
+			one: async (slug: string, params = {}) => {
 				try {
-					return $axios.get(`/restaurants/${slug}`, {});
+					return $axios.get(`/restaurants/${slug}`, { params });
 				} catch (error: any) {
 					return error;
 				}
 			},
-
 			/*		all: async () => {
 				try {
 					const res = await fetch(
