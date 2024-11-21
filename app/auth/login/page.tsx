@@ -19,16 +19,13 @@ export default function LoginPage() {
 						<Link href="/">
 							<span className="sr-only">Your Company</span>
 							<Image
-								className="h-40 w-auto"
+								className="h-20 pb-4 w-auto"
 								src="/logo.png"
 								priority={true}
 								alt=""
 								width={100}
 								height={100}
-								style={{
-									maxWidth: "100%",
-									height: "auto",
-								}}
+
 							/>
 						</Link>
 					</div>

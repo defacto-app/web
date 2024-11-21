@@ -120,7 +120,7 @@ function Email() {
 				}),
 			});
 
-			toast.success("Login Successful");
+			// toast.success("Login Successful");
 			setIsLoggedIn(true);
 			// Fetch user information
 			await getMe();

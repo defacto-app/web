@@ -1,49 +1,19 @@
 import React from 'react';
 
 const Loader = () => {
-  return (
-    <div>
-      <div className="spinner"></div>
-      <style>{`
-        .spinner {
-          position: relative;
-          width: 22.4px;
-          height: 22.4px;
-        }
-
-        .spinner::before,
-        .spinner::after {
-          --radius: 250;
-          content: '';
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          animation: spinner-w7nm60 2s infinite linear;
-          background: #474bff;
-          border-radius: 50%;
-        }
-
-        .spinner::before {
-          --radius: -250;
-          background: #dbdcef;
-        }
-
-        @keyframes spinner-w7nm60 {
-          0% {
-            transform: scale(1) rotate(0deg) translateY(calc(var(--radius) * 1%));
-          }
-
-          50% {
-            transform: scale(0.5) rotate(1440deg) translateY(0);
-          }
-
-          100% {
-            transform: scale(1) rotate(2920deg) translateY(calc(var(--radius) * 1%));
-          }
-        }
-      `}</style>
-    </div>
-  );
+    return (
+        <div className="flex space-x-2 justify-center items-center">
+            {[0, 1, 2].map((index) => (
+                <div
+                    key={index}
+                    className={`w-3 h-3 bg-blue-500 rounded-full animate-pulse`}
+                    style={{
+                        animationDelay: `${index * 0.2}s`
+                    }}
+                />
+            ))}
+        </div>
+    );
 };
 
 export default Loader;

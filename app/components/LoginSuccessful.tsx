@@ -19,9 +19,9 @@ function LoginSuccessful() {
 	}, 3000);
 
 	return (
-		<div className={`h-80 flex flex-col justify-center items-center`}>
-			<h1 className={`text-2xl py-8`}>Login Successful</h1>
-			<Loader />
+		<div className="h-80 flex flex-col justify-center items-center">
+			<h1 className="text-2xl font-semibold mb-8">Login Successful</h1>
+			<Loader/>
 		</div>
 	);
 }

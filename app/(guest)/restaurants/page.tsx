@@ -68,14 +68,14 @@ export default function Page() {
 			<div className="">
 				<div className="flex  px-2">
 					{/* SideBarRestaurant - Hidden on mobile, shown on medium screens and up */}
-					<div className="hidden md:block sticky top-0 h-screen w-[400px]">
+					<div className="hidden md:block sticky top-0 h-screen w-[300px]">
 						<SideBarRestaurant />
 					</div>
 
 					{/* RestaurantGrid takes full width on mobile, 3/4 width on medium screens and up */}
 					<div className="w-full">
 						<div
-							className={`sticky top-0 z-10 bg-white w-full p-4  border-b shadow`}
+							className={`sticky top-0 z-10 bg-white w-full p-4  `}
 						>
 							{/* Search Input */}
 							<Input

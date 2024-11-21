@@ -1,4 +1,5 @@
 import type React from "react";
+import {forwardRef} from "react";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -24,11 +25,14 @@ type GoogleAddressInputProps = {
 	getSavedAddress: () => addressSelectionType | null;
 	setSavedAddress: (data: addressSelectionType) => void;
 };
-function GoogleAddressInput({
-	onConfirm,
-	getSavedAddress,
-	setSavedAddress,
-}: GoogleAddressInputProps) {
+
+const GoogleAddressInput = forwardRef<HTMLInputElement, GoogleAddressInputProps>(({
+																					  initialAddress,
+																					  initialLocation,
+																					  onConfirm,
+																					  getSavedAddress,
+																					  setSavedAddress
+																				  }, ref) => {
 	const [suggestions, setSuggestions] = useState({ predictions: [] });
 	const [loading, setLoading] = useState(false);
 	const [searchAttempted, setSearchAttempted] = useState(false);
@@ -40,7 +44,7 @@ function GoogleAddressInput({
 	const [additionalDetails, setAdditionalDetails] = useState(""); // State for additional address details
 	const [googleAddress, setGoogleAddress] = useState(""); // Local state for input value
 
-	// Define the geographical boundaries for Asaba
+		// Define the geographical boundaries for Asaba
 	const asabaBounds = {
 		north: 6.25,
 		south: 6.1,
@@ -286,5 +290,8 @@ function GoogleAddressInput({
 		</div>
 	);
 }
+);
 
+// Add this line after your component definition
+GoogleAddressInput.displayName = 'GoogleAddressInput';
 export default GoogleAddressInput;

@@ -1,5 +1,6 @@
 "use client";
 import type React from "react";
+import {useRef} from "react";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -422,6 +423,16 @@ const PickupAddress = ({
 	getSavedPickupAddress: () => addressSelectionType | null;
 	setPickupAddress: (addressData: addressSelectionType) => void;
 }) => {
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if (pickModalOpen && inputRef.current) {
+			// Short delay to ensure modal is fully rendered
+			setTimeout(() => {
+				inputRef.current?.focus();
+			}, 100);
+		}
+	}, [pickModalOpen]);
 	return (
 		<div>
 			<Label className={`ml-5`} htmlFor="address">
@@ -443,13 +454,15 @@ const PickupAddress = ({
 							height={20}
 							src={"https://maps.google.com/mapfiles/ms/icons/green-dot.png"}
 						/>
-
 						<Input
-							variant={`line`}
-							className={`text-left`}
+							variant="line"
+							className="text-left cursor-pointer"
 							onClick={() => setPickModalOpen(true)}
+							readOnly
 							value={payload.pickupDetails.address.address}
 						/>
+
+
 					</div>
 				</AlertDialogTrigger>
 				<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
