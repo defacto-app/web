@@ -533,7 +533,7 @@ const ReceiverDetails = ({
 					</div>
 				</AlertDialogTrigger>
 
-				<AlertDialogContent className="py-10 h-96">
+				<AlertDialogContent className=" h-auto min-h-0 max-h-[95vh]">
 					<AlertDialogDescription />
 					<AlertDialogHeader>
 						<AlertDialogTitle>Receiver Information</AlertDialogTitle>
@@ -588,10 +588,12 @@ const ReceiverDetails = ({
 							/>
 						</div>
 					</div>
-					<AlertDialogFooter>
+				<div className={``}>
+					<AlertDialogFooter >
 						<AlertDialogCancel>Cancel</AlertDialogCancel>
 						<AlertDialogAction>Continue</AlertDialogAction>
 					</AlertDialogFooter>
+				</div>
 				</AlertDialogContent>
 			</AlertDialog>
 		</div>
