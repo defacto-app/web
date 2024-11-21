@@ -13,8 +13,16 @@ import PasswordInput from "@/components/ui/PasswordInput";
 import { setToken } from "@/utils/auth";
 import { toast } from "react-toastify";
 import { useAtomAuthContext } from "@/app/store/authAtom";
+import {useSearchParams,useRouter} from "next/navigation";
 
 function Email() {
+	const searchParams = useSearchParams()
+
+	const router = useRouter()
+
+	const next = searchParams.get('next')  || "/"
+
+	console.log(next,"next")
 	const authSteps = [
 		{
 			id: "default",
@@ -126,6 +134,10 @@ function Email() {
 			await getMe();
 
 			setCurrentStep("login-success");
+
+
+			// const redirectTo = decodeURIComponent(next);
+			// router.push(redirectTo);
 
 
 
