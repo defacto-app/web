@@ -26,7 +26,7 @@ import {AspectRatio} from "@/components/ui/aspect-ratio";
                 />
                 <div>
                     <h1 className="text-xl font-semibold mb-2">
-                        Hello {authUser.firstName || authUser.email}, Please send your package.
+                        Hello {authUser.firstName || authUser.email}.
                     </h1>
                 </div>
             </div>

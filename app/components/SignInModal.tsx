@@ -8,15 +8,26 @@ import RegistrationSuccessful from "@/app/components/RegistrationSuccessful";
 export default function SignInModal() {
 	const { currentStep } = useAtomAuthContext();
 
+	const renderStep = () => {
+		switch (currentStep) {
+			case "welcome":
+				return <Welcome />;
+			case "email":
+				return <Email />;
+			case "login-success":
+				return <LoginSuccessful />;
+			case "registration-success":
+				return <RegistrationSuccessful />;
+			default:
+				return null;
+		}
+	};
+
 	return (
 		<div className="rounded-xl">
 			<div>
-
 				<div>
-					{currentStep === "welcome" && <Welcome />}
-					{currentStep === "email" && <Email />}
-					{currentStep === "login-success" && <LoginSuccessful />}
-					{currentStep === "registration-success" && <RegistrationSuccessful />}
+					{renderStep()}
 				</div>
 			</div>
 		</div>

@@ -105,10 +105,14 @@ function Email() {
 
 			// Set token in localStorage
 			setToken("user", res.data.token);
+			setCurrentStep("login-success");
 
 			if (!isUserLoggedIn()) {
 				throw new Error("Failed to set authentication token");
 			}
+
+
+			setLoading(false);
 
 
 		} catch (error: any) {

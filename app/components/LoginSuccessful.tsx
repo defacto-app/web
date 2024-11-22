@@ -4,49 +4,29 @@ import React, { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 function LoginSuccessful() {
-	const searchParams = useSearchParams()
-	const router = useRouter()
-	const next = searchParams.get('next') || "/"
-	const { setModalOpen, setCurrentStep, setIsLoggedIn } = useAtomAuthContext();
+	const searchParams = useSearchParams();
+	const router = useRouter();
+	const next = searchParams.get("next") || "/user/send-package"; // Set a default redirect
+	const { setCurrentStep, setIsLoggedIn } = useAtomAuthContext();
 
 	useEffect(() => {
-		const checkAuthAndRedirect = async () => {
-			try {
-				// Try multiple times with a delay
-				for (let i = 0; i < 3; i++) {
-					const authCheck = await fetch('/api/auth/check-auth');
-					console.log(`Auth check attempt ${i + 1}:`, authCheck.status);
+		// Short delay to ensure smooth transition
+		const timer = setTimeout(() => {
+			// Update auth state
+			setIsLoggedIn(true);
 
-					if (authCheck.ok) {
-						// Wait a moment to ensure cookie is properly set
-						await new Promise(resolve => setTimeout(resolve, 1000));
+			// Redirect to the next page or default
+			const redirectTo = decodeURIComponent(next);
+			router.push(redirectTo);
+		}, 1000);
 
-						setModalOpen(false);
-						setCurrentStep("welcome");
-						setIsLoggedIn(true);
-
-						const redirectTo = decodeURIComponent(next);
-						router.push(redirectTo);
-						return;
-					}
-
-					// Wait before trying again
-					await new Promise(resolve => setTimeout(resolve, 1000));
-				}
-
-				console.error("Failed to verify authentication after multiple attempts");
-			} catch (error) {
-				console.error("Error checking auth:", error);
-			}
-		};
-
-		checkAuthAndRedirect();
-	}, []);
+		return () => clearTimeout(timer);
+	}, [setCurrentStep, setIsLoggedIn, router, next]);
 
 	return (
 		<div className="h-80 flex flex-col justify-center items-center">
 			<h1 className="text-2xl font-semibold mb-8">Login Successful</h1>
-			<Loader/>
+			<Loader />
 		</div>
 	);
 }

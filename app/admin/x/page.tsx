@@ -22,14 +22,12 @@ import {
 	Clock,
 	RefreshCcw,
 } from "lucide-react";
+import Link from "next/link";
 
 interface Role {
 	_id: string;
 	count: number;
 }
-
-
-
 
 export default function AdminIndex() {
 	const [data, setData] = React.useState<any>();
@@ -110,93 +108,101 @@ export default function AdminIndex() {
 
 			{/* Summary Cards */}
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-				<Card className="p-4">
-					<div className="flex items-center justify-between">
-						<div>
-							<p className="text-sm text-muted-foreground">Total Users</p>
-							<h2 className="text-2xl font-bold">{data.users.total}</h2>
-							<div className="flex items-center mt-2 text-sm">
-								<p>Verified: {data.users.verified}</p>
-								<span className="mx-2">•</span>
-								<p>Unverified: {data.users.unverified}</p>
+				<Link href={`/admin/x/users`}>
+					<Card className="p-4">
+						<div className="flex items-center justify-between">
+							<div>
+								<p className="text-sm text-muted-foreground">Total Users</p>
+								<h2 className="text-2xl font-bold">{data.users.total}</h2>
+								<div className="flex items-center mt-2 text-sm">
+									<p>Verified: {data.users.verified}</p>
+									<span className="mx-2">•</span>
+									<p>Unverified: {data.users.unverified}</p>
+								</div>
 							</div>
+							<Users className="h-8 w-8 text-muted-foreground" />
 						</div>
-						<Users className="h-8 w-8 text-muted-foreground" />
-					</div>
-				</Card>
+					</Card>
+				</Link>
 
-				<Card className="p-4">
-					<div className="flex items-center justify-between">
-						<div>
-							<p className="text-sm text-muted-foreground">Restaurants</p>
-							<h2 className="text-2xl font-bold">{data.restaurants.total}</h2>
-							<p className="text-sm mt-2">
-								Popular: {data.restaurants.popularCategory}
-							</p>
+				<Link href={`/admin/x/restaurants`}>
+					<Card className="p-4">
+						<div className="flex items-center justify-between">
+							<div>
+								<p className="text-sm text-muted-foreground">Restaurants</p>
+								<h2 className="text-2xl font-bold">{data.restaurants.total}</h2>
+								<p className="text-sm mt-2">
+									Popular: {data.restaurants.popularCategory}
+								</p>
+							</div>
+							<Store className="h-8 w-8 text-muted-foreground" />
 						</div>
-						<Store className="h-8 w-8 text-muted-foreground" />
-					</div>
-				</Card>
+					</Card>
+				</Link>
 
-				<Card className="p-4">
-					<div className="flex items-center justify-between">
-						<div>
-							<p className="text-sm text-muted-foreground">Orders</p>
-							<h2 className="text-2xl font-bold">{data.orders.total}</h2>
-							<p className="text-sm mt-2">
-								Avg Value: ₦{Math.round(data.orders.avgValue)}
-							</p>
+				<Link href={`/admin/x/orders/restaurant-orders`}>
+					<Card className="p-4">
+						<div className="flex items-center justify-between">
+							<div>
+								<p className="text-sm text-muted-foreground">Orders</p>
+								<h2 className="text-2xl font-bold">{data.orders.total}</h2>
+								<p className="text-sm mt-2">
+									Avg Value: ₦{Math.round(data.orders.avgValue)}
+								</p>
+							</div>
+							<ShoppingBag className="h-8 w-8 text-muted-foreground" />
 						</div>
-						<ShoppingBag className="h-8 w-8 text-muted-foreground" />
-					</div>
-				</Card>
+					</Card>
+				</Link>
 
-				<Card className="p-4">
-					<div className="flex items-center justify-between">
-						<div>
-							<p className="text-sm text-muted-foreground">Menu Items</p>
-							<TooltipProvider>
-								<Tooltip>
-									<TooltipTrigger>
-										<h2 className="text-2xl font-bold">{data.menu.total}</h2>
-									</TooltipTrigger>
-									<TooltipContent>
-										<p>Total number of menu items across all restaurants</p>
-									</TooltipContent>
-								</Tooltip>
-							</TooltipProvider>
-							<div className="flex items-center mt-2 text-sm">
+				<Link href={`/admin/x/restaurants/menu`}>
+					<Card className="p-4">
+						<div className="flex items-center justify-between">
+							<div>
+								<p className="text-sm text-muted-foreground">Menu Items</p>
 								<TooltipProvider>
 									<Tooltip>
 										<TooltipTrigger>
-											<span className="text-green-500 flex items-center">
-												<ArrowUp className="h-4 w-4" /> {data.menu.available}
-											</span>
+											<h2 className="text-2xl font-bold">{data.menu.total}</h2>
 										</TooltipTrigger>
 										<TooltipContent>
-											<p>Currently available menu items</p>
+											<p>Total number of menu items across all restaurants</p>
 										</TooltipContent>
 									</Tooltip>
 								</TooltipProvider>
-								<span className="mx-2">•</span>
-								<TooltipProvider>
-									<Tooltip>
-										<TooltipTrigger>
-											<span className="text-red-500 flex items-center">
-												<ArrowDown className="h-4 w-4" />{" "}
-												{data.menu.unavailable}
-											</span>
-										</TooltipTrigger>
-										<TooltipContent>
-											<p>Currently unavailable menu items</p>
-										</TooltipContent>
-									</Tooltip>
-								</TooltipProvider>
+								<div className="flex items-center mt-2 text-sm">
+									<TooltipProvider>
+										<Tooltip>
+											<TooltipTrigger>
+												<span className="text-green-500 flex items-center">
+													<ArrowUp className="h-4 w-4" /> {data.menu.available}
+												</span>
+											</TooltipTrigger>
+											<TooltipContent>
+												<p>Currently available menu items</p>
+											</TooltipContent>
+										</Tooltip>
+									</TooltipProvider>
+									<span className="mx-2">•</span>
+									<TooltipProvider>
+										<Tooltip>
+											<TooltipTrigger>
+												<span className="text-red-500 flex items-center">
+													<ArrowDown className="h-4 w-4" />{" "}
+													{data.menu.unavailable}
+												</span>
+											</TooltipTrigger>
+											<TooltipContent>
+												<p>Currently unavailable menu items</p>
+											</TooltipContent>
+										</Tooltip>
+									</TooltipProvider>
+								</div>
 							</div>
+							<Menu className="h-8 w-8 text-muted-foreground" />
 						</div>
-						<Menu className="h-8 w-8 text-muted-foreground" />
-					</div>
-				</Card>
+					</Card>
+				</Link>
 			</div>
 
 			{/* Detailed Statistics */}

@@ -41,7 +41,7 @@ export default function Header() {
 					{envData.isDev && (
 						<div className={`flex gap-x-2`}>
 							<UserCart />
-							<Link href="/admin">
+							<Link target="_blank" href="/admin">
 								<UserRoundCogIcon className="text-red-500" size={20} />
 							</Link>
 							<Link href="/user">
