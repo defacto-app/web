@@ -1,22 +1,47 @@
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import Loader from "@/components/Loader";
-import React from "react";
-import {useRouter} from "next/navigation";
-
+import React, { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function LoginSuccessful() {
+	const searchParams = useSearchParams()
+	const router = useRouter()
+	const next = searchParams.get('next') || "/"
 	const { setModalOpen, setCurrentStep, setIsLoggedIn } = useAtomAuthContext();
 
-	const router = useRouter();
-	setTimeout(() => {
-		setModalOpen(false);
-		setCurrentStep("welcome");
-		setIsLoggedIn(true);
+	useEffect(() => {
+		const checkAuthAndRedirect = async () => {
+			try {
+				// Try multiple times with a delay
+				for (let i = 0; i < 3; i++) {
+					const authCheck = await fetch('/api/auth/check-auth');
+					console.log(`Auth check attempt ${i + 1}:`, authCheck.status);
 
-		router.push("/");
+					if (authCheck.ok) {
+						// Wait a moment to ensure cookie is properly set
+						await new Promise(resolve => setTimeout(resolve, 1000));
 
+						setModalOpen(false);
+						setCurrentStep("welcome");
+						setIsLoggedIn(true);
 
-	}, 3000);
+						const redirectTo = decodeURIComponent(next);
+						router.push(redirectTo);
+						return;
+					}
+
+					// Wait before trying again
+					await new Promise(resolve => setTimeout(resolve, 1000));
+				}
+
+				console.error("Failed to verify authentication after multiple attempts");
+			} catch (error) {
+				console.error("Error checking auth:", error);
+			}
+		};
+
+		checkAuthAndRedirect();
+	}, []);
 
 	return (
 		<div className="h-80 flex flex-col justify-center items-center">

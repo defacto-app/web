@@ -1,30 +1,26 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-    try {
+    const { token } = await request.json();
 
-        const { token } = await request.json();
+    const response = NextResponse.json({ success: true });
 
-        const response = NextResponse.json({ success: true });
+    // Set the cookie in the response
+    response.cookies.set({
+        name: 'user-token',
+        value: token,
+        httpOnly: true,
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+    });
 
-        // Set the token as an HTTP-only cookie
-        response.cookies.set('user-token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            path: '/',
-            maxAge: 60 * 60 * 24 * 7, // 7 days
-        });
+    console.log('Setting cookie in response:', {
+        // biome-ignore lint/style/useTemplate: <explanation>
+        token: token.substring(0, 20) + '...',
+        cookieSet: !!response.cookies.get('user-token')
+    });
 
-        // log the cookie value
-
-        console.log(response.cookies.get('user-token'));
-
-        return response;
-    } catch (error: any) {
-        console.error('Error setting cookie:', error);
-        return new NextResponse(
-            JSON.stringify({ error: 'Failed to set cookie' }),
-            { status: 500 }
-        );
-    }
+    return response;
 }

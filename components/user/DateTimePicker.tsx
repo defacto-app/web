@@ -64,6 +64,7 @@ export default function DateTimePicker({
 			<Popover>
 				<PopoverTrigger className={`w-full`}>
 					<Input
+					readOnly
 						value={
 							internalSelected instanceof Date
 								? `${internalSelected.toDateString()} ${internalSelected.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`

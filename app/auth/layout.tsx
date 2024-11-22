@@ -1,4 +1,4 @@
-"use client"; // Mark this component as a client component
+"use client";
 
 import type React from "react";
 import "./../globals.css";
@@ -26,13 +26,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 	console.log(pathname, "layout pathname");
 	return (
 		<html lang="en">
-			<Head>
-				<title>Authentication - Defacto</title>
-				<meta name="description" content="Sign in or sign up to continue" />
-			</Head>
-			<body
-				className={cn(
-					"bg-white font-sans antialiased min-h-screen flex w-full", // Ensure full width
+		<Head>
+			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+			<title>Authentication - Defacto</title>
+			<meta name="description" content="Sign in or sign up to continue"/>
+		</Head>
+		<body
+			className={cn(
+				"bg-white font-sans antialiased min-h-screen flex w-full", // Ensure full width
 					fontSans.variable,
 					{ "flex-row-reverse": !imageOnRight },
 				)}

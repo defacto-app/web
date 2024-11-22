@@ -1,19 +1,15 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import {authenticate, authenticateUser} from "@/app/lib";
+import { authenticate } from "@/app/lib";
+import { tokenConstants, verifyToken } from "@/utils/auth";
 
-// This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-    const adminToken = request.cookies.get("admin-token");
-    const userToken = request.cookies.get("user-token");
-
-
-
-    const isAuthenticatedAdmin = await authenticate(adminToken?.value);
-    const isAuthenticatedUser = await authenticateUser(userToken?.value);
 
     // Handle Admin Authentication
     if (request.nextUrl.pathname.startsWith('/admin')) {
+        const adminToken = request.cookies.get("admin-token");
+        const isAuthenticatedAdmin = await authenticate(adminToken?.value);
+
         if (isAuthenticatedAdmin && !request.nextUrl.pathname.startsWith('/admin/x')) {
             return NextResponse.redirect(new URL('/admin/x', request.url));
         }
@@ -25,19 +21,30 @@ export async function middleware(request: NextRequest) {
 
     // Handle User Authentication
     if (request.nextUrl.pathname.startsWith('/user')) {
-
-        console.log('user-token- middleware', userToken?.value);
-
+        const userToken = request.cookies.get(tokenConstants.user);
 
 
+        if (!userToken?.value) {
+            const loginUrl = new URL('/auth/login', request.url);
+            loginUrl.searchParams.set('next', request.nextUrl.pathname);
+            return NextResponse.redirect(loginUrl);
+        }
 
-        // If user is not authenticated, redirect to the home page
-        if (!isAuthenticatedUser) {
-            return NextResponse.redirect(new URL('/auth/login', request.url));
+        try {
+            const isValid = await verifyToken(userToken.value);
+
+            if (!isValid) {
+                const loginUrl = new URL('/auth/login', request.url);
+                loginUrl.searchParams.set('next', request.nextUrl.pathname);
+                return NextResponse.redirect(loginUrl);
+            }
+        } catch (error) {
+            const loginUrl = new URL('/auth/login', request.url);
+            loginUrl.searchParams.set('next', request.nextUrl.pathname);
+            return NextResponse.redirect(loginUrl);
         }
     }
 
-    // Proceed if no redirects are required
     return NextResponse.next();
 }
 

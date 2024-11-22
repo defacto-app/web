@@ -315,6 +315,7 @@ export default function Page() {
 													/>
 
 													<Input
+													readOnly={true}
 														variant={`line`}
 														onClick={() => setDropOffModalOpen(true)}
 														className={`text-left`}
@@ -458,7 +459,7 @@ const PickupAddress = ({
 							variant="line"
 							className="text-left cursor-pointer"
 							onClick={() => setPickModalOpen(true)}
-							readOnly
+							readOnly={true}
 							value={payload.pickupDetails.address.address}
 						/>
 
@@ -543,7 +544,7 @@ const ReceiverDetails = ({
 							<Label className="mt-4">Name</Label>
 							<Input
 								placeholder="Enter receiver name"
-								value={name}
+								value={payload.dropOffDetails.name}
 								onChange={(e) =>
 									setPayload({
 										...payload,
@@ -559,7 +560,7 @@ const ReceiverDetails = ({
 							<Label className="mt-4">Phone</Label>
 							<Input
 								placeholder="Enter receiver phone"
-								value={phone}
+								value={payload.dropOffDetails.phone}
 								onChange={(e) =>
 									setPayload({
 										...payload,
@@ -575,7 +576,7 @@ const ReceiverDetails = ({
 							<Label className="mt-4">Email</Label>
 							<Input
 								placeholder="Enter receiver email"
-								value={email}
+								value={payload.dropOffDetails.email}
 								onChange={(e) =>
 									setPayload({
 										...payload,

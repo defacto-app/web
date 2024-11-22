@@ -10,19 +10,12 @@ import { isDev } from "@/config/envData";
 import { $api } from "@/http/endpoints";
 import FormError from "@/components/ui/FormError";
 import PasswordInput from "@/components/ui/PasswordInput";
-import { setToken } from "@/utils/auth";
+import {isUserLoggedIn, setToken} from "@/utils/auth";
 import { toast } from "react-toastify";
 import { useAtomAuthContext } from "@/app/store/authAtom";
-import {useSearchParams,useRouter} from "next/navigation";
 
 function Email() {
-	const searchParams = useSearchParams()
 
-	const router = useRouter()
-
-	const next = searchParams.get('next')  || "/"
-
-	console.log(next,"next")
 	const authSteps = [
 		{
 			id: "default",
@@ -106,54 +99,25 @@ function Email() {
 				password: formData.password,
 			});
 
-			// Check if the token exists
-			if (res.data.token) {
-				// Set the current step to 'login-success' after receiving the token
-				// setCurrentStep("login-success");
-			} else {
+			if (!res.data.token) {
 				throw new Error("Token not received");
 			}
 
-			// Store token in localStorage or cookie
+			// Set token in localStorage
 			setToken("user", res.data.token);
 
-			// Send token to the server to set the cookie
-			await fetch("/api/auth/user", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					token: res.data.token,
-				}),
-			});
-
-			// toast.success("Login Successful");
-			setIsLoggedIn(true);
-			// Fetch user information
-			await getMe();
-
-			setCurrentStep("login-success");
+			if (!isUserLoggedIn()) {
+				throw new Error("Failed to set authentication token");
+			}
 
 
-			// const redirectTo = decodeURIComponent(next);
-			// router.push(redirectTo);
-
-
-
-			setLoading(false);
 		} catch (error: any) {
 			console.error("Login failed:", error);
-
-			// Set form errors if any
 			setErrors({
 				...errors,
 				password: error.password || "Login failed",
 			});
-
-			// Display error message using toast
 			toast.error(error.message || "An error occurred during login");
-
 			setLoading(false);
 		}
 	};
