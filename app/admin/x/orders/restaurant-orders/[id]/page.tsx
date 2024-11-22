@@ -187,7 +187,7 @@ function Page({ params }: { params: { id: string } }) {
 				<Card>
 					<CardHeader>
 						<CardTitle className="flex items-center gap-2">
-							<ShoppingCart className="w-5 h-5" />
+							<ShoppingCart className="w-5 h-5 " />
 							Order Summary
 						</CardTitle>
 					</CardHeader>
