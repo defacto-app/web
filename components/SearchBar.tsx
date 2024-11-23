@@ -15,7 +15,7 @@ export const SearchBar = ({
                               placeholder,
                               isLoading,
                           }: SearchBarProps) => (
-    <div className="sticky top-0 bg-gray-50 z-10 py-4">
+    <div >
         <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <Input

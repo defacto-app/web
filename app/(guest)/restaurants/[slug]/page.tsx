@@ -10,17 +10,10 @@ import {
 	LoadingState,
 	MenuSections,
 	RestaurantHero,
-	RestaurantStatus,
 	OpeningHourComponent,
 } from "@/app/(guest)/restaurants/components/SingleRestaurantComponents";
-import type {
-	Category,
-	MenuItemDisplay,
-	Restaurant,
-
-} from "@/lib/types";
-import {SearchBar} from "@/components/SearchBar";
-
+import type { Category, MenuItemDisplay, Restaurant } from "@/lib/types";
+import { SearchBar } from "@/components/SearchBar";
 
 function RestaurantPage({ params }: { params: { slug: string } }) {
 	const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
@@ -127,12 +120,6 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		...categories,
 	];
 
-
-
-
-	const filteredMenu = menu.filter((item) => {
-		return item.name.toLowerCase().includes(search.toLowerCase());
-	});
 	return (
 		<div className="min-h-screen bg-gray-50">
 			<BreadcrumbNav restaurantName={restaurant.name} />
@@ -144,45 +131,53 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 					deliveryTime={restaurant.deliveryTime}
 					address={restaurant.address}
 				/>
-
 			</div>
 
 			<div className="container mx-auto px-4 lg:px-6 py-6">
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 					<div className="lg:col-span-2">
 						<div className="sticky top-4 space-y-4">
-							<MenuSections
+						<div className="hidden lg:block">
+						<MenuSections
 								categories={allCategories}
 								activeCategory={activeCategory}
 								setActiveCategory={setActiveCategory}
 							/>
-							<OpeningHourComponent openingHours={restaurant.openingHours}/>
-
-
 						</div>
+							<OpeningHourComponent openingHours={restaurant.openingHours} />
 						</div>
+					</div>
 
-						<div className="lg:col-span-7">
+					<div className="lg:col-span-7">
+						<div className="sticky top-0 bg-gray-50 z-10 py-4">
 							<SearchBar
 								isLoading={loading}
 								value={search}
 								onChange={(e) => setSearch(e.target.value)}
 								placeholder={`Search in ${restaurant.name}`}
 							/>
-							<div className="mt-4">
-								<MenuArea data={filteredMenu} categories={categories}/>
+							<div className="lg:hidden">
+							<MenuSections
+								categories={allCategories}
+								activeCategory={activeCategory}
+								setActiveCategory={setActiveCategory}
+							/>
 							</div>
 						</div>
+						<div className="mt-4">
+							<MenuArea data={menu} categories={categories} />
+						</div>
+					</div>
 
-						<div className="hidden lg:block lg:col-span-3">
-							<div className="sticky top-4">
-								<OrderCart restaurant_name={restaurant.name}/>
-							</div>
+					<div className="hidden lg:block lg:col-span-3">
+						<div className="sticky top-4">
+							<OrderCart restaurant_name={restaurant.name} />
 						</div>
 					</div>
 				</div>
+			</div>
 
-				<div className="lg:hidden fixed bottom-4 right-4 z-50">
+			<div className="lg:hidden fixed bottom-4 right-4 z-50">
 				<OrderCart buttonOnly restaurant_name={restaurant.name} />
 			</div>
 		</div>

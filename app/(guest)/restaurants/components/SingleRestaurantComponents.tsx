@@ -251,7 +251,6 @@ export const OpeningHourComponent = ({ openingHours }: OpeningHoursProps) => (
 
 interface RestaurantStatusProps {
 	isOpen: boolean;
-
 }
 
 export const RestaurantStatus = ({ isOpen }: RestaurantStatusProps) => (
