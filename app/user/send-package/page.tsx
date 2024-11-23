@@ -1,6 +1,6 @@
 "use client";
 import type React from "react";
-import {useRef} from "react";
+import { useRef } from "react";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,6 +29,12 @@ import { Button } from "@/components/ui/button";
 import { $api } from "@/http/endpoints";
 import envData, { isDev } from "@/config/envData";
 import BackButton from "@/app/components/BackButton";
+import {
+	DropOffAddress,
+	PickupAddress,
+	ReceiverDetails,
+	Summary,
+} from "@/app/user/send-package/component";
 
 export default function Page() {
 	const [loading, setLoading] = useState(false);
@@ -38,7 +44,36 @@ export default function Page() {
 	const [pickModalOpen, setPickModalOpen] = useState(false);
 	const [dropOffModalOpen, setDropOffModalOpen] = useState(false);
 	const [distance, setDistance] = useState<number>();
+	const [validationErrors, setValidationErrors] = useState<{
+		[key: string]: string;
+	}>({});
+
 	const deliveryFee = distance ? distance * RATE_PER_KM : 0;
+
+	// Add this function to scroll to first error
+	const scrollToError = () => {
+		const firstErrorElement = document.querySelector(".error-message");
+		if (firstErrorElement) {
+			firstErrorElement.scrollIntoView({ behavior: "smooth", block: "center" });
+		}
+	};
+
+	// Handle API error response
+	const handleSubmitError = (errorResponse: any) => {
+		if (errorResponse.error) {
+			setValidationErrors(errorResponse.error);
+			scrollToError();
+		}
+	};
+
+	// Add error display component
+	const ErrorMessage = ({ fieldName }: { fieldName: string }) => {
+		return validationErrors[fieldName] ? (
+			<div className="error-message text-red-500 text-sm mt-1">
+				{validationErrors[fieldName]}
+			</div>
+		) : null;
+	};
 
 	const [payload, setPayload] = useState<DeliveryPayloadType>({
 		description: isDev ? "This is a test package" : "",
@@ -183,8 +218,16 @@ export default function Page() {
 			const response = await $api.auth.user.order.package(payload);
 
 			console.log(response);
-		} catch (e) {
+		} catch (e: any) {
 			console.log("error", e);
+
+			setValidationErrors(e.error);
+			// Scroll to first error
+			const firstErrorElement = document.querySelector(".error-message");
+			firstErrorElement?.scrollIntoView({
+				behavior: "smooth",
+				block: "center",
+			});
 		}
 	};
 
@@ -253,7 +296,10 @@ export default function Page() {
 					<div className={`col-span-2 pb-40 lg:px-20`}>
 						<div className={`flex items-center pb-4`}>
 							<BackButton />
-							<div className="lg:text-3xl text-xl font-bold tracking-tight"> Send Package</div>
+							<div className="lg:text-3xl text-xl font-bold tracking-tight">
+								{" "}
+								Send Package
+							</div>
 						</div>
 						<div>
 							<div className="container mx-auto px-4  space-y-4">
@@ -262,7 +308,7 @@ export default function Page() {
 										What do you need to transport ?
 									</Label>
 									<Textarea
-									className="mt-4"
+										className="mt-4"
 										onChange={(e) =>
 											setPayload({
 												...payload,
@@ -285,73 +331,28 @@ export default function Page() {
 									dropOffLocation={payload.dropOffDetails.address.location}
 								/>
 
-								<PickupAddress
-									payload={payload}
-									setPickModalOpen={setPickModalOpen}
-									pickModalOpen={pickModalOpen}
-									handlePickupAddressConfirm={handlePickupAddressConfirm}
-									getSavedPickupAddress={getSavedPickupAddress}
-									setPickupAddress={setPickupAddress}
-								/>
+								<div>
+									<PickupAddress
+										payload={payload}
+										setPickModalOpen={setPickModalOpen}
+										pickModalOpen={pickModalOpen}
+										handlePickupAddressConfirm={handlePickupAddressConfirm}
+										getSavedPickupAddress={getSavedPickupAddress}
+										setPickupAddress={setPickupAddress}
+									/>
+									<ErrorMessage fieldName="pickupDetails.address.address" />
 
-								<div className="mb-4">
-									<div>
-										<Label htmlFor="dropOffAddress" className={`ml-5`}>
-											Drop-Off address
-										</Label>
-										<AlertDialog
-											defaultOpen={dropOffModalOpen}
-											open={dropOffModalOpen}
-										>
-											<AlertDialogTrigger asChild>
-												<div className={`flex items-center`}>
-													<Image
-														alt={`start point`}
-														width={20}
-														height={20}
-														src={
-															"https://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
-														}
-													/>
+									<div></div>
 
-													<Input
-													readOnly={true}
-														variant={`line`}
-														onClick={() => setDropOffModalOpen(true)}
-														className={`text-left`}
-														value={payload.dropOffDetails.address.address}
-													/>
-												</div>
-											</AlertDialogTrigger>
-											<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
-												<AlertDialogTitle>
-													Choose Drop-Off Address
-												</AlertDialogTitle>
-												<button
-													type="button"
-													onClick={() => setDropOffModalOpen(false)}
-													className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
-												>
-													<X className="w-4 h-4" />
-												</button>
-												<div className="mt-8">
-													<GoogleAddressInput
-														initialAddress={
-															payload.dropOffDetails.address.address
-														}
-														initialLocation={
-															payload.dropOffDetails.address.location
-														}
-														onConfirm={handleDropOffAddressConfirm}
-														getSavedAddress={getSavedDropOffAddress}
-														setSavedAddress={setDropOffAddress}
-													/>
-												</div>
-
-												<AlertDialogDescription />
-											</AlertDialogContent>
-										</AlertDialog>
-									</div>
+									<DropOffAddress
+										payload={payload}
+										setDropOffModalOpen={setDropOffModalOpen}
+										dropOffModalOpen={dropOffModalOpen}
+										handleDropOffAddressConfirm={handleDropOffAddressConfirm}
+										getSavedDropOffAddress={getSavedDropOffAddress}
+										setDropOffAddress={setDropOffAddress}
+									/>
+									<ErrorMessage fieldName="dropOffDetails.address.address" />
 								</div>
 
 								<div>
@@ -371,36 +372,13 @@ export default function Page() {
 						</div>
 					</div>
 					<section className="sticky top-20 right-5 w-[350px] z-0 hidden lg:block">
-						<div className="shadow-md rounded-md border p-6 max-w-sm mx-auto bg-white">
-							<h2 className="text-2xl font-bold pb-2">Summary</h2>
-							<hr className="my-4" />
-							<div className="flex justify-between items-center mb-4">
-								<p className="text-lg font-medium">
-									Delivery {distance ? `(${distance.toFixed(2)} km)` : ""}
-								</p>
-								<p className="text-lg font-medium">
-									{" "}
-									{formatPrice(deliveryFee)}
-								</p>
-							</div>
-							<hr className="my-4" />
-							<div className="flex justify-between items-center mb-4">
-								<p className="text-xl font-semibold">TOTAL</p>
-								<p className="text-xl font-semibold">
-									{" "}
-									{formatPrice(deliveryFee)}
-								</p>
-							</div>
-							<div>
-								<Button
-									onClick={confirmOrder}
-									variant={`primary`}
-									className="w-full"
-								>
-									{loading ? "Processing..." : "Confirm order"}
-								</Button>
-							</div>
-						</div>
+						<Summary
+							distance={distance}
+							deliveryFee={deliveryFee}
+							loading={loading}
+							confirmOrder={confirmOrder}
+							formatPrice={formatPrice}
+						/>
 					</section>
 				</div>
 			</div>
@@ -409,194 +387,5 @@ export default function Page() {
 }
 
 // Mini component for Pickup Address
-const PickupAddress = ({
-	payload,
-	setPickModalOpen,
-	pickModalOpen,
-	handlePickupAddressConfirm,
-	getSavedPickupAddress,
-	setPickupAddress,
-}: {
-	payload: DeliveryPayloadType;
-	setPickModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	pickModalOpen: boolean;
-	handlePickupAddressConfirm: (addressData: addressSelectionType) => void;
-	getSavedPickupAddress: () => addressSelectionType | null;
-	setPickupAddress: (addressData: addressSelectionType) => void;
-}) => {
-	const inputRef = useRef<HTMLInputElement>(null);
-
-	useEffect(() => {
-		if (pickModalOpen && inputRef.current) {
-			// Short delay to ensure modal is fully rendered
-			setTimeout(() => {
-				inputRef.current?.focus();
-			}, 100);
-		}
-	}, [pickModalOpen]);
-	return (
-		<div>
-			<Label className={`ml-5`} htmlFor="address">
-				Pickup address
-			</Label>
-
-			<AlertDialog defaultOpen={pickModalOpen} open={pickModalOpen}>
-				<AlertDialogTrigger asChild>
-					<div
-						onClick={() => setPickModalOpen(true)}
-						onKeyUp={(e) => e.key === "Enter" && setPickModalOpen(true)}
-						className={`flex items-center cursor-pointer`}
-						// biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
-						tabIndex={0}
-					>
-						<Image
-							alt={`start point`}
-							width={20}
-							height={20}
-							src={"https://maps.google.com/mapfiles/ms/icons/green-dot.png"}
-						/>
-						<Input
-							variant="line"
-							className="text-left cursor-pointer"
-							onClick={() => setPickModalOpen(true)}
-							readOnly={true}
-							value={payload.pickupDetails.address.address}
-						/>
-
-
-					</div>
-				</AlertDialogTrigger>
-				<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
-					<AlertDialogTitle>Choose Pickup Address</AlertDialogTitle>
-
-					<button
-						type="button"
-						onClick={() => setPickModalOpen(false)}
-						className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
-					>
-						<X className="w-4 h-4" />
-					</button>
-					<div>
-						<GoogleAddressInput
-							initialAddress={payload.pickupDetails.address.address}
-							initialLocation={payload.pickupDetails.address.location}
-							onConfirm={handlePickupAddressConfirm}
-							getSavedAddress={getSavedPickupAddress}
-							setSavedAddress={setPickupAddress}
-						/>
-					</div>
-					<AlertDialogDescription />
-				</AlertDialogContent>
-			</AlertDialog>
-		</div>
-	);
-};
 
 // Mini component for Receiver Details
-
-const ReceiverDetails = ({
-	payload,
-	setPayload,
-}: {
-	payload: DeliveryPayloadType;
-	setPayload: React.Dispatch<React.SetStateAction<DeliveryPayloadType>>;
-}) => {
-	const { name, phone, email } = payload.dropOffDetails;
-
-	return (
-		<div>
-			<AlertDialog>
-				<AlertDialogTrigger asChild>
-					<div
-						className={`bg-white mt-4 p-4 flex justify-between border rounded-lg`}
-					>
-						<div>
-							{name || phone || email ? (
-								<div className="space-y-1">
-									<p className={`underline text-gray-700`}>Receiver details</p>
-									<div>
-										<strong>Name:</strong> {name}
-									</div>
-									<div>
-										<strong>Phone:</strong> {phone}
-									</div>
-									<div>
-										<strong>Email:</strong> {email}
-									</div>
-								</div>
-							) : (
-								<div>Receiver details</div>
-							)}
-						</div>
-						<div>
-							<Pencil className="text-blue-500" />
-						</div>
-					</div>
-				</AlertDialogTrigger>
-
-				<AlertDialogContent className=" h-auto min-h-0 max-h-[95vh]">
-					<AlertDialogDescription />
-					<AlertDialogHeader>
-						<AlertDialogTitle>Receiver Information</AlertDialogTitle>
-					</AlertDialogHeader>
-					<div className="space-y-2">
-						<div>
-							<Label className="mt-4">Name</Label>
-							<Input
-								placeholder="Enter receiver name"
-								value={payload.dropOffDetails.name}
-								onChange={(e) =>
-									setPayload({
-										...payload,
-										dropOffDetails: {
-											...payload.dropOffDetails,
-											name: e.target.value,
-										},
-									})
-								}
-							/>
-						</div>
-						<div>
-							<Label className="mt-4">Phone</Label>
-							<Input
-								placeholder="Enter receiver phone"
-								value={payload.dropOffDetails.phone}
-								onChange={(e) =>
-									setPayload({
-										...payload,
-										dropOffDetails: {
-											...payload.dropOffDetails,
-											phone: e.target.value,
-										},
-									})
-								}
-							/>
-						</div>
-						<div>
-							<Label className="mt-4">Email</Label>
-							<Input
-								placeholder="Enter receiver email"
-								value={payload.dropOffDetails.email}
-								onChange={(e) =>
-									setPayload({
-										...payload,
-										dropOffDetails: {
-											...payload.dropOffDetails,
-											email: e.target.value,
-										},
-									})
-								}
-							/>
-						</div>
-					</div>
-				<div className={``}>
-					<AlertDialogFooter >
-						<AlertDialogCancel>Cancel</AlertDialogCancel>
-						<AlertDialogAction>Continue</AlertDialogAction>
-					</AlertDialogFooter>
-				</div>
-				</AlertDialogContent>
-			</AlertDialog>
-		</div>
-	);
-};

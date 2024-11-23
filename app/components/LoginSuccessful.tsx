@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 function LoginSuccessful() {
 	const searchParams = useSearchParams();
 	const router = useRouter();
-	const next = searchParams.get("next") || "/user/send-package"; // Set a default redirect
+	const next = searchParams.get("next") || "/"; // Set a default redirect
 	const { setCurrentStep, setIsLoggedIn } = useAtomAuthContext();
 
 	useEffect(() => {
