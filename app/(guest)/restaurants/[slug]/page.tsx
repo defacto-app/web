@@ -20,10 +20,7 @@ import type {
 	Restaurant,
 
 } from "@/lib/types";
-import {Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,} from "@/components/ui/accordion";
+
 
 function RestaurantPage({ params }: { params: { slug: string } }) {
 	const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
