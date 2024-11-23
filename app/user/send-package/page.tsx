@@ -31,10 +31,12 @@ import envData, { isDev } from "@/config/envData";
 import BackButton from "@/app/components/BackButton";
 import {
 	DropOffAddress,
+	ErrorMessage,
 	PickupAddress,
 	ReceiverDetails,
 	Summary,
 } from "@/app/user/send-package/component";
+import { AlertCircle } from "lucide-react";
 
 export default function Page() {
 	const [loading, setLoading] = useState(false);
@@ -58,6 +60,29 @@ export default function Page() {
 		}
 	};
 
+	const ErrorSummary = ({ errors }: { errors: Record<string, string> }) => {
+		const errorCount = Object.keys(errors).length;
+
+		if (errorCount === 0) return null;
+
+		return (
+			<div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+				<div className="flex items-center gap-2 text-red-600 font-medium mb-2">
+					<AlertCircle className="h-5 w-5" />
+					<span>
+						Please fix the following {errorCount}{" "}
+						{errorCount === 1 ? "error" : "errors"}:
+					</span>
+				</div>
+				<ul className="list-disc list-inside space-y-1 text-sm text-red-600">
+					{Object.entries(errors).map(([field, message]) => (
+						<li key={field}>{message}</li>
+					))}
+				</ul>
+			</div>
+		);
+	};
+
 	// Handle API error response
 	const handleSubmitError = (errorResponse: any) => {
 		if (errorResponse.error) {
@@ -67,13 +92,6 @@ export default function Page() {
 	};
 
 	// Add error display component
-	const ErrorMessage = ({ fieldName }: { fieldName: string }) => {
-		return validationErrors[fieldName] ? (
-			<div className="error-message text-red-500 text-sm mt-1">
-				{validationErrors[fieldName]}
-			</div>
-		) : null;
-	};
 
 	const [payload, setPayload] = useState<DeliveryPayloadType>({
 		description: isDev ? "This is a test package" : "",
@@ -302,6 +320,7 @@ export default function Page() {
 							</div>
 						</div>
 						<div>
+							<ErrorSummary errors={validationErrors} />
 							<div className="container mx-auto px-4  space-y-4">
 								<div>
 									<Label className={`text-lg lg:text-2xl font-bold`}>
@@ -340,7 +359,10 @@ export default function Page() {
 										getSavedPickupAddress={getSavedPickupAddress}
 										setPickupAddress={setPickupAddress}
 									/>
-									<ErrorMessage fieldName="pickupDetails.address.address" />
+									<ErrorMessage
+										validationErrors={validationErrors}
+										fieldName="pickupDetails.address.address"
+									/>
 
 									<div></div>
 
@@ -352,7 +374,10 @@ export default function Page() {
 										getSavedDropOffAddress={getSavedDropOffAddress}
 										setDropOffAddress={setDropOffAddress}
 									/>
-									<ErrorMessage fieldName="dropOffDetails.address.address" />
+									<ErrorMessage
+										validationErrors={validationErrors}
+										fieldName="dropOffDetails.address.address"
+									/>
 								</div>
 
 								<div>
@@ -366,7 +391,11 @@ export default function Page() {
 							</div>
 
 							{/*receiver details*/}
-							<ReceiverDetails payload={payload} setPayload={setPayload} />
+							<ReceiverDetails
+								validationErrors={validationErrors}
+								payload={payload}
+								setPayload={setPayload}
+							/>
 
 							{/*receiver details*/}
 						</div>

@@ -17,7 +17,7 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Pencil, X } from "lucide-react";
 import GoogleAddressInput from "@/components/GoogleAddressInput";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 export const PickupAddress = ({
 	payload,
@@ -201,154 +201,142 @@ export const DropOffAddress = ({
 //
 //
 //
+
 export const ReceiverDetails = ({
 	payload,
 	setPayload,
+	validationErrors,
 }: {
 	payload: DeliveryPayloadType;
+	validationErrors: Record<string, string>;
 	setPayload: React.Dispatch<React.SetStateAction<DeliveryPayloadType>>;
 }) => {
 	const { name, phone, email } = payload.dropOffDetails;
 
 	return (
-		<div>
-			<AlertDialog>
-				<AlertDialogTrigger asChild>
-					<div
-						className={`bg-white mt-4 p-4 flex justify-between border rounded-lg`}
-					>
-						<div>
-							{name || phone || email ? (
-								<div className="space-y-1">
-									<p className={`underline text-gray-700`}>Receiver details</p>
-									<div>
-										<strong>Name:</strong> {name}
-									</div>
-									<div>
-										<strong>Phone:</strong> {phone}
-									</div>
-									<div>
-										<strong>Email:</strong> {email}
-									</div>
-								</div>
-							) : (
-								<div>Receiver details</div>
-							)}
-						</div>
-						<div>
-							<Pencil className="text-blue-500" />
-						</div>
-					</div>
-				</AlertDialogTrigger>
+		<div className="mt-4 space-y-4">
+			<div className="border rounded-lg p-6 bg-white">
+				<h3 className="text-lg font-medium mb-4">Receiver Information</h3>
 
-				<AlertDialogContent className=" h-auto min-h-0 max-h-[95vh]">
-					<AlertDialogDescription />
-					<AlertDialogHeader>
-						<AlertDialogTitle>Receiver Information</AlertDialogTitle>
-					</AlertDialogHeader>
-					<div className="space-y-2">
-						<div>
-							<Label className="mt-4">Name</Label>
-							<Input
-								placeholder="Enter receiver name"
-								value={payload.dropOffDetails.name}
-								onChange={(e) =>
-									setPayload({
-										...payload,
-										dropOffDetails: {
-											...payload.dropOffDetails,
-											name: e.target.value,
-										},
-									})
-								}
-							/>
-						</div>
-						<div>
-							<Label className="mt-4">Phone</Label>
-							<Input
-								placeholder="Enter receiver phone"
-								value={payload.dropOffDetails.phone}
-								onChange={(e) =>
-									setPayload({
-										...payload,
-										dropOffDetails: {
-											...payload.dropOffDetails,
-											phone: e.target.value,
-										},
-									})
-								}
-							/>
-						</div>
-						<div>
-							<Label className="mt-4">Email</Label>
-							<Input
-								placeholder="Enter receiver email"
-								value={payload.dropOffDetails.email}
-								onChange={(e) =>
-									setPayload({
-										...payload,
-										dropOffDetails: {
-											...payload.dropOffDetails,
-											email: e.target.value,
-										},
-									})
-								}
-							/>
-						</div>
+				<div className="space-y-4">
+					<div>
+						<Label htmlFor="name">Name</Label>
+						<Input
+							id="name"
+							placeholder="Enter receiver name"
+							value={payload.dropOffDetails.name}
+							onChange={(e) =>
+								setPayload({
+									...payload,
+									dropOffDetails: {
+										...payload.dropOffDetails,
+										name: e.target.value,
+									},
+								})
+							}
+						/>
+						<ErrorMessage
+							validationErrors={validationErrors}
+							fieldName="dropOffDetails.name"
+						/>
 					</div>
-					<div className={``}>
-						<AlertDialogFooter>
-							<AlertDialogCancel>Cancel</AlertDialogCancel>
-							<AlertDialogAction>Continue</AlertDialogAction>
-						</AlertDialogFooter>
+
+					<div>
+						<Label htmlFor="phone">Phone</Label>
+						<Input
+							id="phone"
+							placeholder="Enter receiver phone"
+							value={payload.dropOffDetails.phone}
+							onChange={(e) =>
+								setPayload({
+									...payload,
+									dropOffDetails: {
+										...payload.dropOffDetails,
+										phone: e.target.value,
+									},
+								})
+							}
+						/>
+						<ErrorMessage
+							validationErrors={validationErrors}
+							fieldName="dropOffDetails.phone"
+						/>
 					</div>
-				</AlertDialogContent>
-			</AlertDialog>
+
+					<div>
+						<Label htmlFor="email">Email</Label>
+						<Input
+							id="email"
+							placeholder="Enter receiver email"
+							value={payload.dropOffDetails.email}
+							onChange={(e) =>
+								setPayload({
+									...payload,
+									dropOffDetails: {
+										...payload.dropOffDetails,
+										email: e.target.value,
+									},
+								})
+							}
+						/>
+						<ErrorMessage
+							validationErrors={validationErrors}
+							fieldName="dropOffDetails.email"
+						/>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 };
 
-
-
-
 export const Summary = ({
-                     distance,
-                     deliveryFee,
-                     loading,
-                     confirmOrder,
-                     formatPrice,
-                 }: {
-    distance: number | undefined;
-    deliveryFee: number ;
-    loading: boolean;
-    confirmOrder: () => void;
-    formatPrice: (amount: number) => string;
+	distance,
+	deliveryFee,
+	loading,
+	confirmOrder,
+	formatPrice,
+}: {
+	distance: number | undefined;
+	deliveryFee: number;
+	loading: boolean;
+	confirmOrder: () => void;
+	formatPrice: (amount: number) => string;
 }) => {
-    return (
-        <div className="shadow-md rounded-md border p-6 max-w-sm mx-auto bg-white">
-            <h2 className="text-2xl font-bold pb-2">Summary</h2>
-            <hr className="my-4" />
-            <div className="flex justify-between items-center mb-4">
-                <p className="text-lg font-medium">
-                    Delivery {distance ? `(${distance.toFixed(2)} km)` : ""}
-                </p>
-                <p className="text-lg font-medium">{formatPrice(deliveryFee)}</p>
-            </div>
-            <hr className="my-4" />
-            <div className="flex justify-between items-center mb-4">
-                <p className="text-xl font-semibold">TOTAL</p>
-                <p className="text-xl font-semibold">{formatPrice(deliveryFee)}</p>
-            </div>
-            <div>
-                <Button
-                    onClick={confirmOrder}
-                    variant="primary"
-                    className="w-full"
-                >
-                    {loading ? "Processing..." : "Confirm order"}
-                </Button>
-            </div>
-        </div>
-    );
+	return (
+		<div className="shadow-md rounded-md border p-6 max-w-sm mx-auto bg-white">
+			<h2 className="text-2xl font-bold pb-2">Summary</h2>
+			<hr className="my-4" />
+			<div className="flex justify-between items-center mb-4">
+				<p className="text-lg font-medium">
+					Delivery {distance ? `(${distance.toFixed(2)} km)` : ""}
+				</p>
+				<p className="text-lg font-medium">{formatPrice(deliveryFee)}</p>
+			</div>
+			<hr className="my-4" />
+			<div className="flex justify-between items-center mb-4">
+				<p className="text-xl font-semibold">TOTAL</p>
+				<p className="text-xl font-semibold">{formatPrice(deliveryFee)}</p>
+			</div>
+			<div>
+				<Button onClick={confirmOrder} variant="primary" className="w-full">
+					{loading ? "Processing..." : "Confirm order"}
+				</Button>
+			</div>
+		</div>
+	);
 };
 
+export const ErrorMessage = ({
+	fieldName,
+	validationErrors,
+}: {
+	fieldName: string;
+	validationErrors: Record<string, string>;
+}) => {
+	return validationErrors[fieldName] ? (
+		<div className="error-message text-red-500 text-sm mt-1">
+			{validationErrors[fieldName]}
+		</div>
+	) : null;
+};
