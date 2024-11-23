@@ -33,48 +33,58 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 		return acc;
 	}, {});
 
+	if (data.length === 0) {
+		// Show "No menu items found" if data is empty
+		return (
+			<div className="text-center py-10">
+				<p className="text-gray-500">No menu items found.</p>
+			</div>
+		);
+	}
+
 	return (
 		<div>
 			<div>
-				{Object.entries(groupedItems).map(([categoryId, group]: [string, any]) => (
-					group.items.length > 0 && (
-						<div
-							key={categoryId}
-							id={`category-${categoryId}`}
-							className="mb-8 scroll-mt-20" // Add padding for smooth scroll
-						>
-							<h2 className="text-lg font-semibold mb-4">{group.name}</h2>
-							<ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-								{group.items.map((item: any) => (
-									<li key={item._id}>
-										<div className="bg-white border rounded-sm">
-											<Image
-												src={item.image}
-												alt={item.name}
-												className="rounded-t-sm h-64 w-full object-cover"
-												width={150}
-												height={400}
-											/>
-											<div className="p-4 flex items-center justify-between">
-												<div>
-													<h3>{item.name}</h3>
-													<p>Price: {formatPrice(item.price)}</p>
+				{Object.entries(groupedItems).map(
+					([categoryId, group]: [string, any]) =>
+						group.items.length > 0 && (
+							<div
+								key={categoryId}
+								id={`category-${categoryId}`}
+								className="mb-8 scroll-mt-20" // Add padding for smooth scroll
+							>
+								<h2 className="text-lg font-semibold mb-4">{group.name}</h2>
+								<ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+									{group.items.map((item: any) => (
+										<li key={item._id}>
+											<div className="bg-white border rounded-sm">
+												<Image
+													src={item.image}
+													alt={item.name}
+													className="rounded-t-sm h-64 w-full object-cover"
+													width={150}
+													height={400}
+												/>
+												<div className="p-4 flex items-center justify-between">
+													<div>
+														<h3>{item.name}</h3>
+														<p>Price: {formatPrice(item.price)}</p>
+													</div>
+													<Button
+														variant="outline"
+														className="text-blue-500 bg-blue-200 p-2 rounded-full"
+														onClick={() => handleAddToCart(item)}
+													>
+														<Plus />
+													</Button>
 												</div>
-												<Button
-													variant="outline"
-													className="text-blue-500 bg-blue-200 p-2 rounded-full"
-													onClick={() => handleAddToCart(item)}
-												>
-													<Plus/>
-												</Button>
 											</div>
-										</div>
-									</li>
-								))}
-							</ul>
-						</div>
-					)
-				))}
+										</li>
+									))}
+								</ul>
+							</div>
+						),
+				)}
 			</div>
 		</div>
 	);

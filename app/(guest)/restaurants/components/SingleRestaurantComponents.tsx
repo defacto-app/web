@@ -1,16 +1,19 @@
 import Link from "next/link";
 import Image from "next/image";
-import { AlertCircle, Clock1, MapPin, Search, ThumbsUp } from "lucide-react";
+import {
+	AlertCircle,
+	Clock1,
+	MapPin,
+	Search,
+	ThumbsUp,
+	Loader2,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { cn } from "@/utils/cn";
-import type {
-	Category,
-	MenuItemDisplay,
-	OpeningHours,
-	OpeningHours as OpeningHoursType,
-} from "@/lib/types";
+
+import type { MenuItemDisplay, OpeningHours } from "@/lib/types";
 import {
 	Accordion,
 	AccordionContent,
@@ -41,10 +44,12 @@ interface RestaurantHeroProps {
 	name: string;
 	deliveryTime: string;
 	address: string;
+	isOpen: boolean;
 }
 
 export const RestaurantHero = ({
 	image,
+	isOpen,
 	name,
 	deliveryTime,
 	address,
@@ -85,33 +90,17 @@ export const RestaurantHero = ({
 								<span className="line-clamp-1">{address}</span>
 							</div>
 						</div>
+						<RestaurantStatus isOpen={isOpen} />
+
 					</div>
+
 				</div>
 			</div>
 		</div>
 	</div>
 );
 
-interface SearchBarProps {
-	value: string;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	placeholder: string;
-}
 
-export const SearchBar = ({ value, onChange, placeholder }: SearchBarProps) => (
-	<div className="sticky top-0 bg-gray-50 z-10 py-4">
-		<div className="relative">
-			<Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-			<Input
-				variant="rounded"
-				className="pl-10"
-				placeholder={placeholder}
-				value={value}
-				onChange={onChange}
-			/>
-		</div>
-	</div>
-);
 
 export const LoadingState = () => (
 	<div className="min-h-screen bg-gray-50 p-4">
@@ -141,26 +130,7 @@ export const ErrorState = ({ error }: { error: string }) => (
 	</div>
 );
 
-export const MenuCard = ({ item }: { item: MenuItemDisplay }) => (
-	<div className="bg-white p-4 rounded-lg shadow-sm flex gap-4">
-		<div className="w-24 h-24 relative flex-shrink-0">
-			<Image
-				src={item.image}
-				alt={item.name}
-				fill
-				className="object-cover rounded-md"
-			/>
-		</div>
-		<div className="flex-1">
-			<h3 className="font-semibold">{item.name}</h3>
-			<p className="text-sm text-gray-500">{item.categoryId.name}</p>
-			<p className="mt-2 font-medium">₦{Number(item.price).toLocaleString()}</p>
-			{!item.available && (
-				<span className="text-red-500 text-sm">Currently unavailable</span>
-			)}
-		</div>
-	</div>
-);
+
 
 interface MenuSectionsProps {
 	categories: any[];
@@ -175,10 +145,10 @@ interface MenuSectionsProps {
 }
 
 export const MenuSections = ({
-								 categories,
-								 activeCategory,
-								 setActiveCategory,
-							 }: MenuSectionsProps) => {
+	categories,
+	activeCategory,
+	setActiveCategory,
+}: MenuSectionsProps) => {
 	const handleCategoryClick = (categoryId: string) => {
 		setActiveCategory(categoryId);
 
@@ -201,13 +171,15 @@ export const MenuSections = ({
 			</div>
 
 			{/* Categories - Sticky on mobile */}
-			<div className={cn(
-				"flex gap-1 p-2 overflow-x-auto",
-				// Mobile styles
-				"lg:flex-col lg:overflow-x-visible",
-				// Sticky on mobile
-				"sticky top-0 bg-white z-20 lg:relative lg:top-auto"
-			)}>
+			<div
+				className={cn(
+					"flex gap-1 p-2 overflow-x-auto",
+					// Mobile styles
+					"lg:flex-col lg:overflow-x-visible",
+					// Sticky on mobile
+					"sticky top-0 bg-white z-20 lg:relative lg:top-auto",
+				)}
+			>
 				{categories.map((category) => (
 					<button
 						key={category._id}
@@ -218,7 +190,7 @@ export const MenuSections = ({
 							"flex-shrink-0 lg:w-full lg:text-left", // Prevent shrinking on mobile
 							activeCategory === category._id
 								? "bg-blue-50 text-blue-600"
-								: "hover:bg-gray-50"
+								: "hover:bg-gray-50",
 						)}
 					>
 						{category.name}
@@ -233,9 +205,8 @@ interface OpeningHoursProps {
 	openingHours: OpeningHours;
 }
 
-export const OpeningHourComponent = ({openingHours}: OpeningHoursProps) => (
+export const OpeningHourComponent = ({ openingHours }: OpeningHoursProps) => (
 	<div className="mt-4 bg-white rounded-lg shadow-sm ">
-
 		<div className={`hidden lg:block`}>
 			<div className="p-4">
 				<h2 className="text-lg font-semibold">Opening Hours</h2>
@@ -245,8 +216,8 @@ export const OpeningHourComponent = ({openingHours}: OpeningHoursProps) => (
 					<div key={day} className="flex justify-between text-sm">
 						<span className="capitalize">{day}</span>
 						<span className={cn(hours.isClosed && "text-red-500")}>
-						{hours.isClosed ? "Closed" : `${hours.open} - ${hours.close}`}
-					</span>
+							{hours.isClosed ? "Closed" : `${hours.open} - ${hours.close}`}
+						</span>
 					</div>
 				))}
 			</div>
@@ -255,7 +226,9 @@ export const OpeningHourComponent = ({openingHours}: OpeningHoursProps) => (
 		<div className={`lg:hidden`}>
 			<Accordion type="single" collapsible className="w-full">
 				<AccordionItem value="item-1">
-					<AccordionTrigger><span className={`px-4`}>Opening Hours </span></AccordionTrigger>
+					<AccordionTrigger>
+						<span className={`px-4`}>Opening Hours </span>
+					</AccordionTrigger>
 					<AccordionContent>
 						<div className="p-4 space-y-2">
 							{Object.entries(openingHours).map(([day, hours]) => (
@@ -278,19 +251,20 @@ export const OpeningHourComponent = ({openingHours}: OpeningHoursProps) => (
 
 interface RestaurantStatusProps {
 	isOpen: boolean;
+
 }
 
 export const RestaurantStatus = ({ isOpen }: RestaurantStatusProps) => (
-	<Alert
+	<div
 		className={cn(
-			"border",
+			"border p-1 rounded-full text-xs w-20",
 			isOpen ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200",
 		)}
 	>
-		<AlertDescription
+		<div
 			className={cn(isOpen ? "text-green-700" : "text-red-700")}
 		>
 			{isOpen ? "Open Now" : "Currently Closed"}
-		</AlertDescription>
-	</Alert>
+		</div>
+	</div>
 );

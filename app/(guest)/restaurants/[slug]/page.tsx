@@ -11,7 +11,6 @@ import {
 	MenuSections,
 	RestaurantHero,
 	RestaurantStatus,
-	SearchBar,
 	OpeningHourComponent,
 } from "@/app/(guest)/restaurants/components/SingleRestaurantComponents";
 import type {
@@ -20,6 +19,7 @@ import type {
 	Restaurant,
 
 } from "@/lib/types";
+import {SearchBar} from "@/components/SearchBar";
 
 
 function RestaurantPage({ params }: { params: { slug: string } }) {
@@ -88,7 +88,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		} catch (e) {
 			setError("Failed to search menu items");
 		}
-	}, 300);
+	}, 500);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -138,14 +138,13 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 			<BreadcrumbNav restaurantName={restaurant.name} />
 			<div className="relative">
 				<RestaurantHero
+					isOpen={isOpen}
 					image={restaurant.image}
 					name={restaurant.name}
 					deliveryTime={restaurant.deliveryTime}
 					address={restaurant.address}
 				/>
-				<div className="absolute top-4 right-4">
-					<RestaurantStatus isOpen={isOpen} />
-				</div>
+
 			</div>
 
 			<div className="container mx-auto px-4 lg:px-6 py-6">
@@ -165,6 +164,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 
 						<div className="lg:col-span-7">
 							<SearchBar
+								isLoading={loading}
 								value={search}
 								onChange={(e) => setSearch(e.target.value)}
 								placeholder={`Search in ${restaurant.name}`}
