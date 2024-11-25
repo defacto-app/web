@@ -161,6 +161,15 @@ export const $admin_api = {
 				return error;
 			}
 		},
+
+		create: async (body: any) => {
+			try {
+				return $axios_admin.post(`/users`, body);
+			} catch (error: any) {
+				return error;
+			}
+		},
+
 		delete: async (userId: string) => {
 			try {
 				return $axios_admin.delete(`/users/${userId}`);

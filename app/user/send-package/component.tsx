@@ -4,20 +4,17 @@ import { useEffect, useRef } from "react";
 import { Label } from "@/components/ui/label";
 import {
 	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
 	AlertDialogContent,
 	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
-import { Pencil, X } from "lucide-react";
+import { X } from "lucide-react";
 import GoogleAddressInput from "@/components/GoogleAddressInput";
 import { Button } from "@/components/ui/button";
+import {ErrorMessage} from "@/app/components/ErrorMessage";
 
 export const PickupAddress = ({
 	payload,
@@ -327,16 +324,3 @@ export const Summary = ({
 	);
 };
 
-export const ErrorMessage = ({
-	fieldName,
-	validationErrors,
-}: {
-	fieldName: string;
-	validationErrors: Record<string, string>;
-}) => {
-	return validationErrors[fieldName] ? (
-		<div className="error-message text-red-500 text-sm mt-1">
-			{validationErrors[fieldName]}
-		</div>
-	) : null;
-};

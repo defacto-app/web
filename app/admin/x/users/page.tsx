@@ -14,6 +14,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useRefetchContext } from "@/app/store/tableAtom";
 import { SearchBar } from "@/components/SearchBar";
 
+import CreateUserDialog from "@/app/admin/x/users/CreateUserDialog";
+
 // Updated function to fetch restaurants with a search query parameter
 const fetchUsers = async (
 	page: number,
@@ -128,18 +130,11 @@ function AllUserPage() {
 						placeholder="Search Users..."
 						value={searchTerm}
 						onChange={handleSearchChange}
+						isLoading={isLoading}
 					/>
-					<div className="relative">
-						<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-						<Input
-							variant={`rounded`}
-							type="search"
-							value={searchTerm}
-							onChange={handleSearchChange} // Update state on input change
-							placeholder="Search Users..."
-							className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-						/>
-					</div>
+
+
+					<CreateUserDialog />
 				</div>
 
 				{/* Render the DataTableLoading with loading state */}

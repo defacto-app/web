@@ -1,31 +1,13 @@
 "use client";
 import type React from "react";
-import { useRef } from "react";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DateTimePicker from "@/components/user/DateTimePicker";
-
-import GoogleAddressInput from "@/components/GoogleAddressInput";
-import {
-	AlertDialog,
-	AlertDialogContent,
-	AlertDialogTrigger,
-	AlertDialogDescription,
-	AlertDialogTitle,
-	AlertDialogHeader,
-	AlertDialogFooter,
-	AlertDialogCancel,
-	AlertDialogAction,
-} from "@/components/ui/alert-dialog";
-import { Input } from "@/components/ui/input";
-import { Pencil, X } from "lucide-react";
 import type { addressSelectionType, DeliveryPayloadType } from "@/lib/types";
 import { calculateDistance, formatPrice } from "@/utils";
 import DeliveryMap from "@/components/delivery/DeliveryMap";
-import Image from "next/image";
 import PackageImageUploader from "@/components/delivery/PackageImage";
-import { Button } from "@/components/ui/button";
 import { $api } from "@/http/endpoints";
 import envData, { isDev } from "@/config/envData";
 import BackButton from "@/app/components/BackButton";
@@ -414,7 +396,3 @@ export default function Page() {
 		</div>
 	);
 }
-
-// Mini component for Pickup Address
-
-// Mini component for Receiver Details

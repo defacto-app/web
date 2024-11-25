@@ -15,6 +15,7 @@ import { formatDateFromNow } from "@/lib/utils";
 import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
 import { DataTableColumnHeader } from "@/app/admin/x/demo/components/data-table-column-header";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -48,6 +49,17 @@ export const userColumns: ColumnDef<any>[] = [
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Email" />
 		),
+
+		cell: ({ row }) => {
+			const { email } = row.original;
+			return (
+				<Link href={`/admin/users/${row.original.userId}`}>{email} --</Link>
+			);
+		},
+	},
+	{
+		accessorKey: "phoneNumber",
+		header: "Phone Number",
 	},
 	{
 		accessorKey: "firstName",
@@ -60,11 +72,6 @@ export const userColumns: ColumnDef<any>[] = [
 	},
 
 	{
-		accessorKey: "phoneNumber",
-		header: "Phone Number",
-	},
-
-	{
 		accessorKey: "lastSeenAt",
 		header: "Last Seen",
 		cell: ({ row }) => {
@@ -73,6 +80,17 @@ export const userColumns: ColumnDef<any>[] = [
 			return <span>{formattedDate}</span>;
 		},
 	},
+
+	{
+		accessorKey: "createdAt",
+		header: "Created At",
+		cell: ({ row }) => {
+			const { createdAt } = row.original;
+			const formattedDate = formatDateFromNow(createdAt || "");
+			return <span>{formattedDate}</span>;
+		},
+	},
+
 
 	{
 		id: "actions",
