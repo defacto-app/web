@@ -57,12 +57,12 @@ export const menuColumns: ColumnDef<any>[] = [
 		},
 	},
 	{
-		accessorKey: "menuType",
-		header: "menu Type",
+		accessorKey: "category",
+		header: "Category",
 		cell: ({ row }) => {
-			const { menuType } = row.original;
+			const { category } = row.original;
 
-			return <span>{menuType}</span>;
+			return <span>{category.name}</span>;
 		},
 	},
 	{
@@ -104,11 +104,11 @@ export const allMenuColumns: ColumnDef<any>[] = [
 		accessorKey: "name",
 		header: "Name",
 		cell: ({ row }) => {
-			const { name, image } = row.original;
+			const { name, image, restaurant } = row.original;
 			return (
 				<Link
 					className={`font-medium underline flex items-center gap-x-2`}
-					href={`/admin/x/restaurants/${row.original.parent}/menu/${row.original.publicId}`}
+					href={`/admin/x/restaurants/${row.original.restaurant.publicId}/menu`}
 				>
 					<Image
 						width={56}

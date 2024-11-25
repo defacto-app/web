@@ -117,6 +117,14 @@ export const categoryColumns: ColumnDef<any>[] = [
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Name" />
 		),
+		cell: ({ row }) => {
+			const { name, publicId } = row.original;
+			return (
+			<p>
+				{name}
+			</p>
+			);
+		},
 		enableSorting: true,
 	},
 	{
@@ -138,6 +146,11 @@ export const categoryColumns: ColumnDef<any>[] = [
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Created At" />
 		),
+		cell: ({ row }) => {
+			const { updatedAt } = row.original;
+			const formattedDate = formatDateFromNow(updatedAt);
+			return <span>{formattedDate}</span>;
+		},
 		enableSorting: true,
 	},
 	{
@@ -145,6 +158,11 @@ export const categoryColumns: ColumnDef<any>[] = [
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Updated At" />
 		),
+		cell: ({ row }) => {
+			const { updatedAt } = row.original;
+			const formattedDate = formatDateFromNow(updatedAt);
+			return <span>{formattedDate}</span>;
+		},
 		enableSorting: true,
 	},
 	{
