@@ -6,12 +6,13 @@ import { DataTable } from "./data-table";
 import { $admin_api } from "@/http/admin-endpoint";
 import { useDebounce } from "react-haiku";
 import { useQuery } from "react-query";
-import {  Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { TablePagination } from "@/components/table/table-pagination";
 import { useRouter, useSearchParams } from "next/navigation";
-import {useRefetchContext} from "@/app/store/tableAtom";
+import { useRefetchContext } from "@/app/store/tableAtom";
+import { SearchBar } from "@/components/SearchBar";
 
 // Updated function to fetch restaurants with a search query parameter
 const fetchUsers = async (
@@ -53,13 +54,15 @@ function AllUserPage() {
 		["users", page, perPage, debouncedSearchTerm], // The query key includes page, perPage, and debounced search term
 		() => fetchUsers(page, perPage, debouncedSearchTerm),
 		{
-			// keepPreviousData: true, // Keep the previous data while fetching new data
+			// keepPreviousData: true,
 		},
 	);
 
 	// Handle search input change
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(e.target.value);
+		setPage(1); // Reset to first page when search term changes
+		router.push(`?search=${e.target.value}&page=1`); // Update the URL without reloading the page
 	};
 	const handlePageChange = (newPage: number) => {
 		setPage(newPage);
@@ -81,8 +84,21 @@ function AllUserPage() {
 		router.push(`?${params.toString()}`);
 	};
 
-	// Trigger refetch when shouldRefetchAtom is true
-	// Trigger refetch when shouldRefetchAtom is true
+	const handleClearSearch = () => {
+		const params = new URLSearchParams(Array.from(searchParams.entries()));
+
+		params.delete("search");
+
+		// Ensure the "page" is reset to 1
+		params.set("page", "1");
+
+		router.push(`?${params.toString()}`);
+
+		setSearchTerm("");
+
+		console.log("Search input cleared");
+	};
+
 	useEffect(() => {
 		if (shouldRefetch) {
 			refetch();
@@ -107,12 +123,18 @@ function AllUserPage() {
 				<div
 					className={`bg-white shadow-sm rounded mb-6 p-6 flex justify-between`}
 				>
+					<SearchBar
+						onClear={handleClearSearch}
+						placeholder="Search Users..."
+						value={searchTerm}
+						onChange={handleSearchChange}
+					/>
 					<div className="relative">
 						<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 						<Input
 							variant={`rounded`}
 							type="search"
-							value={searchTerm} // Bind input value to state
+							value={searchTerm}
 							onChange={handleSearchChange} // Update state on input change
 							placeholder="Search Users..."
 							className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
@@ -132,7 +154,6 @@ function AllUserPage() {
 								onPageChange={handlePageChange}
 							/>
 							<DataTable
-
 								columns={userColumns}
 								data={data.data}
 								pageCount={data.meta.totalPages}

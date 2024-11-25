@@ -13,15 +13,13 @@ import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatDateFromNow } from "@/lib/utils";
 import { $admin_api } from "@/http/admin-endpoint";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
+import { DataTableColumnHeader } from "@/app/admin/x/demo/components/data-table-column-header";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-
-
 const deleteUser = async (id: string) => {
-
 	try {
 		await $admin_api.users.delete(id);
 		toast.success("User deleted successfully");
@@ -47,11 +45,18 @@ export const userColumns: ColumnDef<any>[] = [
 
 	{
 		accessorKey: "email",
-		header: "Email",
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Email" />
+		),
 	},
 	{
 		accessorKey: "firstName",
 		header: "first Name",
+	},
+
+	{
+		accessorKey: "role",
+		header: "Role",
 	},
 
 	{
@@ -73,7 +78,7 @@ export const userColumns: ColumnDef<any>[] = [
 		id: "actions",
 		cell: ({ row }) => {
 			const { userId } = row.original;
-            return (
+			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button variant="ghost" className="h-8 w-8 p-0">

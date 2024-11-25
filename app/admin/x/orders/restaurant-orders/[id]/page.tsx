@@ -131,6 +131,7 @@ function Page({ params }: { params: { id: string } }) {
 					<Button
 						variant="outline"
 						className="flex items-center gap-2"
+						// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
 						onClick={() => window.location.href = `mailto:${orderData.dropOffDetails.email}`}
 					>
 						<Send className="w-4 h-4" />
