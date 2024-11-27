@@ -211,6 +211,14 @@ export const $admin_api = {
 			}
 		},
 
+		delete: async (id: string) => {
+			try {
+				return $axios_admin.delete(`/menu/${id}`);
+			} catch (error: any) {
+				return error;
+			}
+		},
+
 		create: async (id: string, body: any) => {
 			try {
 				return $axios_admin.post(`/restaurants/menu/${id}`, body);
@@ -256,6 +264,14 @@ export const $admin_api = {
 				return error;
 			}
 		},
+
+		update: async (orderId: string, body: any) => {
+			try {
+				return $axios_admin.put(`/orders/${orderId}`, body);
+			} catch (error: any) {
+				return error;
+			}
+		}
 	},
 
 	/*	upload:{

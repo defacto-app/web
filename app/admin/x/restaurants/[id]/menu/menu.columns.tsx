@@ -6,6 +6,18 @@ import { formatDateFromNow } from "@/lib/utils";
 import Link from "next/link";
 import { formatPrice } from "@/utils";
 import Image from "next/image";
+import {Switch} from "@/components/ui/switch";
+import {Button} from "@/components/ui/button";
+import {Trash2} from "lucide-react";
+import {MenuActionsCell} from "@/app/admin/x/restaurants/components/MenuActionsCell";
+
+function handleAvailabilityToggle() {
+	// Implement the function here
+}
+
+function handleDelete() {
+	// Implement the function here
+}
 
 export const menuColumns: ColumnDef<any>[] = [
 	{
@@ -83,6 +95,28 @@ export const menuColumns: ColumnDef<any>[] = [
 			return <span>{formattedDate}</span>;
 		},
 	},
+	{
+		accessorKey: "actions",
+		header: "Actions",
+		cell: ({ row }) => {
+			return (
+				<div className="flex items-center space-x-2">
+					<Switch
+						checked={row.original.available}
+						onChange={handleAvailabilityToggle}
+					/>
+					<Button
+						variant="ghost"
+						size="icon"
+						onClick={handleDelete}
+					>
+						<Trash2 className="w-5 h-5" />
+					</Button>
+				</div>
+			);
+		},
+		// cell: ({ row }) => <MenuActionsCell item={row.original} onUpdate={refetchData} />
+	}
 ];
 
 export const allMenuColumns: ColumnDef<any>[] = [

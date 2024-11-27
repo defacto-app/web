@@ -14,6 +14,7 @@ function Page({ params }: { params: { id: string } }) {
 		category: "",
 		price: 0,
 		available: false,
+
 	});
 	const [creating, setCreating] = useState<boolean>(false);
 
@@ -23,6 +24,13 @@ function Page({ params }: { params: { id: string } }) {
 			...prevRestaurant,
 			[name]: value ?? "", // Fallback to empty string if value is undefined
 		}));
+	};
+
+	const handleAvailabilityChange = (checked: boolean) => {
+		setMenuData((prev: any) => prev && {
+			...prev,
+			available: checked
+		});
 	};
 
 	const createMenu = async () => {
@@ -54,17 +62,25 @@ function Page({ params }: { params: { id: string } }) {
 	};
 
 	return (
-		<div>
-			<div className={`bg-white rounded-md  p-4 border mt-4`}>
-				<h1 className={`py-4 text-lg`}>Create New Menu</h1>
+		<div className="max-w-2xl mx-auto">
+			<div className="bg-white rounded-lg shadow-sm border p-6">
+				<div className="space-y-6">
+					<div className="border-b pb-4">
+						<h1 className="text-xl font-semibold">New Menu item</h1>
+						<p className="text-sm text-muted-foreground mt-1">
+							Add a new item to your restaurant menu
+						</p>
+					</div>
 
-				<MenuForm
-					action={"create"}
-					handleInputChange={handleInputChange}
-					data={menuData}
-					submitHandler={createMenu}
-					loading={creating}
-				/>
+					<MenuForm
+						action="create"
+						handleInputChange={handleInputChange}
+						handleAvailabilityChange={handleAvailabilityChange}
+						data={menuData}
+						submitHandler={createMenu}
+						loading={creating}
+					/>
+				</div>
 			</div>
 		</div>
 	);

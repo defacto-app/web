@@ -1,19 +1,24 @@
-"use client"
-import React, {useCallback, useEffect, useState} from "react";
-import { Badge } from '@/components/ui/badge';
-import {$admin_api} from "@/http/admin-endpoint";
-import { Package, MapPin, User, Phone, Mail, ShoppingCart, Printer, Send,  X, Check, AlertCircle } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+"use client";
+import React, { useCallback, useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { $admin_api } from "@/http/admin-endpoint";
 import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import {AssignDriver} from "@/app/admin/x/orders/restaurant-orders/components/AssignDriver";
+	Package,
+	MapPin,
+	User,
+	Phone,
+	Mail,
+	ShoppingCart,
+	Printer,
+	X,
+	Check,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+
+import { AssignDriverModal } from "@/app/admin/x/orders/restaurant-orders/components/AssignDriverModal";
+import { formatPrice } from "@/utils";
+import { formatDateFromNow } from "@/lib/utils";
 
 function Page({ params }: { params: { id: string } }) {
 	const [orderData, setOrderData] = useState<any>(null);
@@ -38,9 +43,9 @@ function Page({ params }: { params: { id: string } }) {
 		try {
 			// Simulated API call - replace with actual API
 			// await $admin_api.orders.updateStatus(params.id, newStatus);
-			setOrderData((prev: any) => ({...prev, status: newStatus}));
+			setOrderData((prev: any) => ({ ...prev, status: newStatus }));
 		} catch (error) {
-			console.error('Failed to update status:', error);
+			console.error("Failed to update status:", error);
 		} finally {
 			setIsUpdating(false);
 		}
@@ -50,44 +55,29 @@ function Page({ params }: { params: { id: string } }) {
 		getData();
 	}, [getData]);
 
-	if (loading) return (
-		<div className="flex items-center justify-center min-h-screen">
-			<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-		</div>
-	);
+	if (loading)
+		return (
+			<div className="flex items-center justify-center min-h-screen">
+				<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+			</div>
+		);
 
-	if (error) return (
-		<div className="flex items-center justify-center min-h-screen">
-			<div className="text-red-500">{error}</div>
-		</div>
-	);
+	if (error)
+		return (
+			<div className="flex items-center justify-center min-h-screen">
+				<div className="text-red-500">{error}</div>
+			</div>
+		);
 
 	if (!orderData) return null;
 
-	const getStatusColor = (status: 'pending' | 'completed' | 'cancelled') => {
+	const getStatusColor = (status: "pending" | "completed" | "cancelled") => {
 		const colors = {
-			pending: 'bg-yellow-100 text-yellow-800',
-			completed: 'bg-green-100 text-green-800',
-			cancelled: 'bg-red-100 text-red-800',
+			pending: "bg-yellow-100 text-yellow-800",
+			completed: "bg-green-100 text-green-800",
+			cancelled: "bg-red-100 text-red-800",
 		};
-		return colors[status] || 'bg-gray-100 text-gray-800';
-	};
-
-	const formatDate = (dateString: string) => {
-		return new Date(dateString).toLocaleString('en-US', {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric',
-			hour: '2-digit',
-			minute: '2-digit',
-		});
-	};
-
-	const formatPrice = (price: number) => {
-		return new Intl.NumberFormat('en-US', {
-			style: 'currency',
-			currency: 'NGN',
-		}).format(price);
+		return colors[status] || "bg-gray-100 text-gray-800";
 	};
 
 	// Action Buttons Component
@@ -95,56 +85,21 @@ function Page({ params }: { params: { id: string } }) {
 		<Card className="mt-6">
 			<CardContent className="pt-6">
 				<div className="flex flex-wrap gap-4">
-					<Dialog>
-						<DialogTrigger asChild>
-							<Button variant="outline" className="flex items-center gap-2">
-								<AlertCircle className="w-4 h-4" />
-								Update Status
-							</Button>
-						</DialogTrigger>
-						<DialogContent>
-							<DialogHeader>
-								<DialogTitle>Update Order Status</DialogTitle>
-							</DialogHeader>
-							<div className="space-y-4 pt-4">
-								<Select
-									onValueChange={(value) => updateOrderStatus(value)}
-									defaultValue={orderData.status}
-								>
-									<SelectTrigger>
-										<SelectValue placeholder="Select status" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectItem value="pending">Pending</SelectItem>
-										<SelectItem value="completed">Completed</SelectItem>
-										<SelectItem value="cancelled">Cancelled</SelectItem>
-									</SelectContent>
-								</Select>
-							</div>
-						</DialogContent>
-					</Dialog>
-
-					<Button variant="outline" className="flex items-center gap-2" onClick={() => window.print()}>
+					<Button
+						variant="outline"
+						className="flex items-center gap-2"
+						onClick={() => window.print()}
+					>
 						<Printer className="w-4 h-4" />
 						Print Order
 					</Button>
 
-					<Button
-						variant="outline"
-						className="flex items-center gap-2"
-						// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-						onClick={() => window.location.href = `mailto:${orderData.dropOffDetails.email}`}
-					>
-						<Send className="w-4 h-4" />
-						Contact Customer
-					</Button>
-
-					{orderData.status === 'pending' && (
+					{orderData.status === "pending" && (
 						<>
 							<Button
 								variant="outline"
 								className="flex items-center gap-2 text-green-600 hover:text-green-700"
-								onClick={() => updateOrderStatus('completed')}
+								onClick={() => updateOrderStatus("completed")}
 								disabled={isUpdating}
 							>
 								<Check className="w-4 h-4" />
@@ -154,16 +109,17 @@ function Page({ params }: { params: { id: string } }) {
 							<Button
 								variant="outline"
 								className="flex items-center gap-2 text-red-600 hover:text-red-700"
-								onClick={() => updateOrderStatus('cancelled')}
+								onClick={() => updateOrderStatus("cancelled")}
 								disabled={isUpdating}
 							>
 								<X className="w-4 h-4" />
 								Cancel Order
 							</Button>
 
-							<AssignDriver/>
-
-
+							<AssignDriverModal
+								onDriverAssigned={getData}
+								orderId={orderData.publicId}
+							/>
 						</>
 					)}
 				</div>
@@ -180,8 +136,11 @@ function Page({ params }: { params: { id: string } }) {
 						<h1 className="text-2xl font-bold text-gray-900">Order Details</h1>
 						<p className="text-gray-500">Order ID: {orderData.orderId}</p>
 					</div>
-					<Badge className={`text-sm px-4 py-2 rounded-full ${getStatusColor(orderData.status)}`}>
-						{orderData.status.charAt(0).toUpperCase() + orderData.status.slice(1)}
+					<Badge
+						className={`text-sm px-4 py-2 rounded-full ${getStatusColor(orderData.status)}`}
+					>
+						{orderData.status.charAt(0).toUpperCase() +
+							orderData.status.slice(1)}
 					</Badge>
 				</div>
 
@@ -199,21 +158,24 @@ function Page({ params }: { params: { id: string } }) {
 					</CardHeader>
 					<CardContent>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-							<div>
-								<p className="text-sm text-gray-500">Order Type</p>
-								<p className="font-medium">{orderData.type.charAt(0).toUpperCase() + orderData.type.slice(1)}</p>
-							</div>
+
 							<div>
 								<p className="text-sm text-gray-500">Total Charge</p>
 								<p className="font-medium">{formatPrice(orderData.charge)}</p>
 							</div>
 							<div>
 								<p className="text-sm text-gray-500">Created At</p>
-								<p className="font-medium">{formatDate(orderData.createdAt)}</p>
+								<p className="font-medium">
+									{formatDateFromNow(orderData.createdAt)}
+								</p>
 							</div>
 							<div>
 								<p className="text-sm text-gray-500">Delivery Type</p>
-								<p className="font-medium">{orderData.isInstant ? 'Instant Delivery' : 'Scheduled Delivery'}</p>
+								<p className="font-medium">
+									{orderData.isInstant
+										? "Instant Delivery"
+										: "Scheduled Delivery"}
+								</p>
 							</div>
 						</div>
 					</CardContent>
@@ -240,21 +202,27 @@ function Page({ params }: { params: { id: string } }) {
 								<Phone className="w-5 h-5 text-gray-400 mt-1" />
 								<div>
 									<p className="text-sm text-gray-500">Phone Number</p>
-									<p className="font-medium">{orderData.dropOffDetails.phoneNumber}</p>
+									<p className="font-medium">
+										{orderData.dropOffDetails.phoneNumber}
+									</p>
 								</div>
 							</div>
 							<div className="flex items-start gap-3">
 								<Mail className="w-5 h-5 text-gray-400 mt-1" />
 								<div>
 									<p className="text-sm text-gray-500">Email</p>
-									<p className="font-medium">{orderData.dropOffDetails.email}</p>
+									<p className="font-medium">
+										{orderData.dropOffDetails.email}
+									</p>
 								</div>
 							</div>
 							<div className="flex items-start gap-3">
 								<MapPin className="w-5 h-5 text-gray-400 mt-1" />
 								<div>
 									<p className="text-sm text-gray-500">Delivery Address</p>
-									<p className="font-medium">{orderData.dropOffDetails.address}</p>
+									<p className="font-medium">
+										{orderData.dropOffDetails.address}
+									</p>
 								</div>
 							</div>
 						</div>
@@ -273,26 +241,34 @@ function Page({ params }: { params: { id: string } }) {
 						<div className="overflow-x-auto">
 							<table className="w-full">
 								<thead>
-								<tr className="border-b">
-									<th className="text-left py-3 px-4">Item</th>
-									<th className="text-right py-3 px-4">Quantity</th>
-									<th className="text-right py-3 px-4">Price</th>
-									<th className="text-right py-3 px-4">Total</th>
-								</tr>
+									<tr className="border-b">
+										<th className="text-left py-3 px-4">Item</th>
+										<th className="text-right py-3 px-4">Quantity</th>
+										<th className="text-right py-3 px-4">Price</th>
+										<th className="text-right py-3 px-4">Total</th>
+									</tr>
 								</thead>
 								<tbody>
-								{orderData.restaurantOrder.map((item: any) => (
-									<tr key={item._id} className="border-b">
-										<td className="py-3 px-4">{item.name}</td>
-										<td className="text-right py-3 px-4">{item.quantity}</td>
-										<td className="text-right py-3 px-4">{formatPrice(item.price)}</td>
-										<td className="text-right py-3 px-4">{formatPrice(item.price * item.quantity)}</td>
+									{orderData.restaurantOrder.map((item: any) => (
+										<tr key={item._id} className="border-b">
+											<td className="py-3 px-4">{item.name}</td>
+											<td className="text-right py-3 px-4">{item.quantity}</td>
+											<td className="text-right py-3 px-4">
+												{formatPrice(item.price)}
+											</td>
+											<td className="text-right py-3 px-4">
+												{formatPrice(item.price * item.quantity)}
+											</td>
+										</tr>
+									))}
+									<tr className="font-medium">
+										<td colSpan={3} className="py-3 px-4 text-right">
+											Total Amount:
+										</td>
+										<td className="py-3 px-4 text-right">
+											{formatPrice(orderData.charge)}
+										</td>
 									</tr>
-								))}
-								<tr className="font-medium">
-									<td colSpan={3} className="py-3 px-4 text-right">Total Amount:</td>
-									<td className="py-3 px-4 text-right">{formatPrice(orderData.charge)}</td>
-								</tr>
 								</tbody>
 							</table>
 						</div>

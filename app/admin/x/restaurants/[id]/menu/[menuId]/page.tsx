@@ -40,6 +40,16 @@ function Page({ params }: { params: { menuId: string } }) {
 		}));
 	};
 
+	const handleAvailabilityChange = (checked: boolean) => {
+		setMenuData(
+			(prev: any) =>
+				prev && {
+					...prev,
+					available: checked,
+				},
+		);
+	};
+
 	const updateMenu = async () => {
 		setUpdating(true);
 		try {
@@ -86,35 +96,48 @@ function Page({ params }: { params: { menuId: string } }) {
 
 	// Render getMenu data once fetched
 	return (
-		<div className={`bg-white rounded-md  p-4 border mt-4`}>
-			<h1 className={`py-4 text-lg`}>Update Menu</h1>
+		<div className="max-w-4xl mx-auto">
+			<div className="bg-white rounded-lg shadow-sm border p-6 space-y-8">
+				<div className="flex items-center justify-between">
+					<h1 className="text-2xl font-semibold">Update Menu</h1>
+				</div>
 
-			<div className={`flex justify-start`}>
-				<div className={`flex items-center`}>
-					<Image
-						priority={true}
-						width={500}
-						height={500}
-						src={menuData?.image}
-						alt={menuData?.name}
-						className="rounded-sm h-64  object-cover"
-					/>
+				{/* Image Section */}
+				<div className="space-y-4">
+					<div className="max-w-md mx-auto">
+						<div className="aspect-video relative overflow-hidden rounded-lg border bg-gray-50">
+							<Image
+								priority
+								src={menuData?.image || "https://placehold.co/600x400"}
+								alt={menuData?.name || "Menu item"}
+								width={600}
+								height={400}
+								className="object-cover"
+							/>
+						</div>
+						<div className="mt-4">
+							<ImageUploader
+								buttonText="Update Image"
+								handleUpload={uploadRestaurantImage}
+								id={menuData.publicId}
+								onUploadComplete={getData}
+							/>
+						</div>
+					</div>
+				</div>
 
-					<ImageUploader
-						buttonText={"Update Image"}
-						handleUpload={uploadRestaurantImage}
-						id={menuData.publicId}
-						onUploadComplete={getData}
+				{/* Form Section */}
+				<div className="mt-8">
+					<MenuForm
+						data={menuData}
+						handleInputChange={handleInputChange}
+						handleAvailabilityChange={handleAvailabilityChange}
+						submitHandler={updateMenu}
+						loading={updating}
+						action="update"
 					/>
 				</div>
 			</div>
-			<MenuForm
-				data={menuData}
-				handleInputChange={handleInputChange}
-				submitHandler={updateMenu}
-				loading={updating}
-				action="update"
-			/>
 		</div>
 	);
 }

@@ -72,7 +72,6 @@ export interface MenuItemType {
 	category: string;
 	createdAt: string;
 	image: string;
-	menuType: string;
 	name: string;
 	parent: string;
 	price: string;

@@ -15,14 +15,13 @@ import { useRefetchContext } from "@/app/store/tableAtom";
 import { SearchBar } from "@/components/SearchBar";
 
 import CreateUserDialog from "@/app/admin/x/users/CreateUserDialog";
-import {DataTableFacetedFilter} from "@/app/admin/x/demo/components/data-table-faceted-filter";
-import {userTypes} from "@/app/admin/x/demo/data/data";
 
 // Updated function to fetch restaurants with a search query parameter
 const fetchUsers = async (
 	page: number,
 	perPage: number,
 	searchTerm: string,
+	role: string,
 ) => {
 	const response = await $admin_api.users.all({
 		page,
@@ -39,6 +38,7 @@ function AllUserPage() {
 	const [isMounted, setIsMounted] = useState(false); // Ensure the component is mounted
 	const debouncedSearchTerm = useDebounce(searchTerm, 500); // Debounce search term by 500ms
 	const router = useRouter();
+	const [role, setRole] = useState("user");
 	const searchParams = useSearchParams();
 
 	// Ensure this only runs on the client side to avoid SSR mismatches
@@ -56,7 +56,7 @@ function AllUserPage() {
 	// Use React Query's useQuery hook to fetch data, and pass debouncedSearchTerm as part of the key
 	const { data, error, isLoading, refetch } = useQuery(
 		["users", page, perPage, debouncedSearchTerm], // The query key includes page, perPage, and debounced search term
-		() => fetchUsers(page, perPage, debouncedSearchTerm),
+		() => fetchUsers(page, perPage, role, debouncedSearchTerm),
 		{
 			// keepPreviousData: true,
 		},
@@ -135,15 +135,14 @@ function AllUserPage() {
 						isLoading={isLoading}
 					/>
 
-			{/*		<DataTableFacetedFilter
+					{/*		<DataTableFacetedFilter
 						column={}
 						title="User Type"
 						options={userTypes}
 					/>*/}
 
 
-					<CreateUserDialog
-					/>
+					<CreateUserDialog />
 				</div>
 
 				{/* Render the DataTableLoading with loading state */}

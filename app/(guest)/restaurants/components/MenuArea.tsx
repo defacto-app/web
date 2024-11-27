@@ -57,7 +57,9 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 								<ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 									{group.items.map((item: any) => (
 										<li key={item._id}>
-											<div className="bg-white border rounded-sm">
+											<div
+												className={`bg-white border rounded-sm relative ${!item.available && "opacity-75"}`}
+											>
 												<Image
 													src={item.image}
 													alt={item.name}
@@ -67,13 +69,32 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 												/>
 												<div className="p-4 flex items-center justify-between">
 													<div>
-														<h3>{item.name}</h3>
-														<p>Price: {formatPrice(item.price)}</p>
+														<h3
+															className={!item.available ? "text-gray-500" : ""}
+														>
+															{item.name}
+														</h3>
+														<p
+															className={!item.available ? "text-gray-500" : ""}
+														>
+															Price: {formatPrice(item.price)}
+														</p>
+														{!item.available && (
+															<span className="text-sm text-red-500">
+																Currently unavailable
+															</span>
+														)}
 													</div>
 													<Button
 														variant="outline"
-														className="text-blue-500 bg-blue-200 p-2 rounded-full"
+														className="text-blue-500 bg-blue-200 p-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
 														onClick={() => handleAddToCart(item)}
+														disabled={!item.available}
+														title={
+															!item.available
+																? "Item unavailable"
+																: "Add to cart"
+														}
 													>
 														<Plus />
 													</Button>
