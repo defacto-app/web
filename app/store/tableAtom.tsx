@@ -1,5 +1,7 @@
 import { atom } from "jotai";
 import { useAtomValue, useSetAtom } from "jotai";
+import type {QueryObserverResult, RefetchOptions, RefetchQueryFilters} from "react-query";
+
 
 // Atom to track when a refetch is required
 export const shouldRefetchAtom = atom(false);
@@ -26,3 +28,11 @@ export const useRefetchContext = () => {
         triggerRefetch,
     };
 };
+
+
+
+type RefetchFunction = <TPageData>(
+    options?: RefetchOptions & RefetchQueryFilters<TPageData>
+) => Promise<QueryObserverResult<any, unknown>>;
+
+export const menuRefetchAtom = atom<RefetchFunction | null>(null);

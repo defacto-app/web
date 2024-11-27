@@ -5,27 +5,31 @@ import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 import { $admin_api } from "@/http/admin-endpoint";
+import {menuRefetchAtom} from "@/app/store/tableAtom";
+import {useAtomValue} from "jotai";
 
 interface MenuActionsCellProps {
     item: {
         publicId: string;
         available: boolean;
     };
-    onUpdate?: () => void;
+
 }
 
-export function MenuActionsCell({ item, onUpdate }: MenuActionsCellProps) {
+export function MenuActionsCell({ item }: MenuActionsCellProps) {
     const [isUpdating, setIsUpdating] = useState(false);
+    const refetch = useAtomValue(menuRefetchAtom);
 
     const handleAvailabilityToggle = async () => {
         setIsUpdating(true);
         try {
-            await $admin_api.menu.update(item.publicId, {
+        await $admin_api.menu.toggleAvailability(item.publicId, {
                 ...item,
                 available: !item.available
             });
             toast.success("Availability updated");
-            onUpdate?.();
+            await refetch?.();
+
         } catch (error) {
             toast.error("Failed to update availability");
         } finally {
@@ -39,7 +43,7 @@ export function MenuActionsCell({ item, onUpdate }: MenuActionsCellProps) {
         try {
             await $admin_api.menu.delete(item.publicId);
             toast.success("Item deleted successfully");
-            onUpdate?.();
+            await refetch?.();
         } catch (error) {
             toast.error("Failed to delete item");
         }

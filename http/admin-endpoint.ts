@@ -211,6 +211,15 @@ export const $admin_api = {
 			}
 		},
 
+		toggleAvailability: async (id: string, body: any) => {
+			try {
+
+				return $axios_admin.patch(`/menu/${id}/toggle-availability`, body);
+			} catch (error: any) {
+				return error;
+			}
+		},
+
 		delete: async (id: string) => {
 			try {
 				return $axios_admin.delete(`/menu/${id}`);

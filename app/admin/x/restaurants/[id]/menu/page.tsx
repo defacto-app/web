@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, {useState, useCallback, useEffect} from "react";
 import { $admin_api } from "@/http/admin-endpoint";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { menuColumns } from "@/app/admin/x/restaurants/[id]/menu/menu.columns";
@@ -19,6 +19,8 @@ import {
 import { Card } from "@/components/ui/card";
 import debounce from "lodash/debounce";
 import { Search} from "lucide-react";
+import {useSetAtom} from "jotai";
+import {menuRefetchAtom} from "@/app/store/tableAtom";
 
 async function fetchMenu(id: string, params: any) {
 	const response = await $admin_api.restaurants.getMenu(id, params);
@@ -50,6 +52,13 @@ function Page({ params }: { params: { id: string } }) {
 							: undefined,
 			}),
 	});
+
+	const setMenuRefetch = useSetAtom(menuRefetchAtom);
+
+
+	useEffect(() => {
+		setMenuRefetch(() => refetch);
+	}, [refetch, setMenuRefetch]);
 
 	const debouncedSearch = useCallback(
 		debounce((value: string) => {
