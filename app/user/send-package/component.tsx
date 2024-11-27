@@ -212,7 +212,7 @@ export const ReceiverDetails = ({
 
 	return (
 		<div className="mt-4 space-y-4">
-			<div className="border rounded-lg p-6 bg-white">
+			<div >
 				<h3 className="text-lg font-medium mb-4">Receiver Information</h3>
 
 				<div className="space-y-4">

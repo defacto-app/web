@@ -13,12 +13,13 @@ import envData, { isDev } from "@/config/envData";
 import BackButton from "@/app/components/BackButton";
 import {
 	DropOffAddress,
-	ErrorMessage,
 	PickupAddress,
 	ReceiverDetails,
 	Summary,
 } from "@/app/user/send-package/component";
 import { AlertCircle } from "lucide-react";
+import {ErrorMessage} from "@/app/components/ErrorMessage";
+import {toast} from "react-toastify";
 
 export default function Page() {
 	const [loading, setLoading] = useState(false);
@@ -213,11 +214,18 @@ export default function Page() {
 	}, [distance]);
 
 	const confirmOrder = async () => {
+		setLoading(true);
+
 		try {
 			console.log(payload);
 			const response = await $api.auth.user.order.package(payload);
 
 			console.log(response);
+			toast.success("Order placed successfully");
+			setLoading(false);
+
+			// clear errors
+			setValidationErrors({});
 		} catch (e: any) {
 			console.log("error", e);
 
@@ -228,6 +236,10 @@ export default function Page() {
 				behavior: "smooth",
 				block: "center",
 			});
+
+			toast.error("Error placing order");
+			setLoading(false);
+
 		}
 	};
 
@@ -389,6 +401,7 @@ export default function Page() {
 							loading={loading}
 							confirmOrder={confirmOrder}
 							formatPrice={formatPrice}
+
 						/>
 					</section>
 				</div>

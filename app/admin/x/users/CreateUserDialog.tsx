@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
 	AlertDialog,
-	AlertDialogAction,
 	AlertDialogCancel,
 	AlertDialogContent,
 	AlertDialogHeader,
@@ -22,7 +21,7 @@ import {
 import { PlusCircle } from "lucide-react";
 import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
-import {ErrorMessage} from "@/app/components/ErrorMessage";
+import { ErrorMessage } from "@/app/components/ErrorMessage";
 
 export default function CreateUserDialog() {
 	const [formData, setFormData] = useState({
@@ -84,8 +83,7 @@ export default function CreateUserDialog() {
 				role: "customer",
 			});
 		} catch (err: any) {
-			
-		if (err.error) {
+			if (err.error) {
 				setFieldErrors(err.error);
 			} else {
 				toast.error(err.message || "Failed to create user");
@@ -105,7 +103,7 @@ export default function CreateUserDialog() {
 				</Button>
 			</AlertDialogTrigger>
 
-			<AlertDialogContent className="max-w-2xl  py-10">
+			<AlertDialogContent className="max-w-2xl  py-10 md:h-[500px]">
 				<AlertDialogHeader>
 					<AlertDialogTitle>Create New User</AlertDialogTitle>
 				</AlertDialogHeader>
@@ -120,7 +118,10 @@ export default function CreateUserDialog() {
 							onChange={handleInputChange}
 							placeholder="First name"
 						/>
-						<ErrorMessage fieldName="firstName" validationErrors={fieldErrors} />
+						<ErrorMessage
+							fieldName="firstName"
+							validationErrors={fieldErrors}
+						/>
 					</div>
 
 					<div className="space-y-2">
@@ -157,7 +158,10 @@ export default function CreateUserDialog() {
 							onChange={handleInputChange}
 							placeholder="08012345678"
 						/>
-						<ErrorMessage fieldName="phoneNumber" validationErrors={fieldErrors} />
+						<ErrorMessage
+							fieldName="phoneNumber"
+							validationErrors={fieldErrors}
+						/>
 					</div>
 
 					<div className="space-y-2">

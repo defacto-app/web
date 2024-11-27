@@ -151,9 +151,33 @@ export const $api = {
 			},
 
 			order: {
-				history: async () => {
+				// API endpoint definition
+				history: async (params?: {
+					orderId?: string;
+					page?: number;
+					perPage?: number;
+					sort?: 'asc' | 'desc';
+				}) => {
 					try {
-						return $axios.get(`/orders`);
+						const queryParams = new URLSearchParams();
+
+						if (params?.orderId) {
+							queryParams.append('orderId', params.orderId);
+						}
+						if (params?.page) {
+							queryParams.append('page', params.page.toString());
+						}
+						if (params?.perPage) {
+							queryParams.append('perPage', params.perPage.toString());
+						}
+						if (params?.sort) {
+							queryParams.append('sort', params.sort);
+						}
+
+						const queryString = queryParams.toString();
+						const url = `/orders${queryString ? `?${queryString}` : ''}`;
+
+						return $axios.get(url);
 					} catch (error: any) {
 						return error;
 					}

@@ -29,7 +29,7 @@ const deleteOrder = async (id: string) => {
 export const packageColumns: ColumnDef<any>[] = [
 	{
 		accessorKey: "S/N",
-		header: ({  }) => <div>S/N</div>,
+		header: () => <div>S/N</div>,
 		cell: ({ row }) => {
 			return (
 				<div className="flex space-x-2">
@@ -62,19 +62,11 @@ export const packageColumns: ColumnDef<any>[] = [
 		accessorKey: "customerName",
 		header: "Customer",
 		cell: ({ row }) => {
-			const { dropOffDetails } = row.original;
-			return <span>{dropOffDetails?.name}</span>;
+			const { pickupDetails } = row.original;
+			return <span>{pickupDetails?.name}</span>;
 		},
 	},
-	{
-		accessorKey: "createdAt",
-		header: "Created At",
-		cell: ({ row }) => {
-			const { createdAt } = row.original;
-			const formattedDate = formatDateFromNow(createdAt);
-			return <span>{formattedDate}</span>;
-		},
-	},
+
 
 	{
 		accessorKey: "charge",
@@ -110,6 +102,15 @@ export const packageColumns: ColumnDef<any>[] = [
 	{
 		accessorKey: "cashPaymentLocation",
 		header: "Cash Payment Location",
+	},
+	{
+		accessorKey: "createdAt",
+		header: "Created At",
+		cell: ({ row }) => {
+			const { createdAt } = row.original;
+			const formattedDate = formatDateFromNow(createdAt);
+			return <span>{formattedDate}</span>;
+		},
 	},
 
 	{
