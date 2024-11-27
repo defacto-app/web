@@ -7,18 +7,23 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "@/components/ui/pagination";
-import {Button} from "@/components/ui/button";
-import {DoubleArrowLeftIcon, DoubleArrowRightIcon} from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
+import {
+	DoubleArrowLeftIcon,
+	DoubleArrowRightIcon,
+} from "@radix-ui/react-icons";
 
 interface TablePaginationProps {
 	page: number;
 	totalPages: number;
 	onPageChange: (page: number) => void;
+	perPage?: number;
 }
 
 export function TablePagination({
 	page,
 	totalPages,
+	perPage = 10,
 	onPageChange,
 }: TablePaginationProps) {
 	const handlePrevious = () => {
@@ -74,8 +79,6 @@ export function TablePagination({
 						<DoubleArrowLeftIcon className="h-4 w-4" />
 					</Button>
 					<PaginationPrevious onClick={handlePrevious} />
-
-
 				</PaginationItem>
 
 				{/* Page Numbers */}

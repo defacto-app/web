@@ -23,7 +23,9 @@ import { $admin_api } from "@/http/admin-endpoint";
 import { toast } from "react-toastify";
 import { ErrorMessage } from "@/app/components/ErrorMessage";
 
-export default function CreateUserDialog() {
+export default function CreateUserDialog(
+
+) {
 	const [formData, setFormData] = useState({
 		email: "",
 		phoneNumber: "",
@@ -33,7 +35,7 @@ export default function CreateUserDialog() {
 		role: "customer",
 	});
 	const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-
+	const [isOpen, setIsOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 
@@ -51,6 +53,8 @@ export default function CreateUserDialog() {
 			role: value,
 		}));
 	};
+
+
 
 	// Add field errors state
 
@@ -82,6 +86,7 @@ export default function CreateUserDialog() {
 				password: "",
 				role: "customer",
 			});
+			setIsOpen(false);
 		} catch (err: any) {
 			if (err.error) {
 				setFieldErrors(err.error);
@@ -95,7 +100,7 @@ export default function CreateUserDialog() {
 	};
 
 	return (
-		<AlertDialog>
+		<AlertDialog open={isOpen} onOpenChange={setIsOpen}>
 			<AlertDialogTrigger asChild>
 				<Button variant={`outline`} className="gap-2">
 					<PlusCircle className="w-4 h-4" />

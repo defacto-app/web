@@ -13,6 +13,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import {AssignDriver} from "@/app/admin/x/orders/restaurant-orders/components/AssignDriver";
 
 function Page({ params }: { params: { id: string } }) {
 	const [orderData, setOrderData] = useState<any>(null);
@@ -159,6 +160,10 @@ function Page({ params }: { params: { id: string } }) {
 								<X className="w-4 h-4" />
 								Cancel Order
 							</Button>
+
+							<AssignDriver/>
+
+
 						</>
 					)}
 				</div>

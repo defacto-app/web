@@ -142,7 +142,8 @@ function AllUserPage() {
 					/>*/}
 
 
-					<CreateUserDialog />
+					<CreateUserDialog
+					/>
 				</div>
 
 				{/* Render the DataTableLoading with loading state */}
@@ -151,14 +152,14 @@ function AllUserPage() {
 						<DataTableSkeleton columns={userColumns} />
 					) : (
 						<>
-							<div className={`bg-red-100 flex items-center`}>
-								<div>here</div>
+							<div className={` flex items-center`}>
+								<div></div>
 								<TablePagination
 									page={page}
 									totalPages={data?.meta.totalPages || 1}
 									onPageChange={handlePageChange}
 								/>
-								<div>here</div>
+								<div></div>
 							</div>
 							<DataTable
 								columns={userColumns}
