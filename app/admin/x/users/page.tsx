@@ -15,6 +15,8 @@ import { useRefetchContext } from "@/app/store/tableAtom";
 import { SearchBar } from "@/components/SearchBar";
 
 import CreateUserDialog from "@/app/admin/x/users/CreateUserDialog";
+import {DataTableFacetedFilter} from "@/app/admin/x/demo/components/data-table-faceted-filter";
+import {userTypes} from "@/app/admin/x/demo/data/data";
 
 // Updated function to fetch restaurants with a search query parameter
 const fetchUsers = async (
@@ -133,6 +135,12 @@ function AllUserPage() {
 						isLoading={isLoading}
 					/>
 
+			{/*		<DataTableFacetedFilter
+						column={}
+						title="User Type"
+						options={userTypes}
+					/>*/}
+
 
 					<CreateUserDialog />
 				</div>
@@ -143,11 +151,15 @@ function AllUserPage() {
 						<DataTableSkeleton columns={userColumns} />
 					) : (
 						<>
-							<TablePagination
-								page={page}
-								totalPages={data?.meta.totalPages || 1}
-								onPageChange={handlePageChange}
-							/>
+							<div className={`bg-red-100 flex items-center`}>
+								<div>here</div>
+								<TablePagination
+									page={page}
+									totalPages={data?.meta.totalPages || 1}
+									onPageChange={handlePageChange}
+								/>
+								<div>here</div>
+							</div>
 							<DataTable
 								columns={userColumns}
 								data={data.data}

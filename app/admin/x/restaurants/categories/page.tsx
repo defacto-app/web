@@ -11,6 +11,7 @@ import { useQuery } from "react-query";
 
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
 import { categoryColumns } from "@/app/admin/x/restaurants/restaurant.columns";
+import SearchBar from "@/components/SearchBar";
 
 const getData = async ({ queryKey }: any) => {
 	const [_key, page, perPage, searchTerm, sorting] = queryKey;
@@ -71,13 +72,17 @@ function AllCategoriesPage() {
 		<div className="space-y-4">
 			<h1 className="text-2xl font-bold mb-4">All Categories</h1>
 			<div className="relative">
+
 				<Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
 				<Input
 					variant={"rounded"}
 					placeholder="Search Categories..."
 					className="pl-8"
 					onChange={(e) => debouncedSearch(e.target.value)}
+
 				/>
+
+
 			</div>
 
 			<div className="bg-white shadow-sm rounded">

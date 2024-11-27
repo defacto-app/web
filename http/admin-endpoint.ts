@@ -152,10 +152,10 @@ export const $admin_api = {
 	},
 
 	users: {
-		all: async ({ page = 1, perPage = 20, searchTerm = "" }) => {
+		all: async ({ page = 1, perPage = 20, searchTerm = "", role = "" }) => {
 			try {
 				return $axios_admin.get(`/users`, {
-					params: { page, perPage, search: searchTerm },
+					params: { page, perPage, search: searchTerm, role },
 				});
 			} catch (error: any) {
 				return error;
