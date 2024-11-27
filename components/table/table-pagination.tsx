@@ -7,6 +7,8 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "@/components/ui/pagination";
+import {Button} from "@/components/ui/button";
+import {DoubleArrowLeftIcon, DoubleArrowRightIcon} from "@radix-ui/react-icons";
 
 interface TablePaginationProps {
 	page: number;
@@ -61,8 +63,19 @@ export function TablePagination({
 		<Pagination className={`py-2`}>
 			<PaginationContent>
 				{/* Previous Button */}
-				<PaginationItem>
+				<PaginationItem className={`flex items-center`}>
+					<Button
+						variant="ghost"
+						className="hidden h-8 w-8 p-0 lg:flex"
+						onClick={() => onPageChange(1)}
+						disabled={page === 1}
+					>
+						<span className="sr-only">Go to first page</span>
+						<DoubleArrowLeftIcon className="h-4 w-4" />
+					</Button>
 					<PaginationPrevious onClick={handlePrevious} />
+
+
 				</PaginationItem>
 
 				{/* Page Numbers */}
@@ -89,8 +102,18 @@ export function TablePagination({
 				)}
 
 				{/* Next Button */}
-				<PaginationItem>
+				<PaginationItem className={`flex items-center`}>
 					<PaginationNext onClick={handleNext} />
+
+					<Button
+						variant="ghost"
+						className="hidden h-8 w-8 p-0 lg:flex"
+						onClick={() => onPageChange(totalPages)}
+						disabled={page === totalPages}
+					>
+						<span className="sr-only">Go to last page</span>
+						<DoubleArrowRightIcon className="h-4 w-4" />
+					</Button>
 				</PaginationItem>
 			</PaginationContent>
 		</Pagination>

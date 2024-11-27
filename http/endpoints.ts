@@ -1,6 +1,5 @@
 import { $axios, fetchWithAuth } from "@/http/http.fn";
 
-
 export const $api = {
 	guest: {
 		restaurant: {
@@ -156,26 +155,30 @@ export const $api = {
 					orderId?: string;
 					page?: number;
 					perPage?: number;
-					sort?: 'asc' | 'desc';
+					sort?: "asc" | "desc";
+					sortBy?: "createdAt" | "updatedAt" | "status" | "type";
 				}) => {
 					try {
 						const queryParams = new URLSearchParams();
 
 						if (params?.orderId) {
-							queryParams.append('orderId', params.orderId);
+							queryParams.append("orderId", params.orderId);
 						}
 						if (params?.page) {
-							queryParams.append('page', params.page.toString());
+							queryParams.append("page", params.page.toString());
 						}
 						if (params?.perPage) {
-							queryParams.append('perPage', params.perPage.toString());
+							queryParams.append("perPage", params.perPage.toString());
 						}
 						if (params?.sort) {
-							queryParams.append('sort', params.sort);
+							queryParams.append("sort", params.sort);
+						}
+						if (params?.sortBy) {
+							queryParams.append("sortBy", params.sortBy);
 						}
 
 						const queryString = queryParams.toString();
-						const url = `/orders${queryString ? `?${queryString}` : ''}`;
+						const url = `/orders${queryString ? `?${queryString}` : ""}`;
 
 						return $axios.get(url);
 					} catch (error: any) {
