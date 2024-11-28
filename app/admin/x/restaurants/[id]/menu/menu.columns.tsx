@@ -184,4 +184,18 @@ export const allMenuColumns: ColumnDef<any>[] = [
 			return <span>{formattedDate}</span>;
 		},
 	},
+	{
+		accessorKey: "actions",
+		header: "Actions",
+
+		cell: ({ row }) => <MenuActionsCell item={row.original}  />
+
+		/*cell: ({ row }) => {
+			return (
+				<div className="flex space-x-2">
+					{JSON.stringify(row.original)}
+				</div>
+			);
+		}*/
+	}
 ];

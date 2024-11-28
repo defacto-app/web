@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 import { $api } from "@/http/endpoints";
 import OrderCart from "@/app/user/checkout/OrderCart";
 import MenuArea from "@/app/(guest)/restaurants/components/MenuArea";
@@ -12,28 +13,51 @@ import {
 	RestaurantHero,
 	OpeningHourComponent,
 } from "@/app/(guest)/restaurants/components/SingleRestaurantComponents";
-import type { Category, MenuItemDisplay, Restaurant } from "@/lib/types";
 import { SearchBar } from "@/components/SearchBar";
+import {useQuery, useQueryClient} from "react-query";
 
 function RestaurantPage({ params }: { params: { slug: string } }) {
-	const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
-	const [menu, setMenu] = useState<MenuItemDisplay[]>([]);
-	const [categories, setCategories] = useState<Category[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
+	const queryClient = useQueryClient(); // React Query client for caching and invalidating queries
 	const [search, setSearch] = useState("");
 	const [activeCategory, setActiveCategory] = useState("All");
-	const [isOpen, setIsOpen] = useState(false);
 
-	type OpeningHoursType = {
-		[day: string]: {
-			open: string;
-			close: string;
-			isClosed: boolean;
-		};
-	};
+	// **Fetch Restaurant Data**
+	const { data: restaurantData, isLoading, isError, error } = useQuery(
+		["restaurant", params.slug],
+		async () => {
+			const res = await $api.guest.restaurant.one(params.slug);
+			return res.data;
+		},
+		{
+			staleTime: 5 * 60 * 1000, // Cache data for 5 minutes
+		}
+	);
 
-	const checkIfOpen = (hours: OpeningHoursType) => {
+	// **Fetch Menu Items with Debounced Search**
+	const { data: menuData } = useQuery(
+		["menu", params.slug, search],
+		async () => {
+			const res = await $api.guest.restaurant.one(
+				`${params.slug}?search=${search}`
+			);
+			return res.data.menu;
+		},
+		{
+			enabled: !!restaurantData, // Only fetch menu data if restaurant data is available
+		}
+	);
+
+	const restaurant = restaurantData?.restaurant || null;
+	const menu = menuData || [];
+	const categories = restaurantData?.categories || [];
+
+	// **Handle Search with Debouncing**
+	const handleSearch = debounce((value: string) => {
+		setSearch(value);
+	}, 500);
+
+	// **Check if Restaurant is Open**
+	const checkIfOpen = (hours: any) => {
 		const now = new Date();
 		const days = [
 			"sunday",
@@ -47,7 +71,6 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		const day = days[now.getDay()];
 		const currentTime = now.getHours() * 60 + now.getMinutes();
 
-		// Check if the hours object and the day-specific opening hours are defined
 		if (!hours || !hours[day]) {
 			return false;
 		}
@@ -62,57 +85,13 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		return currentTime >= openTime && currentTime <= closeTime && !isClosed;
 	};
 
-	useEffect(() => {
-		if (!restaurant?.openingHours) return;
+	const isOpen = restaurant?.openingHours
+		? checkIfOpen(restaurant.openingHours)
+		: false;
 
-		const interval = setInterval(() => {
-			setIsOpen(checkIfOpen(restaurant.openingHours));
-		}, 60000);
-
-		return () => clearInterval(interval);
-	}, [restaurant?.openingHours]);
-
-	const debouncedSearch = debounce(async (searchTerm: string) => {
-		try {
-			const res = await $api.guest.restaurant.one(
-				`${params.slug}?search=${searchTerm}`,
-			);
-			setMenu(res.data.menu);
-		} catch (e) {
-			setError("Failed to search menu items");
-		}
-	}, 500);
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				setLoading(true);
-				const res = await $api.guest.restaurant.one(params.slug);
-				setRestaurant(res.data.restaurant);
-				setMenu(res.data.menu);
-				setCategories(res.data.categories);
-				setIsOpen(checkIfOpen(res.data.restaurant.openingHours));
-			} catch (e) {
-				setError("Failed to load restaurant data");
-			} finally {
-				setLoading(false);
-			}
-		};
-		fetchData();
-	}, [params.slug]);
-
-	useEffect(() => {
-		if (search) {
-			debouncedSearch(search);
-		} else {
-			$api.guest.restaurant.one(params.slug).then((res) => {
-				setMenu(res.data.menu);
-			});
-		}
-	}, [search]);
-
-	if (loading) return <LoadingState />;
-	if (error) return <ErrorState error={error} />;
+	// **Handle Loading and Error States**
+	if (isLoading) return <LoadingState />;
+	if (isError) return <ErrorState error={error?.message || "Failed to load"} />;
 	if (!restaurant) return null;
 
 	const allCategories = [
@@ -137,13 +116,13 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 					<div className="lg:col-span-2">
 						<div className="sticky top-4 space-y-4">
-						<div className="hidden lg:block">
-						<MenuSections
-								categories={allCategories}
-								activeCategory={activeCategory}
-								setActiveCategory={setActiveCategory}
-							/>
-						</div>
+							<div className="hidden lg:block">
+								<MenuSections
+									categories={allCategories}
+									activeCategory={activeCategory}
+									setActiveCategory={setActiveCategory}
+								/>
+							</div>
 							<OpeningHourComponent openingHours={restaurant.openingHours} />
 						</div>
 					</div>
@@ -151,17 +130,17 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 					<div className="lg:col-span-7">
 						<div className="sticky top-0 bg-gray-50 z-10 py-4">
 							<SearchBar
-								isLoading={loading}
+								isLoading={isLoading}
 								value={search}
-								onChange={(e) => setSearch(e.target.value)}
+								onChange={(e) => handleSearch(e.target.value)}
 								placeholder={`Search in ${restaurant.name}`}
 							/>
 							<div className="lg:hidden">
-							<MenuSections
-								categories={allCategories}
-								activeCategory={activeCategory}
-								setActiveCategory={setActiveCategory}
-							/>
+								<MenuSections
+									categories={allCategories}
+									activeCategory={activeCategory}
+									setActiveCategory={setActiveCategory}
+								/>
 							</div>
 						</div>
 						<div className="mt-4">

@@ -256,8 +256,8 @@ interface RestaurantStatusProps {
 export const RestaurantStatus = ({ isOpen }: RestaurantStatusProps) => (
 	<div
 		className={cn(
-			"border p-1 rounded-full text-xs w-20",
-			isOpen ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200",
+			"border p-1 rounded-full text-xs ",
+			isOpen ? "bg-green-50 border-green-200 w-20" : "bg-red-50 border-red-200 w-28",
 		)}
 	>
 		<div

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, {useState, useCallback, useEffect} from "react";
 import { $admin_api } from "@/http/admin-endpoint";
 import { DataTable } from "@/app/admin/x/users/data-table";
 import { TablePagination } from "@/components/table/table-pagination";
@@ -8,10 +8,10 @@ import { Input } from "@/components/ui/input";
 import debounce from "lodash/debounce";
 import { Search } from "lucide-react";
 import { useQuery } from "react-query";
-import {
-	allMenuColumns,
-} from "@/app/admin/x/restaurants/[id]/menu/menu.columns";
+import { allMenuColumns } from "@/app/admin/x/restaurants/[id]/menu/menu.columns";
 import { DataTableSkeleton } from "@/components/table/data-table-skeleton";
+import {menuRefetchAtom} from "@/app/store/tableAtom";
+import {useSetAtom} from "jotai/index";
 
 const fetchMenus = async ({ queryKey }: any) => {
 	const [_key, page, perPage, searchTerm] = queryKey; // Extract query parameters
@@ -28,6 +28,18 @@ function AllMenuPage() {
 	const [perPage, setPerPage] = useState(10);
 	const [searchTerm, setSearchTerm] = useState(""); // Search term
 
+	const setMenuRefetch = useSetAtom(menuRefetchAtom);
+
+	// Use react-query to fetch menus
+	const { data, error, isLoading, refetch } = useQuery(
+		["menus", page, perPage, searchTerm],
+		fetchMenus,
+		{
+			keepPreviousData: true, // Keep old data while fetching new data
+			staleTime: 5000, // Prevent refetching for 5 seconds
+		},
+	);
+
 	// Debounced search
 	const debouncedSearch = useCallback(
 		debounce((value) => {
@@ -37,21 +49,17 @@ function AllMenuPage() {
 		[],
 	);
 
-	// Use react-query to fetch menus
-	const { data, error, isLoading } = useQuery(
-		["menus", page, perPage, searchTerm],
-		fetchMenus,
-		{
-			keepPreviousData: true, // Keep old data while fetching new data
-			staleTime: 5000, // Prevent refetching for 5 seconds
-		},
-	);
+
+	useEffect(() => {
+		setMenuRefetch(() => refetch);
+	}, [refetch, setMenuRefetch]);
+
+
 
 	// Handle page change
 	const handlePageChange = (newPage: any) => {
 		setPage(newPage);
 	};
-
 
 	if (error) return <div>Failed to fetch menus</div>;
 

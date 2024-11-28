@@ -47,12 +47,10 @@ export default function RestaurantLayout({
 								<Button variant="ghost">Menu</Button>
 							</Link>
 							<Separator orientation="vertical" />
-							<Link href={`/admin/x/restaurants/${params.id}/menu/create`} prefetch={true}>
-								<Button variant="ghost">Add Menu Item</Button>
-							</Link>
+
 						</div>
-						<Link href="/admin/x/restaurants/" prefetch={true}>
-							<Button variant="ghost">All Restaurants</Button>
+						<Link href={`/admin/x/restaurants/${params.id}/menu/create`} prefetch={true}>
+							<Button variant="ghost">Add Menu Item</Button>
 						</Link>
 					</div>
 
