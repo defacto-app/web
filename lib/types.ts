@@ -42,29 +42,29 @@ export type RestaurantType = {
 };
 
 export interface AdminRestaurantType {
-  publicId: string;
-  name: string | undefined;
-  image: string | undefined;
-  address: string | undefined;
-  phone: string | undefined;
-  email: string | undefined;
-  openingHours: OpeningHours;
-  deliveryTime: string | undefined;
-  category: string | undefined;
-  description: string | undefined;
-  menuItems: { name: string; price: number; }[];
+	publicId: string;
+	name: string | undefined;
+	image: string | undefined;
+	address: string | undefined;
+	phone: string | undefined;
+	email: string | undefined;
+	openingHours: OpeningHours;
+	deliveryTime: string | undefined;
+	category: string | undefined;
+	description: string | undefined;
+	menuItems: { name: string; price: number }[];
 }
 
 export interface RestaurantFormType {
-  name: string;
-  image: string;
-  address: string;
-  phone: string;
-  email: string;
-  openingHours: OpeningHours;
-  deliveryTime: string;
-  category: string;
-  description: string;
+	name: string;
+	image: string;
+	address: string;
+	phone: string;
+	email: string;
+	openingHours: OpeningHours;
+	deliveryTime: string;
+	category: string;
+	description: string;
 }
 
 export interface MenuItemType {
@@ -116,7 +116,6 @@ export interface DeliveryPayloadType {
 	dropOffDetails: DropOffDetails;
 }
 
-
 export type DayHours = {
 	open: string;
 	close: string;
@@ -134,7 +133,14 @@ export type OpeningHours = {
 };
 
 export type OpeningHoursType = {
-	[day in 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday']?: {
+	[day in
+		| "sunday"
+		| "monday"
+		| "tuesday"
+		| "wednesday"
+		| "thursday"
+		| "friday"
+		| "saturday"]?: {
 		open: string;
 		close: string;
 		isClosed: boolean;
@@ -142,69 +148,80 @@ export type OpeningHoursType = {
 };
 
 export const defaultOpeningHours: OpeningHours = {
-  monday: { open: "10:00", close: "19:00", isClosed: false },
-  tuesday: { open: "10:00", close: "19:00", isClosed: false },
-  wednesday: { open: "10:00", close: "19:00", isClosed: false },
-  thursday: { open: "10:00", close: "19:00", isClosed: false },
-  friday: { open: "10:00", close: "19:00", isClosed: false },
-  saturday: { open: "10:00", close: "19:00", isClosed: false },
-  sunday: { open: "10:00", close: "19:00", isClosed: false }
+	monday: { open: "10:00", close: "19:00", isClosed: false },
+	tuesday: { open: "10:00", close: "19:00", isClosed: false },
+	wednesday: { open: "10:00", close: "19:00", isClosed: false },
+	thursday: { open: "10:00", close: "19:00", isClosed: false },
+	friday: { open: "10:00", close: "19:00", isClosed: false },
+	saturday: { open: "10:00", close: "19:00", isClosed: false },
+	sunday: { open: "10:00", close: "19:00", isClosed: false },
 };
 
-export const parseOpeningHours = (hours: string | OpeningHours | undefined): OpeningHours => {
-  if (typeof hours === 'string') {
-    try {
-      const parsed = JSON.parse(hours);
-      if (isValidOpeningHours(parsed)) {
-        return parsed;
-      }
-    } catch (e) {
-      console.error('Failed to parse opening hours:', e);
-    }
-  } else if (isValidOpeningHours(hours)) {
-    return hours;
-  }
-  return defaultOpeningHours;
+export const parseOpeningHours = (
+	hours: string | OpeningHours | undefined,
+): OpeningHours => {
+	if (typeof hours === "string") {
+		try {
+			const parsed = JSON.parse(hours);
+			if (isValidOpeningHours(parsed)) {
+				return parsed;
+			}
+		} catch (e) {
+			console.error("Failed to parse opening hours:", e);
+		}
+	} else if (isValidOpeningHours(hours)) {
+		return hours;
+	}
+	return defaultOpeningHours;
 };
 
 const isValidOpeningHours = (hours: any): hours is OpeningHours => {
-  if (!hours || typeof hours !== 'object') return false;
+	if (!hours || typeof hours !== "object") return false;
 
-  const requiredDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-  return requiredDays.every(day =>
-    hours[day] &&
-    typeof hours[day].open === 'string' &&
-    typeof hours[day].close === 'string' &&
-    typeof hours[day].isClosed === 'boolean'
-  );
+	const requiredDays = [
+		"monday",
+		"tuesday",
+		"wednesday",
+		"thursday",
+		"friday",
+		"saturday",
+		"sunday",
+	];
+	return requiredDays.every(
+		(day) =>
+			hours[day] &&
+			typeof hours[day].open === "string" &&
+			typeof hours[day].close === "string" &&
+			typeof hours[day].isClosed === "boolean",
+	);
 };
 
 // Convert partial restaurant data to required form type
-export const toFormType = (restaurant: Partial<RestaurantFormType>): RestaurantFormType => ({
-  name: restaurant.name ?? '',
-  image: restaurant.image ?? '',
-  address: restaurant.address ?? '',
-  phone: restaurant.phone ?? '',
-  email: restaurant.email ?? '',
-  openingHours: restaurant.openingHours ?? defaultOpeningHours,
-  deliveryTime: restaurant.deliveryTime ?? '',
-  category: restaurant.category ?? '',
-  description: restaurant.description ?? ''
+export const toFormType = (
+	restaurant: Partial<RestaurantFormType>,
+): RestaurantFormType => ({
+	name: restaurant.name ?? "",
+	image: restaurant.image ?? "",
+	address: restaurant.address ?? "",
+	phone: restaurant.phone ?? "",
+	email: restaurant.email ?? "",
+	openingHours: restaurant.openingHours ?? defaultOpeningHours,
+	deliveryTime: restaurant.deliveryTime ?? "",
+	category: restaurant.category ?? "",
+	description: restaurant.description ?? "",
 });
 
-
 export interface RestaurantFormType {
-  name: string;
-  image: string;
-  address: string;
-  phone: string;
-  email: string;
-  openingHours: OpeningHours;
-  deliveryTime: string;
-  category: string;
-  description: string;
+	name: string;
+	image: string;
+	address: string;
+	phone: string;
+	email: string;
+	openingHours: OpeningHours;
+	deliveryTime: string;
+	category: string;
+	description: string;
 }
-
 
 // Base Menu Item interface with common properties
 export interface BaseMenuItem {
@@ -230,7 +247,7 @@ export interface MenuItemDisplay extends BaseMenuItem {
 // For admin forms when creating/editing menu items
 export interface MenuItemForm extends BaseMenuItem {
 	description?: string;
-	categoryId: string;  // Just the ID when submitting forms
+	categoryId: string; // Just the ID when submitting forms
 }
 
 // For the full menu item data from API
