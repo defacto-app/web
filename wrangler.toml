@@ -3,10 +3,9 @@ compatibility_date = "2024-07-29"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
 # Add this for the main client build
-[build.environment]
-EXCLUDE_ADMIN = "true"
 
 [env.production.vars]
+EXCLUDE_ADMIN = "true"
 NEXT_PUBLIC_DOMAIN = "https://defactoapp.com.ng"
 NEXT_PUBLIC_BASE_URL = "https://api.defactoapp.com.ng/api/v1"
 NEXT_PUBLIC_TEST_USER_EMAIL = "kats.com.ng@gmail.com"

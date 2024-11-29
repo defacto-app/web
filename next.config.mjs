@@ -22,16 +22,10 @@ const nextConfig = {
 		],
 	},
 
-	// More aggressive path exclusion
-	pageExtensions: [
-		...(process.env.EXCLUDE_ADMIN === 'true'
-				? ['tsx', 'ts', 'jsx', 'js'].map(ext => `((?!admin).)*\\.${ext}$`)
-				: ['tsx', 'ts', 'jsx', 'js']
-		)
-	],
+	// Simplified page extensions handling
+	pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
 
-	// Add webpack configuration for admin exclusion
-
+	// Webpack configuration for admin exclusion
 	webpack: (config, { isServer }) => {
 		if (process.env.EXCLUDE_ADMIN === 'true') {
 			config.watchOptions = {
@@ -42,7 +36,7 @@ const nextConfig = {
 			if (!config.module.rules) config.module.rules = [];
 
 			config.module.rules.push({
-				test: /[\\/]admin[\\/]|[\\/]api[\\/]auth[\\/]admin[\\/]/,
+				test: /admin/,
 				loader: 'ignore-loader'
 			});
 		}
@@ -50,12 +44,8 @@ const nextConfig = {
 	},
 
 	distDir: buildDir,
-
-	// Optimize output for Cloudflare
 	output: 'standalone',
 };
-
-
 
 if (process.env.NODE_ENV === "development") {
 	await setupDevPlatform();
