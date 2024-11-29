@@ -16,7 +16,6 @@ NEXT_PUBLIC_TEST_PHONE_NUMBER = "08063145125"
 NEXT_PUBLIC_RESTRICT_LAT = 9.082
 NEXT_PUBLIC_RESTRICT_LONG = 8.6753
 
-
 # The FLUTTER_WAVE_KEY and GOOGLE API keys should be added as secrets
 # These should be managed through the wrangler secrets commands:
 
