@@ -2,6 +2,7 @@ name = "defacto-client"
 compatibility_date = "2024-07-29"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
+pages_build_output_dir = ".next"
 # Add this for the main client build
 
 [env.production.vars]
