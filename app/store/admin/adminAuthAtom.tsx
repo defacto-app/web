@@ -1,5 +1,5 @@
 import { atom, useAtomValue, useSetAtom } from 'jotai';
-import {useCallback, useEffect} from "react";
+import {useCallback} from "react";
 
 import {$admin_api} from "@/http/admin-endpoint";
 

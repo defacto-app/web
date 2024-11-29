@@ -21,14 +21,14 @@ function CategorySelect({
 	selectedCategory?: string; // Optional preselected category slug
 	setRestaurantData: React.Dispatch<React.SetStateAction<RestaurantFormType>>;
 }) {
-	const [searchTerm, setSearchTerm] = useState(""); // Track the search term
+	const [searchTerm] = useState(""); // Track the search term
 	const [page] = useState(1); // Track current page (fixed for now)
 	const [perPage] = useState(30); // Track items per page
 	const debouncedSearchTerm = useDebounce(searchTerm, 500); // Debounce search term by 500ms
 	const [selected, setSelected] = useState<string | undefined>(selectedCategory);
 
 	// Use React Query's useQuery hook to fetch data, and pass debouncedSearchTerm as part of the key
-	const { data, error, isLoading } = useQuery(
+	const { data,  isLoading } = useQuery(
 		["categories", page, perPage, debouncedSearchTerm],
 		() => getData(page, perPage, debouncedSearchTerm),
 		{

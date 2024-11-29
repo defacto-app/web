@@ -19,31 +19,33 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { AssignDriverModal } from "@/app/admin/x/orders/restaurant-orders/components/AssignDriverModal";
 import { formatPrice } from "@/utils";
 import { formatDateFromNow } from "@/lib/utils";
+import {useQuery, useQueryClient} from "react-query";
 
 function Page({ params }: { params: { id: string } }) {
-	const [orderData, setOrderData] = useState<any>(null);
-	const [loading, setLoading] = useState<boolean>(true);
-	const [error, setError] = useState<string | null>(null);
+
+
+
 	const [isUpdating, setIsUpdating] = useState(false);
 
-	// Fetch getMenu data
-	const getData = useCallback(async () => {
-		try {
+	// Fetch order data using React Query
+	const { data: orderData, isLoading, isError, error, refetch } = useQuery(
+		["order", params.id],
+		async () => {
 			const res = await $admin_api.orders.one(params.id);
-			setOrderData(res.data.data);
-			setLoading(false);
-		} catch (e: any) {
-			setError(e.message || "An error occurred while fetching the data");
-			setLoading(false);
+			return res.data.data;
 		}
-	}, [params.id]);
+	);
+
+
+	// Fetch getMenu data
+
 
 	const updateOrderStatus = async (newStatus: string) => {
 		setIsUpdating(true);
 		try {
 			// Simulated API call - replace with actual API
 			// await $admin_api.orders.updateStatus(params.id, newStatus);
-			setOrderData((prev: any) => ({ ...prev, status: newStatus }));
+			// setOrderData((prev: any) => ({ ...prev, status: newStatus }));
 		} catch (error) {
 			console.error("Failed to update status:", error);
 		} finally {
@@ -51,11 +53,9 @@ function Page({ params }: { params: { id: string } }) {
 		}
 	};
 
-	useEffect(() => {
-		getData();
-	}, [getData]);
 
-	if (loading)
+
+	if (isLoading)
 		return (
 			<div className="flex items-center justify-center min-h-screen">
 				<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
@@ -117,7 +117,7 @@ function Page({ params }: { params: { id: string } }) {
 							</Button>
 
 							<AssignDriverModal
-								onDriverAssigned={getData}
+								onDriverAssigned={refetch}
 								orderId={orderData.publicId}
 							/>
 						</>

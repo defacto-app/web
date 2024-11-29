@@ -46,7 +46,6 @@ type UserProviderProps = {
 
 // Create the provider component
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-	const allSteps = ["welcome", "email", "phone", "success"];
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
 	const [form, setForm] = useState<registerFormType>({

@@ -63,7 +63,7 @@ export const logOutAtom = atom(null, async (get, set) => {
 	localStorage.setItem("isLoggedIn", JSON.stringify(false));
 	set(currentStepAtom, authSteps[0]); // Optionally reset the step to "welcome"
 	set(modalOpenAtom, false); // Close any open modals
-	const data = await fetch(`/api/auth/logout`);
+	await fetch(`/api/auth/logout`);
 });
 
 // Create the hook to use the atoms in components

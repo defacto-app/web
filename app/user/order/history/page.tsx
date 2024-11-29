@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import type React from "react";
+import { useEffect, useState, useRef } from "react";
 import { $api } from "@/http/endpoints";
 import Image from "next/image";
 import OrderHistoryLoading from "@/app/user/order/components/OrderHistoryLoading";
