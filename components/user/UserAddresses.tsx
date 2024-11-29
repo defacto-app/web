@@ -65,9 +65,9 @@ function UserAddresses() {
 										<span className="text-sm text-blue-500">(Default)</span>
 									</p>
 									<p className="text-sm text-gray-500">
-										<div className="flex">
+										<span className="flex">
 											{data[0].street}, {data[0].city}
-										</div>
+										</span>
 									</p>
 								</div>
 							) : (

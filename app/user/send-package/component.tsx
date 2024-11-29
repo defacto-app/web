@@ -67,7 +67,7 @@ export const PickupAddress = ({
 							className="text-left cursor-pointer"
 							onClick={() => setPickModalOpen(true)}
 							readOnly={true}
-							value={payload.pickupDetails.address.address}
+							value={payload.pickupDetails?.address?.address}
 						/>
 					</div>
 				</AlertDialogTrigger>
@@ -83,8 +83,8 @@ export const PickupAddress = ({
 					</button>
 					<div>
 						<GoogleAddressInput
-							initialAddress={payload.pickupDetails.address.address}
-							initialLocation={payload.pickupDetails.address.location}
+							initialAddress={payload.pickupDetails?.address?.address}
+							initialLocation={payload.pickupDetails?.address?.location}
 							onConfirm={handlePickupAddressConfirm}
 							getSavedAddress={getSavedPickupAddress}
 							setSavedAddress={setPickupAddress}
@@ -115,8 +115,10 @@ export const DropOffAddress = ({
 	handleDropOffAddressConfirm,
 	getSavedDropOffAddress,
 	setDropOffAddress,
+	label = "Drop-Off Address",
 }: {
 	payload: DeliveryPayloadType;
+	label?: string;
 	setDropOffModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	dropOffModalOpen: boolean;
 	handleDropOffAddressConfirm: (addressData: addressSelectionType) => void;
@@ -137,7 +139,7 @@ export const DropOffAddress = ({
 	return (
 		<div className="mb-4">
 			<Label htmlFor="dropOffAddress" className={`ml-5`}>
-				Drop-Off Address
+				{label}
 			</Label>
 
 			<AlertDialog defaultOpen={dropOffModalOpen} open={dropOffModalOpen}>

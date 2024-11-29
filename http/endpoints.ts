@@ -185,9 +185,9 @@ export const $api = {
 						return error;
 					}
 				},
-				restaurant: async (body: any) => {
+				restaurant: async (orderId: string, body: any) => {
 					try {
-						return $axios.post(`/orders/restaurant`, body);
+						return $axios.post(`/orders/${orderId}/restaurant`, body);
 					} catch (error: any) {
 						return error;
 					}

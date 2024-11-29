@@ -17,6 +17,13 @@ function CartItemList() {
 	const { cart, removeItem, updateItemQuantity } = useCartContext();
 	const [isLoading, setIsLoading] = useState(true);
 
+	const [restaurantName, setRestaurantName] = useState<string | null>(null);
+
+	useEffect(() => {
+		const name = sessionStorage.getItem("currentRestaurantName");
+		setRestaurantName(name);
+	}, []);
+
 	useEffect(() => {
 		// Retrieve stored slug from session storage
 		const storedSlug = sessionStorage.getItem("currentRestaurantSlug");
@@ -51,6 +58,7 @@ function CartItemList() {
 	return (
 		<div>
 			<div className="bg-white p-4 border rounded-lg">
+				<h2 className="text-lg font-semibold mb-2 pl-4">{restaurantName}</h2>
 				<div className="space-y-6">
 					{cart.length > 0 ? (
 						cart.map((item) => (

@@ -257,7 +257,7 @@ export default function Page() {
 		setLoading(true);
 
 		try {
-			const response = await $api.auth.user.order.restaurant(payload);
+			const response = await $api.auth.user.order.package(payload);
 
 			console.log(response);
 		} catch (e) {

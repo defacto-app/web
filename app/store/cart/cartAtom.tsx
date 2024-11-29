@@ -11,6 +11,7 @@ type CartItemType = {
 	price: number;
 	quantity: number;
 	image: string;
+	parent: string;
 };
 
 // Atom to store all carts by restaurant slug

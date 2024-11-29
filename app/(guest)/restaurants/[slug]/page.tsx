@@ -48,6 +48,12 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		}
 	);
 
+	// restarant id to seesion storage
+
+	if(restaurantData){
+		sessionStorage.setItem("restaurant_id", restaurantData.restaurant.publicId);
+	}
+
 	const restaurant = restaurantData?.restaurant || null;
 	const menu = menuData || [];
 	const categories = restaurantData?.categories || [];

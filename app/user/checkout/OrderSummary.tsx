@@ -2,7 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
-import { useCartContext, useCartSummaryContext } from "@/app/store/cart/cartAtom";
+import {
+	useCartContext,
+	useCartSummaryContext,
+} from "@/app/store/cart/cartAtom";
 import Link from "next/link";
 import { $api } from "@/http/endpoints";
 import { useAtomAuthContext } from "@/app/store/authAtom";
@@ -17,6 +20,17 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 	const { deliveryFee, discount, discountAmount, firstAddress } =
 		useCartSummaryContext();
 	const { authUser } = useAtomAuthContext();
+
+	const [skipPayment] = useState(true);
+
+	const [restaurantId, setRestaurantId] = useState("");
+
+	useEffect(() => {
+		const restaurantId = sessionStorage.getItem("restaurant_id");
+		if (restaurantId) {
+			setRestaurantId(restaurantId);
+		}
+	}, []);
 
 	const [loading, setLoading] = useState(false);
 
@@ -40,6 +54,7 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 	const initiatePayment = async () => {
 		setLoading(true);
 		const body = {
+			parentId: sessionStorage.getItem("restaurant_id"),
 			restaurantOrder: cart.map((item) => ({
 				publicId: item.publicId,
 				quantity: item.quantity,
@@ -61,47 +76,49 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 		};
 
 		try {
-			const response = await $api.auth.user.order.restaurant(body);
-
-			console.log(response);
+			await $api.auth.user.order.restaurant(
+				restaurantId,
+				body,
+			);
 		} catch (e) {
 			console.log(e);
 		}
-		FlutterwaveCheckout({
-			public_key: envData.flutter_wave.test.public_key, // Replace with your public key
-			tx_ref: `txref-${Date.now()}`, // Unique transaction reference
-			amount: totalAmount, // Total amount calculated from the cart
-			currency: "NGN", // Replace with your currency
-			payment_options: "card, banktransfer, ussd", // Payment methods
-			meta: {
-				source: "NextJS-checkout",
-				consumer_mac: "92a3-912ba-1192a",
-			},
-			customer: {
-				email: "customer@example.com", // Replace with actual customer email
-				phone_number: "08012345678", // Replace with actual customer phone number
-				name: "Customer Name", // Replace with actual customer name
-			},
-			customizations: {
-				title: "Your Store Name", // Replace with your store's title
-				description: "Payment for your cart items", // Custom description
-				logo: envData.logo,
-			},
-			callback: (data: any) => {
-				console.log("Payment callback:", data);
-				if (data.status === "successful") {
-					// Handle successful payment here
-					console.log("Payment was successful!", data);
-					// Optionally: You can verify the transaction on the backend here
-				} else {
-					console.log("Payment failed or was canceled.");
-				}
-			},
-			onclose: () => {
-				console.log("Payment process closed by user.");
-			},
-		});
-
+		if (!skipPayment) {
+			FlutterwaveCheckout({
+				public_key: envData.flutter_wave.test.public_key, // Replace with your public key
+				tx_ref: `txref-${Date.now()}`, // Unique transaction reference
+				amount: totalAmount, // Total amount calculated from the cart
+				currency: "NGN", // Replace with your currency
+				payment_options: "card, banktransfer, ussd", // Payment methods
+				meta: {
+					source: "NextJS-checkout",
+					consumer_mac: "92a3-912ba-1192a",
+				},
+				customer: {
+					email: "customer@example.com", // Replace with actual customer email
+					phone_number: "08012345678", // Replace with actual customer phone number
+					name: "Customer Name", // Replace with actual customer name
+				},
+				customizations: {
+					title: "Your Store Name", // Replace with your store's title
+					description: "Payment for your cart items", // Custom description
+					logo: envData.logo,
+				},
+				callback: (data: any) => {
+					console.log("Payment callback:", data);
+					if (data.status === "successful") {
+						// Handle successful payment here
+						console.log("Payment was successful!", data);
+						// Optionally: You can verify the transaction on the backend here
+					} else {
+						console.log("Payment failed or was canceled.");
+					}
+				},
+				onclose: () => {
+					console.log("Payment process closed by user.");
+				},
+			});
+		}
 		setLoading(false);
 	};
 	return (
@@ -142,7 +159,7 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 
 				{cartPage && (
 					<>
-				{/*		<div className="flex items-center space-x-2">
+						{/*		<div className="flex items-center space-x-2">
 							<input
 								type="text"
 								placeholder="Add promo code"
