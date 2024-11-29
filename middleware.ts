@@ -4,6 +4,12 @@ import { authenticate } from "@/app/lib";
 import { tokenConstants, verifyToken } from "@/utils/auth";
 
 export async function middleware(request: NextRequest) {
+
+    // Block access to admin routes on the main site
+    if (process.env.EXCLUDE_ADMIN === 'true' && request.nextUrl.pathname.startsWith('/admin')) {
+        return NextResponse.redirect(new URL('/', request.url))
+    }
+
     // Handle Auth Pages (Prevent logged-in users from accessing login/register)
     if (request.nextUrl.pathname.startsWith('/auth')) {
         const userToken = request.cookies.get(tokenConstants.user);

@@ -22,22 +22,40 @@ const nextConfig = {
 		],
 	},
 
+	// More aggressive path exclusion
+	pageExtensions: [
+		...(process.env.EXCLUDE_ADMIN === 'true'
+				? ['tsx', 'ts', 'jsx', 'js'].map(ext => `((?!admin).)*\\.${ext}$`)
+				: ['tsx', 'ts', 'jsx', 'js']
+		)
+	],
+
 	// Add webpack configuration for admin exclusion
+
 	webpack: (config, { isServer }) => {
-		if (isMainBuild) {
+		if (process.env.EXCLUDE_ADMIN === 'true') {
 			config.watchOptions = {
-				ignored: ['/app/admin/**']
+				ignored: ['**/admin/**', '**/api/auth/admin/**']
 			}
+			// Add ignore pattern for admin routes
+			if (!config.module) config.module = {};
+			if (!config.module.rules) config.module.rules = [];
+
 			config.module.rules.push({
-				test: /admin/,
+				test: /[\\/]admin[\\/]|[\\/]api[\\/]auth[\\/]admin[\\/]/,
 				loader: 'ignore-loader'
-			})
+			});
 		}
 		return config
 	},
 
 	distDir: buildDir,
+
+	// Optimize output for Cloudflare
+	output: 'standalone',
 };
+
+
 
 if (process.env.NODE_ENV === "development") {
 	await setupDevPlatform();
