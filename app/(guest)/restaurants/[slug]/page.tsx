@@ -15,6 +15,7 @@ import {
 } from "@/app/(guest)/restaurants/components/SingleRestaurantComponents";
 import { SearchBar } from "@/components/SearchBar";
 import {useQuery, useQueryClient} from "react-query";
+import type {AxiosError} from "axios";
 
 function RestaurantPage({ params }: { params: { slug: string } }) {
 	const queryClient = useQueryClient(); // React Query client for caching and invalidating queries
@@ -22,7 +23,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 	const [activeCategory, setActiveCategory] = useState("All");
 
 	// **Fetch Restaurant Data**
-	const { data: restaurantData, isLoading, isError, error } = useQuery(
+	const { data: restaurantData, isLoading, isError, error } = useQuery<any, AxiosError>(
 		["restaurant", params.slug],
 		async () => {
 			const res = await $api.guest.restaurant.one(params.slug);

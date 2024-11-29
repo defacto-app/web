@@ -274,6 +274,14 @@ export const $admin_api = {
 			}
 		},
 
+		updateStatus: async (orderId: string, status: string) => {
+			try {
+				return $axios_admin.patch(`/orders/${orderId}/status`, { status });
+			} catch (error: any) {
+				return error;
+			}
+		},
+
 		update: async (orderId: string, body: any) => {
 			try {
 				return $axios_admin.put(`/orders/${orderId}`, body);

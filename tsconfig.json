@@ -34,10 +34,12 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/(guest)/about/page.tsz",
+    "app/(guest)/about/page.tsx",
     "build/user/types/**/*.ts",
     "build/admin/types/**/*.ts",
-    "build/guest/types/**/*.ts"
+    "build/guest/types/**/*.ts",
+    "build-main/types/**/*.ts",
+    "build-admin/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

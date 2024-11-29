@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { $admin_api } from "@/http/admin-endpoint";
 import {
@@ -19,32 +19,31 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { AssignDriverModal } from "@/app/admin/x/orders/restaurant-orders/components/AssignDriverModal";
 import { formatPrice } from "@/utils";
 import { formatDateFromNow } from "@/lib/utils";
-import {useQuery, useQueryClient} from "react-query";
+import { useQuery } from "react-query";
+import type { AxiosError } from "axios";
 
 function Page({ params }: { params: { id: string } }) {
-
-
-
 	const [isUpdating, setIsUpdating] = useState(false);
 
 	// Fetch order data using React Query
-	const { data: orderData, isLoading, isError, error, refetch } = useQuery(
-		["order", params.id],
-		async () => {
-			const res = await $admin_api.orders.one(params.id);
-			return res.data.data;
-		}
-	);
-
+	const {
+		data: orderData,
+		isLoading,
+		isError,
+		error,
+		refetch,
+	} = useQuery<any, AxiosError>(["order", params.id], async () => {
+		const res = await $admin_api.orders.one(params.id);
+		return res.data.data;
+	});
 
 	// Fetch getMenu data
-
 
 	const updateOrderStatus = async (newStatus: string) => {
 		setIsUpdating(true);
 		try {
 			// Simulated API call - replace with actual API
-			// await $admin_api.orders.updateStatus(params.id, newStatus);
+			await $admin_api.orders.updateStatus(params.id, newStatus);
 			// setOrderData((prev: any) => ({ ...prev, status: newStatus }));
 		} catch (error) {
 			console.error("Failed to update status:", error);
@@ -52,8 +51,6 @@ function Page({ params }: { params: { id: string } }) {
 			setIsUpdating(false);
 		}
 	};
-
-
 
 	if (isLoading)
 		return (
@@ -65,7 +62,7 @@ function Page({ params }: { params: { id: string } }) {
 	if (error)
 		return (
 			<div className="flex items-center justify-center min-h-screen">
-				<div className="text-red-500">{error}</div>
+				<div className="text-red-500">{error.message}</div>
 			</div>
 		);
 
@@ -158,7 +155,6 @@ function Page({ params }: { params: { id: string } }) {
 					</CardHeader>
 					<CardContent>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
 							<div>
 								<p className="text-sm text-gray-500">Total Charge</p>
 								<p className="font-medium">{formatPrice(orderData.charge)}</p>

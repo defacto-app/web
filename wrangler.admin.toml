@@ -1,0 +1,11 @@
+# wrangler.admin.toml
+name = "defacto-admin"
+compatibility_date = "2024-07-29"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+[env.production.vars]
+EXCLUDE_ADMIN = "false"
+NEXT_PUBLIC_DOMAIN = "https://manage.defactoapp.com.ng"
+NEXT_PUBLIC_BASE_URL = "https://api.defactoapp.com.ng/api/v1"
+# ... copy other relevant vars
