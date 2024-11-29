@@ -1,8 +1,8 @@
-'use client' // Error components must be Client Components
+"use client";
 
 import { useEffect } from 'react'
 
-export default function Error({
+export default function ErrorComponent({
                                   error,
                                   reset,
                               }: {
@@ -18,6 +18,7 @@ export default function Error({
         <div className="bg-white p-4 rounded-lg  flex flex-col items-center justify-center">
             <h2 className="text-lg font-semibold text-gray-800">Something went wrong!</h2>
             <p className="text-gray-600 mt-2">We encountered an unexpected issue.</p>
+            {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
             <button
                 onClick={reset}
                 className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
