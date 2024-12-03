@@ -14,11 +14,10 @@ import {
 	OpeningHourComponent,
 } from "@/app/(guest)/restaurants/components/SingleRestaurantComponents";
 import { SearchBar } from "@/components/SearchBar";
-import {useQuery, useQueryClient} from "react-query";
+import {useQuery} from "react-query";
 import type {AxiosError} from "axios";
 
 function RestaurantPage({ params }: { params: { slug: string } }) {
-	const queryClient = useQueryClient(); // React Query client for caching and invalidating queries
 	const [search, setSearch] = useState("");
 	const [activeCategory, setActiveCategory] = useState("All");
 
@@ -48,7 +47,6 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		}
 	);
 
-	// restarant id to seesion storage
 
 	if(restaurantData){
 		sessionStorage.setItem("restaurant_id", restaurantData.restaurant.publicId);

@@ -117,7 +117,7 @@ export const DropOffAddress = ({
 	setDropOffAddress,
 	label = "Drop-Off Address",
 }: {
-	payload: DeliveryPayloadType;
+	payload: any;
 	label?: string;
 	setDropOffModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	dropOffModalOpen: boolean;

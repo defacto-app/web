@@ -21,15 +21,25 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 			price: item.price,
 			quantity: 1,
 			image: item.image,
-		};
+		} as any;
 		addItem(cartItem);
 	};
 
-	const groupedItems = categories.reduce((acc: any, category: any) => {
-		acc[category._id] = {
-			name: category.name,
-			items: data.filter((item: any) => item.categoryId._id === category._id),
-		};
+	const groupedItems = data.reduce((acc: any, item: any) => {
+		const categoryId = item.category._id; // Use category._id as the grouping key
+		const categoryName = item.category.name;
+
+		// Initialize the category group if it doesn't exist
+		if (!acc[categoryId]) {
+			acc[categoryId] = {
+				name: categoryName,
+				items: [],
+			};
+		}
+
+		// Push the current item into the correct category group
+		acc[categoryId].items.push(item);
+
 		return acc;
 	}, {});
 

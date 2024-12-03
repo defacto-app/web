@@ -9,6 +9,7 @@ import {
 	cartsByRestaurantAtom,
 	useCartContext,
 } from "@/app/store/cart/cartAtom";
+import { Trash2, Minus, Plus } from "lucide-react"; // Import icons
 
 function CartItemList() {
 	const setSlug = useSetAtom(selectedRestaurantSlugAtom);
@@ -53,70 +54,111 @@ function CartItemList() {
 		return <p>Loading...</p>;
 	}
 
+	const subtotal = cart.reduce((total, item) => {
+		return total + (item.price * item.quantity);
+	}, 0);
+
+
 	// Debugging information to confirm cart data
 
 	return (
 		<div>
-			<div className="bg-white p-4 border rounded-lg">
-				<h2 className="text-lg font-semibold mb-2 pl-4">{restaurantName}</h2>
-				<div className="space-y-6">
-					{cart.length > 0 ? (
-						cart.map((item) => (
-							<div
-								key={item.publicId}
-								className="flex items-center justify-between p-4 border-b last:border-b-0"
-							>
-								<div className="flex items-center">
-									<Image
-										width={64}
-										height={64}
-										src={item.image}
-										alt={item.name}
-										priority={true}
-										className="w-16 h-16 object-cover rounded-lg"
-									/>
-									<div className="ml-4">
-										<p className="font-semibold">{item.name}</p>
-										<p className="text-blue-500">{formatPrice(item.price)}</p>
+			<div className="w-full max-w-4xl mx-auto">
+				<div className="bg-white shadow-sm rounded-lg overflow-hidden">
+					{/* Restaurant Header */}
+					<div className="border-b p-4 bg-gray-50">
+						<h2 className="text-xl font-semibold text-gray-800">
+							{restaurantName || 'Restaurant'}
+						</h2>
+					</div>
+
+					{/* Cart Items */}
+					<div className="divide-y divide-gray-100">
+						{cart.length > 0 ? (
+							cart.map((item) => (
+								<div
+									key={item.publicId}
+									className="p-4 hover:bg-gray-50 transition-colors"
+								>
+									<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+										{/* Item Info */}
+										<div className="flex items-center flex-1 min-w-0">
+											<div
+												className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+												<Image
+													src={item.image}
+													alt={item.name}
+													fill
+													className="object-cover"
+													priority
+												/>
+											</div>
+											<div className="ml-4 flex-1 min-w-0">
+												<h3 className="font-medium text-gray-900 truncate">
+													{item.name}
+												</h3>
+												<p className="text-blue-600 font-semibold mt-1">
+													{formatPrice(item.price)}
+												</p>
+											</div>
+										</div>
+
+										{/* Quantity Controls */}
+										<div className="flex items-center gap-2 sm:gap-4">
+											<div className="flex items-center bg-gray-100 rounded-lg">
+												<Button
+													variant="ghost"
+													size="icon"
+													className="h-8 w-8"
+													onClick={() =>
+														updateItemQuantity({
+															itemId: item.publicId,
+															quantity: item.quantity - 1,
+														})
+													}
+													disabled={item.quantity === 1}
+												>
+													<Minus className="h-4 w-4"/>
+												</Button>
+												<span className="w-8 text-center font-medium">
+                                                {item.quantity}
+                                            </span>
+												<Button
+													variant="ghost"
+													size="icon"
+													className="h-8 w-8"
+													onClick={() =>
+														updateItemQuantity({
+															itemId: item.publicId,
+															quantity: item.quantity + 1,
+														})
+													}
+												>
+													<Plus className="h-4 w-4"/>
+												</Button>
+											</div>
+											<Button
+												variant="destructive"
+												size="icon"
+												className="h-8 w-8"
+												onClick={() => removeItem(item.publicId)}
+											>
+												<Trash2 className="h-4 w-4"/>
+											</Button>
+										</div>
 									</div>
 								</div>
-								<div className="flex items-center space-x-2">
-									<Button
-										className="px-3 py-1 bg-gray-200 rounded-lg"
-										onClick={() =>
-											updateItemQuantity({
-												itemId: item.publicId,
-												quantity: item.quantity - 1,
-											})
-										}
-										disabled={item.quantity === 1} // Disable if the quantity is 1
-									>
-										-
-									</Button>
-									<span>{item.quantity}</span>
-									<Button
-										className="px-3 py-1 bg-gray-200 rounded-lg"
-										onClick={() =>
-											updateItemQuantity({
-												itemId: item.publicId,
-												quantity: item.quantity + 1,
-											})
-										}
-									>
-										+
-									</Button>
-									<Button
-										className="text-red-500"
-										onClick={() => removeItem(item.publicId)}
-									>
-										🗑
-									</Button>
+							))
+						) : (
+							<div className="p-8 text-center text-gray-500">
+								<div className="mb-4">
+									🛒
 								</div>
+								<p className="text-lg font-medium">Your cart is empty</p>
+								<p className="mt-1 text-sm">Add items to get started</p>
 							</div>
-						))
-					) : (
-						<p>Your cart is empty.</p>
-					)}
+						)}
+					</div>
 				</div>
 			</div>
 		</div>

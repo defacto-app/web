@@ -11,11 +11,14 @@ import { $api } from "@/http/endpoints";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 
 import envData from "@/config/envData";
+import {useAtom} from "jotai/index";
+import {checkoutPayloadAtom, useCheckout} from "@/app/store/restaurantOrderAtom";
 type OrderSummaryProps = {
 	cartPage?: boolean;
 	checkoutPage?: boolean;
 };
 function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
+	const [payload, setPayload] = useAtom(checkoutPayloadAtom);
 	const { cart } = useCartContext();
 	const { deliveryFee, discount, discountAmount, firstAddress } =
 		useCartSummaryContext();
@@ -74,6 +77,8 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 				phoneNumber: "08063152617",
 			},
 		};
+
+		console.log(payload,"payload");
 
 		try {
 			await $api.auth.user.order.restaurant(
