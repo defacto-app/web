@@ -16,6 +16,7 @@ import { isDev } from "@/config/envData";
 import { $api } from "@/http/endpoints";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import { toast } from "react-toastify";
+import { useMutation } from "react-query";
 
 export default function EditUserNumberModal() {
 	const { getMe, authUser } = useAtomAuthContext();
@@ -44,27 +45,30 @@ export default function EditUserNumberModal() {
 		});
 	}
 
-	const updateNumber = async () => {
-		setLoading(true);
-		try {
-			const response = await $api.auth.user.account.update({
-				phoneNumber: form.phoneNumber,
-			});
-			console.log(response);
-
-			await getMe();
-			setLoading(false);
-
-			toast.success(response.message);
-
-			setIsDialogOpen(false);
-		} catch (e) {
-			console.log(e);
-			setLoading(false);
-		}
-
-		// Call the API to update the phone number
+	const updateNumber = () => {
+		updatePhoneMutation.mutate(form.phoneNumber);
 	};
+
+	const updatePhoneMutation = useMutation(
+		(phoneNumber: string) => $api.auth.user.account.update({ phoneNumber }),
+		{
+			onSuccess: async (response) => {
+				await getMe();
+				toast.success(response.message);
+				setIsDialogOpen(false);
+			},
+			onError: (error: any) => {
+				toast.error(
+					error?.response?.data?.message || "Failed to update phone number",
+				);
+				setErrors((prev: any) => ({
+					...prev,
+					phoneNumber:
+						error?.response?.data?.message || "Failed to update phone number",
+				}));
+			},
+		},
+	);
 
 	return (
 		<div>
@@ -94,7 +98,7 @@ export default function EditUserNumberModal() {
 						<FormError error={errors.phoneNumber} />
 						<AlertDialogFooter>
 							<Button
-								loading={loading}
+								loading={updatePhoneMutation.isLoading}
 								onClick={updateNumber}
 								type="submit"
 								variant="primary"
