@@ -5,7 +5,7 @@ import EditUserModal from "@/components/user/EditUserModal";
 import EditUserNumberModal from "@/components/user/EditUserNumberModal";
 
 function AccountPage() {
-	const { authUser } = useAtomAuthContext();
+	const { authUser, } = useAtomAuthContext();
 
 	return (
 		<div className="container mx-auto">

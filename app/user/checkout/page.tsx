@@ -2,7 +2,7 @@
 import type React from "react";
 import { useEffect, useState } from "react";
 
-import OrderSummary from "@/app/user/checkout/OrderSummary";
+import OrderSummary from "@/app/user/cart/OrderSummary";
 import CartItemList from "@/app/user/cart/CartItemList";
 
 import { Textarea } from "@/components/ui/textarea";

@@ -1,15 +1,42 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import {useEffect} from "react";
 
-import OrderSummary from "@/app/user/checkout/OrderSummary";
+import OrderSummary from "@/app/user/cart/OrderSummary";
 import UserAddresses from "@/components/user/UserAddresses";
 import dynamic from "next/dynamic";
 import BackButton from "@/app/components/BackButton";
+import {Textarea} from "@/components/ui/textarea";
+import {useAtom} from "jotai/index";
+import {
+	checkoutPayloadAtom,
+	dropOffModalAtom,
+	setDropOffAddressAtom,
+	updateNotesAtom, useCheckout
+} from "@/app/store/restaurantOrderAtom";
+import {DropOffAddress} from "@/app/user/send-package/component";
 const CartItemList = dynamic(() => import("./CartItemList"), { ssr: false });
 function CartPage() {
 	// Sample product to simulate adding to the cart
 
+	const [payload, setPayload] = useAtom(checkoutPayloadAtom);
 
+	const [dropOffModalOpen, setDropOffModalOpen] = useAtom(dropOffModalAtom);
+	const [, updateNotes] = useAtom(updateNotesAtom);
+	const [, setDropOffAddress] = useAtom(setDropOffAddressAtom);
+	const { initializeCheckout, getSavedDropOffAddress } = useCheckout();
+
+	const handleNoteChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+		updateNotes(event.target.value);
+	};
+	// Initialize saved address on component mount
+	useEffect(() => {
+		initializeCheckout();
+	}, []); // Run only once on mount
+	const handleDropOffAddressConfirm = (addressData: any) => {
+		setDropOffAddress(addressData);
+		setDropOffModalOpen(false);
+	};
 	return (
 		<div className="p-8">
 			{/* Cart Header */}
@@ -24,11 +51,34 @@ function CartPage() {
 				{/* Left Side (Items and Delivery Info) */}
 				<div className="flex-1 space-y-4">
 					{/* Delivery Section */}
-					<UserAddresses />
+
 
 					{/* Order Summary Section */}
 
-					<CartItemList />
+					<CartItemList/>
+
+					<div>
+						<Textarea
+							placeholder="Add a note to your order"
+							value={payload.notes}
+							onChange={handleNoteChange}
+						/>
+
+					</div>
+					{JSON.stringify(payload)}
+
+					<DropOffAddress
+						label={"Deliver To"}
+						payload={payload}
+						setDropOffModalOpen={setDropOffModalOpen}
+						dropOffModalOpen={dropOffModalOpen}
+						handleDropOffAddressConfirm={handleDropOffAddressConfirm}
+						getSavedDropOffAddress={getSavedDropOffAddress}
+						setDropOffAddress={setDropOffAddress}
+					/>
+
+					<UserAddresses/>
+
 				</div>
 
 				{/* Right Side (Order Summary and Checkout) */}

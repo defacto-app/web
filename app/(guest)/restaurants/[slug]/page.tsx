@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { $api } from "@/http/endpoints";
-import OrderCart from "@/app/user/checkout/OrderCart";
+import OrderCart from "@/app/user/cart/OrderCart";
 import MenuArea from "@/app/(guest)/restaurants/components/MenuArea";
 import debounce from "lodash/debounce";
 import {

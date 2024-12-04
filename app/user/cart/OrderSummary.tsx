@@ -13,6 +13,7 @@ import { useAtomAuthContext } from "@/app/store/authAtom";
 import envData from "@/config/envData";
 import {useAtom} from "jotai/index";
 import {checkoutPayloadAtom, useCheckout} from "@/app/store/restaurantOrderAtom";
+import {toast} from "react-toastify";
 type OrderSummaryProps = {
 	cartPage?: boolean;
 	checkoutPage?: boolean;
@@ -85,6 +86,8 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 				restaurantId,
 				body,
 			);
+
+			toast.success("Order placed successfully");
 		} catch (e) {
 			console.log(e);
 		}
@@ -151,36 +154,15 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 					<span>Total</span>
 					<span>{formatPrice(totalAmount)}</span>
 				</div>
-				{checkoutPage && (
-					<Button
-						variant={`primary`}
-						onClick={initiatePayment}
-						loading={loading}
-						className="w-full"
-					>
-						{loading ? "Processing..." : "Confirm order"}
-					</Button>
-				)}
+				<Button
+					variant={`primary`}
+					onClick={initiatePayment}
+					loading={loading}
+					className="w-full"
+				>
+					{loading ? "Processing..." : "Confirm order"}
+				</Button>
 
-				{cartPage && (
-					<>
-						{/*		<div className="flex items-center space-x-2">
-							<input
-								type="text"
-								placeholder="Add promo code"
-								className="flex-1 border rounded-lg p-2"
-							/>
-							<Button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-								Apply
-							</Button>
-						</div>*/}
-						<Link href={`/user/checkout`}>
-							<Button variant={`primary`} className="w-full  px-4 py-3 mt-4 ">
-								Go to Checkout →
-							</Button>
-						</Link>
-					</>
-				)}
 			</div>
 		</div>
 	);

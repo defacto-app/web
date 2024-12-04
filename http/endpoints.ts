@@ -123,6 +123,16 @@ export const $api = {
 				}
 			},
 
+			account:{
+				update: async (body: any) => {
+					try {
+						return $axios.patch(`/account`, body);
+					} catch (error: any) {
+						return error;
+					}
+				},
+			},
+
 			address: {
 				all: async () => {
 					try {

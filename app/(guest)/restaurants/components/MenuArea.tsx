@@ -68,8 +68,15 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 									{group.items.map((item: any) => (
 										<li key={item._id}>
 											<div
-												className={`bg-white border rounded-sm relative ${!item.available && "opacity-75"}`}
-											>
+												className={`bg-white border rounded-sm relative ${!item.available && "opacity-75"}`}>
+												{/* Unavailable badge in top right corner */}
+												{!item.available && (
+													<span
+														className="absolute top-2 right-2 bg-red-100 text-red-500 px-2 py-1 rounded-md text-sm font-medium z-10">
+                Currently unavailable
+            </span>
+												)}
+
 												<Image
 													src={item.image}
 													alt={item.name}
@@ -79,34 +86,21 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 												/>
 												<div className="p-4 flex items-center justify-between">
 													<div>
-														<h3
-															className={!item.available ? "text-gray-500" : ""}
-														>
+														<h3 className={!item.available ? "text-gray-500" : ""}>
 															{item.name}
 														</h3>
-														<p
-															className={!item.available ? "text-gray-500" : ""}
-														>
+														<p className={!item.available ? "text-gray-500" : ""}>
 															Price: {formatPrice(item.price)}
 														</p>
-														{!item.available && (
-															<span className="text-sm text-red-500">
-																Currently unavailable
-															</span>
-														)}
 													</div>
 													<Button
 														variant="outline"
 														className="text-blue-500 bg-blue-200 p-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
 														onClick={() => handleAddToCart(item)}
 														disabled={!item.available}
-														title={
-															!item.available
-																? "Item unavailable"
-																: "Add to cart"
-														}
+														title={!item.available ? "Item unavailable" : "Add to cart"}
 													>
-														<Plus />
+														<Plus/>
 													</Button>
 												</div>
 											</div>
