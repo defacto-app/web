@@ -50,16 +50,9 @@ export const CheckOutDropOffAddress = ({
 	}, [dropOffModalOpen]);
 
 
-
-	const markerOptions: any = {
-		icon: {
-			url: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
-			scaledSize: new google.maps.Size(40, 40)
-		}
-	};
 	return (
 		<div className="mb-4">
-			{JSON.stringify(payload.dropOffDetails.address.location)}
+
 
 			<div>
 				<div className="lg:col-span-3 mt-4 lg:mt-0">
@@ -80,9 +73,7 @@ export const CheckOutDropOffAddress = ({
 								>
 									<Marker
 										position={payload.dropOffDetails.address.location}
-										options={markerOptions}
-
-
+										icon="https://maps.google.com/mapfiles/ms/icons/green-dot.png"
 									/>
 								</Map>
 							</APIProvider>

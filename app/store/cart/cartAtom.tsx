@@ -19,7 +19,6 @@ export const cartsByRestaurantAtom = atom<{ [slug: string]: CartItemType[] }>(
 	{},
 );
 
-
 // Atom to hold the currently selected restaurant slug
 export const selectedRestaurantSlugAtom = atom<string | null>(null);
 
@@ -52,7 +51,7 @@ export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
 		: [...currentCart, newItem];
 
 	set(cartsByRestaurantAtom, { ...carts, [slug]: updatedCart });
-	sessionStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
+	localStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
 });
 
 // Atom to remove an item from the current restaurant's cart
@@ -65,7 +64,7 @@ export const removeItemAtom = atom(null, (get, set, itemId: string) => {
 	const updatedCart = currentCart.filter((item) => item.publicId !== itemId);
 
 	set(cartsByRestaurantAtom, { ...carts, [slug]: updatedCart });
-	sessionStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
+	localStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
 });
 
 // Atom to update item quantity in the current restaurant's cart
@@ -82,7 +81,7 @@ export const updateItemQuantityAtom = atom(
 		);
 
 		set(cartsByRestaurantAtom, { ...carts, [slug]: updatedCart });
-		sessionStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
+		localStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
 	},
 );
 
@@ -92,7 +91,7 @@ export const clearCartAtom = atom(null, (get, set) => {
 	if (!slug) return;
 
 	set(cartsByRestaurantAtom, (carts) => ({ ...carts, [slug]: [] }));
-	sessionStorage.removeItem(`cart_${slug}`);
+	localStorage.removeItem(`cart_${slug}`);
 });
 
 // Hook to initialize and persist the cart for the selected restaurant slug
@@ -107,7 +106,7 @@ export const useRestaurantSlug = () => {
 
 		if (slug) {
 			setSlug(slug);
-			const storedCart = sessionStorage.getItem(`cart_${slug}`);
+			const storedCart = localStorage.getItem(`cart_${slug}`);
 			const initialCart = storedCart ? JSON.parse(storedCart) : [];
 			setCartsByRestaurant((prevCarts) => ({
 				...prevCarts,
@@ -159,8 +158,7 @@ export const useCartContext = () => {
 		updateItemQuantity,
 		clearCart,
 		getCartSummary,
-		setSelectedAddress
-
+		setSelectedAddress,
 	};
 };
 

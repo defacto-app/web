@@ -9,14 +9,21 @@ import {
 	cartsByRestaurantAtom,
 	useCartContext,
 } from "@/app/store/cart/cartAtom";
-import { Trash2, Minus, Plus } from "lucide-react"; // Import icons
+import { Trash2, Minus, Plus } from "lucide-react";
+import {useRouter, useSearchParams,useParams} from "next/navigation";
 
 function CartItemList() {
+	const params = useParams()
+
 	const setSlug = useSetAtom(selectedRestaurantSlugAtom);
 	const setCartsByRestaurant = useSetAtom(cartsByRestaurantAtom);
 	const slug = useAtomValue(selectedRestaurantSlugAtom);
 	const { cart, removeItem, updateItemQuantity } = useCartContext();
 	const [isLoading, setIsLoading] = useState(true);
+
+	 const slugger = params.slug
+
+	console.log(slugger,"slugger")
 
 	const [restaurantName, setRestaurantName] = useState<string | null>(null);
 
@@ -36,7 +43,7 @@ function CartItemList() {
 
 		// Check if cart data for the stored slug is already in cartsByRestaurantAtom
 		if (storedSlug) {
-			const storedCart = sessionStorage.getItem(`cart_${storedSlug}`);
+			const storedCart = localStorage.getItem(`cart_${storedSlug}`);
 			if (storedCart) {
 				setCartsByRestaurant((prevCarts) => ({
 					...prevCarts,
@@ -54,9 +61,7 @@ function CartItemList() {
 		return <p>Loading...</p>;
 	}
 
-	const subtotal = cart.reduce((total, item) => {
-		return total + (item.price * item.quantity);
-	}, 0);
+
 
 
 	// Debugging information to confirm cart data
