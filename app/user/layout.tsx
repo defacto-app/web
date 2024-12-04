@@ -7,7 +7,6 @@ import type React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "@/components/Footer";
 import UserHeader from "@/components/user/UserHeader";
-import { Providers } from "@/app/Providers";
 
 const fontSans = FontSans({
 	subsets: ["latin"],
@@ -38,15 +37,12 @@ export default function Layout({
 				)}
 				suppressHydrationWarning
 			>
-				<Providers>
 					<UserHeader />
 					<main className="flex-grow">{children}</main>
 					<ToastContainer position="top-center" />
 					<Footer />
-				</Providers>
 			</body>
 		</html>
 	);
 }
-
 export const runtime = "edge";

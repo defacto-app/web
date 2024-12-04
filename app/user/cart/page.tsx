@@ -1,20 +1,21 @@
 "use client";
 import type React from "react";
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 import OrderSummary from "@/app/user/cart/OrderSummary";
 import UserAddresses from "@/components/user/UserAddresses";
 import dynamic from "next/dynamic";
 import BackButton from "@/app/components/BackButton";
-import {Textarea} from "@/components/ui/textarea";
-import {useAtom} from "jotai/index";
+import { Textarea } from "@/components/ui/textarea";
+import { useAtom } from "jotai/index";
 import {
 	checkoutPayloadAtom,
 	dropOffModalAtom,
 	setDropOffAddressAtom,
-	updateNotesAtom, useCheckout
+	updateNotesAtom,
+	useCheckout,
 } from "@/app/store/restaurantOrderAtom";
-import {DropOffAddress} from "@/app/user/send-package/component";
+import { DropOffAddress } from "@/app/user/send-package/component";
 const CartItemList = dynamic(() => import("./CartItemList"), { ssr: false });
 function CartPage() {
 	// Sample product to simulate adding to the cart
@@ -52,10 +53,9 @@ function CartPage() {
 				<div className="flex-1 space-y-4">
 					{/* Delivery Section */}
 
-
 					{/* Order Summary Section */}
 
-					<CartItemList/>
+					<CartItemList />
 
 					<div>
 						<Textarea
@@ -63,7 +63,6 @@ function CartPage() {
 							value={payload.notes}
 							onChange={handleNoteChange}
 						/>
-
 					</div>
 					{JSON.stringify(payload)}
 
@@ -77,8 +76,7 @@ function CartPage() {
 						setDropOffAddress={setDropOffAddress}
 					/>
 
-					<UserAddresses/>
-
+					<UserAddresses />
 				</div>
 
 				{/* Right Side (Order Summary and Checkout) */}
