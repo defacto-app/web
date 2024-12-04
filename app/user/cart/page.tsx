@@ -16,6 +16,7 @@ import {
 	useCheckout,
 } from "@/app/store/restaurantOrderAtom";
 import { DropOffAddress } from "@/app/user/send-package/component";
+import CheckOutDropOffAddress from "@/app/user/cart/CheckOutDropOffAddress";
 const CartItemList = dynamic(() => import("./CartItemList"), { ssr: false });
 function CartPage() {
 	// Sample product to simulate adding to the cart
@@ -64,9 +65,8 @@ function CartPage() {
 							onChange={handleNoteChange}
 						/>
 					</div>
-					{JSON.stringify(payload)}
 
-					<DropOffAddress
+					<CheckOutDropOffAddress
 						label={"Deliver To"}
 						payload={payload}
 						setDropOffModalOpen={setDropOffModalOpen}

@@ -11,9 +11,12 @@ import { $api } from "@/http/endpoints";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 
 import envData from "@/config/envData";
-import {useAtom} from "jotai/index";
-import {checkoutPayloadAtom, useCheckout} from "@/app/store/restaurantOrderAtom";
-import {toast} from "react-toastify";
+import { useAtom } from "jotai/index";
+import {
+	checkoutPayloadAtom,
+	useCheckout,
+} from "@/app/store/restaurantOrderAtom";
+import { toast } from "react-toastify";
 type OrderSummaryProps = {
 	cartPage?: boolean;
 	checkoutPage?: boolean;
@@ -69,7 +72,13 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 			deliveryFee,
 			discount,
 			dropOffDetails: {
-				address: firstAddress,
+				address: {
+					location: {
+						lat: payload.dropOffDetails.address.location.lat,
+						lng: payload.dropOffDetails.address.location.lng,
+					},
+					address: payload.dropOffDetails.address.address,
+				},
 				phone: authUser.phoneNumber,
 				name: authUser.firstName,
 				// phoneNumber: authUser.phoneNumber,
@@ -79,13 +88,10 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 			},
 		};
 
-		console.log(payload,"payload");
+		console.log(payload, "payload");
 
 		try {
-			await $api.auth.user.order.restaurant(
-				restaurantId,
-				body,
-			);
+			await $api.auth.user.order.restaurant(restaurantId, body);
 
 			toast.success("Order placed successfully");
 		} catch (e) {
@@ -162,7 +168,6 @@ function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
 				>
 					{loading ? "Processing..." : "Confirm order"}
 				</Button>
-
 			</div>
 		</div>
 	);

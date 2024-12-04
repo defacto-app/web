@@ -113,7 +113,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 					image={restaurant.image}
 					name={restaurant.name}
 					deliveryTime={restaurant.deliveryTime}
-					address={restaurant.address}
+					address={restaurant.address.location}
 				/>
 			</div>
 

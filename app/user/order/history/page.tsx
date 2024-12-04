@@ -18,6 +18,8 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { fromDate } from "@internationalized/date";
+import { formatDateFromNow } from "@/lib/utils";
 
 function Page() {
 	const [loading, setLoading] = useState<boolean>(true);
@@ -28,12 +30,18 @@ function Page() {
 	const [hasMore, setHasMore] = useState<boolean>(true);
 	const [type, setType] = useState<string | null>(null);
 	const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
-	const [sortBy, setSortBy] = useState<"createdAt" | "updatedAt" | "status" | "type">("createdAt");
+	const [sortBy, setSortBy] = useState<
+		"createdAt" | "updatedAt" | "status" | "type"
+	>("createdAt");
 	const perPage = 10;
 
 	const observerRef = useRef<HTMLDivElement | null>(null);
 
-	const getData = async (searchId = "", pageNum = 1, orderType: string | null = null) => {
+	const getData = async (
+		searchId = "",
+		pageNum = 1,
+		orderType: string | null = null,
+	) => {
 		try {
 			setLoading(true);
 			const res = await $api.auth.user.order.history({
@@ -114,7 +122,7 @@ function Page() {
 					});
 				}
 			},
-			{ threshold: 1.0 }
+			{ threshold: 1.0 },
 		);
 
 		if (observerRef.current) {
@@ -159,8 +167,8 @@ function Page() {
 										{field.charAt(0).toUpperCase() + field.slice(1)}
 										{sortBy === field && (
 											<span className="text-xs ml-2">
-                                                ({sortDirection === "asc" ? "↑" : "↓"})
-                                            </span>
+												({sortDirection === "asc" ? "↑" : "↓"})
+											</span>
 										)}
 									</DropdownMenuItem>
 								))}
@@ -170,13 +178,23 @@ function Page() {
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="outline">
-								{type ? (type === "food" ? "Restaurant Orders" : "Delivery Orders") : "Filter by Type"}
+								{type
+									? type === "food"
+										? "Restaurant Orders"
+										: "Delivery Orders"
+									: "Filter by Type"}
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent>
-							<DropdownMenuItem onClick={() => handleTypeChange(null)}>All Orders</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => handleTypeChange("food")}>Restaurant Orders</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => handleTypeChange("package")}>Delivery Orders</DropdownMenuItem>
+							<DropdownMenuItem onClick={() => handleTypeChange(null)}>
+								All Orders
+							</DropdownMenuItem>
+							<DropdownMenuItem onClick={() => handleTypeChange("food")}>
+								Restaurant Orders
+							</DropdownMenuItem>
+							<DropdownMenuItem onClick={() => handleTypeChange("package")}>
+								Delivery Orders
+							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
@@ -194,7 +212,9 @@ function Page() {
 			{error && <ErrorMessage message={error} />}
 			{orders.length === 0 && !loading && (
 				<div className="text-center py-8 text-gray-500">
-					{searchQuery ? "No orders found matching your search." : "No orders found."}
+					{searchQuery
+						? "No orders found matching your search."
+						: "No orders found."}
 				</div>
 			)}
 			<div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
@@ -205,7 +225,7 @@ function Page() {
 			<div ref={observerRef} className="mt-6 text-center">
 				{loading && <span>Loading...</span>}
 			</div>
-		</div>
+		</div>,
 	);
 }
 
@@ -221,25 +241,45 @@ function OrderItem({ order }: { order: any }) {
 					<Image
 						src={
 							order.type === "food"
-								? "https://placehold.co/600x600.png"
+								? order.restaurant_image || "https://placehold.co/600x600.png"
 								: order.package_image || "https://placehold.co/600x600.png"
 						}
 						alt={order.type}
 						width={80}
-						height={80}
+						height={100}
 						priority
-						className="object-cover w-auto h-auto"
+						className="object-cover w-auto h-full"
 					/>
 				</AspectRatio>
 			</div>
 			<div className="ml-4">
 				<h2 className="text-xl font-semibold">
-					{order.type === "food" ? "Restaurant Order" : "Package Delivery"}
+					{order.type === "food"
+						? order.restaurant_name || "Restaurant order"
+						: "Package Delivery"}
 				</h2>
-				<p className="text-gray-700">{order.description || "No description provided"}</p>
-				<p className={`text-sm font-medium ${order.status === "completed" ? "text-green-500" : "text-yellow-500"}`}>
+
+				{order.type === "food" && (
+					<div className="mt-2">
+						{order.restaurantOrder.map((item: { _id: React.Key | null | undefined; quantity: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; name: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; price: { toLocaleString: () => string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }; }) => (
+							<div key={item._id} className="flex items-center gap-2">
+								<span className="text-sm">
+									{item.quantity} x {item.name}
+								</span>
+								{/* Optionally show price */}
+
+							</div>
+						))}
+					</div>
+				)}
+
+				<p
+					className={`text-sm font-medium ${order.status === "completed" ? "text-green-500" : "text-yellow-500"}`}
+				>
 					{order.status}
 				</p>
+
+				{/*<p>{formatDateFromNow(order.createdAt)}</p>*/}
 			</div>
 		</div>
 	);

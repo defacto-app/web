@@ -35,3 +35,12 @@ export const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2
 };
 
 
+
+export const isValidCoordinates = (location?: { lat: number; lng: number }) => {
+    if (!location) return false;
+
+    const { lat, lng } = location;
+
+    // Check if coordinates exist and are not zero
+    return (lat !== 0 && lng !== 0 && !Number.isNaN(lat) && !Number.isNaN(lng));
+};
