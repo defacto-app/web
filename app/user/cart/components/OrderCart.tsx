@@ -32,9 +32,9 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 			router.push("/auth/login");
 		} else {
 			if (slug) {
-				localStorage.setItem("currentRestaurantSlug", slug);
+				sessionStorage.setItem("currentRestaurantSlug", slug);
 				if (typeof restaurant_name === "string") {
-					localStorage.setItem("currentRestaurantName", restaurant_name);
+					sessionStorage.setItem("currentRestaurantName", restaurant_name);
 				} // Replace with actual restaurant name
 			}
 

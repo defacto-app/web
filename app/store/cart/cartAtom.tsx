@@ -51,7 +51,7 @@ export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
 		: [...currentCart, newItem];
 
 	set(cartsByRestaurantAtom, { ...carts, [slug]: updatedCart });
-	localStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
+	sessionStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
 });
 
 // Atom to remove an item from the current restaurant's cart
@@ -64,7 +64,7 @@ export const removeItemAtom = atom(null, (get, set, itemId: string) => {
 	const updatedCart = currentCart.filter((item) => item.publicId !== itemId);
 
 	set(cartsByRestaurantAtom, { ...carts, [slug]: updatedCart });
-	localStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
+	sessionStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
 });
 
 // Atom to update item quantity in the current restaurant's cart
@@ -81,7 +81,7 @@ export const updateItemQuantityAtom = atom(
 		);
 
 		set(cartsByRestaurantAtom, { ...carts, [slug]: updatedCart });
-		localStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
+		sessionStorage.setItem(`cart_${slug}`, JSON.stringify(updatedCart));
 	},
 );
 
@@ -91,7 +91,7 @@ export const clearCartAtom = atom(null, (get, set) => {
 	if (!slug) return;
 
 	set(cartsByRestaurantAtom, (carts) => ({ ...carts, [slug]: [] }));
-	localStorage.removeItem(`cart_${slug}`);
+	sessionStorage.removeItem(`cart_${slug}`);
 });
 
 // Hook to initialize and persist the cart for the selected restaurant slug
@@ -106,7 +106,7 @@ export const useRestaurantSlug = () => {
 
 		if (slug) {
 			setSlug(slug);
-			const storedCart = localStorage.getItem(`cart_${slug}`);
+			const storedCart = sessionStorage.getItem(`cart_${slug}`);
 			const initialCart = storedCart ? JSON.parse(storedCart) : [];
 			setCartsByRestaurant((prevCarts) => ({
 				...prevCarts,

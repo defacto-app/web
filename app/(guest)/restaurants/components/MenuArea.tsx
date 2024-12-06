@@ -99,7 +99,7 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 													</div>
 													<Button
 														variant="outline"
-														className="text-blue-500 bg-blue-200 p-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+														className="text-blue-500 bg-blue-200  p-2 rounded-full disabled:opacity-50 cursor-pointer"
 														onClick={() => handleAddToCart(item)}
 														disabled={!item.available}
 														title={

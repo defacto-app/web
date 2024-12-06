@@ -28,13 +28,13 @@ function CartItemList() {
 	const [, setRestaurantName] = useState<string | null>(null);
 
 	useEffect(() => {
-		const name = localStorage.getItem("currentRestaurantName");
+		const name = sessionStorage.getItem("currentRestaurantName");
 		setRestaurantName(name);
 	}, []);
 
 	useEffect(() => {
 		// Retrieve stored slug from session storage
-		const storedSlug = localStorage.getItem("currentRestaurantSlug");
+		const storedSlug = sessionStorage.getItem("currentRestaurantSlug");
 
 		// If no slug is set in atom, set it from session storage
 		if (storedSlug && slug !== storedSlug) {
@@ -43,7 +43,7 @@ function CartItemList() {
 
 		// Check if cart data for the stored slug is already in cartsByRestaurantAtom
 		if (storedSlug) {
-			const storedCart = localStorage.getItem(`cart_${storedSlug}`);
+			const storedCart = sessionStorage.getItem(`cart_${storedSlug}`);
 			if (storedCart) {
 				setCartsByRestaurant((prevCarts) => ({
 					...prevCarts,
