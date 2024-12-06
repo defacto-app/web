@@ -155,14 +155,14 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 
 					<div className="hidden lg:block lg:col-span-3">
 						<div className="sticky top-4">
-							<OrderCart restaurant_name={restaurant.name} />
+							<OrderCart  />
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div className="lg:hidden fixed bottom-4 right-4 z-50">
-				<OrderCart buttonOnly restaurant_name={restaurant.name} />
+				<OrderCart buttonOnly  />
 			</div>
 		</div>
 	);

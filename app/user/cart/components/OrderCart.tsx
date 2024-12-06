@@ -4,7 +4,7 @@ import { formatPrice } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useAtomAuthContext } from "@/app/store/authAtom";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAtomValue } from "jotai";
 import {
 	selectedRestaurantSlugAtom,
@@ -13,17 +13,17 @@ import {
 
 type propTypes = {
 	buttonOnly?: boolean;
-	restaurant_name?: string;
 };
 
-function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
+function OrderCart({ buttonOnly = false }: propTypes) {
 	const router = useRouter();
 	// Get the cart items, removeItem, and updateItemQuantity functions from the context
 	const { cart, updateItemQuantity, removeItem } = useCartContext();
 
 	const { isLoggedIn } = useAtomAuthContext();
+	const pathname = usePathname();
 
-	const slug = useAtomValue(selectedRestaurantSlugAtom); // Get the current restaurant slug
+	const slug = pathname.split("/")[2]; // Get the current restaurant slug
 
 	function handleCartNavigation() {
 		if (!isLoggedIn) {
@@ -31,13 +31,6 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 
 			router.push("/auth/login");
 		} else {
-			if (slug) {
-				sessionStorage.setItem("currentRestaurantSlug", slug);
-				if (typeof restaurant_name === "string") {
-					sessionStorage.setItem("currentRestaurantName", restaurant_name);
-				} // Replace with actual restaurant name
-			}
-
 			router.push(`/user/cart/${slug}`);
 			// Redirect to cart page
 		}
@@ -67,13 +60,15 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 											variant="ghost"
 											size="sm"
 											className="h-8 w-8 rounded-full bg-gray-100 hover:bg-gray-200"
-											onClick={() => updateItemQuantity({
-												itemId: item.publicId,
-												quantity: item.quantity - 1,
-											})}
+											onClick={() =>
+												updateItemQuantity({
+													itemId: item.publicId,
+													quantity: item.quantity - 1,
+												})
+											}
 											disabled={item.quantity === 1}
 										>
-											<Minus className="h-4 w-4"/>
+											<Minus className="h-4 w-4" />
 										</Button>
 
 										<span className="text-sm text-gray-500">Takeaway pack</span>
@@ -82,12 +77,14 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 											variant="ghost"
 											size="sm"
 											className="h-8 w-8 rounded-full bg-gray-100 hover:bg-gray-200"
-											onClick={() => updateItemQuantity({
-												itemId: item.publicId,
-												quantity: item.quantity + 1,
-											})}
+											onClick={() =>
+												updateItemQuantity({
+													itemId: item.publicId,
+													quantity: item.quantity + 1,
+												})
+											}
 										>
-											<Plus className="h-4 w-4"/>
+											<Plus className="h-4 w-4" />
 										</Button>
 									</div>
 
@@ -97,7 +94,7 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 										className="text-red-400 hover:text-red-500"
 										onClick={() => removeItem(item.publicId)}
 									>
-										<Trash2 className="h-4 w-4"/>
+										<Trash2 className="h-4 w-4" />
 									</Button>
 								</div>
 							</div>
@@ -105,7 +102,7 @@ function OrderCart({ buttonOnly = false, restaurant_name }: propTypes) {
 					) : (
 						<p className="text-center text-gray-500 py-8">
 							Your cart is empty.
-							<br/>
+							<br />
 							Add items to get started.
 						</p>
 					)}
