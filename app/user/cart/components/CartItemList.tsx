@@ -10,10 +10,10 @@ import {
 	useCartContext,
 } from "@/app/store/cart/cartAtom";
 import { Trash2, Minus, Plus } from "lucide-react";
-import {useRouter, useSearchParams,useParams} from "next/navigation";
+import {  useParams } from "next/navigation";
 
 function CartItemList() {
-	const params = useParams()
+	const params = useParams();
 
 	const setSlug = useSetAtom(selectedRestaurantSlugAtom);
 	const setCartsByRestaurant = useSetAtom(cartsByRestaurantAtom);
@@ -21,20 +21,20 @@ function CartItemList() {
 	const { cart, removeItem, updateItemQuantity } = useCartContext();
 	const [isLoading, setIsLoading] = useState(true);
 
-	 const slugger = params.slug
+	const slugger = params.slug;
 
-	console.log(slugger,"slugger")
+	console.log(slugger, "slugger");
 
-	const [restaurantName, setRestaurantName] = useState<string | null>(null);
+	const [, setRestaurantName] = useState<string | null>(null);
 
 	useEffect(() => {
-		const name = sessionStorage.getItem("currentRestaurantName");
+		const name = localStorage.getItem("currentRestaurantName");
 		setRestaurantName(name);
 	}, []);
 
 	useEffect(() => {
 		// Retrieve stored slug from session storage
-		const storedSlug = sessionStorage.getItem("currentRestaurantSlug");
+		const storedSlug = localStorage.getItem("currentRestaurantSlug");
 
 		// If no slug is set in atom, set it from session storage
 		if (storedSlug && slug !== storedSlug) {
@@ -61,9 +61,6 @@ function CartItemList() {
 		return <p>Loading...</p>;
 	}
 
-
-
-
 	// Debugging information to confirm cart data
 
 	return (
@@ -71,11 +68,6 @@ function CartItemList() {
 			<div className="w-full max-w-4xl mx-auto">
 				<div className="bg-white shadow-sm rounded-lg overflow-hidden">
 					{/* Restaurant Header */}
-					<div className="border-b p-4 bg-gray-50">
-						<h2 className="text-xl font-semibold text-gray-800">
-							{restaurantName || 'Restaurant'}
-						</h2>
-					</div>
 
 					{/* Cart Items */}
 					<div className="divide-y divide-gray-100">
@@ -88,8 +80,7 @@ function CartItemList() {
 									<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 										{/* Item Info */}
 										<div className="flex items-center flex-1 min-w-0">
-											<div
-												className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+											<div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
 												<Image
 													src={item.image}
 													alt={item.name}
@@ -123,11 +114,11 @@ function CartItemList() {
 													}
 													disabled={item.quantity === 1}
 												>
-													<Minus className="h-4 w-4"/>
+													<Minus className="h-4 w-4" />
 												</Button>
 												<span className="w-8 text-center font-medium">
-                                                {item.quantity}
-                                            </span>
+													{item.quantity}
+												</span>
 												<Button
 													variant="ghost"
 													size="icon"
@@ -139,7 +130,7 @@ function CartItemList() {
 														})
 													}
 												>
-													<Plus className="h-4 w-4"/>
+													<Plus className="h-4 w-4" />
 												</Button>
 											</div>
 											<Button
@@ -148,7 +139,7 @@ function CartItemList() {
 												className="h-8 w-8"
 												onClick={() => removeItem(item.publicId)}
 											>
-												<Trash2 className="h-4 w-4"/>
+												<Trash2 className="h-4 w-4" />
 											</Button>
 										</div>
 									</div>
@@ -156,9 +147,7 @@ function CartItemList() {
 							))
 						) : (
 							<div className="p-8 text-center text-gray-500">
-								<div className="mb-4">
-									🛒
-								</div>
+								<div className="mb-4">🛒</div>
 								<p className="text-lg font-medium">Your cart is empty</p>
 								<p className="mt-1 text-sm">Add items to get started</p>
 							</div>

@@ -17,11 +17,8 @@ import {
 	useCheckout,
 } from "@/app/store/restaurantOrderAtom";
 import { toast } from "react-toastify";
-type OrderSummaryProps = {
-	cartPage?: boolean;
-	checkoutPage?: boolean;
-};
-function OrderSummary({ cartPage, checkoutPage }: OrderSummaryProps) {
+
+function OrderSummary() {
 	const [payload, setPayload] = useAtom(checkoutPayloadAtom);
 	const { cart } = useCartContext();
 	const { deliveryFee, discount, discountAmount, firstAddress } =

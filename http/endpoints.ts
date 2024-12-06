@@ -123,7 +123,7 @@ export const $api = {
 				}
 			},
 
-			account:{
+			account: {
 				update: async (body: any) => {
 					try {
 						return $axios.patch(`/account`, body);

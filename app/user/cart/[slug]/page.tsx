@@ -14,14 +14,16 @@ import {
 } from "@/app/store/restaurantOrderAtom";
 import BackButton from "@/app/components/BackButton";
 import { Textarea } from "@/components/ui/textarea";
-import CheckOutDropOffAddress from "@/app/user/cart/CheckOutDropOffAddress";
+import CheckOutDropOffAddress from "@/app/user/cart/components/CheckOutDropOffAddress";
 import UserAddresses from "@/components/user/UserAddresses";
-import OrderSummary from "@/app/user/cart/OrderSummary";
-import CartItemList from "@/app/user/cart/CartItemList";
+import OrderSummary from "@/app/user/cart/components/OrderSummary";
+const CartItemList = dynamic(() => import("../components/CartItemList"), { ssr: false });
+
 import {
 	ErrorState,
 	LoadingState,
 } from "@/app/(guest)/restaurants/components/SingleRestaurantComponents";
+import dynamic from "next/dynamic";
 function CartPage({ params }: { params: { slug: string } }) {
 	const [payload, setPayload] = useAtom(checkoutPayloadAtom);
 
@@ -63,10 +65,9 @@ function CartPage({ params }: { params: { slug: string } }) {
 	if (!restaurantData) return null;
 
 	return (
-		<div>
-			{/*<div>{JSON.stringify(restaurantData.restaurant.name)}</div>*/}
+		<div className={`container mx-auto lg:px-10`}>
 
-			<div className="p-8">
+			<div className="lg:px-20">
 				{/* Cart Header */}
 
 				<div className={`flex items-center pb-4`}>
@@ -75,7 +76,7 @@ function CartPage({ params }: { params: { slug: string } }) {
 					<br />
 				</div>
 
-				<div className={`text-3xl pl-8 font-bold`}>
+				<div className={`text-xl lg:text-3xl pl-8 font-bold`}>
 					{restaurantData.restaurant.name}
 				</div>
 
@@ -113,8 +114,8 @@ function CartPage({ params }: { params: { slug: string } }) {
 
 					{/* Right Side (Order Summary and Checkout) */}
 					<div className="w-full lg:w-1/3 space-y-8">
-						<div className={`sticky top-20 right-5`}>
-							<OrderSummary cartPage />
+						<div className={`lg:sticky lg:top-20 right-5`}>
+							<OrderSummary  />
 						</div>
 					</div>
 				</div>
