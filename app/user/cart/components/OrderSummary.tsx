@@ -18,7 +18,11 @@ import {
 } from "@/app/store/restaurantOrderAtom";
 import { toast } from "react-toastify";
 
-function OrderSummary() {
+function OrderSummary({
+	restaurant
+}: {
+	restaurant: any
+}) {
 	const [payload, setPayload] = useAtom(checkoutPayloadAtom);
 	const { cart } = useCartContext();
 	const { deliveryFee, discount, discountAmount, firstAddress } =
@@ -65,6 +69,7 @@ function OrderSummary() {
 				name: item.name,
 				price: item.price,
 			})),
+			restaurantId:restaurant.publicId,
 			charge: totalAmount,
 			deliveryFee,
 			discount,
@@ -134,6 +139,7 @@ function OrderSummary() {
 	};
 	return (
 		<div>
+			{JSON.stringify(restaurant.publicId)} --
 			<div className="bg-white p-6  rounded-lg border  space-y-4">
 				<h2 className="text-lg font-semibold">Order Summary</h2>
 				<div className="flex justify-between">

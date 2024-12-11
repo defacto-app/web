@@ -2,7 +2,7 @@
 
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { usePathname } from "next/navigation";
-import {useEffect, useCallback, useMemo, useState} from "react";
+import { useEffect, useCallback, useMemo, useState } from "react";
 
 // Define the type for a cart item
 type CartItemType = {
@@ -45,10 +45,10 @@ export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
 	);
 	const updatedCart = existingItem
 		? currentCart.map((item) =>
-			item.publicId === newItem.publicId
-				? { ...item, quantity: item.quantity + newItem.quantity }
-				: item,
-		)
+				item.publicId === newItem.publicId
+					? { ...item, quantity: item.quantity + newItem.quantity }
+					: item,
+			)
 		: [...currentCart, newItem];
 
 	// Update atom and session storage atomically
@@ -64,11 +64,6 @@ export const addItemAtom = atom(null, (get, set, newItem: CartItemType) => {
 	//
 	//
 	//
-
-
-
-
-
 });
 
 // Atom to remove an item from the current restaurant's cart
@@ -124,19 +119,18 @@ export const useRestaurantSlug = () => {
 			// Get the restaurant name from the path
 			const restaurantName = parts[parts.length - 1];
 			// Convert to kebab case
-			return restaurantName.toLowerCase()
-				.replace(/\s+/g, '-')
-				.replace(/[^a-z0-9-]/g, '');
+			return restaurantName
+				.toLowerCase()
+				.replace(/\s+/g, "-")
+				.replace(/[^a-z0-9-]/g, "");
 		};
 
 		const slug = getSlugFromPath(pathname);
-		console.log('Current slug:', slug); // Debug log
 
 		if (slug) {
 			setSlug(slug);
 			try {
 				const cartKey = `cart_${slug}`;
-				console.log('Looking for cart with key:', cartKey); // Debug log
 				const storedCart = sessionStorage.getItem(cartKey);
 
 				if (storedCart) {
@@ -147,7 +141,7 @@ export const useRestaurantSlug = () => {
 					}));
 				}
 			} catch (error) {
-				console.error('Error loading cart:', error);
+				console.error("Error loading cart:", error);
 				setCartsByRestaurant((prevCarts) => ({
 					...prevCarts,
 					[slug]: [],
@@ -161,7 +155,7 @@ export const useRestaurantSlug = () => {
 
 // Create the hook to use the cart atoms in components
 export const useCartContext = () => {
-	const [isInitialized, setIsInitialized] = useState(false);
+	const [, setIsInitialized] = useState(false);
 	useRestaurantSlug(); // Use the slug initialization hook
 
 	const selectedSlug = useAtomValue(selectedRestaurantSlugAtom);
@@ -171,9 +165,8 @@ export const useCartContext = () => {
 		[selectedSlug, carts],
 	);
 
-
 	useEffect(() => {
-		if (selectedSlug && typeof carts[selectedSlug] !== 'undefined') {
+		if (selectedSlug && typeof carts[selectedSlug] !== "undefined") {
 			setIsInitialized(true);
 		}
 	}, [selectedSlug, carts]);
@@ -181,8 +174,6 @@ export const useCartContext = () => {
 	//
 	//
 	//
-
-
 
 	// Debugging statements to verify cart loading
 	useEffect(() => {}, [selectedSlug, carts, cart]);
@@ -241,6 +232,6 @@ export const useCartSummaryContext = () => {
 		deliveryFee,
 		discount,
 		totalPrice,
-		firstAddress, // Include the first address in the returned values
+		firstAddress,
 	};
 };

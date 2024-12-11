@@ -115,7 +115,7 @@ function CartPage({ params }: { params: { slug: string } }) {
 					{/* Right Side (Order Summary and Checkout) */}
 					<div className="w-full lg:w-1/3 space-y-8">
 						<div className={`lg:sticky lg:top-20 right-5`}>
-							<OrderSummary  />
+							<OrderSummary  restaurant={restaurantData.restaurant} />
 						</div>
 					</div>
 				</div>
