@@ -10,7 +10,11 @@ import { useQuery } from "react-query";
 import { useDebounce } from "react-haiku";
 import AllRestaurantLoading from "@/app/(guest)/restaurants/components/AllRestaurantLoading";
 
-const fetchRestaurants = async (page: number, perPage: number, searchTerm: string) => {
+const fetchRestaurants = async (
+	page: number,
+	perPage: number,
+	searchTerm: string,
+) => {
 	const response = $api.guest.restaurant.all({
 		page,
 		perPage,
@@ -25,7 +29,7 @@ export default function Page() {
 	const [perPage, setPerPage] = useState(30); // Track items per page
 	const debouncedSearchTerm = useDebounce(searchTerm, 500); // Debounce search term by 500ms
 	const inputRef = useRef<HTMLInputElement>(null); // Ref for the input field
-
+	const resultsRef = useRef<HTMLDivElement>(null);
 
 	// Use React Query's useQuery hook to fetch data, and pass debouncedSearchTerm as part of the key
 	const { data, error, isLoading, refetch } = useQuery(
@@ -48,9 +52,10 @@ export default function Page() {
 	// Trigger refetch when the debounced search term changes
 	useEffect(() => {
 		refetch(); // Fetch new data when debouncedSearchTerm changes
+		if (resultsRef.current) {
+			resultsRef.current.scrollIntoView({ behavior: "smooth" });
+		}
 	}, [debouncedSearchTerm, refetch]);
-
-
 
 	if (isLoading) {
 		return <AllRestaurantLoading />;
@@ -81,7 +86,7 @@ export default function Page() {
 								ref={inputRef} // Attach ref to input
 							/>
 						</div>
-						<div className="px-6 pt-4 pb-40">
+						<div className="px-6 pt-4 pb-40" ref={resultsRef}>
 							<RestaurantGrid data={data?.data?.data} />
 						</div>
 					</div>

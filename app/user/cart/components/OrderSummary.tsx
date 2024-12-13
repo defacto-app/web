@@ -6,7 +6,6 @@ import {
 	useCartContext,
 	useCartSummaryContext,
 } from "@/app/store/cart/cartAtom";
-import Link from "next/link";
 import { $api } from "@/http/endpoints";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 
@@ -14,7 +13,6 @@ import envData from "@/config/envData";
 import { useAtom } from "jotai/index";
 import {
 	checkoutPayloadAtom,
-	useCheckout,
 } from "@/app/store/restaurantOrderAtom";
 import { toast } from "react-toastify";
 
@@ -139,8 +137,7 @@ function OrderSummary({
 	};
 	return (
 		<div>
-			{JSON.stringify(restaurant.publicId)} --
-			<div className="bg-white p-6  rounded-lg border  space-y-4">
+			<div className="bg-white p-6  rounded-lg border  space-y-4">{JSON.stringify(authUser)}
 				<h2 className="text-lg font-semibold">Order Summary</h2>
 				<div className="flex justify-between">
 					<span>Subtotal</span>

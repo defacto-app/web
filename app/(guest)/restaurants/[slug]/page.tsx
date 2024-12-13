@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { $api } from "@/http/endpoints";
 import OrderCart from "@/app/user/cart/components/OrderCart";
 import MenuArea from "@/app/(guest)/restaurants/components/MenuArea";
@@ -14,15 +14,36 @@ import {
 	OpeningHourComponent,
 } from "@/app/(guest)/restaurants/components/SingleRestaurantComponents";
 import { SearchBar } from "@/components/SearchBar";
-import {useQuery} from "react-query";
-import type {AxiosError} from "axios";
+import { useQuery, useQueryClient } from "react-query";
+import type { AxiosError } from "axios";
 
 function RestaurantPage({ params }: { params: { slug: string } }) {
-	const [search, setSearch] = useState("");
+	const [searchTerm, setSearchTerm] = useState("");
 	const [activeCategory, setActiveCategory] = useState("All");
+	const queryClient = useQueryClient();
 
-	// **Fetch Restaurant Data**
-	const { data: restaurantData, isLoading, isError, error } = useQuery<any, AxiosError>(
+	// Create memoized debounced function for API calls
+	const debouncedSearch = useCallback(
+		debounce((term: string) => {
+			// Trigger requery by invalidating the menu query
+			queryClient.invalidateQueries(["menu", params.slug, term]);
+		}, 500),
+		[params.slug],
+	);
+
+	// Handle search input changes
+	const handleSearch = (value: string) => {
+		setSearchTerm(value);
+		debouncedSearch(value);
+	};
+
+	// Fetch Restaurant Data
+	const {
+		data: restaurantData,
+		isLoading,
+		isError,
+		error,
+	} = useQuery<any, AxiosError>(
 		["restaurant", params.slug],
 		async () => {
 			const res = await $api.guest.restaurant.one(params.slug);
@@ -30,25 +51,24 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		},
 		{
 			staleTime: 5 * 60 * 1000, // Cache data for 5 minutes
-		}
+		},
 	);
 
-	// **Fetch Menu Items with Debounced Search**
+	// Fetch Menu Items
 	const { data: menuData } = useQuery(
-		["menu", params.slug, search],
+		["menu", params.slug, searchTerm],
 		async () => {
 			const res = await $api.guest.restaurant.one(
-				`${params.slug}?search=${search}`
+				`${params.slug}?search=${searchTerm}`,
 			);
 			return res.data.menu;
 		},
 		{
 			enabled: !!restaurantData, // Only fetch menu data if restaurant data is available
-		}
+		},
 	);
 
-
-	if(restaurantData){
+	if (restaurantData) {
 		sessionStorage.setItem("restaurant_id", restaurantData.restaurant.publicId);
 	}
 
@@ -56,12 +76,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 	const menu = menuData || [];
 	const categories = restaurantData?.categories || [];
 
-	// **Handle Search with Debouncing**
-	const handleSearch = debounce((value: string) => {
-		setSearch(value);
-	}, 500);
-
-	// **Check if Restaurant is Open**
+	// Check if Restaurant is Open
 	const checkIfOpen = (hours: any) => {
 		const now = new Date();
 		const days = [
@@ -94,7 +109,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		? checkIfOpen(restaurant.openingHours)
 		: false;
 
-	// **Handle Loading and Error States**
+	// Handle Loading and Error States
 	if (isLoading) return <LoadingState />;
 	if (isError) return <ErrorState error={error?.message || "Failed to load"} />;
 	if (!restaurant) return null;
@@ -136,7 +151,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 						<div className="sticky top-0 bg-gray-50 z-10 py-4">
 							<SearchBar
 								isLoading={isLoading}
-								value={search}
+								value={searchTerm}
 								onChange={(e) => handleSearch(e.target.value)}
 								placeholder={`Search in ${restaurant.name}`}
 							/>
@@ -155,14 +170,14 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 
 					<div className="hidden lg:block lg:col-span-3">
 						<div className="sticky top-4">
-							<OrderCart  />
+							<OrderCart />
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div className="lg:hidden fixed bottom-4 right-4 z-50">
-				<OrderCart buttonOnly  />
+				<OrderCart buttonOnly />
 			</div>
 		</div>
 	);
