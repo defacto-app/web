@@ -8,7 +8,8 @@ import { Input } from "@/components/ui/input";
 import SideBarRestaurant from "@/components/restaurant/SideBarRestaurant";
 import { useQuery } from "react-query";
 import { useDebounce } from "react-haiku";
-import AllRestaurantLoading from "@/app/(guest)/restaurants/components/AllRestaurantLoading";
+import { AllRestaurantLoading } from "./components/AllRestaurantLoading";
+import SearchBar from "@/components/SearchBar";
 
 const fetchRestaurants = async (
 	page: number,
@@ -70,7 +71,15 @@ export default function Page() {
 
 					<div className="w-full">
 						<div className="sticky top-0 z-10 bg-white w-full p-4">
-							<Input
+							<div ref={inputRef}>
+								<SearchBar
+									isLoading={isLoading}
+									value={searchTerm}
+									onChange={handleSearchChange}
+									placeholder="Search Restaurant and eateries in Asaba ..."
+								/>
+							</div>
+							{/* 				<Input
 								variant="rounded"
 								type="search"
 								value={searchTerm}
@@ -78,7 +87,7 @@ export default function Page() {
 								placeholder="Search Restaurant and eateries in Asaba ..."
 								className="py-4 mt-4 h-10 sm:w-[300px] md:w-[600px]"
 								ref={inputRef}
-							/>
+							/> */}
 						</div>
 						<div className="px-6 pt-4 pb-40">
 							<RestaurantGrid data={data?.data?.data} />

@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { RestaurantType } from "@/lib/types";
+import { NoResultsFound } from "@/app/(guest)/restaurants/components/AllRestaurantLoading";
 
 // Define the props type
 type RestaurantGridProps = {
@@ -9,6 +10,9 @@ type RestaurantGridProps = {
 };
 
 function RestaurantGrid({ data }: RestaurantGridProps) {
+	if (!data || data.length === 0) {
+		return <NoResultsFound />;
+	}
 	return (
 		<div>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

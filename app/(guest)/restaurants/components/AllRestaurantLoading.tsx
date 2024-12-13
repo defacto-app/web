@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AllRestaurantLoading = () => {
+export const AllRestaurantLoading = () => {
     return (
         <div className="pt-4 pb-20">
             <div className="flex px-2">
@@ -88,4 +88,18 @@ const AllRestaurantLoading = () => {
     );
 };
 
-export default AllRestaurantLoading;
+
+
+import { SearchX } from "lucide-react";
+
+export const NoResultsFound = () => {
+  return (
+    <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
+      <SearchX size={64} className="text-gray-400 mb-4" />
+      <h3 className="text-xl font-semibold text-gray-900 mb-2">No results found</h3>
+      <p className="text-gray-600 max-w-md">
+        We couldn't find any restaurants matching your search. Try adjusting your search terms or browse our available restaurants.
+      </p>
+    </div>
+  );
+};
