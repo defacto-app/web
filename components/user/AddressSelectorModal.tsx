@@ -5,6 +5,7 @@ import {
 	AlertDialog,
 	AlertDialogContent,
 	AlertDialogDescription,
+	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
@@ -44,8 +45,6 @@ function AddressSelectorModal({
 		// Add any additional logic for when the address is confirmed
 	};
 
-
-
 	useEffect(() => {
 		const savedData = getSavedAddress();
 		if (savedData) {
@@ -56,40 +55,36 @@ function AddressSelectorModal({
 	const [modalOpen, setModalOpen] = useState(false);
 	return (
 		<div className="relative w-full">
-			<AlertDialog defaultOpen={modalOpen} open={modalOpen}>
+		<AlertDialog open={modalOpen} onOpenChange={setModalOpen}>
 				<AlertDialogTrigger asChild>
 					<div>
 						{deliveryAddress ? (
-							<div className={`flex flex-col gap-2`}>
+						    <div className={`flex flex-col gap-2`}>
 								<span className="text-blue-500 text-sm lg:hidden">
-									Deliver Here:
+										Deliver Here:
 								</span>
 								<Button
-									variant={`outline`}
-									onClick={() => {
-										setModalOpen(true);
-									}}
-									className={`pr-4 py-1 gap-x-4 w-72	  md:w-full`} // Removed `px-4`
+										variant={`outline`}
+										onClick={() => setModalOpen(true)}
+										className={`pr-4 py-1 gap-x-4 w-72 md:w-9/12`}
 								>
-									<div className="w-full truncate flex items-center">
-										<span className="text-blue-500 hidden lg:block">
-											Deliver Here:
-										</span>
-										<span className="truncate ml-1">
-											{deliveryAddress.address || "What's your address ?"}
-										</span>
-									</div>
-
-									<ChevronDown size={`30`} className={`text-blue-500`} />
+										<div className="w-full truncate flex items-center">
+												<span className="text-blue-500 hidden lg:block">
+														Deliver Here:
+												</span>
+												<span className="truncate ml-1">
+														{deliveryAddress.address || "What's your address ?"}
+												</span>
+										</div>
+										<ChevronDown size={`30`} className={`text-blue-500`} />
 								</Button>
-							</div>
+						</div>
 						) : (
 							<div className="relative mb-8 cursor-pointer">
 								<Input
 									onClick={() => {
 										setModalOpen(true);
 									}}
-
 									type="text"
 									placeholder={
 										deliveryAddress ? deliveryAddress : "What's your address ?"
@@ -109,18 +104,8 @@ function AddressSelectorModal({
 				</AlertDialogTrigger>
 
 				<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
-					<AlertDialogDescription>
-						<span>{title}</span>
-					</AlertDialogDescription>
-					<button
-						type="button"
-						onClick={() => {
-							setModalOpen(false);
-						}}
-						className="absolute top-4 right-2 bg-gray-200 rounded-full p-2"
-					>
-						<X className="w-4 h-4" />
-					</button>
+					<AlertDialogTitle className="text-center">{title}</AlertDialogTitle>
+
 					<AlertDialogTitle className="text-center">
 						{/*<span>{title}</span>*/}
 					</AlertDialogTitle>
