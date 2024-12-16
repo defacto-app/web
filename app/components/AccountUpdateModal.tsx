@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAtomAuthContext } from "@/app/store/authAtom";
 import Debug from "./Debug";
+import Link from "next/link";
 
 interface AccountUpdateModalProps {
   open: boolean;
@@ -58,7 +59,9 @@ function AccountUpdateModal({ open, onOpenChange }: AccountUpdateModalProps) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Later</AlertDialogCancel>
-          <AlertDialogAction>Update Now</AlertDialogAction>
+          <AlertDialogAction>
+          <Link href="/user/account">Update Now</Link>
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
