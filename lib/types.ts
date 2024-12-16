@@ -101,7 +101,7 @@ interface Address {
 interface DropOffDetails {
 	address: Address;
 	name: string;
-	phone?: string;
+	phone: string;
 	email?: string;
 }
 

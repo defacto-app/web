@@ -11,15 +11,15 @@ import { useAtomAuthContext } from "@/app/store/authAtom";
 
 import envData from "@/config/envData";
 import { useAtom } from "jotai/index";
-import {
-	checkoutPayloadAtom,
-} from "@/app/store/restaurantOrderAtom";
+import { checkoutPayloadAtom } from "@/app/store/restaurantOrderAtom";
 import { toast } from "react-toastify";
+import AccountUpdateModal from "@/app/components/AccountUpdateModal";
+import Debug from "@/app/components/Debug";
 
 function OrderSummary({
-	restaurant
+	restaurant,
 }: {
-	restaurant: any
+	restaurant: any;
 }) {
 	const [payload, setPayload] = useAtom(checkoutPayloadAtom);
 	const { cart } = useCartContext();
@@ -30,6 +30,9 @@ function OrderSummary({
 	const [skipPayment] = useState(true);
 
 	const [restaurantId, setRestaurantId] = useState("");
+
+	const [showUpdateModal, setShowUpdateModal] = useState(false);
+
 
 	useEffect(() => {
 		const restaurantId = sessionStorage.getItem("restaurant_id");
@@ -59,6 +62,13 @@ function OrderSummary({
 	// Initiate Flutterwave Payment
 	const initiatePayment = async () => {
 		setLoading(true);
+
+		if (!authUser.firstName || !authUser.verificationStatus.isPhoneVerified) {
+			setShowUpdateModal(true);
+
+			setLoading(false);
+			return; // Stop order creation until profile is complete
+		}
 		const body = {
 			parentId: sessionStorage.getItem("restaurant_id"),
 			restaurantOrder: cart.map((item) => ({
@@ -67,7 +77,7 @@ function OrderSummary({
 				name: item.name,
 				price: item.price,
 			})),
-			restaurantId:restaurant.publicId,
+			restaurantId: restaurant.publicId,
 			charge: totalAmount,
 			deliveryFee,
 			discount,
@@ -137,7 +147,13 @@ function OrderSummary({
 	};
 	return (
 		<div>
-			<div className="bg-white p-6  rounded-lg border  space-y-4">{JSON.stringify(authUser)}
+    <AccountUpdateModal
+      open={showUpdateModal}
+      onOpenChange={setShowUpdateModal}
+    />
+			<div className="bg-white p-6  rounded-lg border  space-y-4">
+
+				<Debug data={authUser} title="AuthUser" />
 				<h2 className="text-lg font-semibold">Order Summary</h2>
 				<div className="flex justify-between">
 					<span>Subtotal</span>
@@ -174,3 +190,5 @@ function OrderSummary({
 }
 
 export default OrderSummary;
+
+

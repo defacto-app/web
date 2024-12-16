@@ -10,6 +10,7 @@ import { useAtomAuthContext } from "@/app/store/authAtom";
 import { setToken } from "@/utils/auth";
 import { toast } from "react-toastify";
 import ResendOTPButton from "@/app/components/ResendOTPButton";
+import PhoneInput from "./PhoneInput";
 
 const PhoneLogin = () => {
 	const { setCurrentStep, getMe, setIsLoggedIn } = useAtomAuthContext();
@@ -184,17 +185,7 @@ const PhoneLogin = () => {
 				</div>
 			) : (
 				<div>
-					<div className={`flex items-center gap-x-2`}>
-						<div className={`border py-2 px-3 rounded-full flex`}>
-							<span>🇳🇬</span>
-							<span>+234</span>
-						</div>
-						<Input
-							className="md:w-full"
-							value={form.phoneNumber}
-							onChange={handleChange}
-						/>
-					</div>
+					<PhoneInput value={form.phoneNumber} onChange={handleChange} />
 					<FormError error={errors.phoneNumber} />
 					<div className="flex justify-center">
 						<Button

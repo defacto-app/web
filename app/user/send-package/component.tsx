@@ -14,7 +14,8 @@ import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
 import GoogleAddressInput from "@/components/GoogleAddressInput";
 import { Button } from "@/components/ui/button";
-import {ErrorMessage} from "@/app/components/ErrorMessage";
+import { ErrorMessage } from "@/app/components/ErrorMessage";
+import PhoneInput from "@/app/components/PhoneInput";
 
 export const PickupAddress = ({
 	payload,
@@ -214,7 +215,7 @@ export const ReceiverDetails = ({
 
 	return (
 		<div className="mt-4 space-y-4">
-			<div >
+			<div>
 				<h3 className="text-lg font-medium mb-4">Receiver Information</h3>
 
 				<div className="space-y-4">
@@ -242,20 +243,23 @@ export const ReceiverDetails = ({
 
 					<div>
 						<Label htmlFor="phone">Phone</Label>
-						<Input
-							id="phone"
-							placeholder="Enter receiver phone"
-							value={payload.dropOffDetails.phone}
-							onChange={(e) =>
-								setPayload({
-									...payload,
-									dropOffDetails: {
-										...payload.dropOffDetails,
-										phone: e.target.value,
-									},
-								})
-							}
-						/>
+
+						<div id="phone">
+							<PhoneInput
+								placeholder="Enter receiver phone"
+								value={payload.dropOffDetails.phone || ""}
+								onChange={(e) =>
+									setPayload({
+										...payload,
+										dropOffDetails: {
+											...payload.dropOffDetails,
+											phone: e.target.value,
+										},
+									})
+								}
+							/>
+						</div>
+
 						<ErrorMessage
 							validationErrors={validationErrors}
 							fieldName="dropOffDetails.phone"
@@ -325,4 +329,3 @@ export const Summary = ({
 		</div>
 	);
 };
-

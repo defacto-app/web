@@ -1,13 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
-import {  UserRoundCogIcon } from "lucide-react";
+import { UserRoundCogIcon } from "lucide-react";
 import UserAuth from "./UserAuth";
 import { UserProvider } from "@/app/provider/auth.context";
 import envData from "@/config/envData";
 import Link from "next/link";
 import Image from "next/image";
 import { useAtomAuthContext } from "@/app/store/authAtom";
-import UserCart from "@/components/user/UserCart";
 
 export default function Header() {
 	const [isSticky, setIsSticky] = useState(false);
@@ -40,7 +39,6 @@ export default function Header() {
 				<div className="flex flex-1 items-center justify-end gap-x-6">
 					{envData.isDev && (
 						<div className={`flex gap-x-2`}>
-							<UserCart />
 							<Link target="_blank" href="/admin">
 								<UserRoundCogIcon className="text-red-500" size={20} />
 							</Link>

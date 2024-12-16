@@ -6,16 +6,11 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import UserPopover from "./UserPopover";
 import { useAtomAuthContext } from "@/app/store/authAtom";
-import UserCart from "@/components/user/UserCart";
-
-
-
 
 export default function UserHeader() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const [isSticky, setIsSticky] = useState(false);
 	const { getMe } = useAtomAuthContext();
-
 
 	useEffect(() => {
 		getMe();
@@ -58,17 +53,14 @@ export default function UserHeader() {
 							alt=""
 							width={100}
 							height={100}
-
 						/>
 					</Link>
 				</motion.div>
 
 				<div className="flex flex-1 items-center justify-end gap-x-6">
 					<UserPopover />
-					<UserCart/>
 
 				</div>
-
 			</nav>
 			<Dialog
 				as="div"
@@ -94,10 +86,7 @@ export default function UserHeader() {
 								}}
 							/>
 						</Link>
-
-
 					</div>
-
 				</Dialog.Panel>
 			</Dialog>
 		</header>

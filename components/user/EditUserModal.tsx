@@ -34,7 +34,7 @@ export default function EditUserModal() {
 							</Label>
 							<Input
 								id="name"
-								defaultValue="Jay Jay Okocha"
+								defaultValue=""
 								className="col-span-3"
 							/>
 						</div>
@@ -44,7 +44,7 @@ export default function EditUserModal() {
 							</Label>
 							<Input
 								id="username"
-								defaultValue="jayjayokocha@gmail.com"
+								defaultValue=""
 								className="col-span-3"
 							/>
 						</div>

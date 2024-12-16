@@ -25,6 +25,10 @@ type authUserType = {
 	email: string;
 	phoneNumber: string;
 	address: string;
+	verificationStatus:{
+		isEmailVerified: boolean;
+		isPhoneVerified: boolean;
+	}
 };
 
 // Atoms for global state management using Jotai

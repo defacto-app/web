@@ -103,7 +103,8 @@ function AddressSelectorModal({
 					</div>
 				</AlertDialogTrigger>
 
-				<AlertDialogContent className="h-full lg:h-[570px] max-w-4xl mx-auto px-4">
+				<AlertDialogContent className="h-full lg:h-4/6 max-w-4xl mx-auto px-4">
+
 					<AlertDialogTitle className="text-center">{title}</AlertDialogTitle>
 
 					<AlertDialogTitle className="text-center">

@@ -85,17 +85,25 @@ const JsonDisplay = ({ data }: JsonDisplayProps) => {
 	);
 };
 
-const Debug = ({ data }: { data: unknown }) => {
-	if (!isDev) return null;
+const Debug = ({
+  data,
+  title
+}: {
+  data: unknown;
+  title?: string
+}) => {
+  if (!isDev) return null;
 
-	return (
-		<details className="my-4">
-			<summary className="cursor-pointer text-sm text-gray-500">
-				Debug Data
-			</summary>
-			<JsonDisplay data={data} />
-		</details>
-	);
+  const displayTitle = title || 'Debug Data';
+
+  return (
+    <details className="my-4">
+      <summary className="cursor-pointer text-sm text-gray-500">
+        {displayTitle}
+      </summary>
+      <JsonDisplay data={data} />
+    </details>
+  );
 };
 
 export default Debug;

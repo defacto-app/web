@@ -18,7 +18,7 @@ function AccountPage() {
 							<div className="flex flex-col gap-y-2">
 								<div>
 									<h1 className="mt-2 text-gray-500">Name</h1>
-									<h2>{authUser.firstName || authUser.email}</h2>
+									<h2>{authUser.firstName || "Not set"}</h2>
 								</div>
 								<div>
 									<h1 className="text-gray-500">Email</h1>
