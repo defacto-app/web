@@ -131,9 +131,16 @@ export const $api = {
             return error;
           }
         },
-        updateEmail: async (body: any) => {
+        update_name_email: async (body: any) => {
           try {
             return $axios.patch(`/account/update-email`, body);
+          } catch (error: any) {
+            return error;
+          }
+        },
+        verifyEmailChange: async (body: any) => {
+          try {
+            return $axios.patch(`/account/verify-email-chnage`, body);
           } catch (error: any) {
             return error;
           }

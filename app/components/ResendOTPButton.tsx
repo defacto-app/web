@@ -3,14 +3,23 @@ import { Button } from "@/components/ui/button"; // Assuming you are using a But
 
 interface ResendOTPButtonProps {
 	onResend: () => void;
-    loading: boolean;
+	loading: boolean;
+	variant?:
+		| "link"
+		| "primary"
+		| "secondary"
+		| "ghost"
+		| "destructive"
+		| "outline"
+		| "outlinePrimary";
 	initialCountdown?: number; // Optional prop for custom countdown duration
 }
 
 const ResendOTPButton: React.FC<ResendOTPButtonProps> = ({
 	onResend,
 	initialCountdown = 60,
-    loading,
+	loading,
+	variant = "outline",
 }) => {
 	const [countdown, setCountdown] = useState<number>(initialCountdown);
 	const [isResendDisabled, setIsResendDisabled] = useState<boolean>(false);
@@ -33,10 +42,10 @@ const ResendOTPButton: React.FC<ResendOTPButtonProps> = ({
 
 	return (
 		<Button
-            loading={loading}
+			loading={loading}
 			onClick={handleResendClick}
 			disabled={isResendDisabled}
-			variant="outline"
+			variant={variant}
 		>
 			{isResendDisabled ? `Resend OTP in ${countdown}s` : "Resend OTP"}
 		</Button>

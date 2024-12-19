@@ -46,7 +46,7 @@ function Email() {
 	const currentStepDetails = getCurrentStep();
 
 	const [formData, setFormData] = useState({
-		email: isDev ? "kats.com.ng@gmail.com" : "",
+		email: isDev ? "chibuezenmeje@gmail.com" : "",
 		password: isDev ? "123456" : "",
 	});
 
