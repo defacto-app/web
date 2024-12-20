@@ -57,7 +57,6 @@ export default function EditUserModal() {
 	});
 
 	const onSubmit = async (data: FormData) => {
-
 		setLoading(true);
 		try {
 			const res = (await $api.auth.user.account.update_name_email({
@@ -109,11 +108,14 @@ export default function EditUserModal() {
 	const handleOTPSubmit = async () => {
 		setIsVerifying(true);
 		try {
-			await $api.auth.user.account.verifyEmailChange({ code: otp });
+			const res = await $api.auth.user.account.verifyEmailChange({ code: otp });
 			setAuthUser((prev: any) => ({ ...prev, email: authUser.email })); // Update local state
 			toast.success("Email updated successfully");
 			setIsOpen(false);
+
+			console.log(res.data);
 		} catch (error: any) {
+			console.log(error);
 			toast.error(error.message || "Failed to verify OTP");
 		} finally {
 			setIsVerifying(false);
@@ -172,23 +174,37 @@ export default function EditUserModal() {
 						</AlertDialogFooter>
 					</form>
 				) : (
-					<div>
-						<p> {newEmail}</p>
-						<p>Enter the OTP sent to your new email:</p>
-						<InputOTPPattern defaultValue={otp} setOtp={setOtp} />
-						<ResendOTPButton
-							onResend={() => handleSubmit(onSubmit)()}
-							loading={loading}
-							variant="link"
-						/>
-						<Button
-							onClick={handleOTPSubmit}
-							disabled={isVerifying || !otp}
-							className="mt-4"
-							variant="primary"
-						>
-							{isVerifying ? "Verifying..." : "Verify OTP"}
-						</Button>
+					<div className="flex flex-col items-center space-y-4 p-4">
+						<div className="text-center">
+							<p className="text-sm text-gray-500">
+								Verification code sent to:
+							</p>
+							<p className="font-medium">{newEmail}</p>
+						</div>
+
+						<div className="w-full max-w-sm">
+							<p className="mb-2 text-sm text-gray-600">
+								Enter the OTP sent to your new email:
+							</p>
+							<InputOTPPattern defaultValue={otp} setOtp={setOtp} />
+						</div>
+
+						<div className="flex flex-col items-center gap-2 w-full">
+							<Button
+								onClick={handleOTPSubmit}
+								disabled={isVerifying || !otp}
+								className="w-full max-w-sm"
+								variant="primary"
+							>
+								{isVerifying ? "Verifying..." : "Verify OTP"}
+							</Button>
+
+							<ResendOTPButton
+								onResend={() => handleSubmit(onSubmit)()}
+								loading={loading}
+								variant="link"
+							/>
+						</div>
 					</div>
 				)}
 			</AlertDialogContent>

@@ -140,7 +140,7 @@ export const $api = {
         },
         verifyEmailChange: async (body: any) => {
           try {
-            return $axios.patch(`/account/verify-email-chnage`, body);
+            return $axios.patch(`/account/verify-email-change`, body);
           } catch (error: any) {
             return error;
           }
