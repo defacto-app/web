@@ -20,7 +20,7 @@ const PhoneInput = ({
 		<div
 			className={`flex w-full rounded-lg border overflow-hidden ${className}`}
 		>
-			<div className="flex items-center gap-x-2 px-4 py-2 bg-white border-r">
+			<div className="flex items-center gap-x-2 px-2 py-2 bg-white border-r">
 				<span>🇳🇬</span>
 				<span className="text-gray-600">+234</span>
 			</div>
