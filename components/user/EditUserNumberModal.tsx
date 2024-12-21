@@ -29,7 +29,7 @@ export default function EditUserNumberModal() {
 	// Form state
 	const [form, setForm] = useState({
 		code: "+234",
-		phoneNumber: isDev ? authUser.phoneNumber : "",
+		phoneNumber: isDev ? authUser.phoneNumber : "08102289245",
 		otp: "",
 	});
 
@@ -48,72 +48,84 @@ export default function EditUserNumberModal() {
 
 	// Handle phone number input change
 	function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value;
-    setForm((prev) => ({ ...prev, phoneNumber: value }));
-    setErrors((prev) => ({ ...prev, phoneNumber: "" })); // Reset phone number errors
-}
+		const value = event.target.value;
+		setForm((prev) => ({ ...prev, phoneNumber: value }));
+		setErrors((prev) => ({ ...prev, phoneNumber: "" })); // Reset phone number errors
+	}
 
 	// Handle OTP input change
 	function handleOtpChange(value: string) {
 		setForm((prev) => ({ ...prev, otp: value }));
 		setErrors((prev) => ({ ...prev, otp: "" })); // Reset OTP errors
 	}
+	function resetForm() {
+		setForm({ code: "+234", phoneNumber: "", otp: "" });
+		setErrors({ phoneNumber: "", otp: "" });
+		setShowOtpInput(false);
+	}
+	function closeDialog() {
+		setIsDialogOpen(false);
+		resetForm();
+	}
+	const isValidPhoneNumber = (phone: string) =>
+		/^\d{10,15}$/.test(phone.replace(/\s/g, "")); // Adjust regex to match your expected format
 
 	// Send OTP
 	async function sendOtp() {
-		if (!form.phoneNumber) {
+		if (!isValidPhoneNumber(form.phoneNumber)) {
 			setErrors((prev) => ({
 				...prev,
-				phoneNumber: "Phone number is required.",
+				phoneNumber: "Invalid phone number format.",
 			}));
 			return;
 		}
 
 		setIsSendingOTP(true);
 		try {
-			const response = await $api.auth.user.confirm_phone_login({
-				phoneNumber: `${form.code}${form.phoneNumber}`,
+		const res = 	await $api.auth.user.account.update_phone_number({
+			phoneNumber: `${form.code}${form.phoneNumber}`,
 			});
-			toast.success("OTP sent successfully.");
-			setShowOtpInput(true); // Show OTP input after successful OTP sending
+			console.log(res.message);
+			toast.success(res.message || "OTP sent successfully.");
+			setShowOtpInput(true);
 		} catch (error: any) {
+
+			console.log(error.message);
 			setErrors((prev) => ({
 				...prev,
-				phoneNumber: error.error?.phoneNumber || "Failed to send OTP.",
+				phoneNumber: error.message || "Failed to send OTP.",
 			}));
 		} finally {
 			setIsSendingOTP(false);
 		}
 	}
 
-	// Update phone number
 	async function updateNumber() {
 		if (!form.otp) {
-			setErrors((prev) => ({
-				...prev,
-				otp: "OTP is required.",
-			}));
+			setErrors((prev) => ({ ...prev, otp: "OTP is required." }));
 			return;
 		}
 
 		setIsUpdatingNumber(true);
 		try {
-			const response = await $api.auth.user.account.update({
+			const response = await $api.auth.user.account.verify_phone_number({
 				phoneNumber: form.phoneNumber,
 				otp: form.otp,
 			});
 			toast.success(response.message || "Phone number updated successfully.");
 			await getMe();
-			setIsDialogOpen(false); // Close dialog on success
+			closeDialog();
 		} catch (error: any) {
 			setErrors((prev) => ({
 				...prev,
-				otp: error.error?.otp || "Failed to update phone number.",
+				otp: error?.response?.data?.message || "Failed to verify OTP.",
 			}));
 		} finally {
 			setIsUpdatingNumber(false);
 		}
 	}
+
+	// Update phone number
 
 	return (
 		<div>
@@ -167,7 +179,7 @@ export default function EditUserNumberModal() {
 								type="submit"
 								variant="primary"
 							>
-							Confirm Number
+								Confirm Number
 							</Button>
 						)}
 					</AlertDialogFooter>

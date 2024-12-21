@@ -1,4 +1,5 @@
 import { $axios, fetchWithAuth } from "@/http/http.fn";
+import { verify } from "crypto";
 
 export const $api = {
   guest: {
@@ -134,6 +135,20 @@ export const $api = {
         update_name_email: async (body: any) => {
           try {
             return $axios.patch(`/account/update-email`, body);
+          } catch (error: any) {
+            return error;
+          }
+        },
+        update_phone_number: async (body: any) => {
+          try {
+            return $axios.patch(`/account/update-phone-number`, body);
+          } catch (error: any) {
+            return error;
+          }
+        },
+        verify_phone_number: async (body: any) => {
+          try {
+            return $axios.patch(`/account/verify-phone-number`, body);
           } catch (error: any) {
             return error;
           }
