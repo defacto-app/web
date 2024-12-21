@@ -79,6 +79,7 @@ export default function Page() {
 									placeholder="Search Restaurant and eateries in Asaba ..."
 								/>
 							</div>
+
 							{/* 				<Input
 								variant="rounded"
 								type="search"
@@ -90,7 +91,14 @@ export default function Page() {
 							/> */}
 						</div>
 						<div className="px-6 pt-4 pb-40">
-							<RestaurantGrid data={data?.data?.data} />
+						<div>
+							{ searchTerm && (
+								<div className="text-sm text-gray-500">
+									Search results for: <span className="font-medium">{searchTerm}</span>
+								</div>
+							)}
+							</div>
+							<RestaurantGrid searchTerm={searchTerm} data={data?.data?.data} />
 						</div>
 					</div>
 				</div>

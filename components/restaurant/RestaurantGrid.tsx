@@ -7,11 +7,12 @@ import { NoResultsFound } from "@/app/(guest)/restaurants/components/AllRestaura
 // Define the props type
 type RestaurantGridProps = {
 	data: any[];
+	searchTerm: string;
 };
 
 function RestaurantGrid({ data }: RestaurantGridProps) {
 	if (!data || data.length === 0) {
-		return <NoResultsFound />;
+		return <NoResultsFound  />;
 	}
 	return (
 		<div>

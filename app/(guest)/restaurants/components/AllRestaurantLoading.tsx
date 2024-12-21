@@ -98,8 +98,8 @@ export const NoResultsFound = () => {
       <SearchX size={64} className="text-gray-400 mb-4" />
       <h3 className="text-xl font-semibold text-gray-900 mb-2">No results found</h3>
       <p className="text-gray-600 max-w-md">
-        We couldn't find any restaurants matching your search. Try adjusting your search terms or browse our available restaurants.
-      </p>
-    </div>
-  );
+                We couldn't find any restaurants matching your search . Try adjusting your search terms or browse our available restaurants.
+            </p>
+        </div>
+    );
 };
