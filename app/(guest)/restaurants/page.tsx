@@ -4,96 +4,121 @@ import type React from "react";
 import { useEffect, useState, useRef } from "react";
 import RestaurantGrid from "@/components/restaurant/RestaurantGrid";
 import { $api } from "@/http/endpoints";
-import { Input } from "@/components/ui/input";
 import SideBarRestaurant from "@/components/restaurant/SideBarRestaurant";
 import { useQuery } from "react-query";
 import { useDebounce } from "react-haiku";
 import { AllRestaurantLoading } from "./components/AllRestaurantLoading";
 import SearchBar from "@/components/SearchBar";
+import { RestaurantQueryParams } from "@/lib/types";
+
+interface FilterOptions {
+  category: string;
+  menuCategory: string;
+  dietary: string[];
+  priceRange: string;
+  quickFilter: string;
+  sort: string;
+}
 
 const fetchRestaurants = async (
-	page: number,
-	perPage: number,
-	searchTerm: string,
-) => {
-	const response = $api.guest.restaurant.all({
-		page,
-		perPage,
-		searchTerm,
-	});
-	return response;
+  page: number,
+  perPage: number,
+  searchTerm: string,
+  filters: FilterOptions
+): Promise<any> => {
+  const params: RestaurantQueryParams = {
+    page,
+    perPage,
+    ...(searchTerm && { search: searchTerm }),
+    ...(filters.category && { category: filters.category }),
+    ...(filters.dietary.length > 0 && { dietary: filters.dietary.join(",") }),
+    ...(filters.quickFilter && { quickFilter: filters.quickFilter }),
+    ...(filters.sort && filters.sort !== "recommended" && { sort: filters.sort }),
+    ...(filters.priceRange && { priceRange: filters.priceRange })
+  };
+
+  return $api.guest.restaurant.all(params);
 };
 
 export default function Page() {
-	const [searchTerm, setSearchTerm] = useState("");
-	const [page, setPage] = useState(1);
-	const [perPage, setPerPage] = useState(30);
-	const debouncedSearchTerm = useDebounce(searchTerm, 500);
-	const inputRef = useRef<HTMLInputElement>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(30);
+  const [filters, setFilters] = useState<FilterOptions>({
+    category: "",
+    menuCategory: "",
+    dietary: [],
+    priceRange: "",
+    quickFilter: "",
+    sort: "recommended"
+  });
 
-	const { data, error, isLoading, refetch } = useQuery(
-		["restaurant", page, perPage, debouncedSearchTerm],
-		() => fetchRestaurants(page, perPage, debouncedSearchTerm),
-	);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const debouncedFilters = useDebounce(filters, 500);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchTerm(e.target.value);
-	};
+  const { data, error, isLoading, refetch } = useQuery(
+    ["restaurant", page, perPage, debouncedSearchTerm, debouncedFilters],
+    () => fetchRestaurants(page, perPage, debouncedSearchTerm, debouncedFilters)
+  );
 
-	useEffect(() => {
-		if (inputRef.current) {
-			inputRef.current.focus();
-		}
-	}, [debouncedSearchTerm]);
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setPage(1); // Reset page when search changes
+  };
 
-	useEffect(() => {
-		refetch();
-		// Scroll to top of the window instead of a specific element
-		window.scrollTo({
-			top: 0,
-			behavior: "smooth",
-		});
-	}, [debouncedSearchTerm, refetch]);
+  const handleFilterChange = (newFilters: Partial<FilterOptions>) => {
+    setFilters(prev => ({ ...prev, ...newFilters }));
+    setPage(1); // Reset page when filters change
+  };
 
-	if (isLoading) {
-		return <AllRestaurantLoading />;
-	}
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [debouncedSearchTerm]);
 
-	if (error) return <div>Error loading data...</div>;
+  useEffect(() => {
+    refetch();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [debouncedSearchTerm, debouncedFilters, refetch]);
 
-	return (
-		<div>
-			<div className="">
-				<div className="flex px-2">
-					<div className="hidden md:block sticky top-0 h-screen w-[300px]">
-						<SideBarRestaurant />
-					</div>
+  if (isLoading) {
+    return <AllRestaurantLoading />;
+  }
 
-					<div className="w-full">
-						<div className="sticky top-0 z-10 bg-white w-full p-4">
-							<div ref={inputRef}>
-								<SearchBar
-									isLoading={isLoading}
-									value={searchTerm}
-									onChange={handleSearchChange}
-									placeholder="Search Restaurant and eateries in Asaba ..."
-								/>
-							</div>
-						</div>
-						<div className="px-6 pt-4 pb-40">
-							<div>
-								{searchTerm && (
-									<div className="text-sm text-gray-500">
-										Search results for:{" "}
-										<span className="font-medium">{searchTerm}</span>
-									</div>
-								)}
-							</div>
-							<RestaurantGrid searchTerm={searchTerm} data={data?.data?.data} />
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+  if (error) return <div>Error loading data...</div>;
+
+  return (
+    <div>
+      <div className="">
+        <div className="flex px-2">
+          <div className="w-full container mx-auto">
+            <div className="sticky top-0 z-10 bg-white w-full p-4">
+              <div ref={inputRef}>
+                <SearchBar
+                  isLoading={isLoading}
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  placeholder="Search Restaurant and eateries in Asaba ..."
+                />
+              </div>
+            </div>
+            <div className="px-6 pt-4 pb-40">
+              <SideBarRestaurant
+                selectedFilters={filters}
+                onFilterChange={handleFilterChange}
+              />
+
+
+              <RestaurantGrid searchTerm={searchTerm} data={data?.data?.data} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

@@ -7,17 +7,24 @@ import { NoResultsFound } from "@/app/(guest)/restaurants/components/AllRestaura
 // Define the props type
 type RestaurantGridProps = {
 	data: any[];
-	searchTerm: string;
+	searchTerm?: string;
 };
 
-function RestaurantGrid({ data }: RestaurantGridProps) {
+function RestaurantGrid({ data, searchTerm }: RestaurantGridProps) {
 	if (!data || data.length === 0) {
-		return <NoResultsFound  />;
+		return <NoResultsFound />;
 	}
+
 	return (
 		<div>
+			{/* Conditionally show results count if there's a search term and results */}
+			{searchTerm && data.length > 0 && (
+				<div className="mb-4 text-sm text-gray-600">
+					{data.length} results for "{searchTerm}"
+				</div>
+			)}
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-				{data.map((restaurant: RestaurantType, index: any) => (
+				{data.map((restaurant: RestaurantType) => (
 					<Link
 						href={`/restaurants/${restaurant.slug}`}
 						key={restaurant.publicId}
@@ -34,14 +41,22 @@ function RestaurantGrid({ data }: RestaurantGridProps) {
 							/>
 						</div>
 						<div className="p-4">
-							<span className="inline-block bg-blue-500 text-white text-xs px-2 rounded-full mb-2">
-								{restaurant.category}
-							</span>
 							<h3 className="text-lg font-semibold">{restaurant.name}</h3>
-							<div className="flex items-center mt-2">
+							<div className="flex items-center ">
 								<span className="text-gray-600">{restaurant.rating}</span>
-								<span className="text-gray-600 mx-2">•</span>
-								<span className="text-gray-600">{restaurant.deliveryTime}</span>
+								<span className="text-gray-600 ">•</span>
+								<div className="flex items-center ">
+									{restaurant.deliveryTime ? (
+										<span className="text-gray-600">
+											{restaurant.deliveryTime.min} -{" "}
+											{restaurant.deliveryTime.max} mins
+										</span>
+									) : (
+										<span className="text-gray-600">
+											Delivery time unavailable
+										</span>
+									)}
+								</div>
 							</div>
 						</div>
 					</Link>

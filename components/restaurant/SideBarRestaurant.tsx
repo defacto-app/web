@@ -1,84 +1,283 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { $api } from "@/http/endpoints";
 
-const SideBarRestaurant = () => {
-	// Array to store the filter items for different sections
-	const sortByOptions = [
-		{ id: "near_me", name: "Near me", isActive: true },
-		{ id: "ratings", name: "Ratings", isActive: false },
-		{ id: "delivery_fee", name: "Delivery Fee", isActive: false },
-	];
+interface FilterOption {
+  id: string;
+  name: string;
+}
 
-	const popularFilters = [
-		{ id: "chicken", name: "Chicken" },
-		{ id: "traditional", name: "Traditional" },
-		{ id: "chinese_food", name: "Chinese Food" },
-	];
+interface PriceRange extends FilterOption {
+  min: number;
+  max: number;
+}
 
-	const moreFilters = [
-		{ id: "breakfasts", name: "Breakfasts" },
-		{ id: "lunch", name: "Lunch" },
-		{ id: "bakery_pastry", name: "Bakery & Pastry" },
-		{ id: "alcohol_beer", name: "Alcohol/Beer" },
-		{ id: "ice_cream", name: "Ice Cream" },
-	];
+interface SideBarProps {
+  selectedFilters: {
+    category: string;
+    menuCategory: string;
+    dietary: string[];
+    priceRange: string;
+    quickFilter: string;
+    sort: string;
+  };
+  onFilterChange: (filters: any) => void;
+}
 
-	function getDta() {}
+const SideBarRestaurant = ({ selectedFilters, onFilterChange }: SideBarProps) => {
+  const [filters, setFilters] = useState<{
+    menuCategories: FilterOption[];
+    dietary: FilterOption[];
+    priceRanges: PriceRange[];
+    quickFilters: FilterOption[];
+    sort: FilterOption[];
+  }>({
+    menuCategories: [],
+    dietary: [],
+    priceRanges: [],
+    quickFilters: [],
+    sort: []
+  });
 
-	useEffect(() => {
-		getDta();
-	}, []);
+  useEffect(() => {
+    const fetchFilters = async () => {
+      try {
+        const response = await $api.guest.restaurant.filtersData();
 
-	return (
-		<div className=" p-6  rounded-xl max-w-xs overflow-y-scroll h-[700px]">
-			{/* Sort by Section */}
-			<div className="mb-8">
-				<h4 className="text-lg font-bold mb-4">Sort by</h4>
-				{sortByOptions.map((option) => (
-					<div key={option.id} className="mb-2">
-						<span
-							className={`block py-1 px-4 rounded-lg cursor-pointer ${
-								option.isActive
-									? "text-blue-500  font-semibold"
-									: " text-gray-500 font-medium"
-							}`}
-						>
-							{option.name}
-						</span>
-					</div>
-				))}
-			</div>
+				console.log('response:', response);
+        if (response.success) {
+          setFilters(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching filters:', error);
+      }
+    };
 
-			{/* Popular Filters Section */}
-			<div className="mb-8">
-				<h4 className="text-lg font-bold mb-4">Popular Filters</h4>
-				{popularFilters.map((filter) => (
-					<div key={filter.id} className="mb-2">
-						<span className="block py-2 px-4 rounded-lg  text-gray-700 font-medium cursor-pointer">
-							{filter.name}
-						</span>
-					</div>
-				))}
-			</div>
+    fetchFilters();
+  }, []);
+// Update these handlers in SideBarRestaurant
 
-			{/* More Filters Section */}
-			<div className="mb-8">
-				<h4 className="text-lg font-bold mb-4">More Filters</h4>
-				{moreFilters.map((filter) => (
-					<div key={filter.id} className="mb-2">
-						<span className="block py-2 px-4 rounded-lg  text-gray-700 font-medium cursor-pointer">
-							{filter.name}
-						</span>
-					</div>
-				))}
-			</div>
+const handleQuickFilterClick = (filterId: string) => {
+  console.log('Quick filter clicked:', filterId);
+  onFilterChange({
+    ...selectedFilters,
+    quickFilter: selectedFilters.quickFilter === filterId ? "" : filterId
+  });
+};
 
-			{/* View More Button */}
-			<Button className="w-full py-2 px-4 text-white bg-blue-500 rounded-full font-medium hover:bg-blue-600 transition duration-200">
-				View more
-			</Button>
-		</div>
-	);
+const handleDietaryChange = (optionId: string) => {
+  console.log('Dietary changed:', optionId);
+  const currentDietary = selectedFilters.dietary || [];
+  const updatedDietary = currentDietary.includes(optionId)
+    ? currentDietary.filter(id => id !== optionId)
+    : [...currentDietary, optionId];
+
+  onFilterChange({
+    ...selectedFilters,
+    dietary: updatedDietary
+  });
+};
+
+
+
+
+  return (
+    <div className="mt-4 space-x-4 overflow-x-auto flex pb-2">
+      {/* Quick Filters */}
+      {filters.quickFilters.map((filter) => (
+        <Button
+          key={filter.id}
+          variant={selectedFilters.quickFilter === filter.id ? "default" : "outline"}
+          className="rounded-full flex-shrink-0"
+          onClick={() => handleQuickFilterClick(filter.id)}
+        >
+          {filter.name}
+        </Button>
+      ))}
+
+      {/* Category Filter */}
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className="rounded-full flex-shrink-0"
+          >
+            Categories
+            <ChevronDown className="ml-2 h-4 w-4" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-80">
+          <div className="p-4">
+            <h4 className="font-semibold mb-4">Categories</h4>
+            <RadioGroup
+              value={selectedFilters.category}
+              onValueChange={(value) => onFilterChange({
+                ...selectedFilters,
+                category: value
+              })}
+            >
+              {filters.menuCategories.map((category) => (
+                <div key={category.id} className="flex items-center space-x-2 py-2">
+                  <RadioGroupItem value={category.name} id={category.id} />
+                  <Label htmlFor={category.id}>{category.name}</Label>
+                </div>
+              ))}
+            </RadioGroup>
+            {selectedFilters.category && (
+              <div className="flex justify-end mt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => onFilterChange({
+                    ...selectedFilters,
+                    category: ""
+                  })}
+                >
+                  Clear
+                </Button>
+              </div>
+            )}
+          </div>
+        </PopoverContent>
+      </Popover>
+
+      {/* Sort Options */}
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className="rounded-full flex-shrink-0"
+          >
+            Sort
+            <ChevronDown className="ml-2 h-4 w-4" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-80">
+          <div className="p-4">
+            <h4 className="font-semibold mb-4">Sort By</h4>
+            <RadioGroup
+              value={selectedFilters.sort}
+              onValueChange={(value) => onFilterChange({
+                ...selectedFilters,
+                sort: value
+              })}
+            >
+              {filters.sort.map((option) => (
+                <div key={option.id} className="flex items-center space-x-2 py-2">
+                  <RadioGroupItem value={option.id} id={option.id} />
+                  <Label htmlFor={option.id}>{option.name}</Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+        </PopoverContent>
+      </Popover>
+
+      {/* Price Range */}
+      {filters.priceRanges.length > 0 && (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className="rounded-full flex-shrink-0"
+            >
+              Price Range
+              <ChevronDown className="ml-2 h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-80">
+            <div className="p-4">
+              <h4 className="font-semibold mb-4">Price Range</h4>
+              <RadioGroup
+                value={selectedFilters.priceRange}
+                onValueChange={(value) => onFilterChange({
+                  ...selectedFilters,
+                  priceRange: value
+                })}
+              >
+                {filters.priceRanges.map((range) => (
+                  <div key={range.id} className="flex items-center space-x-2 py-2">
+                    <RadioGroupItem value={range.id} id={range.id} />
+                    <Label htmlFor={range.id}>{range.name}</Label>
+                  </div>
+                ))}
+              </RadioGroup>
+              {selectedFilters.priceRange && (
+                <div className="flex justify-end mt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => onFilterChange({
+                      ...selectedFilters,
+                      priceRange: ""
+                    })}
+                  >
+                    Clear
+                  </Button>
+                </div>
+              )}
+            </div>
+          </PopoverContent>
+        </Popover>
+      )}
+
+      {/* Dietary Options */}
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className={`rounded-full flex-shrink-0 ${
+              selectedFilters.dietary.length > 0 ? "bg-primary text-primary-foreground" : ""
+            }`}
+          >
+            Dietary
+            {selectedFilters.dietary.length > 0 && (
+              <span className="ml-2 bg-white text-primary rounded-full px-2 text-xs">
+                {selectedFilters.dietary.length}
+              </span>
+            )}
+            <ChevronDown className="ml-2 h-4 w-4" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-80">
+          <div className="p-4">
+            <h4 className="font-semibold mb-4">Dietary Options</h4>
+            {filters.dietary.map((option) => (
+              <div key={option.id} className="flex items-center space-x-2 py-2">
+                <input
+                  type="checkbox"
+                  id={option.id}
+                  checked={selectedFilters.dietary.includes(option.id)}
+                  onChange={() => handleDietaryChange(option.id)}
+                  className="rounded border-gray-300 focus:ring-primary"
+                />
+                <Label htmlFor={option.id}>{option.name}</Label>
+              </div>
+            ))}
+            {selectedFilters.dietary.length > 0 && (
+              <div className="flex justify-end mt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => onFilterChange({
+                    ...selectedFilters,
+                    dietary: []
+                  })}
+                >
+                  Clear All
+                </Button>
+              </div>
+            )}
+          </div>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
 };
 
 export default SideBarRestaurant;

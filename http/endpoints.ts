@@ -1,14 +1,32 @@
 import { $axios, fetchWithAuth } from "@/http/http.fn";
+import type { RestaurantQueryParams } from "@/lib/types";
 import { verify } from "crypto";
 
 export const $api = {
   guest: {
     restaurant: {
-      all: async ({ page = 1, perPage = 20, searchTerm = "" }) => {
+      all: (params: RestaurantQueryParams) => {
         try {
           return $axios.get(`/restaurants`, {
-            params: { page, perPage, search: searchTerm },
+            params: {
+              page: params.page || 1,
+              perPage: params.perPage || 20,
+              ...(params.search && { search: params.search }),
+              ...(params.category && { category: params.category }),
+              ...(params.dietary && { dietary: params.dietary }),
+              ...(params.quickFilter && { quickFilter: params.quickFilter }),
+              ...(params.sort && { sort: params.sort }),
+              ...(params.priceRange && { priceRange: params.priceRange })
+            }
           });
+        } catch (error: any) {
+          return error;
+        }
+      },
+
+      filtersData: async () => {
+        try {
+          return $axios.get(`/restaurants/filters`);
         } catch (error: any) {
           return error;
         }

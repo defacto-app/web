@@ -42,9 +42,10 @@ export const BreadcrumbNav = ({
 interface RestaurantHeroProps {
 	image: string;
 	name: string;
-	deliveryTime: string;
-	address: string;
+	deliveryTime: { min: number; max: number };
+	address: { fullAddress: string };
 	isOpen: boolean;
+	rating: number;
 }
 
 export const RestaurantHero = ({
@@ -53,6 +54,7 @@ export const RestaurantHero = ({
 	name,
 	deliveryTime,
 	address,
+	rating,
 }: RestaurantHeroProps) => (
 	<div className="relative h-[200px] md:h-[280px] bg-gray-900">
 		<Image
@@ -79,15 +81,15 @@ export const RestaurantHero = ({
 						<div className="flex flex-wrap gap-3 md:gap-6 items-center text-sm md:text-base">
 							<div className="flex items-center gap-1">
 								<ThumbsUp className="w-4 h-4 text-green-400" />
-								<span>95%</span>
+								<span>{rating}</span>
 							</div>
 							<div className="flex items-center gap-1">
 								<Clock1 className="w-4 h-4" />
-								<span>{deliveryTime}</span>
+							  <span>{`${deliveryTime.min}-${deliveryTime.max} min`}</span>
 							</div>
 							<div className="flex items-center gap-1">
 								<MapPin className="w-4 h-4" />
-								<span className="line-clamp-1">{address}</span>
+								<span className="line-clamp-1">{address.fullAddress}</span>
 							</div>
 						</div>
 						<RestaurantStatus isOpen={isOpen} />

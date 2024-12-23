@@ -17,7 +17,10 @@ export interface Restaurant {
 	phone: string;
 	email: string;
 	openingHours: OpeningHours;
-	deliveryTime: string;
+	deliveryTime:{
+		min: number;
+		max: number;
+	}
 	category: string;
 	description: string;
 	menuItems: any[]; // Replace 'any' with proper type if available
@@ -29,7 +32,10 @@ export type RestaurantType = {
 	name: string; // The name of the restaurant
 	address: string; // The address of the restaurant
 	category: string; // The category of food (e.g., "Pasta")
-	deliveryTime: string; // Estimated delivery time (e.g., "11-22 mins")
+	deliveryTime: {
+		min: number; // Minimum delivery time (e.g., 11)
+		max: number; // Maximum delivery time (e.g., 22)
+	}; // Estimated delivery time (e.g., "11-22 mins")
 	email: string; // Email address of the restaurant
 	phone: string; // Phone number of the restaurant
 	image: string; // URL of the restaurant's image
@@ -270,3 +276,16 @@ export interface Category {
 }
 
 // Rest of your existing types remain the same...
+
+
+
+export interface RestaurantQueryParams {
+  page?: number;
+  perPage?: number;
+  search?: string;
+  category?: string;
+  dietary?: string;
+  quickFilter?: string;
+  sort?: string;
+  priceRange?: string;
+}
