@@ -4,7 +4,7 @@ import type React from "react";
 import { useEffect, useState, useRef } from "react";
 import RestaurantGrid from "@/components/restaurant/RestaurantGrid";
 import { $api } from "@/http/endpoints";
-import SideBarRestaurant from "@/components/restaurant/SideBarRestaurant";
+import SideBarRestaurant from "@/components/restaurant/RestaurantFilterComponent";
 import { useQuery } from "react-query";
 import { useDebounce } from "react-haiku";
 import { AllRestaurantLoading } from "./components/AllRestaurantLoading";
