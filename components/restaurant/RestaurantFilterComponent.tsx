@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { $api } from "@/http/endpoints";
+import SingleCategorySelect from "./SingleCategorySelect";
 
 interface FilterOption {
 	id: string;
@@ -106,87 +107,18 @@ const RestaurantFilterComponent = ({
 			))}
 
 			{/* Category Filter */}
-			<Popover>
-				<PopoverTrigger asChild>
-					<Button variant="outline" className="rounded-full flex-shrink-0">
-						Categories
-						<ChevronDown className="ml-2 h-4 w-4" />
-					</Button>
-				</PopoverTrigger>
-				<PopoverContent className="w-80">
-					<div className="p-4">
-						<h4 className="font-semibold mb-4">Categories</h4>
-						<RadioGroup
-							value={selectedFilters.category}
-							onValueChange={(value) =>
-								onFilterChange({
-									...selectedFilters,
-									category: value,
-								})
-							}
-						>
-							{filters.menuCategories.map((category) => (
-								<div
-									key={category.id}
-									className="flex items-center space-x-2 py-2"
-								>
-									<RadioGroupItem value={category.name} id={category.id} />
-									<Label htmlFor={category.id}>{category.name}</Label>
-								</div>
-							))}
-						</RadioGroup>
-						{selectedFilters.category && (
-							<div className="flex justify-end mt-4">
-								<Button
-									variant="outline"
-									onClick={() =>
-										onFilterChange({
-											...selectedFilters,
-											category: "",
-										})
-									}
-								>
-									Clear
-								</Button>
-							</div>
-						)}
-					</div>
-				</PopoverContent>
-			</Popover>
+			<SingleCategorySelect
+				selectedCategory={selectedFilters.category}
+				onSelect={(value) =>
+					onFilterChange({
+						...selectedFilters,
+						category: value,
+					})
+				}
+				categories={filters.menuCategories}
+			/>
 
 			{/* Sort Options */}
-			<Popover>
-				<PopoverTrigger asChild>
-					<Button variant="outline" className="rounded-full flex-shrink-0">
-						Sort
-						<ChevronDown className="ml-2 h-4 w-4" />
-					</Button>
-				</PopoverTrigger>
-				<PopoverContent className="w-80">
-					<div className="p-4">
-						<h4 className="font-semibold mb-4">Sort By</h4>
-						<RadioGroup
-							value={selectedFilters.sort}
-							onValueChange={(value) =>
-								onFilterChange({
-									...selectedFilters,
-									sort: value,
-								})
-							}
-						>
-							{filters.sort.map((option) => (
-								<div
-									key={option.id}
-									className="flex items-center space-x-2 py-2"
-								>
-									<RadioGroupItem value={option.id} id={option.id} />
-									<Label htmlFor={option.id}>{option.name}</Label>
-								</div>
-							))}
-						</RadioGroup>
-					</div>
-				</PopoverContent>
-			</Popover>
 
 			{/* Price Range */}
 			{filters.priceRanges.length > 0 && (
