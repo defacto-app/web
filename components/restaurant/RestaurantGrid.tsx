@@ -23,15 +23,16 @@ function RestaurantGrid({ data, searchTerm }: RestaurantGridProps) {
 					{data.length} results for "{searchTerm}"
 				</div>
 			)}
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
 				{data.map((restaurant: RestaurantType) => (
 					<Link
 						href={`/restaurants/${restaurant.slug}`}
 						key={restaurant.publicId}
-						className="bg-white rounded-lg shadow-md overflow-hidden"
+						className="bg-white rounded-lg  overflow-hidden"
 					>
 						<div className="relative h-48">
 							<Image
+							className="rounded-md"
 								src={restaurant.image}
 								alt={restaurant.name}
 								fill
@@ -40,7 +41,7 @@ function RestaurantGrid({ data, searchTerm }: RestaurantGridProps) {
 								style={{ objectFit: "cover" }}
 							/>
 						</div>
-						<div className="p-4">
+						<div className="p-2">
 							<h3 className="text-lg font-semibold">{restaurant.name}</h3>
 							<div className="flex items-center ">
 								<span className="text-gray-600">{restaurant.rating}</span>
