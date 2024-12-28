@@ -25,10 +25,10 @@ type authUserType = {
 	email: string;
 	phoneNumber: string;
 	address: string;
-	verificationStatus:{
+	verificationStatus: {
 		isEmailVerified: boolean;
 		isPhoneVerified: boolean;
-	}
+	};
 };
 
 // Atoms for global state management using Jotai
@@ -49,6 +49,10 @@ export const authUserAtom = atom<authUserType>({
 	email: "",
 	phoneNumber: "",
 	address: "",
+	verificationStatus: {
+		isEmailVerified: false,
+		isPhoneVerified: false,
+	},
 });
 
 // Define a derived atom to handle `goBack` function
@@ -63,7 +67,16 @@ export const goBackAtom = atom(null, (get, set) => {
 export const logOutAtom = atom(null, async (get, set) => {
 	clearToken("user");
 	set(isLoggedInAtom, false);
-	set(authUserAtom, { firstName: "", email: "", phoneNumber: "", address: "" }); // Reset user data
+	set(authUserAtom, {
+		firstName: "",
+		email: "",
+		phoneNumber: "",
+		address: "",
+		verificationStatus: {
+			isEmailVerified: false,
+			isPhoneVerified: false,
+		},
+	}); // Reset user data
 	localStorage.setItem("isLoggedIn", JSON.stringify(false));
 	set(currentStepAtom, authSteps[0]); // Optionally reset the step to "welcome"
 	set(modalOpenAtom, false); // Close any open modals
