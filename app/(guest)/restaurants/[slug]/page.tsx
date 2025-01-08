@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo } from "react";
 import { $api } from "@/http/endpoints";
 import OrderCart from "@/app/user/cart/components/OrderCart";
 import MenuArea from "@/app/(guest)/restaurants/components/MenuArea";
@@ -14,14 +14,13 @@ import {
 	OpeningHourComponent,
 } from "@/app/(guest)/restaurants/components/SingleRestaurantComponents";
 import { SearchBar } from "@/components/SearchBar";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import type { AxiosError } from "axios";
 
 function RestaurantPage({ params }: { params: { slug: string } }) {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [activeCategory, setActiveCategory] = useState("All");
 	const [debouncedTerm, setDebouncedTerm] = useState("");
-	const queryClient = useQueryClient();
 
 	// Create memoized debounced function for API calls
 	const debouncedSetTerm = useMemo(
@@ -31,7 +30,6 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 			}, 500),
 		[],
 	);
-
 
 	// Fetch Restaurant Data
 	const {
@@ -46,7 +44,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 			return res.data;
 		},
 		{
-			staleTime: 5 * 60 * 1000, // Cache data for 5 minutes
+			staleTime: 5 * 60 * 1000,
 		},
 	);
 
@@ -55,20 +53,21 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 		["menu", params.slug, debouncedTerm],
 		async () => {
 			const res = await $api.guest.restaurant.one(
-				`${params.slug}?search=${debouncedTerm}`,
+				debouncedTerm ? `${params.slug}?search=${debouncedTerm}` : params.slug,
 			);
 			return res.data.menu;
 		},
 		{
-			enabled: !!restaurantData && debouncedTerm !== "", // Only fetch menu data if restaurant data is available and debouncedTerm is not empty
+			enabled: !!restaurantData, // Only fetch menu data if restaurant data is available
 		},
 	);
 
 	// Handle search input changes
 	const handleSearch = (value: string) => {
 		setSearchTerm(value);
-		debouncedSetTerm(value); // Update the debounced term with a delay
+		debouncedSetTerm(value);
 	};
+
 	if (restaurantData) {
 		sessionStorage.setItem("restaurant_id", restaurantData.restaurant.publicId);
 	}

@@ -4,12 +4,12 @@ import type React from "react";
 import { useEffect, useState, useRef } from "react";
 import RestaurantGrid from "@/components/restaurant/RestaurantGrid";
 import { $api } from "@/http/endpoints";
-import SideBarRestaurant from "@/components/restaurant/RestaurantFilterComponent";
+import RestaurantFilterComponent from "@/components/restaurant/RestaurantFilterComponent";
 import { useQuery } from "react-query";
 import { useDebounce } from "react-haiku";
 import { AllRestaurantLoading } from "./components/AllRestaurantLoading";
 import SearchBar from "@/components/SearchBar";
-import { RestaurantQueryParams } from "@/lib/types";
+import type { RestaurantQueryParams } from "@/lib/types";
 
 interface FilterOptions {
   category: string;
@@ -95,8 +95,8 @@ export default function Page() {
   return (
     <div>
       <div className="">
-        <div className="flex px-2">
-          <div className="w-full container mx-auto">
+        <div className="flex">
+          <div className="w-full lg:container lg:mx-auto">
             <div className="sticky top-0 z-10 bg-white w-full p-4">
               <div ref={inputRef}>
                 <SearchBar
@@ -107,8 +107,8 @@ export default function Page() {
                 />
               </div>
             </div>
-            <div className="px-6 pt-4 pb-40">
-              <SideBarRestaurant
+            <div className=" pt-4 pb-40">
+              <RestaurantFilterComponent
                 selectedFilters={filters}
                 onFilterChange={handleFilterChange}
               />

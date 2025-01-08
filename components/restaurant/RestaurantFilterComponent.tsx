@@ -77,21 +77,8 @@ const RestaurantFilterComponent = ({
 		});
 	};
 
-	const handleDietaryChange = (optionId: string) => {
-		console.log("Dietary changed:", optionId);
-		const currentDietary = selectedFilters.dietary || [];
-		const updatedDietary = currentDietary.includes(optionId)
-			? currentDietary.filter((id) => id !== optionId)
-			: [...currentDietary, optionId];
-
-		onFilterChange({
-			...selectedFilters,
-			dietary: updatedDietary,
-		});
-	};
-
 	return (
-		<div className="mt-4 space-x-4 overflow-x-auto flex pb-2">
+		<div className="mt-4 space-x-4 overflow-x-auto flex px-4 ">
 			{/* Quick Filters */}
 			{filters.quickFilters.map((filter) => (
 				<Button
@@ -170,60 +157,6 @@ const RestaurantFilterComponent = ({
 					</PopoverContent>
 				</Popover>
 			)}
-
-			{/* Dietary Options */}
-			<Popover>
-				<PopoverTrigger asChild>
-					<Button
-						variant="outline"
-						className={`rounded-full flex-shrink-0 ${
-							selectedFilters.dietary.length > 0
-								? "bg-primary text-primary-foreground"
-								: ""
-						}`}
-					>
-						Dietary
-						{selectedFilters.dietary.length > 0 && (
-							<span className="ml-2 bg-white text-primary rounded-full px-2 text-xs">
-								{selectedFilters.dietary.length}
-							</span>
-						)}
-						<ChevronDown className="ml-2 h-4 w-4" />
-					</Button>
-				</PopoverTrigger>
-				<PopoverContent className="w-80">
-					<div className="p-4">
-						<h4 className="font-semibold mb-4">Dietary Options</h4>
-						{filters.dietary.map((option) => (
-							<div key={option.id} className="flex items-center space-x-2 py-2">
-								<input
-									type="checkbox"
-									id={option.id}
-									checked={selectedFilters.dietary.includes(option.id)}
-									onChange={() => handleDietaryChange(option.id)}
-									className="rounded border-gray-300 focus:ring-primary"
-								/>
-								<Label htmlFor={option.id}>{option.name}</Label>
-							</div>
-						))}
-						{selectedFilters.dietary.length > 0 && (
-							<div className="flex justify-end mt-4">
-								<Button
-									variant="outline"
-									onClick={() =>
-										onFilterChange({
-											...selectedFilters,
-											dietary: [],
-										})
-									}
-								>
-									Clear All
-								</Button>
-							</div>
-						)}
-					</div>
-				</PopoverContent>
-			</Popover>
 		</div>
 	);
 };

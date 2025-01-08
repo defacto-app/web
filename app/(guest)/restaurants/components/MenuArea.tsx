@@ -91,6 +91,7 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 														>
 															{item.name}
 														</h3>
+														<p className="text-sm">{item.description}</p>
 														<p
 															className={!item.available ? "text-gray-500" : ""}
 														>
