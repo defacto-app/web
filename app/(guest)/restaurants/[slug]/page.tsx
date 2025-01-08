@@ -20,22 +20,18 @@ import type { AxiosError } from "axios";
 function RestaurantPage({ params }: { params: { slug: string } }) {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [activeCategory, setActiveCategory] = useState("All");
+	const [debouncedTerm, setDebouncedTerm] = useState("");
 	const queryClient = useQueryClient();
 
 	// Create memoized debounced function for API calls
-	const debouncedSearch = useCallback(
-		debounce((term: string) => {
-			// Trigger requery by invalidating the menu query
-			queryClient.invalidateQueries(["menu", params.slug, term]);
-		}, 500),
-		[params.slug],
+	const debouncedSetTerm = useMemo(
+		() =>
+			debounce((term: string) => {
+				setDebouncedTerm(term);
+			}, 500),
+		[],
 	);
 
-	// Handle search input changes
-	const handleSearch = (value: string) => {
-		setSearchTerm(value);
-		debouncedSearch(value);
-	};
 
 	// Fetch Restaurant Data
 	const {
@@ -56,18 +52,23 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 
 	// Fetch Menu Items
 	const { data: menuData } = useQuery(
-		["menu", params.slug, searchTerm],
+		["menu", params.slug, debouncedTerm],
 		async () => {
 			const res = await $api.guest.restaurant.one(
-				`${params.slug}?search=${searchTerm}`,
+				`${params.slug}?search=${debouncedTerm}`,
 			);
 			return res.data.menu;
 		},
 		{
-			enabled: !!restaurantData, // Only fetch menu data if restaurant data is available
+			enabled: !!restaurantData && debouncedTerm !== "", // Only fetch menu data if restaurant data is available and debouncedTerm is not empty
 		},
 	);
 
+	// Handle search input changes
+	const handleSearch = (value: string) => {
+		setSearchTerm(value);
+		debouncedSetTerm(value); // Update the debounced term with a delay
+	};
 	if (restaurantData) {
 		sessionStorage.setItem("restaurant_id", restaurantData.restaurant.publicId);
 	}
@@ -130,7 +131,6 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 					deliveryTime={restaurant.deliveryTime}
 					address={restaurant.address}
 					rating={restaurant.rating}
-
 				/>
 			</div>
 
