@@ -120,7 +120,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 	];
 
 	return (
-		<div className="min-h-screen bg-gray-50">
+		<div className="min-h-screen ">
 			<BreadcrumbNav restaurantName={restaurant.name} />
 			<div className="relative">
 				<RestaurantHero
@@ -149,7 +149,7 @@ function RestaurantPage({ params }: { params: { slug: string } }) {
 					</div>
 
 					<div className="lg:col-span-7">
-						<div className="sticky top-0 bg-gray-50 z-10 py-4">
+						<div className="sticky top-0 bg-white  z-10 py-4">
 							<SearchBar
 								isLoading={isLoading}
 								value={searchTerm}

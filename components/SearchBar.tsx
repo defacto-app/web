@@ -30,7 +30,7 @@ export const SearchBar = ({
 				<Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
 				<Input
 					variant="rounded"
-					className="pl-10 pr-10 w-full"
+					className="pl-10 pr-10 w-full bg-gray-50"
 					placeholder={placeholder}
 					value={value}
 					onChange={handleInputChange}

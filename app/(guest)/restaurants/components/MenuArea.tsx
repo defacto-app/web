@@ -21,7 +21,7 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 			price: item.price,
 			quantity: 1,
 			image: item.image,
-		} as any;
+		};
 		addItem(cartItem);
 	};
 
@@ -63,53 +63,36 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 								{group.items.map((item: any) => (
 									<div
 										key={item._id}
-										className={`bg-white rounded-lg p-4 ${
-											!item.available && "opacity-75"
-										}`}
+										className="border rounded-lg p-4 flex gap-4 items-center"
 									>
-										<div className="flex justify-between items-start gap-4">
-											<div className="flex gap-4 flex-1">
-												<div className="relative w-32 h-32 flex-shrink-0">
-													<Image
-														src={item.image}
-														alt={item.name}
-														className="rounded-lg object-cover"
-														fill
-														sizes="(max-width: 128px) 100vw, 128px"
-													/>
-												</div>
-												<div className="flex-1">
-													<h3 className="text-lg font-medium mb-2">
-														{item.name}
-													</h3>
-													<p className="text-gray-600 text-sm mb-2 line-clamp-20">
-														{item.description}
-													</p>
-													<div className="flex items-center gap-2">
-														<span className="font-semibold">
-															{formatPrice(item.price)}
-														</span>
-														{!item.available && (
-															<span className="bg-red-100 text-red-500 px-2 py-1 rounded text-sm">
-																Currently unavailable
-															</span>
-														)}
-													</div>
-												</div>
-											</div>
-											<Button
-												variant="ghost"
-												size="icon"
-												className="rounded-full bg-gray-100 hover:bg-gray-200"
-												onClick={() => handleAddToCart(item)}
-												disabled={!item.available}
-												title={
-													!item.available ? "Item unavailable" : "Add to cart"
-												}
-											>
-												<Plus className="h-5 w-5 text-blue-500 stroke-[3]" />
-											</Button>
+										<div className="relative w-24 h-24 flex-shrink-0">
+											<Image
+												src={item.image}
+												alt={item.name}
+												className="rounded-lg object-cover"
+												fill
+												sizes="(max-width: 96px) 100vw, 96px"
+											/>
 										</div>
+										<div className="flex-1">
+											<h3 className="text-md font-semibold">{item.name}</h3>
+											<p className="text-gray-500 text-sm">
+												{item.description}
+											</p>
+											<p className="text-md  mt-1">{formatPrice(item.price)}</p>
+										</div>
+										<Button
+											variant="ghost"
+											size="icon"
+											className="rounded-full bg-gray-100 hover:bg-gray-200 h-10 w-10"
+											onClick={() => handleAddToCart(item)}
+											disabled={!item.available}
+											title={
+												!item.available ? "Item unavailable" : "Add to cart"
+											}
+										>
+											<Plus className="h-6 w-6 text-blue-500" />
+										</Button>
 									</div>
 								))}
 							</div>
