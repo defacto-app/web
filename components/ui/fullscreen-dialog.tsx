@@ -30,29 +30,30 @@ const DialogOverlay = React.forwardRef<
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const DialogContent = React.forwardRef<
-	React.ElementRef<typeof DialogPrimitive.Content>,
-	React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+  React.ElementRef<typeof DialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
-	<DialogPortal>
-		<DialogOverlay />
-		<DialogPrimitive.Content
-			ref={ref}
-			className={cn(
-				"fixed inset-0 z-50 flex flex-col bg-white p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 sm:left-[50%] sm:top-[50%] sm:w-full sm:max-w-6xl sm:translate-x-[-50%] sm:translate-y-[-50%] sm:rounded-lg dark:bg-slate-950",
-				className,
-			)}
-			{...props}
-		>
-			{children}
-			<DialogPrimitive.Close className="absolute right-4 top-7 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 data-[state=open]:text-slate-500 dark:ring-offset-slate-950 dark:focus:ring-slate-300 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:text-slate-400">
-				<CircleX className="text-white h-6 w-6 bg-gray-400 rounded-xl" />
-				<span className="sr-only">Close</span>
-			</DialogPrimitive.Close>
-		</DialogPrimitive.Content>
-	</DialogPortal>
+  <DialogPortal>
+    <DialogOverlay />
+    <DialogPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed inset-0 z-50 flex flex-col bg-white p-6 shadow-lg duration-200 overflow-auto sm:left-[50%] sm:top-[50%] sm:w-full sm:max-w-[600px] sm:translate-x-[-50%] sm:translate-y-[-50%] sm:rounded-lg sm:min-h-[400px] sm:h-auto dark:bg-slate-950", // Updated sizing
+        className,
+      )}
+      {...props}
+    >
+      {children}
+      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-full bg-gray-100 hover:bg-gray-200 focus:outline-none">
+        <CircleX className="h-6 w-6 text-gray-600" />
+        <span className="sr-only">Close</span>
+      </DialogPrimitive.Close>
+    </DialogPrimitive.Content>
+  </DialogPortal>
 ));
 
 DialogContent.displayName = DialogPrimitive.Content.displayName;
+
 
 const DialogHeader = ({
 	className,
