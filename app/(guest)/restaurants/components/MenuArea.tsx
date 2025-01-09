@@ -128,67 +128,67 @@ function MenuArea({ data }: MenuAreaProps) {
 											</Button>
 										</div>
 										<DialogContent className="sm:max-w-[600px] sm:rounded-lg sm:min-h-[400px] h-auto p-6 bg-white">
-											{/* Main Content */}
-											<div className="flex flex-col gap-6">
+											<div className="flex flex-col h-full">
 												{/* Image Section */}
-												<div className="relative w-full h-64 bg-green-200">
+												<div className="relative w-full h-64">
 													<Image
 														src={item.image}
 														alt={item.name}
-														className="rounded-lg object-cover"
+														className="object-cover"
 														fill
+														sizes="(max-width: 600px) 100vw, 600px"
 													/>
 												</div>
 
-												{/* Details Section */}
-												<div className="bg-red-500 p-4 rounded-lg">
-													<h3 className="text-xl font-semibold">{item.name}</h3>
-													<p className="text-gray-600 mt-2">
-														{item.description}
-													</p>
-													<p className="text-xl font-semibold mt-4">
-														{formatPrice(item.price)}
-													</p>
-												</div>
-											</div>
-
-											{/* Footer Section */}
-											<div className="sticky bottom-0 left-0 right-0 p-4 bg-white border-t">
-												<div className="flex items-center gap-4 max-w-md mx-auto">
-													{/* Quantity Selector */}
-													<div className="flex items-center gap-3 bg-gray-100 rounded-full px-2">
-														<Button
-															variant="ghost"
-															size="icon"
-															className="rounded-full h-10 w-10"
-															onClick={() =>
-																setQuantity(Math.max(1, quantity - 1))
-															}
-														>
-															<Minus className="h-5 w-5 text-gray-600" />
-														</Button>
-														<span className="text-lg w-6 text-center">
-															{quantity}
-														</span>
-														<Button
-															variant="ghost"
-															size="icon"
-															className="rounded-full h-10 w-10"
-															onClick={() => setQuantity(quantity + 1)}
-														>
-															<Plus className="h-5 w-5 text-gray-600" />
-														</Button>
+												{/* Content Container */}
+												<div className="p-6 space-y-6">
+													{/* Details Section */}
+													<div className="bg-red-400 rounded-lg p-4">
+														<h3 className="text-xl font-semibold">
+															{item.name}
+														</h3>
+														<p className="text-gray-100 mt-2">
+															{item.description}
+														</p>
+														<p className="text-xl font-semibold mt-4">
+															{formatPrice(item.price)}
+														</p>
 													</div>
 
-													{/* Add to Cart Button */}
-													<Button
-														variant="primary"
-														className="flex-1 rounded-full bg-blue-600 hover:bg-blue-700 h-12 text-white"
-														onClick={() => handleAddToCart(item, quantity)}
-													>
-														Add {quantity} for{" "}
-														{formatPrice(item.price * quantity)}
-													</Button>
+													{/* Action Section */}
+													<div className="flex flex-col gap-4">
+														{/* Quantity Selector */}
+														<div className="flex justify-center">
+															<div className="inline-flex items-center bg-gray-100 rounded-full">
+																<button
+																	className="p-3"
+																	onClick={() =>
+																		setQuantity(Math.max(1, quantity - 1))
+																	}
+																>
+																	<Minus className="h-6 w-6 text-gray-600" />
+																</button>
+																<span className="w-12 text-center text-xl">
+																	{quantity}
+																</span>
+																<button
+																	className="p-3"
+																	onClick={() => setQuantity(quantity + 1)}
+																>
+																	<Plus className="h-6 w-6 text-gray-600" />
+																</button>
+															</div>
+														</div>
+
+														{/* Add to Cart Button */}
+														<Button
+															className="w-full rounded-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg"
+															onClick={() => handleAddToCart(item, quantity)}
+														>
+															Add {quantity} for{" "}
+															{formatPrice(item.price * quantity)}
+														</Button>
+													</div>
 												</div>
 											</div>
 										</DialogContent>
