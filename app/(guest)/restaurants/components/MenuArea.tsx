@@ -124,7 +124,7 @@ function MenuArea({ data }: MenuAreaProps) {
 													!item.available ? "Item unavailable" : "Add to cart"
 												}
 											>
-												<Plus className="h-6 w-6 text-emerald-600 stroke-[3]" />
+												<Plus className="h-6 w-6 text-blue-500 stroke-[3]" />
 											</Button>
 										</div>
 										<DialogContent className="sm:max-w-[600px] sm:rounded-lg sm:min-h-[400px] h-auto p-6 bg-white">
@@ -143,11 +143,11 @@ function MenuArea({ data }: MenuAreaProps) {
 												{/* Content Container */}
 												<div className="p-6 space-y-6">
 													{/* Details Section */}
-													<div className="bg-red-400 rounded-lg p-4">
+													<div className="rounded-lg p-4">
 														<h3 className="text-xl font-semibold">
 															{item.name}
 														</h3>
-														<p className="text-gray-100 mt-2">
+														<p className="text-gray-700 mt-2">
 															{item.description}
 														</p>
 														<p className="text-xl font-semibold mt-4">
@@ -161,6 +161,7 @@ function MenuArea({ data }: MenuAreaProps) {
 														<div className="flex justify-center">
 															<div className="inline-flex items-center bg-gray-100 rounded-full">
 																<button
+																	type="button"
 																	className="p-3"
 																	onClick={() =>
 																		setQuantity(Math.max(1, quantity - 1))
@@ -172,6 +173,7 @@ function MenuArea({ data }: MenuAreaProps) {
 																	{quantity}
 																</span>
 																<button
+																	type="button"
 																	className="p-3"
 																	onClick={() => setQuantity(quantity + 1)}
 																>
