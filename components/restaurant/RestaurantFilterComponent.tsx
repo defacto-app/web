@@ -107,56 +107,7 @@ const RestaurantFilterComponent = ({
 
 			{/* Sort Options */}
 
-			{/* Price Range */}
-			{filters.priceRanges.length > 0 && (
-				<Popover>
-					<PopoverTrigger asChild>
-						<Button variant="outline" className="rounded-full flex-shrink-0">
-							Price Range
-							<ChevronDown className="ml-2 h-4 w-4" />
-						</Button>
-					</PopoverTrigger>
-					<PopoverContent className="w-80">
-						<div className="p-4">
-							<h4 className="font-semibold mb-4">Price Range</h4>
-							<RadioGroup
-								value={selectedFilters.priceRange}
-								onValueChange={(value) =>
-									onFilterChange({
-										...selectedFilters,
-										priceRange: value,
-									})
-								}
-							>
-								{filters.priceRanges.map((range) => (
-									<div
-										key={range.id}
-										className="flex items-center space-x-2 py-2"
-									>
-										<RadioGroupItem value={range.id} id={range.id} />
-										<Label htmlFor={range.id}>{range.name}</Label>
-									</div>
-								))}
-							</RadioGroup>
-							{selectedFilters.priceRange && (
-								<div className="flex justify-end mt-4">
-									<Button
-										variant="outline"
-										onClick={() =>
-											onFilterChange({
-												...selectedFilters,
-												priceRange: "",
-											})
-										}
-									>
-										Clear
-									</Button>
-								</div>
-							)}
-						</div>
-					</PopoverContent>
-				</Popover>
-			)}
+
 		</div>
 	);
 };

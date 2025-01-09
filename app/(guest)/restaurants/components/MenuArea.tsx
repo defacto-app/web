@@ -16,7 +16,7 @@ interface MenuAreaProps {
 	categories: any[];
 }
 
-function MenuArea({ data, categories }: MenuAreaProps) {
+function MenuArea({ data }: MenuAreaProps) {
 	const addItem = useSetAtom(addItemAtom);
 
 	const handleAddToCart = (item: any) => {
@@ -26,6 +26,7 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 			price: item.price,
 			quantity: 1,
 			image: item.image,
+			parent: item.parent,
 		};
 		addItem(cartItem);
 	};
@@ -112,7 +113,7 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 											<Button
 												variant="ghost"
 												size="icon"
-												className="rounded-full h-10 w-10 absolute bottom-4 right-4"
+												className="rounded-full h-10 w-10 absolute right-4 bottom-4 bg-gray-100  flex items-center justify-center"
 												onClick={(e) => {
 													e.stopPropagation();
 													handleAddToCart(item);
@@ -122,7 +123,7 @@ function MenuArea({ data, categories }: MenuAreaProps) {
 													!item.available ? "Item unavailable" : "Add to cart"
 												}
 											>
-												<Plus className="h-6 w-6 text-emerald-600 stroke-[3]" />
+												<Plus className="h-6 w-6 text-blue-500 stroke-[3]" />
 											</Button>
 										</div>
 
