@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { NoResultsFound } from "@/app/(guest)/restaurants/components/AllRestaurantLoading";
 
 // Define the props type
 type RestaurantGridProps = {

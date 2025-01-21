@@ -20,6 +20,7 @@ interface MenuAreaProps {
 function MenuArea({ data }: MenuAreaProps) {
 	const addItem = useSetAtom(addItemAtom);
 	const [quantity, setQuantity] = useState(1);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const handleAddToCart = (item: any, qty = 1) => {
 		const cartItem = {
@@ -31,6 +32,8 @@ function MenuArea({ data }: MenuAreaProps) {
 			parent: item.parent,
 		};
 		addItem(cartItem);
+		setIsModalOpen(false);
+
 	};
 
 	const groupedItems = data.reduce((acc: any, item: any) => {
@@ -69,7 +72,11 @@ function MenuArea({ data }: MenuAreaProps) {
 							<h2 className="text-lg font-semibold mb-4">{group.name}</h2>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
 								{group.items.map((item: any) => (
-									<Dialog key={item._id} onOpenChange={() => setQuantity(1)}>
+									<Dialog
+										key={item._id}
+										open={isModalOpen}
+										onOpenChange={setIsModalOpen}
+									>
 										<div
 											className={`border rounded-lg p-2 relative min-h-[180px] ${
 												!item.available ? "opacity-50" : ""
@@ -96,7 +103,21 @@ function MenuArea({ data }: MenuAreaProps) {
 												</div>
 
 												<DialogTrigger asChild>
-													<div className="flex-1 cursor-pointer">
+													<div
+														className="flex-1 cursor-pointer"
+														onClick={(e) => {
+															e.stopPropagation();
+															setIsModalOpen(true);
+														}}
+														onKeyDown={(e) => {
+															if (e.key === "Enter" || e.key === " ") {
+																e.stopPropagation();
+																setIsModalOpen(true);
+															}
+														}}
+														tabIndex={0}
+														role="button"
+													>
 														<h3 className="text-lg font-semibold">
 															{item.name}
 														</h3>
