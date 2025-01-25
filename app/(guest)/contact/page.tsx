@@ -49,12 +49,12 @@ export default function ContactPage() {
                 <Building2Icon className="h-7 w-6 text-gray-400" aria-hidden="true"/>
                 </dt>
                 <dd>
-                  545 Mavis Island
+                Along Nnebisi Road By Oando F/Station
                   <br />
-                  Chicago, IL 99191
+                  Asaba, Delta
                 </dd>
               </div>
-              <div className="flex gap-x-4">
+            {/*   <div className="flex gap-x-4">
                 <dt className="flex-none">
                   <span className="sr-only">Telephone</span>
                  <PhoneIcon className="h-7 w-6 text-gray-400" aria-hidden="true" />
@@ -64,7 +64,7 @@ export default function ContactPage() {
                     +1 (555) 234-5678
                   </a>
                 </dd>
-              </div>
+              </div> */}
               <div className="flex gap-x-4">
                 <dt className="flex-none">
                   <span className="sr-only">Email</span>
@@ -72,7 +72,7 @@ export default function ContactPage() {
                 </dt>
                 <dd>
                   <a className="hover:text-gray-900" href="mailto:hello@example.com">
-                    hello@example.com
+                    hello@defactoapp.com.ng
                   </a>
                 </dd>
               </div>

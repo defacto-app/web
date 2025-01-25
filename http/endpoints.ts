@@ -207,6 +207,13 @@ export const $api = {
       },
 
       order: {
+        restaurant: async (orderId: string, body: any) => {
+          try {
+            return $axios.post(`/orders/${orderId}/restaurant`, body);
+          } catch (error: any) {
+            return error;
+          }
+        },
         // API endpoint definition
         history: async (params?: {
           orderId?: string;
@@ -242,13 +249,7 @@ export const $api = {
             return error;
           }
         },
-        restaurant: async (orderId: string, body: any) => {
-          try {
-            return $axios.post(`/orders/${orderId}/restaurant`, body);
-          } catch (error: any) {
-            return error;
-          }
-        },
+       
         package: async (body: any) => {
           try {
             return $axios.post(`/orders/package-delivery`, body);

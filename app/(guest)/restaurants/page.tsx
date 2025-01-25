@@ -35,11 +35,6 @@ const fetchRestaurants = async (
 		perPage,
 		...(searchTerm && { search: searchTerm }),
 		...(filters.category && { category: filters.category }),
-		...(filters.dietary.length > 0 && { dietary: filters.dietary.join(",") }),
-		...(filters.quickFilter && { quickFilter: filters.quickFilter }),
-		...(filters.sort &&
-			filters.sort !== "recommended" && { sort: filters.sort }),
-		...(filters.priceRange && { priceRange: filters.priceRange }),
 	};
 
 	return $api.guest.restaurant.all(params);

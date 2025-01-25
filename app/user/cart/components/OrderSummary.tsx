@@ -91,10 +91,9 @@ function OrderSummary({
 				},
 				phone: authUser.phoneNumber,
 				name: authUser.firstName,
-				// phoneNumber: authUser.phoneNumber,
+				phoneNumber: authUser.phoneNumber || "",
 				email: authUser.email,
 
-				phoneNumber: "08063152617",
 			},
 		};
 
@@ -124,7 +123,7 @@ function OrderSummary({
 					name: "Customer Name", // Replace with actual customer name
 				},
 				customizations: {
-					title: "Your Store Name", // Replace with your store's title
+					title: "Defacto Restaurant", // Replace with your store's title
 					description: "Payment for your cart items", // Custom description
 					logo: envData.logo,
 				},
