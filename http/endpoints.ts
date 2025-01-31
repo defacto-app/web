@@ -13,10 +13,7 @@ export const $api = {
               perPage: params.perPage || 20,
               ...(params.search && { search: params.search }),
               ...(params.category && { category: params.category }),
-              ...(params.dietary && { dietary: params.dietary }),
-              ...(params.quickFilter && { quickFilter: params.quickFilter }),
               ...(params.sort && { sort: params.sort }),
-              ...(params.priceRange && { priceRange: params.priceRange })
             }
           });
         } catch (error: any) {
@@ -92,6 +89,14 @@ export const $api = {
           return error;
         }
       },
+    },
+
+    contact:async (body: any) => {
+      try {
+        return $axios.post(`/g/contact`, body);
+      } catch (error: any) {
+        return error;
+      }
     },
   },
 
@@ -249,7 +254,7 @@ export const $api = {
             return error;
           }
         },
-       
+
         package: async (body: any) => {
           try {
             return $axios.post(`/orders/package-delivery`, body);

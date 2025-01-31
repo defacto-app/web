@@ -284,6 +284,5 @@ export interface RestaurantQueryParams {
   perPage?: number;
   search?: string;
   category?: string;
-  quickFilter?: string;
   sort?: string;
 }
