@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { fromDate } from "@internationalized/date";
 import { formatDateFromNow } from "@/lib/utils";
+import OrderItem from "../components/OrderItem";
 
 function Page() {
 	const [loading, setLoading] = useState<boolean>(true);
@@ -233,56 +234,6 @@ function ErrorMessage({ message }: { message: string }) {
 	return <div className="text-center text-red-500">{message}</div>;
 }
 
-function OrderItem({ order }: { order: any }) {
-	return (
-		<div className="flex items-center p-4 bg-white shadow-sm rounded-lg border">
-			<div className="w-20 h-20 overflow-hidden rounded-lg">
-				<AspectRatio ratio={1}>
-					<Image
-						src={
-							order.type === "food"
-								? order.restaurant_image || "https://placehold.co/600x600.png"
-								: order.package_image || "https://placehold.co/600x600.png"
-						}
-						alt={order.type}
-						width={80}
-						height={100}
-						priority
-						className="object-cover w-auto h-full"
-					/>
-				</AspectRatio>
-			</div>
-			<div className="ml-4">
-				<h2 className="text-xl font-semibold">
-					{order.type === "food"
-						? order.restaurant_name || "Restaurant order"
-						: "Package Delivery"}
-				</h2>
 
-				{order.type === "food" && (
-					<div className="mt-2">
-						{order.restaurantOrder.map((item: { _id: React.Key | null | undefined; quantity: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; name: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; price: { toLocaleString: () => string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }; }) => (
-							<div key={item._id} className="flex items-center gap-2">
-								<span className="text-sm">
-									{item.quantity} x {item.name}
-								</span>
-								{/* Optionally show price */}
-
-							</div>
-						))}
-					</div>
-				)}
-
-				<p
-					className={`text-sm font-medium ${order.status === "completed" ? "text-green-500" : "text-yellow-500"}`}
-				>
-					{order.status}
-				</p>
-
-				{/*<p>{formatDateFromNow(order.createdAt)}</p>*/}
-			</div>
-		</div>
-	);
-}
 
 export default Page;

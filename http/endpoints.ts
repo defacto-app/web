@@ -255,6 +255,14 @@ export const $api = {
           }
         },
 
+        one: async (publicId: string) => {
+          try {
+            return $axios.get(`/orders/${publicId}`);
+          } catch (error: any) {
+            return error;
+          }
+        },
+
         package: async (body: any) => {
           try {
             return $axios.post(`/orders/package-delivery`, body);
